@@ -1,0 +1,19 @@
+<div>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title> {{title}}</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <canvas  baseChart
+        [type]="data.type"
+        [datasets]="data.chartDatasets"
+        [labels]="data.chartLabels"
+        [options]="data.chartOptions"
+        [plugins]="data.chartPlugins"
+        [legend]="data.chartLegend">
+      </canvas>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

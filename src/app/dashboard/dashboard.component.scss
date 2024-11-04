@@ -1,0 +1,26 @@
+.dashContainer {
+  padding: 1rem;
+  display:flex;flex-direction: column;gap: 20px;flex-wrap: wrap;height: 100%;overflow: auto;justify-content: center;
+  @media(max-width: 576px) {
+    margin-top: 40px;
+  }
+}
+
+.dashContainerDM {
+  background-color: black;
+}
+
+@media(max-width: 576px) {
+  app-md-card {
+    width: 100%;
+  }
+}
+
+.cards {
+  gap:10px;
+  padding-left: 60px;
+  @media(max-width: 576px) {
+    margin-top: 15px;
+    width: 350px;
+  }
+}

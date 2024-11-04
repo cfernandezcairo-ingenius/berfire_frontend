@@ -1,0 +1,69 @@
+
+.full-width-table {
+  width: 100%;
+}
+
+.full-width-table-dm {
+    background-color: black;
+}
+
+.container {
+  // background-color: white;
+  color: black;
+
+}
+.containerDarkMode {
+  background-color: black;
+  color: white;
+}
+
+.pdfClass {
+  right: 120px;
+  bottom: 20px;
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+}
+
+@media (max-width: 576px) {
+  td {
+    display: block;
+    width: 100%;
+  }
+  th {
+    display: none;
+  }
+}
+
+.mat-row-even {
+  background-color: #F0F0F0;
+}
+
+.mat-row-odd {
+  background-color: #F5F5DC;
+}
+
+.searchClass {
+  position: relative;
+  width: 50%;
+  border: solid 1px;
+  margin-top: 10px;
+  margin-left: 40%;
+  background-color: transparent;
+  height: 50px;
+  border: solid;
+  border-radius: 15px;
+  border-width: 1px;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}

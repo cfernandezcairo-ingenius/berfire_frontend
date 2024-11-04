@@ -1,0 +1,6 @@
+@if (theme === 'bootstrap') {
+  <app-formly-bootstrap [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event)" (cancelEvent)="onCancel()" ></app-formly-bootstrap>
+
+} @else if (theme === 'material') {
+  <app-formly-material [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event)" (cancelEvent)="onCancel()"></app-formly-material>
+}

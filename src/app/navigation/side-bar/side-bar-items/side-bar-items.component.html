@@ -1,0 +1,8 @@
+<div *ngFor="let child of childrens">
+  <button style="background-color: #242D35;color: white;margin-top: 5px;border: none;z-index: 999;" class="btn btn-primary btn__side-menu" *ngIf="child.inSideBar" placement="top" [disabled]="!child.enabled" (click)="navigateTo(child.url)">
+    <div class="btn__side-menu-icon" style="display: flex; flex-direction: row;">
+      <mat-icon style="color: white;margin-right: 5px;">{{child.icon}}</mat-icon>
+      <div class="btn__side-menu-title">{{ child.name }}</div>
+    </div>
+  </button>
+</div>

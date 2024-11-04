@@ -1,0 +1,16 @@
+<div [ngClass]="darkMode ? 'dashContainer dashContainerDM' : 'dashContainer'">
+  <div class="row cards">
+    <app-md-card class="col-sm-12 col-md-3 col-lg-2" [valor]="'0'" [descripcion]="'2024'" title="Facturas"></app-md-card>
+    <app-md-card class="col-sm-12 col-md-3 col-lg-2" [valor]="'1'" [descripcion]="'Activos'" title="Clientes"></app-md-card>
+    <app-md-card class="col-sm-12 col-md-3 col-lg-2" [valor]="'1'" [descripcion]="'Activos'" title="Productos"></app-md-card>
+    <app-md-card class="col-sm-12 col-md-3 col-lg-2" [valor]="'0'" [descripcion]="'Activos'" title="Servicios"></app-md-card>
+  </div>
+  <!-- <div class="row" style="gap:10px">
+    <app-md-card class="col-sm-12 col-md-4 col-lg-4" [type]="'md'" title="'Titulo md 1'"></app-md-card>
+    <app-md-card class="col-sm-12 col-md-4 col-lg-4" [type]="'md'" title="'Titulo md 2'"></app-md-card>
+  </div> -->
+  <div class="row gap-3">
+    <app-chart-pie style="width: 340px;" [data]="pieChart"></app-chart-pie>
+    <app-chart-bar [data]="barChart" style="width: 450px;"></app-chart-bar>
+  </div>
+</div>

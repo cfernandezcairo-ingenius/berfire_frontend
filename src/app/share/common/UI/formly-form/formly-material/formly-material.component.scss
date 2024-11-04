@@ -1,0 +1,79 @@
+.formly-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura completa de la ventana */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column; /* Coloca el label encima del input */
+  margin-bottom: 15px; /* Espacio entre los campos */
+}
+
+.custom-label-class {
+  display: block;
+  margin-bottom: 0.5rem;
+  width: 125px;
+}
+
+.visibilityClass {
+  color: rgb(135 156 175 / 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  z-index: 999;
+  margin-top: -70px;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}
+
+.form-container {
+  border: solid;
+  border-width: 1px;
+  border-radius: .5rem;
+  position: relative;
+  min-width: 400px;
+  max-width: 800px;
+  width: 500px;
+  @media(max-width: 576px) {
+    width: 95%;
+    min-width: 200px;
+    margin-top: 50px;
+  }
+}
+
+.buttons-add-edit {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-direction: row;
+  @media(max-width: 576px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.btn-primary {
+  margin-left:20px;
+  @media(max-width: 576px) {
+    margin-left: 0;
+  }
+}
+
+.btn-secondary {
+  @media(max-width: 576px) {
+    margin-top: 20px;
+  }
+}
+
+
+

@@ -1,0 +1,30 @@
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+  margin: 8px 8px 8px 0;
+  background-color: #1469C0;
+}
+
+.buttonClass {
+  height: 50px;
+  border-radius: 1rem;
+  border-width: 1px;
+  width: 120px;
+  transition: all .5s ease;
+}
+
+.buttonClass:hover {
+  cursor: pointer;
+  -webkit-transform:scale(1.05);
+  -moz-transform:scale(1.05);
+  -ms-transform:scale(1.05);
+  -o-transform:scale(1.05);
+  transform:scale(1.05);
+}

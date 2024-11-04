@@ -1,0 +1,96 @@
+.lg {
+  width: 310px;
+  border: solid1px;
+  @media(max-width: 576px) {
+      width: 100%;
+  }
+}
+
+.cardlg {
+  background-color: aqua;
+  border: solid 1px;
+  border-radius: .5rem;
+}
+
+.cardlgdm {
+  background-color: #2d3436;
+  border: solid 1px;
+  border-radius: .5rem;
+}
+
+.sm {
+  width: 280px;
+  @media(max-width: 576px) {
+    width: 100%;
+}
+}
+
+.cardsm {
+  background-color: beige;
+  border: solid 1px;
+  border-radius: 1rem;
+}
+.cardsmdm {
+  background-color: #2d3436;
+  border: solid 1px;
+  border-radius: 1rem;
+}
+
+.md {
+  width: 380px;
+  @media(max-width: 576px) {
+    width: 100%;
+}
+}
+
+.cardmd {
+  background-color:cadetblue;
+  border: solid 1px;
+  border-radius: 1rem;
+}
+.cardmddm {
+  background-color:#2d3436;
+  border: solid 1px;
+  border-radius: 1rem;
+}
+
+@media(max-width: 576px) {
+  .sm .md .lg {
+    width: 100%;
+  }
+}
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 15px;
+}
+
+.linea {
+  background-color: green;
+  border: none;
+  height: 3px;
+  margin: 20px 0;
+}

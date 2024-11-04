@@ -1,0 +1,32 @@
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+  margin-top: 10px;
+  @media(max-width:576px) {
+    display: flex;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.buttonClass {
+  //background-color: blue;
+  //color: white;
+  height: 50px;
+  border-radius: 1rem;
+  width: 120px;
+  border-width: 1px;
+  transition: all .5s ease;
+}
+
+.buttonClass:hover {
+  cursor: pointer;
+  -webkit-transform:scale(1.05);
+  -moz-transform:scale(1.05);
+  -ms-transform:scale(1.05);
+  -o-transform:scale(1.05);
+  transform:scale(1.05);
+}

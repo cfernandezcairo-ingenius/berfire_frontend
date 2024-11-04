@@ -1,0 +1,56 @@
+.formly-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura completa de la ventana */
+}
+
+.childContainer {
+  border: solid;
+  border-width: 1px;
+  border-radius: .5rem;
+  position: relative;
+  min-width: 250px;
+  max-width: 800px;
+  @media(max-width: 400px) {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column; /* Coloca el label encima del input */
+  margin-bottom: 15px; /* Espacio entre los campos */
+}
+
+.custom-label-class {
+  display: block;
+  margin-bottom: 0.5rem;
+  width: 125px;
+}
+
+.visibilityClass {
+  color: rgb(135 156 175 / 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  z-index: 999;
+  margin-top: -70px;
+}
+
+.sm-button {
+  @media(max-width:400px) {
+    width: 100%;
+  }
+}
+
+
+

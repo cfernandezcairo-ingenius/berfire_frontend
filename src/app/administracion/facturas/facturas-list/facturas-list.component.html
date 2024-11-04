@@ -1,0 +1,2 @@
+<app-spinner style="justify-content: center;align-items: center;margin: auto;" *ngIf="loading"></app-spinner>
+<app-table-list *ngIf="todoListo" [dataInput]="dataSource" (addRow)="addItem()" (deleteRow)="eliminar($event)" (editRow)="editar($event)" (editRowNueva)="editarNueva($event)"></app-table-list>

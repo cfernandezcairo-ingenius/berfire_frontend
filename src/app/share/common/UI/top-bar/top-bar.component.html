@@ -1,0 +1,55 @@
+<div [ngClass]="darkMode ? 'barraTop barraTopDarkMode' : 'barraTop'" class="barraTop">
+  <div style="position: relative;">
+    <div style="position: absolute; left: 10px;top: 10px;">
+      <img *ngIf="!isMobile" id="miImagen" src="ingeniusLogo.png" alt="Logo" style="width: 150px; height: 85px; aspect-ratio: 16/9; object-fit: contain; object-position: center;">
+      <img *ngIf="isMobile" id="miImagen" src="ingeniusLogo.png" alt="Logo" style="width: 100px; height: 85px; aspect-ratio: 16/9; object-fit: contain; object-position: center;">
+    </div>
+  </div>
+  <div class="btn-menu-container-bar" (click)="showMenu()" *ngIf="isMobile && isAuthenticated">
+    <div class="btn-menu-bar">
+      <span style="position: absolute;top: 15%;left: 30%;">Menú</span>
+    </div>
+  </div>
+  <!-- <div class="menu-container" *ngIf="authService.isAuthenticated()">
+    <svg *ngIf="darkMode" (click)="showMenu()"  width="36px" height="36px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <path fill="#FFFFFF"  fill-rule="evenodd" d="M19 4a1 1 0 01-1 1H2a1 1 0 010-2h16a1 1 0 011 1zm0 6a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 7a1 1 0 100-2H2a1 1 0 100 2h16z"/>
+    </svg>
+    <svg *ngIf="!darkMode" (click)="showMenu()"  width="36px" height="36px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <path fill="#21C38A"  fill-rule="evenodd" d="M19 4a1 1 0 01-1 1H2a1 1 0 010-2h16a1 1 0 011 1zm0 6a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 7a1 1 0 100-2H2a1 1 0 100 2h16z"/>
+    </svg>
+  </div> -->
+  <div class="idiomas">
+    <div style="display: flex;flex-direction: row;">
+      <!-- <div *ngIf="!isMobile" style="margin-right: 20px;">
+        <mat-button-toggle-group [value]="darkMode ? 'dark' : 'sunny'" style="height: 38px;align-items: center;margin-top: -7px;border: solid 1px;border-radius: 1rem;" name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle (change)="onValChange($event.value)" value="sunny">
+            <mat-icon>sunny</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle (change)="onValChange($event.value)" value="dark">
+            <mat-icon>dark_mode</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div> -->
+      <div style="position: relative;display: flex;flex-direction: row;justify-content: end;margin-left: 10px;margin-right: 10px;">
+        <div class="idiomaEspanol" (click)="changeLanguage('Espanol')" [ngStyle]="translate.currentLang === 'en' ? {opacity: 0.5} : {}">
+          <img src="banderaEspanol.png" width="36px" alt="español">
+        </div>
+        <div class="idiomaIngles" (click)="changeLanguage('Ingles')" [ngStyle]="translate.currentLang === 'es' ? {opacity: 0.5} : {}">
+          <img style="margin-left: 10px;" src="banderaIngles.png" width="36px" alt="ingles">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div *ngIf="isMobile" class="toggleinMobile">
+  <div style="position:absolute;right: 0;top:10px">
+    <mat-button-toggle-group [value]="darkMode ? 'dark' : 'sunny'" style="height: 38px;align-items: center;margin-top: -7px;border: solid 1px;border-radius: 1rem;" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle (change)="onValChange($event.value)" value="sunny">
+        <mat-icon>sunny</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle (change)="onValChange($event.value)" value="dark">
+        <mat-icon>dark_mode</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div> -->
