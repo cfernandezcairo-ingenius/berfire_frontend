@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 // import { HttpHeaderClass } from '../share/common/httpHeader';
 import { HttpClient } from '@angular/common/http';
 import { backendConfig } from '../../app.config';
-import { FacturasDataSource } from '../../administracion/facturas/facturas-list/facturas-datasource';
+import { EstadosAlbaranesEntregasDataSource } from './estados-albaranes-entregas-list/estados-albaranes-entregas-datasource';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class EstadosAlbaranesEntregasService {
     return new Observable<any>(observer => {
       // Simulando un retraso para emular una llamada a una API
       setTimeout(() => {
-        const mockData = new FacturasDataSource();
+        const mockData = new EstadosAlbaranesEntregasDataSource();
         observer.next(mockData); // Emite los datos
         observer.complete(); // Completa el observable
       }, 2000); // 2 segundos de retraso

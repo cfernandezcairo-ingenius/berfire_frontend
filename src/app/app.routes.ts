@@ -29,6 +29,7 @@ export const routes: Routes = [
   { path: 'delivery-notes/edit/:id', component: AlbaranesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'dispatch-notes/list', component: EstadosAlbaranesEntregasListComponent, canActivate: [AuthGuard]},
   { path: 'dispatch-notes/edit/:id', component: EstadosAlbaranesEntregasAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'dispatch-notes/edit/new/:id', component: EstadosAlbaranesEntregasAddEditComponent, canActivate: [AuthGuard]},
   { path: 'expirations', component:VencimientosComponent, canActivate: [AuthGuard]},
   { path: 'corrective-budgets', component: PreupuestosCorrectivoaComponent, canActivate: [AuthGuard]},
   { path: 'handle-rectification', component: GestionarRectificativasComponent, canActivate: [AuthGuard]},

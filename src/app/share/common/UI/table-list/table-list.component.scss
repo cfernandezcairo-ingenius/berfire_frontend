@@ -67,3 +67,24 @@ th, td {
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent !important;
 }
+
+.btn-firstPage {
+  border: none;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  font-size: larger;
+  color: rgba(26, 27, 31, 0.38);
+  font-weight: 600;
+}
+
+.btn-lastPage {
+  border: none;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  font-size: larger;
+  margin-left: 10px;
+  color: rgba(26, 27, 31, 0.38);
+  font-weight: 600;
+}

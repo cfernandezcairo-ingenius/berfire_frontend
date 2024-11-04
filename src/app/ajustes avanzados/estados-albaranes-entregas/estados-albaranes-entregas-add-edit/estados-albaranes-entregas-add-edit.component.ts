@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 
 @Component({
-  selector: 'app-albaranes-add-edit',
+  selector: 'app-estados-albaranes-entregas-add-edit',
   standalone: true,
   imports: [FormlyBaseComponent],
   templateUrl: './estados-albaranes-entregas-add-edit.component.html',
@@ -70,9 +70,9 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-6 col-lg-6',
+            className: 'col-sm-12 col-md-126 col-lg-12',
             type: 'input',
-            key: 'name',
+            key: 'nombre',
             props: {
               required: true,
               label: 'FORM.FIELDS.FIRSTNAME',
@@ -85,13 +85,18 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
                 required: this.translate.get('FORM.VALIDATION.REQUIRED'),
               },
             },
-          },
+          }
+        ],
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
           {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'lastname',
+            className: 'col-sm-12 col-md-12 col-lg-12',
+            type: 'checkbox',
+            key: 'confirma',
             props: {
-              label: 'FORM.FIELDS.LASTNAME',
+              label: 'FORM.FIELDS.CONFIRM',
               required:true
             },
             validators: {
@@ -102,88 +107,9 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
                 required: this.translate.get('FORM.VALIDATION.REQUIRED'),
               },
             },
-            expressionProperties: {
-              'props.disabled': '!model.name',
-            },
           },
         ],
-      },
-      // {
-      //   className: 'section-label',
-      //   template: '<hr /><div><strong>Address:</strong></div>',
-      // },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'address',
-            props: {
-              label: 'FORM.FIELDS.ADDRESS',
-              maxLength: 30
-            },
-            validators: {
-              validation: [ { name: 'maxLength', options: { maxLength: 30 } },],
-            },
-            validation: {
-              messages: {
-                maxLength: () => this.translate.get('FORM.VALIDATION.MAX_LENGTH', { maxLength: 30 }),
-              },
-            },
-          },
-          // {
-          //   className: 'col-sm-6 col-md-3 col-lg-3',
-          //   type: 'input',
-          //   key: 'cityName',
-          //   props: {
-          //     label: 'City',
-          //   },
-          // },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'mobile',
-            props: {
-              label: 'FORM.FIELDS.MOBILE',
-            },
-            validators: {
-              validation: ['mobile'],
-            },
-            validation: {
-              messages: {
-                email: () => this.translate.get('FORM.VALIDATION.MOBILE'),
-              },
-            }
-          }
-        ],
-      },
-      { template: '<hr />' },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'email',
-            props: {
-              label: 'FORM.FIELDS.EMAIL',
-            },
-            validators: {
-              validation: ['email'],
-            },
-            validation: {
-              messages: {
-                email: () => this.translate.get('FORM.VALIDATION.EMAIL'),
-              },
-            },
-          }],
-          // {
-          //   className: 'col-sm-12 col-md-6 col-lg-6',
-          //   key: 'passwordToggle',
-          //   type: 'passwordToggleVisible',
-          // }],
-        }
+      }
     ];
     this.updateLabels();
   }
@@ -193,17 +119,8 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.LASTNAME').subscribe((label) => {
-      this.fields[0].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.ADDRESS').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.MOBILE').subscribe((label) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.EMAIL').subscribe((label) => {
-      this.fields[3].fieldGroup[0].props.label = label;
     });
   }
 
@@ -228,21 +145,15 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        lastname: this.fg!.get('lastname')?.value,
-        email: this.fg!.get('email')?.value,
-        address: this.fg!.get('address')?.value,
-        mobile: this.fg!.get('mobile')?.value,
+        nombre: this.fg!.get('nombre')?.value,
+        confirma: this.fg!.get('confirma')?.value,
       }
       myobs = this.estadosAlbaranesEntregasSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        lastname: this.fg!.get('lastname')?.value,
-        email: this.fg!.get('email')?.value,
-        address: this.fg!.get('address')?.value,
-        mobile: this.fg!.get('mobile')?.value,
+        name: this.fg!.get('nombre')?.value,
+        confirma: this.fg!.get('confirma')?.value,
       }
       myobs = this.estadosAlbaranesEntregasSrv.edit(payload);
     }

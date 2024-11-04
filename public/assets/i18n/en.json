@@ -40,6 +40,7 @@
   "invoice_list": "Invoices List",
   "list": "List",
   "invoice_add": "New Invoice",
+  "dispatch-notes": "Dispatch Notes",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "First Name",
@@ -47,7 +48,8 @@
       "LASTNAME": "Last Name",
       "EMAIL": "Email",
       "ADDRESS": "Address",
-      "MOBILE": "Mobile"
+      "MOBILE": "Mobile",
+      "CONFIRM": "Confirm"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required",

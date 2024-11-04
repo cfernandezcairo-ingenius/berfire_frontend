@@ -19,23 +19,6 @@
                 </div>
                 <div *ngIf="!isMobile">
                   <app-modal-menu [row]="row" (menuEdit)="editar($event)" (menuEditNueva)="editarNueva($event)" (menuDelete)="eliminar($event)"></app-modal-menu>
-                  <!-- <button mat-button [matMenuTriggerFor]="menu">
-                    <mat-icon [ngStyle]="darkMode ? { 'background-color': 'black', color: 'white'} : { color: 'black'}">more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <div [ngStyle]="!darkMode ? { 'background-color': 'white'} : {}">
-                      <button (click)="editar(row)" mat-menu-item>
-                        <mat-icon>edit</mat-icon>
-                        <span>{{'edit' | translate}}</span>
-                      </button>
-                    </div>
-                    <div [ngStyle]="!darkMode ? { 'background-color': 'white'} : {}">
-                      <button  (click)="eliminar(row.id)" mat-menu-item>
-                        <mat-icon>delete</mat-icon>
-                        <span>{{'delete' | translate}}</span>
-                      </button>
-                    </div>
-                  </mat-menu> -->
                 </div>
               </td>
           </ng-container>
@@ -46,11 +29,18 @@
               {{column}}
             </th>
             <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
-              <div *ngIf="isMobile" style="display: flex;flex-direction: row;">
+              <!-- <div *ngIf="isMobile" style="display: flex;flex-direction: row;">
                 <div style="font-weight:bold;">{{column}}:</div>
                 <div style="margin-left: 6px;">{{row[column]}}</div>
+              </div> -->
+              <!-- <div *ngIf="isMobile && (row[column] == true || row[column]== false)">
+                <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
+              </div> -->
+              <div *ngIf="!isMobile && (row[column] != true && row[column] != false)">{{row[column]}}
               </div>
-              <div *ngIf="!isMobile">{{row[column]}}</div>
+              <div *ngIf="!isMobile && (row[column] == true || row[column]== false)">
+                <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
+              </div>
             </td>
           </ng-container>
         }
@@ -62,6 +52,7 @@
 
     <mat-paginator #paginator
         [length]="dataInput.length"
+        [showFirstLastButtons]="true"
         [pageIndex]="0"
         [pageSize]="10"
         [pageSizeOptions]="[5, 10, 20]"
@@ -71,18 +62,18 @@
   <div style="position: absolute;">
     <app-button-add (newItem)="addItem()"></app-button-add>
   </div>
-  <div style="position:absolute;right: 120px;bottom: 25px;">
+  <!-- <div style="position:absolute;right: 120px;bottom: 25px;">
     <app-pdf-generator [dataSource]="dataInput" [header]="displayedColumns" class="pdfClass"></app-pdf-generator>
   </div>
   <div style="position:absolute;right: 260px;bottom: 25px;">
     <app-xls-generator [dataSource]="dataInput" [header]="displayedColumns" class="pdfClass"></app-xls-generator>
-  </div>
+  </div> -->
 </div>
 
 <div *ngIf="isMobile" style="margin-top: 75px;">
   @for (data of dataInput.data; track data;let index = $index,e = $even) {
     <div style="margin-top: 10px;">
-      <app-mat-table-mobile [data]="data" [title]="'invoice'" [subtitle]="'list'" (editarEvent)="editar($event)" (eliminarEvent)="eliminar($event)"></app-mat-table-mobile>
+      <app-mat-table-mobile [data]="data" [title]="titleMobileList" [subtitle]="'list'" (editarEvent)="editar($event)" (eliminarEvent)="eliminar($event)"></app-mat-table-mobile>
     </div>
   }
   <div style="position: relative;z-index: 99999;">

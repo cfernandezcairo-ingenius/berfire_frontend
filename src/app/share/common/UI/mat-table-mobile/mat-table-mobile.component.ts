@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { StyleManager } from '../../../services/style-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export type strucNew = {
   clave: string,
@@ -13,7 +14,7 @@ export type strucNew = {
 @Component({
   selector: 'app-mat-table-mobile',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardSubtitle, MatCardTitle, MatCardActions,FormsModule, ReactiveFormsModule, CommonModule, TranslateModule],
+  imports: [MatCard, MatCardHeader, MatCardSubtitle, MatCardTitle, MatCardActions,FormsModule, ReactiveFormsModule, CommonModule, TranslateModule, MatCheckboxModule],
   templateUrl: './mat-table-mobile.component.html',
   styleUrl: './mat-table-mobile.component.scss'
 })
@@ -52,6 +53,11 @@ export class MatTableMobileComponent implements OnInit {
 
   eliminar() {
     this.eliminarEvent.emit(this.data.id)
+  }
+
+
+  getChecked(value: any) {
+    return value == 'true';
   }
 
 }

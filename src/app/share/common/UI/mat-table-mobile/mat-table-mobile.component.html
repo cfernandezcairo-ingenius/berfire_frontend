@@ -13,7 +13,8 @@
                 <label style="font-weight: bold;">{{item.clave}}:</label>
               </td>
               <td align="left">
-                <label style="margin-left: 5px;">{{item.valor}}</label>
+                <label *ngIf="item.valor != 'true' && item.valor != 'false'" style="margin-left: 5px;">{{item.valor}}</label>
+                <mat-checkbox *ngIf="item.valor == 'true' || item.valor == 'false'" #checkBox [checked]="getChecked(item.valor)"></mat-checkbox>
               </td>
             </tr>
         }

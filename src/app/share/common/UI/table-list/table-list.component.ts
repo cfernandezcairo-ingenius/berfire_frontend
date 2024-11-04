@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-table-list',
@@ -42,7 +43,8 @@ import { MatTableDataSource } from '@angular/material/table';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckboxModule
 ],
   templateUrl: './table-list.component.html',
   styleUrl: './table-list.component.scss',
@@ -51,6 +53,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TableListComponent implements OnInit {
 
   @Input() dataInput: any;
+  @Input() titleMobileList: string = '';
   @Output() deleteRow = new EventEmitter();
   @Output() editRow = new EventEmitter();
   @Output() editRowNueva = new EventEmitter();
@@ -88,7 +91,7 @@ export class TableListComponent implements OnInit {
       filter: ['']
     });
     this.fg.controls['filter'].valueChanges.subscribe(f=> {
-      this.dataSourceShow = this.filterData(this.dataInput, f);
+      this.dataSourceShow.data = this.filterData(this.dataInput.data, f);
     });
    }
 
@@ -153,6 +156,18 @@ export class TableListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.addRow.emit(row);
+  }
+
+  goToFirstPage() {
+    this.paginator.firstPage();
+  }
+
+  goToLastPage() {
+    this.paginator.lastPage();
+  }
+
+  getChecked(value: any) {
+    return value == true;
   }
 
 }

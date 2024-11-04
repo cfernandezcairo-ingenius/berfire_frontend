@@ -5,32 +5,93 @@ import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
 // TODO: Replace this with your own data model type
-export interface FacturasItem {
-  name: string;
-  id: number;
-  lastname: string;
-  email: string;
-  address: string;
-  mobile: string;
+export interface EstadosAlbaranesItem {
+  id: number
+  nombre: string;
+  confirma: boolean
 }
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: FacturasItem[] = [
+const EXAMPLE_DATA: EstadosAlbaranesItem[] = [
   {
     id: 1,
-    name: 'Name 1',
-    lastname: 'otro',
-    email: 'email1@gmail.com',
-    address: 'cdcmkmckrnc  vkrkrv vrvr',
-    mobile: '+178654392343'
+    nombre: 'Name 1',
+    confirma: true
   },
   {
     id: 2,
-    name: 'Name 2',
-    lastname: 'lastname 2',
-    email: 'email2@gmail.com',
-    address: 'cdcmnc  vkrkrv vrvr',
-    mobile: '+178654392545'
+    nombre: 'Name 2',
+    confirma: true,
+  },
+  {
+    id: 3,
+    nombre: 'Name 3',
+    confirma: true
+  },
+  {
+    id: 4,
+    nombre: 'Name 4',
+    confirma: false,
+  },
+  {
+    id: 5,
+    nombre: 'Name 5',
+    confirma: true
+  },
+  {
+    id: 6,
+    nombre: 'Name 6',
+    confirma: false,
+  },
+  {
+    id: 7,
+    nombre: 'Name 7',
+    confirma: true
+  },
+  {
+    id: 8,
+    nombre: 'Name 8',
+    confirma: false,
+  },
+  {
+    id: 9,
+    nombre: 'Name 9',
+    confirma: true
+  },
+  {
+    id: 10,
+    nombre: 'Name 10',
+    confirma: false,
+  },
+  {
+    id: 11,
+    nombre: 'Name 11',
+    confirma: true
+  },
+  {
+    id: 12,
+    nombre: 'Name 12',
+    confirma: false,
+  },
+  {
+    id: 13,
+    nombre: 'Name 13',
+    confirma: true
+  },
+  {
+    id: 14,
+    nombre: 'Name 14',
+    confirma: false,
+  },
+  {
+    id: 15,
+    nombre: 'Name 5',
+    confirma: true
+  },
+  {
+    id: 16,
+    nombre: 'Name 16',
+    confirma: false,
   }
 ];
 
@@ -39,8 +100,8 @@ const EXAMPLE_DATA: FacturasItem[] = [
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class FacturasDataSource extends DataSource<FacturasItem> {
-  data: FacturasItem[] = EXAMPLE_DATA;
+export class EstadosAlbaranesEntregasDataSource extends DataSource<EstadosAlbaranesItem> {
+  data: EstadosAlbaranesItem[] = EXAMPLE_DATA;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
@@ -53,7 +114,7 @@ export class FacturasDataSource extends DataSource<FacturasItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<FacturasItem[]> {
+  connect(): Observable<EstadosAlbaranesItem[]> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
@@ -76,7 +137,7 @@ export class FacturasDataSource extends DataSource<FacturasItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: FacturasItem[]): FacturasItem[] {
+  private getPagedData(data: EstadosAlbaranesItem[]): EstadosAlbaranesItem[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       return data.splice(startIndex, this.paginator.pageSize);
@@ -89,7 +150,7 @@ export class FacturasDataSource extends DataSource<FacturasItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: FacturasItem[]): FacturasItem[] {
+  private getSortedData(data: EstadosAlbaranesItem[]): EstadosAlbaranesItem[] {
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -97,7 +158,7 @@ export class FacturasDataSource extends DataSource<FacturasItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
+        case 'name': return compare(a.nombre, b.nombre, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
       }

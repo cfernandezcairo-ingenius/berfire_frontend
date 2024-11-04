@@ -40,6 +40,7 @@
   "invoice_list": "Listado de Facturas",
   "list": "Listado",
   "invoice_add": "Nueva Factura",
+  "dispatch-notes": "Estados Albaranes Entrega",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "Nombre",
@@ -47,7 +48,8 @@
       "LANG": "Idioma",
       "EMAIL": "Correo Electrónico",
       "ADDRESS": "Dirección",
-      "MOBILE": "Teléfono"
+      "MOBILE": "Teléfono",
+      "CONFIRM": "Confirma"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido",

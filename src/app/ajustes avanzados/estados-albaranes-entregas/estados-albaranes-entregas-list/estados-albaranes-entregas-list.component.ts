@@ -63,12 +63,12 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
 
   editar(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/invoice/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${strRow}`)
   }
 
   editarNueva(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/invoice/edit/new/${strRow}`, '_blank')
+    window.open(`/dispatch-notes/edit/new/${strRow}`, '_blank')
   }
 
 
@@ -88,7 +88,7 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/invoice/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${row}`)
   }
 
 }
