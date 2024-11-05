@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
@@ -62,6 +62,12 @@ export class TableListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild('movible') movible!: ElementRef;
+  private offsetX: number = 0;
+  private offsetY: number = 0;
+  // Almacena las referencias a las funciones
+  private mouseMoveHandler?: ((e: MouseEvent) => void);
+  private mouseUpHandler?: (() => void);
 
   dataSourceShow = new MatTableDataSource<any>();
 
@@ -93,6 +99,8 @@ export class TableListComponent implements OnInit {
     this.fg.controls['filter'].valueChanges.subscribe(f=> {
       this.dataSourceShow.data = this.filterData(this.dataInput.data, f);
     });
+    this.mouseMoveHandler = this.onMouseMove.bind(this);
+    this.mouseUpHandler = this.onMouseUp.bind(this);
    }
 
   @HostListener('window:resize', ['$event'])
@@ -105,14 +113,37 @@ export class TableListComponent implements OnInit {
   ngOnInit(): void {
     this.displayedColumns = Object.keys(this.dataInput.data[0]);
     this.dataSourceShow.data = this.dataInput.data;
+
   }
 
   ngAfterViewInit(): void {
-
-    //this.table.dataSource = this.dataSourceShow.data;
     this.dataSourceShow.sort = this.sort;
     this.dataSourceShow.paginator = this.paginator;
     this.cdr.detectChanges();
+    //Boton Add
+    if (this.movible) {
+      this.movible.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this));
+    } else {
+      console.log('El elemento movible no se encontró');
+    }
+  }
+
+  private onMouseDown(e: MouseEvent) {
+    this.offsetX = e.clientX - this.movible.nativeElement.getBoundingClientRect().left;
+    this.offsetY = e.clientY - this.movible.nativeElement.getBoundingClientRect().top;
+
+    document.addEventListener('mousemove', this.mouseMoveHandler!);
+    document.addEventListener('mouseup', this.mouseUpHandler!);
+  }
+
+  private onMouseMove(e: MouseEvent) {
+    this.movible.nativeElement.style.left = e.clientX - this.offsetX + 'px';
+    this.movible.nativeElement.style.top = e.clientY - this.offsetY + 'px';
+  }
+
+  private onMouseUp() {
+    document.removeEventListener('mousemove', this.mouseMoveHandler!);
+    document.removeEventListener('mouseup', this.mouseMoveHandler!);
   }
 
   filterData(array:any, searchTerm:string) {
@@ -169,5 +200,15 @@ export class TableListComponent implements OnInit {
   getChecked(value: any) {
     return value == true;
   }
+
+  // moverDiv(e:any) {
+  //     this.movible!.style.left = e.clientX - this.offsetX + 'px';
+  //     this.movible!.style.top = e.clientY - this.offsetY + 'px';
+  // }
+
+  // soltarDiv() {
+  //     document.removeEventListener('mousemove', this.moverDiv);
+  //     document.removeEventListener('mouseup', this.soltarDiv);
+  // }
 
 }

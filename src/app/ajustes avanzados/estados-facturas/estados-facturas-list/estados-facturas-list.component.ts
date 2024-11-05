@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { EstadosFacturasService } from '../estados-facturas.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -17,7 +17,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     TableListComponent,
     SpinnerComponent,
-    CommonModule
+    CommonModule,
+    TranslateModule
 ]
 })
 export class EstadosFacturasListComponent implements OnInit {

@@ -29,13 +29,6 @@
               {{column}}
             </th>
             <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
-              <!-- <div *ngIf="isMobile" style="display: flex;flex-direction: row;">
-                <div style="font-weight:bold;">{{column}}:</div>
-                <div style="margin-left: 6px;">{{row[column]}}</div>
-              </div> -->
-              <!-- <div *ngIf="isMobile && (row[column] == true || row[column]== false)">
-                <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
-              </div> -->
               <div *ngIf="!isMobile && (row[column] != true && row[column] != false)">{{row[column]}}
               </div>
               <div *ngIf="!isMobile && (row[column] == true || row[column]== false)">
@@ -59,15 +52,11 @@
         aria-label="Select page">
     </mat-paginator>
   </div>
-  <div style="position: absolute;">
-    <app-button-add (newItem)="addItem()"></app-button-add>
+  <div #movible class="movibleClass">
+    <button (click)="addItem()" mat-icon-button class="rotate-button" [ngStyle]="darkMode ? { 'background-color': '#58C472', color: 'white'} : { 'background-color': 'blue'}">
+      <mat-icon class="rotate-icon">add</mat-icon>
+    </button>
   </div>
-  <!-- <div style="position:absolute;right: 120px;bottom: 25px;">
-    <app-pdf-generator [dataSource]="dataInput" [header]="displayedColumns" class="pdfClass"></app-pdf-generator>
-  </div>
-  <div style="position:absolute;right: 260px;bottom: 25px;">
-    <app-xls-generator [dataSource]="dataInput" [header]="displayedColumns" class="pdfClass"></app-xls-generator>
-  </div> -->
 </div>
 
 <div *ngIf="isMobile" style="margin-top: 75px;">
@@ -78,12 +67,6 @@
   }
   <div style="position: relative;z-index: 99999;">
     <app-button-add (newItem)="addItem()"></app-button-add>
-  </div>
-  <div style="position: relative;margin-top: 15px;width: 95%; margin-left: auto;margin-right: auto;">
-    <app-pdf-generator [dataSource]="dataInput" [header]="displayedColumns" class="pdfClass"></app-pdf-generator>
-  </div>
-  <div style="position: relative;margin-top: 15px;margin-left: 10px;margin-bottom: 10px;">
-    <app-xls-generator [dataSource]="dataInput" [header]="displayedColumns" class="pdfClass"></app-xls-generator>
   </div>
 </div>
 

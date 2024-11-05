@@ -7,7 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { EstadosAlbaranesEntregasService } from '../estados-albaranes-entregas.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-estados-albaranes-entregas-list',
@@ -17,7 +17,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     TableListComponent,
     SpinnerComponent,
-    CommonModule
+    CommonModule,
+    TranslateModule
 ]
 })
 export class EstadosAlbaranesEntregasListComponent implements OnInit {

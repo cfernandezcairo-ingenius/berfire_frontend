@@ -8,6 +8,7 @@ mat-icon {
   border-width: thin;
   border-radius: 50%;
   position: fixed;
+  cursor: move;
   width: 60px;
   height: 60px;
   @media(max-width:576px) {

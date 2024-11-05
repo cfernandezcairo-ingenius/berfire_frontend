@@ -38,9 +38,10 @@
   "initial_view": "Pantalla Inicial",
   "invoice": "Facturas",
   "invoice_list": "Listado de Facturas",
+  "invoice_status": "Estado de las Facturas",
   "list": "Listado",
   "invoice_add": "Nueva Factura",
-  "dispatch-notes": "Estados Albaranes Entrega",
+  "dispatch-notes": "Estados Albaranes de Entrega",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "Nombre",
@@ -63,6 +64,20 @@
       "MAX_LENGTH": "La longitud maxima es de 30 caracteres",
       "MOBILE": "El formato no parece correcto"
     }
+  },
+  "menu": {
+    "title": "Menú",
+    "clients": "Clientes",
+    "administration": "Administración",
+    "budgets":"Presupuestos",
+    "delivery-notes": "Albaranes",
+    "dispatch-notes": "Estados Albaranes de Entrega",
+    "invoice-status": "Estado de las Facturas",
+    "invoice": "Facturas",
+    "expirations": "Vencimientos",
+    "corrective-budgets": "Presupuestos correctivos",
+    "handle-rectification": "Gestionar rectificativas",
+    "reports": "Reportes"
   }
 }
 

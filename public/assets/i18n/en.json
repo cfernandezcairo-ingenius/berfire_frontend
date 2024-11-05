@@ -38,6 +38,7 @@
   "initial_view": "Initial View",
   "invoice": "Invoices",
   "invoice_list": "Invoices List",
+  "invoice_status": "Invoice Status",
   "list": "List",
   "invoice_add": "New Invoice",
   "dispatch-notes": "Dispatch Notes",
@@ -63,5 +64,19 @@
       "MAX_LENGTH": "The length of field must be less than 30 caracters",
        "MOBILE": "Format is not correct"
     }
+  },
+  "menu": {
+    "title": "Menu",
+    "clients": "Clients",
+    "administration": "Administration",
+    "budgets":"Budgets",
+    "delivery-notes": "Delivery Notes",
+    "dispatch-notes": "Dispatch Notes",
+    "invoice-status": "Invoice Status",
+    "invoice": "Invoices",
+    "expirations": "Expirations",
+    "corrective-budgets": "Corrective Budgets",
+    "handle-rectification": "Handle Rectifications",
+    "reports": "Reports"
   }
 }

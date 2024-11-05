@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -12,7 +12,7 @@ import { StyleManager } from '../../../share/services/style-manager.service';
 @Component({
   selector: 'app-estados-facturas-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent],
+  imports: [FormlyBaseComponent, TranslateModule],
   templateUrl: './estados-facturas-add-edit.component.html',
   styleUrl: './estados-facturas-add-edit.component.scss'
 })
@@ -97,15 +97,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             key: 'pagado',
             props: {
               label: 'FORM.FIELDS.PAID',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           },
           {
@@ -114,15 +106,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             key: 'devuelto',
             props: {
               label: 'FORM.FIELDS.RETURNED',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           },
         ],
@@ -136,15 +120,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             key: 'pendiente',
             props: {
               label: 'FORM.FIELDS.PENDING',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           },
           {
@@ -153,15 +129,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             key: 'enviado',
             props: {
               label: 'FORM.FIELDS.SENT',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           },
         ],
@@ -175,16 +143,8 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             key: 'impagado',
             props: {
               label: 'FORM.FIELDS.NOTPAID',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
+              required:false
+            }
           },
         ],
       }

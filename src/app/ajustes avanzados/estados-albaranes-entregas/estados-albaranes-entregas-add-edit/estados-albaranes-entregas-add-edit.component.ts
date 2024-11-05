@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { EstadosAlbaranesEntregasService } from '../estados-albaranes-entregas.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-estados-albaranes-entregas-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent],
+  imports: [FormlyBaseComponent, TranslateModule],
   templateUrl: './estados-albaranes-entregas-add-edit.component.html',
   styleUrl: './estados-albaranes-entregas-add-edit.component.scss'
 })
@@ -97,15 +98,7 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
             key: 'confirma',
             props: {
               label: 'FORM.FIELDS.CONFIRM',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           },
         ],

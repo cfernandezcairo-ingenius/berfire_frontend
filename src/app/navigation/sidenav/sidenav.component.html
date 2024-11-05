@@ -3,7 +3,7 @@
     <h1 class="example-app-name"></h1>
   </mat-toolbar>
   <div class="btn-menu-container" (click)="showMenu()" *ngIf="isAuthenticated() && showMenuL">
-    <div class="btn-menu">Menú
+    <div class="btn-menu">{{'menu.title' | translate}}
     </div>
   </div>
   <mat-sidenav-container class="example-sidenav-container" style="background-color: #58c0c8;">
