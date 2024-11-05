@@ -49,7 +49,12 @@
       "EMAIL": "Email",
       "ADDRESS": "Address",
       "MOBILE": "Mobile",
-      "CONFIRM": "Confirm"
+      "CONFIRM": "Confirm",
+      "PAID": "Paid",
+      "RETURNED": "Returned",
+      "PENDING": "Pending",
+      "SENT": "Sent",
+      "NOTPAID": "NOT PAID"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required",

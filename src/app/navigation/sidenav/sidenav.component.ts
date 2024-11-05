@@ -182,7 +182,7 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: 'Ajustes Avanzados',iconName: '',children: [
           {displayName: 'Bancos',iconName: ''},
           {displayName: 'Estados Albaranes de entrega',iconName: '', route: 'dispatch-notes/list'},
-          {displayName: 'Estados de las facturas',iconName: ''},
+          {displayName: 'Estados de las facturas',iconName: '', route: 'invoice-status/list'},
           {displayName: 'Estados de las órdenes de trabajo',iconName: ''},
           {displayName: 'Estados de los pedidos',iconName: ''},
           {displayName: 'Estados de los partes de revisión',iconName: ''},

@@ -5,18 +5,18 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { Observable } from 'rxjs';
-import { EstadosAlbaranesEntregasService } from '../estados-albaranes-entregas.service';
+import { EstadosFacturasService } from '../estados-facturas.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 
 @Component({
-  selector: 'app-estados-albaranes-entregas-add-edit',
+  selector: 'app-estados-facturas-add-edit',
   standalone: true,
   imports: [FormlyBaseComponent],
-  templateUrl: './estados-albaranes-entregas-add-edit.component.html',
-  styleUrl: './estados-albaranes-entregas-add-edit.component.scss'
+  templateUrl: './estados-facturas-add-edit.component.html',
+  styleUrl: './estados-facturas-add-edit.component.scss'
 })
-export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
+export class EstadosFacturasAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
@@ -29,7 +29,7 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     private translate: TranslateService,
     private route: ActivatedRoute,
     private navigationService: NavigationService,
-    private estadosAlbaranesEntregasSrv: EstadosAlbaranesEntregasService,
+    private estadosFacturasSrv: EstadosFacturasService,
     private darkModeService: StyleManager,
     private router: Router
   ) {
@@ -50,7 +50,7 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/dispatch-notes/edit/new');
+        this.showinNewTab = this.router.url.includes('/invoice-status/edit/new');
       }
     });
   }
@@ -92,11 +92,89 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'checkbox',
+            key: 'pagado',
+            props: {
+              label: 'FORM.FIELDS.PAID',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          },
+          {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'checkbox',
+            key: 'devuelto',
+            props: {
+              label: 'FORM.FIELDS.RETURNED',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          },
+        ],
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'checkbox',
+            key: 'pendiente',
+            props: {
+              label: 'FORM.FIELDS.PENDING',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          },
+          {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'checkbox',
+            key: 'enviado',
+            props: {
+              label: 'FORM.FIELDS.SENT',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          },
+        ],
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
             className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'checkbox',
-            key: 'confirma',
+            key: 'impagado',
             props: {
-              label: 'FORM.FIELDS.CONFIRM',
+              label: 'FORM.FIELDS.NOTPAID',
               required:true
             },
             validators: {
@@ -119,8 +197,20 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.PAID').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.RETURNED').subscribe((label) => {
+      this.fields[1].fieldGroup[1].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.PENDING').subscribe((label) => {
+      this.fields[2].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.SENT').subscribe((label) => {
+      this.fields[2].fieldGroup[1].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.NOTPAID').subscribe((label) => {
+      this.fields[3].fieldGroup[0].props.label = label;
     });
   }
 
@@ -146,16 +236,22 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       payload = {
         nombre: this.fg!.get('nombre')?.value,
-        confirma: this.fg!.get('confirma')?.value,
+        pagado: this.fg!.get('pagado')?.value,
+        pendiente: this.fg!.get('pendiente')?.value,
+        enviado: this.fg!.get('enviado')?.value,
+        impagado: this.fg!.get('impagado')?.value,
       }
-      myobs = this.estadosAlbaranesEntregasSrv.add(payload);
+      myobs = this.estadosFacturasSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('nombre')?.value,
-        confirma: this.fg!.get('confirma')?.value,
+        nombre: this.fg!.get('nombre')?.value,
+        pagado: this.fg!.get('pagado')?.value,
+        pendiente: this.fg!.get('pendiente')?.value,
+        enviado: this.fg!.get('enviado')?.value,
+        impagado: this.fg!.get('impagado')?.value,
       }
-      myobs = this.estadosAlbaranesEntregasSrv.edit(payload);
+      myobs = this.estadosFacturasSrv.edit(payload);
     }
     myobs.subscribe({
       next: (res) => {

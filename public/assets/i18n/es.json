@@ -49,7 +49,12 @@
       "EMAIL": "Correo Electrónico",
       "ADDRESS": "Dirección",
       "MOBILE": "Teléfono",
-      "CONFIRM": "Confirma"
+      "CONFIRM": "Confirma",
+      "PAID": "Pagado",
+      "RETURNED": "Devuelto",
+      "PENDING": "Pendiente",
+      "SENT": "Enviado",
+      "NOTPAID": "Impagado"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido",

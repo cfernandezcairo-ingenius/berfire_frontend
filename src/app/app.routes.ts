@@ -14,6 +14,8 @@ import { AlbaranesListComponent } from './administracion/albaranes/albaranes-lis
 import { AlbaranesAddEditComponent } from './administracion/albaranes/albaranes-add-edit/albaranes-add-edit.component';
 import { EstadosAlbaranesEntregasListComponent } from './ajustes avanzados/estados-albaranes-entregas/estados-albaranes-entregas-list/estados-albaranes-entregas-list.component';
 import { EstadosAlbaranesEntregasAddEditComponent } from './ajustes avanzados/estados-albaranes-entregas/estados-albaranes-entregas-add-edit/estados-albaranes-entregas-add-edit.component';
+import { EstadosFacturasListComponent } from './ajustes avanzados/estados-facturas/estados-facturas-list/estados-facturas-list.component';
+import { EstadosFacturasAddEditComponent } from './ajustes avanzados/estados-facturas/estados-facturas-add-edit/estados-facturas-add-edit.component';
 
 export const routes: Routes = [
 
@@ -33,6 +35,8 @@ export const routes: Routes = [
   { path: 'expirations', component:VencimientosComponent, canActivate: [AuthGuard]},
   { path: 'corrective-budgets', component: PreupuestosCorrectivoaComponent, canActivate: [AuthGuard]},
   { path: 'handle-rectification', component: GestionarRectificativasComponent, canActivate: [AuthGuard]},
-  { path: 'invoice-report', component: ReportesFacturacionComponent, canActivate: [AuthGuard]}
-
+  { path: 'invoice-report', component: ReportesFacturacionComponent, canActivate: [AuthGuard]},
+  { path: 'invoice-status/list', component: EstadosFacturasListComponent, canActivate: [AuthGuard]},
+  { path: 'invoice-status/edit/:id', component: EstadosFacturasAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'invoice-status/edit/new/:id', component: EstadosFacturasAddEditComponent, canActivate: [AuthGuard]},
 ];
