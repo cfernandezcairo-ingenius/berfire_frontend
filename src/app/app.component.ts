@@ -21,7 +21,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'angularJWT';
+  title = 'berFire App';
   show = false;
   darkMode = false;
   anterior = false;
