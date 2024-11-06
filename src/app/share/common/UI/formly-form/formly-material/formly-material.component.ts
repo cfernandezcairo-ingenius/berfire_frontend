@@ -17,10 +17,12 @@ import { ButtonPrimaryComponent } from "../../button-primary/button-primary.comp
 export class FormlyMaterialComponent implements OnInit {
 [x: string]: any;
   @Input() fields: any;
+  @Input() showButtonGuardarYNuevo = false;
   show = false;
   @Input() fg: any;
   @Input() model: any;
   @Output() submitEvent = new EventEmitter();
+  @Output() submitEventNew = new EventEmitter();
   @Output() cancelEvent = new EventEmitter();
   options: FormlyFormOptions = {
     formState: {
@@ -40,7 +42,11 @@ export class FormlyMaterialComponent implements OnInit {
   }
 
   onSubmit(model: any) {
-    this.submitEvent.emit(model);
+    if (this.showButtonGuardarYNuevo) {
+      this.submitEventNew.emit(model);
+    } else {
+      this.submitEvent.emit(model);
+    }
   }
 
   onCancel() {

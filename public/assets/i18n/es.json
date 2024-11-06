@@ -33,6 +33,7 @@
   "save_error": "Error al guardar el registro",
   "inform": "Resultado",
   "save": "Guardar",
+  "savenew": "Guardar y Nuevo",
   "cancel": "Cancelar",
   "home": "Inicio",
   "initial_view": "Pantalla Inicial",
@@ -50,12 +51,12 @@
       "EMAIL": "Correo Electrónico",
       "ADDRESS": "Dirección",
       "MOBILE": "Teléfono",
-      "CONFIRM": "Confirma",
-      "PAID": "Pagado",
-      "RETURNED": "Devuelto",
+      "CONFIRM": "Confirma el albarán",
+      "PAID": "Es Pagado",
+      "RETURNED": "Es Devuelto",
       "PENDING": "Pendiente",
-      "SENT": "Enviado",
-      "NOTPAID": "Impagado"
+      "SENT": "Es Enviado",
+      "NOTPAID": "Es Impagado"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido",

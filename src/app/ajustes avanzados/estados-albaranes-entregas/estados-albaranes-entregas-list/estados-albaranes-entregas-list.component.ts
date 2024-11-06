@@ -28,6 +28,7 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
+  displayedLabels = ['','Nombre', 'Confirma el albarán'];
 
   constructor(
     private darkModeService: StyleManager,

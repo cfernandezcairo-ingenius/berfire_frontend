@@ -53,6 +53,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class TableListComponent implements OnInit {
 
   @Input() dataInput: any;
+  @Input() displayedLabels: string[] = [];
   @Input() titleMobileList: string = '';
   @Output() deleteRow = new EventEmitter();
   @Output() editRow = new EventEmitter();

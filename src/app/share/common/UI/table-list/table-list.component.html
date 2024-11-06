@@ -26,7 +26,7 @@
         @else {
           <ng-container [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              {{column}}
+              {{displayedLabels[index]}}
             </th>
             <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
               <div *ngIf="!isMobile && (row[column] != true && row[column] != false)">{{row[column]}}

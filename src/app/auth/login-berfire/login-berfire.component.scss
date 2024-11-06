@@ -83,7 +83,9 @@
 .ingresoLabel {
   margin-top: 1.5rem;
   --tw-text-opacity: 1;
-  color: rgba(var(--gray-600), var(--tw-text-opacity));
+  //color: rgba(var(--gray-600), var(--tw-text-opacity));
+  color: #2E3192;
+  font-weight: 600;
 }
 
 .labelPassword {
@@ -169,7 +171,8 @@ input.disabled {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   color: #fff;
   --tw-bg-opacity: 1;
-    background-color: rgb(63 88 109 / var(--tw-bg-opacity));
+   // background-color: rgb(63 88 109 / var(--tw-bg-opacity));
+  background-color: #1c75bc;
   width: 180px;
   height: 54px;
 }
@@ -185,7 +188,7 @@ input.disabled {
 }
 
 .btn-login:hover {
-  background-color: #2E3A6D;
+  background-color: #2E3192;
 }
 
 .btn-login:disabled {

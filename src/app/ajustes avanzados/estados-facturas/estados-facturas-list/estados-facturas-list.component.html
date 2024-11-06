@@ -1,5 +1,5 @@
 <app-spinner style="justify-content: center;align-items: center;margin: auto;" *ngIf="loading"></app-spinner>
-<div style="text-align: center;font-size: xx-large;color: #22C48B;font-weight: 500;">
+<div style="text-align: center;font-size: xx-large;color: #2E3192;font-weight: 500;">
   <p>{{'invoice_status' | translate}}</p>
 </div>
-<app-table-list *ngIf="todoListo" [titleMobileList]="'dispatch-notes'" [dataInput]="dataSource" (addRow)="addItem()" (deleteRow)="eliminar($event)" (editRow)="editar($event)" (editRowNueva)="editarNueva($event)"></app-table-list>
+<app-table-list *ngIf="todoListo" [displayedLabels]="displayedLabels" [titleMobileList]="'dispatch-notes'" [dataInput]="dataSource" (addRow)="addItem()" (deleteRow)="eliminar($event)" (editRow)="editar($event)" (editRowNueva)="editarNueva($event)"></app-table-list>

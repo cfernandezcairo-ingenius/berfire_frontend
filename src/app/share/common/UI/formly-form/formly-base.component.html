@@ -2,5 +2,5 @@
   <app-formly-bootstrap [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event)" (cancelEvent)="onCancel()" ></app-formly-bootstrap>
 
 } @else if (theme === 'material') {
-  <app-formly-material [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event)" (cancelEvent)="onCancel()"></app-formly-material>
+  <app-formly-material [showButtonGuardarYNuevo]="showButtonGuardarYNuevo" [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event)" (submitEventNew)="onSubmitNew($event)" (cancelEvent)="onCancel()"></app-formly-material>
 }

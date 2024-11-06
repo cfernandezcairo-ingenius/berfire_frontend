@@ -190,7 +190,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any) {
+  onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
@@ -236,11 +236,14 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             color: this.darkMode ? '#fff' : '#000',
           })
         }
+        //Aqui tengo que preguntar si nuevo = true
+        //Para limpiar el formulario
+        //y permanecer en la ventana
         if (this.showinNewTab) {
           localStorage.setItem('dataModifiedInNewTab', 'true');
-          window.close();
+          if (!nuevo) window.close();
         } else {
-          this.navigationService.goback();
+          if (!nuevo) this.navigationService.goback();
         }
       },
       error: (error) => {
@@ -256,6 +259,10 @@ export class EstadosFacturasAddEditComponent implements OnInit {
         })
       },
     });
+  }
+
+  onsubmitNew(model:any) {
+    this.onSubmit(model, true);
   }
 
   onCancel() {

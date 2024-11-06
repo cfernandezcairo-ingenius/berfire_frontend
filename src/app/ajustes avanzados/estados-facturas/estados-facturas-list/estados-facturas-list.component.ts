@@ -28,6 +28,7 @@ export class EstadosFacturasListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
+  displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
 
   constructor(
     private darkModeService: StyleManager,

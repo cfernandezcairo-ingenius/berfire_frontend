@@ -5,6 +5,7 @@
       <div class="buttons-add-edit">
         <app-button-secondary (cancel)="onCancel()" class="btn-secondary"></app-button-secondary>
         <app-button-primary (addEdit)="onSubmit(model)" class="btn-primary" [fg]="fg"></app-button-primary>
+        <app-button-primary *ngIf="showButtonGuardarYNuevo" [buttonText]="'savenew'" (addEdit)="onSubmit(model)" class="btn-primary" [fg]="fg"></app-button-primary>
       </div>
     </form>
   </div>

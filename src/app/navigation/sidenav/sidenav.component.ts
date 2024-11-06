@@ -30,7 +30,7 @@ export interface NavItem {
   imports: [MatToolbar, MatIconModule, MatSidenavContainer, MatSidenav, MatListModule,MatTableModule, MatExpansionModule , MatCheckboxModule, MatSidenavContent , CommonModule, TranslateModule],
   templateUrl: 'sidenav.component.html',
   styleUrls: ['sidenav.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  //encapsulation: ViewEncapsulation.None
 })
 export class SidenavResponsiveExample implements OnDestroy {
 
@@ -291,7 +291,7 @@ export class SidenavResponsiveExample implements OnDestroy {
           {displayName: this.translate.instant('menu.expirations'), iconName: '', route: 'expirations'},
           {displayName: this.translate.instant('menu.corrective-budgets'), iconName: '', route: 'corrective-budgets'},
           {displayName: this.translate.instant('menu.handle-rectification'), iconName: '', route: 'handle-rectification'},
-          {displayName: this.translate.instant('menu.reports'), iconName: '', route: '' ,children: [
+          {displayName: this.translate.instant('menu.reports'), iconName: 'ballot', route: '' ,children: [
             {displayName: 'Reporte de Facturas', iconName: '', route: 'invoice-report'},
             {displayName: 'Reporte de Albaranes', iconName: '', route: ''},
           ]},
@@ -317,7 +317,7 @@ export class SidenavResponsiveExample implements OnDestroy {
           },
           {
             displayName: 'Reportes de facturación',
-            iconName: '',
+            iconName: 'ballot',
             children: [
               {displayName: 'Por categorías', iconName: '', route: ''},
               {displayName: 'Por operaciones', iconName: '', route: ''},
@@ -329,10 +329,10 @@ export class SidenavResponsiveExample implements OnDestroy {
       },
       {
         displayName: 'Facturación de Proveedores',
-        iconName: '',
+        iconName: 'ballot',
         children: [
           {displayName: 'Proveedores', iconName: '', route: ''},
-          {displayName: 'Facturación de Proveedores', iconName: '', route: '', children: [
+          {displayName: 'Facturación de Proveedores', iconName: 'ballot', route: '', children: [
             {displayName: 'Facturas de Proveedores', iconName: '', route: ''},
             {displayName: 'Rectificativas de Proveedores', iconName: '', route: ''},
           ]},
@@ -348,7 +348,7 @@ export class SidenavResponsiveExample implements OnDestroy {
       },
       {
         displayName: 'Almacén',
-        iconName: '',
+        iconName: 'ballot',
         children: [
           {displayName: 'Almacenes', iconName: '', route: ''},
           {displayName: 'Categorías', iconName: '', route: ''},
@@ -358,15 +358,15 @@ export class SidenavResponsiveExample implements OnDestroy {
       },
       {
         displayName: 'Trabajos',
-        iconName: '',
+        iconName: 'ballot',
         children: [
-          {displayName: 'Próximas revisiones', iconName: '', route: '', children: [
+          {displayName: 'Próximas revisiones', iconName: 'ballot', route: '', children: [
             {displayName: 'Próximas revisiones RIPCI', iconName: '', route: ''},
             {displayName: 'Próximas revisiones Seguridad', iconName: '', route: ''},
           ]},
           {displayName: 'Revisiones planificadas', iconName: '', route: ''},
           {displayName: 'Calendario de ejecución', iconName: '', route: ''},
-          {displayName: 'últimas revisiones', iconName: '', route: '', children: [
+          {displayName: 'últimas revisiones', iconName: 'ballot', route: '', children: [
             {displayName: 'últimas revisiones RIPCI', iconName: '', route: ''},
             {displayName: 'últimas revisiones Seguridad', iconName: '', route: ''},
           ]},
@@ -384,19 +384,19 @@ export class SidenavResponsiveExample implements OnDestroy {
         displayName: 'Documentos',
         iconName: '',
       },
-      {displayName: 'Informes',iconName: '',children: [
-        {displayName: 'Informes de trabajos', iconName:'', children: [
+      {displayName: 'Informes',iconName: 'ballot',children: [
+        {displayName: 'Informes de trabajos', iconName:'ballot', children: [
           {displayName: 'Tareas Asignadas',iconName: ''},
           {displayName: 'Incidencias',iconName: ''},
           {displayName: 'Confirmaciones de Tareas',iconName: ''},
           {displayName: 'Gráficos de Productividad',iconName: ''},
         ]},
-        {displayName: 'Informes de periodicidad', iconName:'', children: [
+        {displayName: 'Informes de periodicidad', iconName:'ballot', children: [
           {displayName: 'Gráficos de Periodicidades',iconName: ''},
           {displayName: 'Cuotas',iconName: ''},
           {displayName: 'Gráficos mensuales',iconName: ''},
         ]},
-        {displayName: 'Mostrar Informes de clientes', iconName:'', children: [
+        {displayName: 'Mostrar Informes de clientes', iconName:'ballot', children: [
           {displayName: 'Márgenes de beneficio',iconName: ''},
           {displayName: 'Servicios ofrecidos',iconName: ''},
           {displayName: 'Rentabilidad de los clientes',iconName: ''},
@@ -405,20 +405,20 @@ export class SidenavResponsiveExample implements OnDestroy {
           {displayName: 'Facturación agrupada',iconName: ''},
           {displayName: 'Presupuestos de clientes',iconName: ''},
         ]},
-        {displayName: 'Mostrar Informes de equipos', iconName:'', children: [
+        {displayName: 'Mostrar Informes de equipos', iconName:'ballot', children: [
           {displayName: 'Equipos',iconName: ''},
           {displayName: 'Historial de un equipo',iconName: ''}
         ]},
       ]
       },
-      {displayName: 'Gestionar la configuración',iconName: '',children: [
+      {displayName: 'Gestionar la configuración',iconName: 'ballot',children: [
         {displayName: 'Datos de la Empresa',iconName: ''},
         {displayName: 'Usuarios',iconName: ''},
         {displayName: 'Tipos de partes de revisión',iconName: ''},
         {displayName: 'Fabricantes',iconName: ''},
         {displayName: 'Plantillas de documentos',iconName: ''}
       ]},
-      {displayName: 'Ajustes Avanzados',iconName: '',children: [
+      {displayName: 'Ajustes Avanzados',iconName: 'ballot',children: [
         {displayName: 'Bancos',iconName: ''},
         {displayName: this.translate.instant('menu.dispatch-notes'),iconName: '', route: 'dispatch-notes/list'},
         {displayName:  this.translate.instant('menu.invoice-status'),iconName: '', route: 'invoice-status/list'},
@@ -436,7 +436,7 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: 'Tipos de contrato',iconName: ''},
         {displayName: 'Roles',iconName: ''}
       ]},
-      {displayName: 'Gestión Operativa',iconName: '',children: [
+      {displayName: 'Gestión Operativa',iconName: 'ballot',children: [
         {displayName: 'Familias',iconName: ''},
         {displayName: 'Productos',iconName: ''},
         {displayName: 'Servicios',iconName: ''}

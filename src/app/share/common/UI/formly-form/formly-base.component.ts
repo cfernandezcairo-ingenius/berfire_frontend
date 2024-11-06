@@ -11,15 +11,21 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
   styleUrl: './formly-base.component.scss',
 })
 export class FormlyBaseComponent {
-  @Input() theme: string = "bootstrap"  || "material";
+  @Input() theme: string = '';
   @Input() fields: any;
   @Input() model: any;
   @Input() fg: any;
+  @Input() showButtonGuardarYNuevo = false;
   @Output() submitEvent = new EventEmitter();
+  @Output() submitEventNew = new EventEmitter();
   @Output() cancelEvent = new EventEmitter();
 
   onSubmit(model:any) {
     this.submitEvent.emit(model);
+  }
+
+  onSubmitNew(model:any) {
+    this.submitEventNew.emit(model);
   }
 
   onCancel() {

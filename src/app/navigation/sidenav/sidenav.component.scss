@@ -48,11 +48,11 @@ table {
 
 .mat-expansion-panel-body {
   padding: 0 24px 16px;
-  background-color: #7FFFD4 !important;
+  background-color: #1c75bc !important;
 }
 
 .mat-expansion-panel-content {
-  background-color: #7FFFD4 !important;
+  background-color: #1c75bc !important;
 }
 
 .btn-menu-container {
@@ -69,7 +69,9 @@ table {
   top: -60px;
   border-radius: 1rem;
   border: solid 1px;
-  background-color: aquamarine;
+  //background-color: aquamarine;
+  background-color: #1c75bc;
+  color: white;
   text-align: end;
   padding-right: 10px;
   padding-top: 5px;
@@ -80,15 +82,33 @@ table {
 }
 
 .mat-list-item-leaf {
-  background-color: #7FFFD4;
+  background-color: #1c75bc;
   :hover {
     cursor: pointer;
   }
 }
 
 .mat-list-item-single {
-  background-color: #7FFFD4;
+  background-color: #1c75bc;
   :hover {
     cursor: pointer;
   }
+}
+
+.mat-expansion-indicator svg {
+    fill: white;
+}
+
+.mat-accordion .mat-expansion-panel:first-of-type {
+  border-top-right-radius:0px;
+  border-top-left-radius:0px;
+}
+.mat-accordion .mat-expansion-panel:last-of-type {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.mat-expansion-panel-body {
+  padding: 0 24px 16px;
+  background-color: #1c75bc;
 }
