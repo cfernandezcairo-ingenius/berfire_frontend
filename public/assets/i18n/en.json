@@ -61,7 +61,9 @@
       "FINALIZED": "Finalized",
       "DAYS": "Days",
       "HOME": "Home",
-      "CODE": "Code"
+      "CODE": "Code",
+      "SWIFT": "SWIFT",
+      "IBAN": "IBAN"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required",
@@ -87,6 +89,8 @@
     "reports": "Reports",
     "statement-order": "Statement Orders",
     "payment-forms": "Payment Forms",
-    "request-status": "Request Status"
+    "request-status": "Request Status",
+    "work-status": "Worker Status",
+    "banks": "Banks"
   }
 }

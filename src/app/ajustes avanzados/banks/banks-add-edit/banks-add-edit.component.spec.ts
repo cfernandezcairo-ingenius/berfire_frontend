@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BancosComponent } from './bancos.component';
+import { BanksAddEditComponent } from './banks-add-edit.component';
 
-describe('BancosComponent', () => {
-  let component: BancosComponent;
-  let fixture: ComponentFixture<BancosComponent>;
+describe('WorkStatusAddEditComponent', () => {
+  let component: BanksAddEditComponent;
+  let fixture: ComponentFixture<BanksAddEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BancosComponent]
+      imports: [BanksAddEditComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BancosComponent);
+    fixture = TestBed.createComponent(BanksAddEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

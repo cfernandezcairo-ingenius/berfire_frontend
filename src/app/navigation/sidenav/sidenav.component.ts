@@ -419,13 +419,13 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: 'Plantillas de documentos',iconName: ''}
       ]},
       {displayName: 'Ajustes Avanzados',iconName: 'menu',children: [
-        {displayName: 'Bancos',iconName: ''},
+        {displayName: this.translate.instant('menu.banks'),iconName: '', route: 'banks/list'},
         {displayName: this.translate.instant('menu.dispatch-notes'),iconName: '', route: 'dispatch-notes/list'},
         {displayName: this.translate.instant('menu.invoice-status'),iconName: '', route: 'invoice-status/list'},
         {displayName: this.translate.instant('menu.statement-order'),iconName: '', route: 'statement-order/list'},
         {displayName: this.translate.instant('menu.request-status'),iconName: '', route: 'request-status/list'},
         {displayName: 'Estados de los partes de revisión',iconName: ''},
-        {displayName: 'Estados del trabajador',iconName: ''},
+        {displayName: this.translate.instant('menu.work-status'),iconName: '', route: 'work-status/list'},
         {displayName: this.translate.instant('menu.payment-forms'),iconName: '', route: 'payment-forms/list'},
         {displayName: 'Impuestos',iconName: ''},
         {displayName: 'Logs',iconName: ''},

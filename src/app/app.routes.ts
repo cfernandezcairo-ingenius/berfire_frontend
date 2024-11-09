@@ -26,6 +26,12 @@ import { PaymentFormsAddEditComponent } from './ajustes avanzados/paymentForms/p
 import { RequestStatusListComponent } from './ajustes avanzados/requestStatus/request-status-list/request-status-list.component';
 import { RequestStatusAddEditComponent } from './ajustes avanzados/requestStatus/request-status-add-edit/request-status-add-edit.component';
 import { RequestStatusDeleteComponent } from './ajustes avanzados/requestStatus/request-status-delete/request-status-delete.component';
+import { WorkStatusListComponent } from './ajustes avanzados/workStatus/work-status-list/work-status-list.component';
+import { WorkStatusAddEditComponent } from './ajustes avanzados/workStatus/work-status-add-edit/work-status-add-edit.component';
+import { WorkStatusDeleteComponent } from './ajustes avanzados/workStatus/work-status-delete/work-status-delete.component';
+import { BanksListComponent } from './ajustes avanzados/banks/banks-list/banks-list.component';
+import { BanksAddEditComponent } from './ajustes avanzados/banks/banks-add-edit/banks-add-edit.component';
+import { BanksDeleteComponent } from './ajustes avanzados/banks/banks-delete/banks-delete.component';
 
 export const routes: Routes = [
 
@@ -63,5 +69,13 @@ export const routes: Routes = [
   { path: 'request-status/list', component: RequestStatusListComponent, canActivate: [AuthGuard]},
   { path: 'request-status/edit/:id', component: RequestStatusAddEditComponent, canActivate: [AuthGuard]},
   { path: 'request-status/delete/:id', component: RequestStatusDeleteComponent, canActivate: [AuthGuard]},
-  { path: 'request-status/edit/new/:id', component: RequestStatusAddEditComponent, canActivate: [AuthGuard]}
+  { path: 'request-status/edit/new/:id', component: RequestStatusAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'work-status/list', component: WorkStatusListComponent, canActivate: [AuthGuard]},
+  { path: 'work-status/edit/:id', component: WorkStatusAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'work-status/delete/:id', component: WorkStatusDeleteComponent, canActivate: [AuthGuard]},
+  { path: 'work-status/edit/new/:id', component: WorkStatusAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'banks/list', component: BanksListComponent, canActivate: [AuthGuard]},
+  { path: 'banks/edit/:id', component: BanksAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'banks/delete/:id', component: BanksDeleteComponent, canActivate: [AuthGuard]},
+  { path: 'banks/edit/new/:id', component: BanksAddEditComponent, canActivate: [AuthGuard]}
 ];
