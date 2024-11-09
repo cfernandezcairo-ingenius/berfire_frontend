@@ -60,7 +60,7 @@ export class AlbaranesAddEditComponent implements OnInit {
       //Agregar
       //this.title = this.translate.instant('addItem');
     } else {
-      //Editar
+      //edit
       //this.title = this.translate.instant('editItem');
       this.model = Object.assign({}, this.row);
     }

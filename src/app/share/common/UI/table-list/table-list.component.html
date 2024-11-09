@@ -7,7 +7,7 @@
       </mat-form-field>
       </form>
     </div>
-    <table style="display: inline-table;" mat-table [dataSource]="dataSourceShow" class="full-width-table" matSort aria-label="Elements">
+    <table style="display: inline-table;" mat-table [dataSource]="dataSourceShow" class="full-width-table" matSort>
       @for (column of displayedColumns; track column;let index = $index,e = $even) {
         @if (column === 'id') {
           <ng-container [matColumnDef]="column">
@@ -15,10 +15,10 @@
               <td  mat-cell *matCellDef="let row">
                 <div *ngIf="isMobile" style="display: flex;flex-direction: row;">
                   <div style="display: flex; font-weight:bold;align-items: center;">{{"actions" | translate}}</div>
-                  <app-modal-menu style="margin-left: 6px;" [row]="row" (menuEdit)="editar($event)" (menuEditNueva)="editarNueva($event)" (menuDelete)="eliminar($event)"></app-modal-menu>
+                  <app-modal-menu style="margin-left: 6px;" [row]="row" (menuEdit)="edit($event)" (menuEditNueva)="editNew($event)" (menuDelete)="delete($event)"></app-modal-menu>
                 </div>
                 <div *ngIf="!isMobile">
-                  <app-modal-menu [row]="row" (menuEdit)="editar($event)" (menuEditNueva)="editarNueva($event)" (menuDelete)="eliminar($event)"></app-modal-menu>
+                  <app-modal-menu [row]="row" (menuEdit)="edit($event)" (menuEditNueva)="editNew($event)" (menuDelete)="delete($event)"></app-modal-menu>
                 </div>
               </td>
           </ng-container>
@@ -29,9 +29,9 @@
               {{displayedLabels[index]}}
             </th>
             <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
-              <div *ngIf="!isMobile && (row[column] != true && row[column] != false)">{{row[column]}}
+              <div *ngIf="!isMobile && (row[column].toString() != 'true' && row[column].toString() != 'false')">{{row[column]}}
               </div>
-              <div *ngIf="!isMobile && (row[column] == true || row[column]== false)">
+              <div *ngIf="!isMobile && (row[column].toString() == 'true' || row[column].toString() == 'false')">
                 <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
               </div>
             </td>
@@ -53,7 +53,7 @@
     </mat-paginator>
   </div>
   <div #movible class="movibleClass">
-    <button (click)="addItem()" mat-icon-button class="rotate-button" [ngStyle]="darkMode ? { 'background-color': '#58C472', color: 'white'} : { 'background-color': 'blue'}">
+    <button (click)="addItem()" mat-icon-button class="rotate-button" [ngStyle]="darkMode ? { 'background-color': '#58C472', color: 'white'} : { 'background-color': '#1C75BC'}">
       <mat-icon class="rotate-icon">add</mat-icon>
     </button>
   </div>
@@ -62,7 +62,7 @@
 <div *ngIf="isMobile" style="margin-top: 75px;">
   @for (data of dataInput.data; track data;let index = $index,e = $even) {
     <div style="margin-top: 10px;">
-      <app-mat-table-mobile [data]="data" [title]="titleMobileList" [subtitle]="'list'" (editarEvent)="editar($event)" (eliminarEvent)="eliminar($event)"></app-mat-table-mobile>
+      <app-mat-table-mobile [data]="data" [title]="titleMobileList" [subtitle]="'list'" (editEvent)="edit($event)" (deleteEvent)="delete($event)"></app-mat-table-mobile>
     </div>
   }
   <div style="position: relative;z-index: 99999;">

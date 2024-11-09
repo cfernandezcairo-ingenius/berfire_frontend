@@ -28,14 +28,14 @@ export class ModalMenuComponent {
   }
 
 
-  editar(row: any) {
+  edit(row: any) {
     this.menuEdit.emit(row);
   }
 
-  editarNuevaPagina(row:any) {
+  editNewPagina(row:any) {
     this.menuEditNueva.emit(row);
   }
-  eliminar(id: any) {
+  delete(id: any) {
     this.menuDelete.emit(id);
   }
 

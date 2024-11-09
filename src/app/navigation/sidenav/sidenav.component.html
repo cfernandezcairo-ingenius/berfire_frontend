@@ -1,13 +1,13 @@
 <div class="example-container">
-  <mat-toolbar color="primary" class="example-toolbar">
+  <!-- <mat-toolbar color="primary" class="example-toolbar">
     <h1 class="example-app-name"></h1>
-  </mat-toolbar>
+  </mat-toolbar> -->
   <div class="btn-menu-container" (click)="showMenu()" *ngIf="isAuthenticated() && showMenuL">
     <div class="btn-menu">{{'menu.title' | translate}}
     </div>
   </div>
   <mat-sidenav-container class="example-sidenav-container" style="background-color: #58c0c8;">
-    <mat-sidenav mode="side" fixedInViewport="true" fixedTopGap="56" opened>
+    <mat-sidenav mode="side" fixedInViewport="true" opened>
       <mat-list>
         <span *ngFor="let item of menu">
           <ng-container *ngIf="item.children && item.children.length > 0; else singleItem">

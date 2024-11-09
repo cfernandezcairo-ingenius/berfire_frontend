@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormasPagosComponent } from './formas-pagos.component';
+import { IntegerInputComponent } from './integer-input.component';
 
-describe('FormasPagosComponent', () => {
-  let component: FormasPagosComponent;
-  let fixture: ComponentFixture<FormasPagosComponent>;
+describe('IntegerInputComponent', () => {
+  let component: IntegerInputComponent;
+  let fixture: ComponentFixture<IntegerInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormasPagosComponent]
+      imports: [IntegerInputComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FormasPagosComponent);
+    fixture = TestBed.createComponent(IntegerInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

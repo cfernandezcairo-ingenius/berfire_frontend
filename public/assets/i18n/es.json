@@ -28,7 +28,7 @@
   "exportPDF": "Exportar a PDF",
   "exportXLS": "Exportar a Excel",
   "addItem": "Agregar Registro",
-  "editItem": "Editar Registro",
+  "editItem": "edit Registro",
   "save_ok": "Registro guardado con éxito.",
   "save_error": "Error al guardar el registro",
   "inform": "Resultado",
@@ -56,14 +56,20 @@
       "RETURNED": "Es Devuelto",
       "PENDING": "Pendiente",
       "SENT": "Es Enviado",
-      "NOTPAID": "Es Impagado"
+      "NOTPAID": "Es Impagado",
+      "DESCRIPTION": "Descripción",
+      "FINALIZED": "Finalizado",
+      "DAYS": "Dias",
+      "HOME": "Domiciliado",
+      "CODE": "Código"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido",
       "MIN_LENGTH": "El valor debe ser mayor que {{minLength}} caracteres",
       "EMAIL": "El formato no parece correcto",
       "MAX_LENGTH": "La longitud maxima es de 30 caracteres",
-      "MOBILE": "El formato no parece correcto"
+      "MOBILE": "El formato no parece correcto",
+      "NUMBER": "El valor debe ser un número"
     }
   },
   "menu": {
@@ -78,7 +84,10 @@
     "expirations": "Vencimientos",
     "corrective-budgets": "Presupuestos correctivos",
     "handle-rectification": "Gestionar rectificativas",
-    "reports": "Reportes"
+    "reports": "Reportes",
+    "statement-order": "Estados Ordenes de Trabajo",
+    "payment-forms": "Estados Formas de Pago",
+    "request-status": "Estados de los pedidos"
   }
 }
 

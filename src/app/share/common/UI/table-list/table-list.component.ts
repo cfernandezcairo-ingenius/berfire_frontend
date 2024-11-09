@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-table-list',
@@ -50,7 +51,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   styleUrl: './table-list.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class TableListComponent implements OnInit {
+export class TableListComponent implements OnInit, OnChanges {
 
   @Input() dataInput: any;
   @Input() displayedLabels: string[] = [];
@@ -117,6 +118,10 @@ export class TableListComponent implements OnInit {
 
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.dataSourceShow.data = this.dataInput.data;
+  }
+
   ngAfterViewInit(): void {
     this.dataSourceShow.sort = this.sort;
     this.dataSourceShow.paginator = this.paginator;
@@ -158,11 +163,11 @@ export class TableListComponent implements OnInit {
     });
   }
 
-  editar(row:any) {
+  edit(row:any) {
     this.editRow.emit(row);
   }
 
-  editarNueva(row:any) {
+  editNew(row:any) {
     this.editRowNueva.emit(row);
   }
 
@@ -170,7 +175,7 @@ export class TableListComponent implements OnInit {
     debugger;
   }
 
-  eliminar(id: number) {
+  delete(id: number) {
     Swal.fire({
       title: this.translate.instant('confirm'),
       text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',

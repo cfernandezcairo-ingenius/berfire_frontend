@@ -15,7 +15,7 @@ export class FormlyBaseComponent {
   @Input() fields: any;
   @Input() model: any;
   @Input() fg: any;
-  @Input() showButtonGuardarYNuevo = false;
+  @Input() shoWButtonSaveAndNew = false;
   @Output() submitEvent = new EventEmitter();
   @Output() submitEventNew = new EventEmitter();
   @Output() cancelEvent = new EventEmitter();

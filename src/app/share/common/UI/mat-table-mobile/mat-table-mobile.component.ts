@@ -25,8 +25,8 @@ export class MatTableMobileComponent implements OnInit {
   @Input() title = '';
   @Input() subtitle = '';
   @Input() data: any;
-  @Output() editarEvent = new EventEmitter();
-  @Output() eliminarEvent = new EventEmitter();
+  @Output() editEvent = new EventEmitter();
+  @Output() deleteEvent = new EventEmitter();
 
   dataNew: strucNew[] = [];
   darkMode = false;
@@ -47,12 +47,12 @@ export class MatTableMobileComponent implements OnInit {
     this.dataNew.splice(0,1);
   }
 
-  editar() {
-    this.editarEvent.emit(this.data)
+  edit() {
+    this.editEvent.emit(this.data)
   }
 
-  eliminar() {
-    this.eliminarEvent.emit(this.data.id)
+  delete() {
+    this.deleteEvent.emit(this.data.id)
   }
 
 

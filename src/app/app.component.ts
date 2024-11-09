@@ -77,7 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Eliminar el listener al destruir el componente
+    // delete el listener al destruir el componente
     window.removeEventListener('beforeunload', this.beforeUnloadHandler);
   }
 

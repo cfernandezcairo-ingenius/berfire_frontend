@@ -61,18 +61,18 @@ export class FacturasListComponent implements OnInit {
   }
 
 
-  editar(row:any) {
+  edit(row:any) {
     const strRow = JSON.stringify(row);
     this.navigationSrv.NavigateTo(`/invoice/edit/${strRow}`)
   }
 
-  editarNueva(row:any) {
+  editNew(row:any) {
     const strRow = JSON.stringify(row);
     window.open(`/invoice/edit/new/${strRow}`, '_blank')
   }
 
 
-  eliminar(id: number) {
+  delete(id: number) {
     Swal.fire({
       title: this.translate.instant('confirm'),
       text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',

@@ -60,8 +60,11 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
+      this.model = {
+        confirmDeliveryNote: false
+      }
     } else {
-      //Editar
+      //edit
       //this.title = this.translate.instant('editItem');
       this.model = Object.assign({}, this.row);
     }
@@ -73,7 +76,7 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-126 col-lg-12',
             type: 'input',
-            key: 'nombre',
+            key: 'name',
             props: {
               required: true,
               label: 'FORM.FIELDS.FIRSTNAME',
@@ -95,7 +98,7 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'checkbox',
-            key: 'confirma',
+            key: 'confirmDeliveryNote',
             props: {
               label: 'FORM.FIELDS.CONFIRM',
               required:false
@@ -138,15 +141,15 @@ export class EstadosAlbaranesEntregasAddEditComponent implements OnInit {
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        nombre: this.fg!.get('nombre')?.value,
-        confirma: this.fg!.get('confirma')?.value,
+        name: this.fg!.get('name')?.value,
+        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
       }
       myobs = this.estadosAlbaranesEntregasSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('nombre')?.value,
-        confirma: this.fg!.get('confirma')?.value,
+        name: this.fg!.get('name')?.value,
+        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
       }
       myobs = this.estadosAlbaranesEntregasSrv.edit(payload);
     }

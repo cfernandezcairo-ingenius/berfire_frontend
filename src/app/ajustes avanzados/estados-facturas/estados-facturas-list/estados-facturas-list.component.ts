@@ -8,6 +8,16 @@ import { EstadosFacturasService } from '../estados-facturas.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 
+export interface IEstadosFacturas {
+  id: number,
+  name: string,
+  isPaid: boolean,
+  isReturned: boolean,
+  isPending: boolean,
+  isSent: boolean,
+  isUnPaid: boolean
+}
+
 
 @Component({
   selector: 'app-estados-facturas-list',
@@ -23,7 +33,9 @@ import { CommonModule } from '@angular/common';
 })
 export class EstadosFacturasListComponent implements OnInit {
 
-  dataSource: any;
+  dataSource = {
+    data: [] as IEstadosFacturas[]
+  };
   darkMode = false;
   payload: any;
   loading = false;
@@ -48,11 +60,30 @@ export class EstadosFacturasListComponent implements OnInit {
       }
     });
     this.loading = true;
+    this.loadAll();
+  }
+
+  loadAll() {
+    this.loading = true;
     this.estadosFacturasSrv.getAll().subscribe(All => {
-      this.dataSource = All;
-      this.loading = false;
-      this.todoListo = true;
-    });
+      if (All.data.length === 0) {
+        Swal.fire({
+          title: this.translate.instant('confirm'),
+          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
+          icon: 'info',
+          showConfirmButton:true,
+          showCancelButton: false,
+          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+          background: this.darkMode ? '#444' : '#fff',
+          color: this.darkMode ? '#fff' : '#000',
+        })
+        this.addItem();
+      } else {
+        this.dataSource.data = All.data;
+        this.loading = false;
+        this.todoListo = true;
+      }
+    })
   }
 
   handleDataChange() {
@@ -63,29 +94,19 @@ export class EstadosFacturasListComponent implements OnInit {
   }
 
 
-  editar(row:any) {
+  edit(row:any) {
     const strRow = JSON.stringify(row);
     this.navigationSrv.NavigateTo(`/invoice-status/edit/${strRow}`)
   }
 
-  editarNueva(row:any) {
+  editNew(row:any) {
     const strRow = JSON.stringify(row);
     window.open(`/invoice-status/edit/new/${strRow}`, '_blank')
   }
 
-
-  eliminar(id: number) {
-    Swal.fire({
-      title: this.translate.instant('confirm'),
-      text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',
-      icon: 'question',
-      showConfirmButton:true,
-      showCancelButton: true,
-      confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-      cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
-    })
+  delete(id: number) {
+    const strRow = JSON.stringify(id);
+    this.navigationSrv.NavigateTo(`/invoice-status/delete/${strRow}`)
   }
 
   addItem() {

@@ -9,6 +9,12 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
+export interface IEstadosAlbaranesEntregas {
+  id: number,
+  name: string,
+  confirmDeliveryNote: boolean
+}
+
 @Component({
   selector: 'app-estados-albaranes-entregas-list',
   templateUrl: './estados-albaranes-entregas-list.component.html',
@@ -23,7 +29,9 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class EstadosAlbaranesEntregasListComponent implements OnInit {
 
-  dataSource: any;
+  dataSource = {
+    data: [] as IEstadosAlbaranesEntregas[]
+  };
   darkMode = false;
   payload: any;
   loading = false;
@@ -34,24 +42,42 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
     private darkModeService: StyleManager,
     private navigationSrv: NavigationService,
     private translate: TranslateService,
-    private estadosAlbaranesEntregasSrv: EstadosAlbaranesEntregasService
+    private estadosAlbaranesEntregasSrv: EstadosAlbaranesEntregasService,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
-  }
-
-  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  ngOnInit(): void {
     this.loading = true;
+    this.loadAll();
+  }
+
+  loadAll() {
     this.estadosAlbaranesEntregasSrv.getAll().subscribe(All => {
-      this.dataSource = All;
-      this.loading = false;
-      this.todoListo = true;
+      if (All.data.length === 0) {
+        Swal.fire({
+          title: this.translate.instant('confirm'),
+          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
+          icon: 'info',
+          showConfirmButton:true,
+          showCancelButton: false,
+          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+          background: this.darkMode ? '#444' : '#fff',
+          color: this.darkMode ? '#fff' : '#000',
+        })
+        this.addItem();
+      } else {
+        this.dataSource.data = All.data;
+        this.loading = false;
+        this.todoListo = true;
+      }
     });
   }
 
@@ -60,34 +86,24 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
     //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
     debugger;
     //Aqui tengo que recargar los datos desde el backend
+    this.ngOnInit();
   }
 
 
-  editar(row:any) {
+  edit(row:any) {
     const strRow = JSON.stringify(row);
     this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${strRow}`)
   }
 
-  editarNueva(row:any) {
+  editNew(row:any) {
     const strRow = JSON.stringify(row);
     window.open(`/dispatch-notes/edit/new/${strRow}`, '_blank')
   }
 
-
-  eliminar(id: number) {
-    Swal.fire({
-      title: this.translate.instant('confirm'),
-      text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',
-      icon: 'question',
-      showConfirmButton:true,
-      showCancelButton: true,
-      confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-      cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
-    })
+  delete(id: number) {
+    const strRow = JSON.stringify(id);
+    this.navigationSrv.NavigateTo(`/dispatch-notes/delete/${strRow}`)
   }
-
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${row}`)

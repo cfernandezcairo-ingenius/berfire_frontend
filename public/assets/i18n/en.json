@@ -56,14 +56,20 @@
       "RETURNED": "Returned",
       "PENDING": "Pending",
       "SENT": "Sent",
-      "NOTPAID": "NOT PAID"
+      "NOTPAID": "NOT PAID",
+      "DESCRIPTION": "Description",
+      "FINALIZED": "Finalized",
+      "DAYS": "Days",
+      "HOME": "Home",
+      "CODE": "Code"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required",
       "MIN_LENGTH": "Data must be larger than {{minLength}} characters",
       "EMAIL": "Format is not correct",
       "MAX_LENGTH": "The length of field must be less than 30 caracters",
-       "MOBILE": "Format is not correct"
+       "MOBILE": "Format is not correct",
+       "NUMBER": "Data must be a number"
     }
   },
   "menu": {
@@ -78,6 +84,9 @@
     "expirations": "Expirations",
     "corrective-budgets": "Corrective Budgets",
     "handle-rectification": "Handle Rectifications",
-    "reports": "Reports"
+    "reports": "Reports",
+    "statement-order": "Statement Orders",
+    "payment-forms": "Payment Forms",
+    "request-status": "Request Status"
   }
 }

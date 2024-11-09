@@ -20,7 +20,7 @@ export class AuthService {
     }
 
     //const headers = new HttpHeaderClass().defaultHeader
-    return this.http.post<any>(`${backendConfig.url}/login`, payload);
+    return this.http.post<any>('http://localhost:4000/login', payload);
   }
 
   logout() {

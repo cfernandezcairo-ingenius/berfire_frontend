@@ -16,6 +16,16 @@ import { EstadosAlbaranesEntregasListComponent } from './ajustes avanzados/estad
 import { EstadosAlbaranesEntregasAddEditComponent } from './ajustes avanzados/estados-albaranes-entregas/estados-albaranes-entregas-add-edit/estados-albaranes-entregas-add-edit.component';
 import { EstadosFacturasListComponent } from './ajustes avanzados/estados-facturas/estados-facturas-list/estados-facturas-list.component';
 import { EstadosFacturasAddEditComponent } from './ajustes avanzados/estados-facturas/estados-facturas-add-edit/estados-facturas-add-edit.component';
+import { EstadosAlbaranesEntregasDeleteComponent } from './ajustes avanzados/estados-albaranes-entregas/estados-albaranes-entregas-delete/estados-albaranes-entregas-delete.component'
+import { EstadosFacturasDeleteComponent } from './ajustes avanzados/estados-facturas/estados-facturas-delete/estados-facturas-delete.component';
+import { StatementOrderListComponent } from './ajustes avanzados/statement-order/statement-order-list/statement-order-list.component';
+import { StatementOrdersAddEditComponent } from './ajustes avanzados/statement-order/statement-order-add-edit/statement-order-add-edit.component';
+import { StatementOrderDeleteComponent } from './ajustes avanzados/statement-order/statement-order-delete/statement-order-delete.component';
+import { PaymenFormsListComponent } from './ajustes avanzados/paymentForms/payment-forms-list/payment-forms-list.component';
+import { PaymentFormsAddEditComponent } from './ajustes avanzados/paymentForms/payment-forms-add-edit/payment-forms-add-edit.component';
+import { RequestStatusListComponent } from './ajustes avanzados/requestStatus/request-status-list/request-status-list.component';
+import { RequestStatusAddEditComponent } from './ajustes avanzados/requestStatus/request-status-add-edit/request-status-add-edit.component';
+import { RequestStatusDeleteComponent } from './ajustes avanzados/requestStatus/request-status-delete/request-status-delete.component';
 
 export const routes: Routes = [
 
@@ -31,6 +41,7 @@ export const routes: Routes = [
   { path: 'delivery-notes/edit/:id', component: AlbaranesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'dispatch-notes/list', component: EstadosAlbaranesEntregasListComponent, canActivate: [AuthGuard]},
   { path: 'dispatch-notes/edit/:id', component: EstadosAlbaranesEntregasAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'dispatch-notes/delete/:id', component: EstadosAlbaranesEntregasDeleteComponent, canActivate: [AuthGuard]},
   { path: 'dispatch-notes/edit/new/:id', component: EstadosAlbaranesEntregasAddEditComponent, canActivate: [AuthGuard]},
   { path: 'expirations', component:VencimientosComponent, canActivate: [AuthGuard]},
   { path: 'corrective-budgets', component: PreupuestosCorrectivoaComponent, canActivate: [AuthGuard]},
@@ -38,5 +49,19 @@ export const routes: Routes = [
   { path: 'invoice-report', component: ReportesFacturacionComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/list', component: EstadosFacturasListComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/edit/:id', component: EstadosFacturasAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'invoice-status/delete/:id', component: EstadosFacturasDeleteComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/edit/new/:id', component: EstadosFacturasAddEditComponent, canActivate: [AuthGuard]},
+  //statementOrder
+  { path: 'statement-order/list', component: StatementOrderListComponent, canActivate: [AuthGuard]},
+  { path: 'statement-order/edit/:id', component: StatementOrdersAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'statement-order/delete/:id', component: StatementOrderDeleteComponent, canActivate: [AuthGuard]},
+  { path: 'statement-order/edit/new/:id', component: StatementOrdersAddEditComponent, canActivate:[AuthGuard]},
+  { path: 'payment-forms/list', component: PaymenFormsListComponent, canActivate: [AuthGuard]},
+  { path: 'payment-forms/edit/:id', component: PaymentFormsAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'payment-forms/delete/:id', component: StatementOrderDeleteComponent, canActivate: [AuthGuard]},
+  { path: 'payment-forms/edit/new/:id', component: StatementOrdersAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'request-status/list', component: RequestStatusListComponent, canActivate: [AuthGuard]},
+  { path: 'request-status/edit/:id', component: RequestStatusAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'request-status/delete/:id', component: RequestStatusDeleteComponent, canActivate: [AuthGuard]},
+  { path: 'request-status/edit/new/:id', component: RequestStatusAddEditComponent, canActivate: [AuthGuard]}
 ];

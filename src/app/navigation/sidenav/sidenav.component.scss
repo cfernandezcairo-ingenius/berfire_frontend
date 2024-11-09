@@ -57,16 +57,19 @@ table {
 
 .btn-menu-container {
   position: relative;margin-top: 30px;
-  :hover{
+  background-color: transparent;
+  :hover {
+    background-color: #2E3192;
     cursor: pointer;
   }
 }
+
 .btn-menu {
   position: absolute;
   height: 40px;
   width: 100px;
   right: -80px;
-  top: -60px;
+  top: -22px;
   border-radius: 1rem;
   border: solid 1px;
   //background-color: aquamarine;

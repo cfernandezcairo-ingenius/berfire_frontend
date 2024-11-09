@@ -17,7 +17,7 @@ import { ButtonPrimaryComponent } from "../../button-primary/button-primary.comp
 export class FormlyMaterialComponent implements OnInit {
 [x: string]: any;
   @Input() fields: any;
-  @Input() showButtonGuardarYNuevo = false;
+  @Input() shoWButtonSaveAndNew = false;
   show = false;
   @Input() fg: any;
   @Input() model: any;
@@ -42,11 +42,11 @@ export class FormlyMaterialComponent implements OnInit {
   }
 
   onSubmit(model: any) {
-    if (this.showButtonGuardarYNuevo) {
+    this.submitEvent.emit(model);
+  }
+
+  onSubmitNew(model: any) {
       this.submitEventNew.emit(model);
-    } else {
-      this.submitEvent.emit(model);
-    }
   }
 
   onCancel() {

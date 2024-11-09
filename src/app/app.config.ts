@@ -10,13 +10,15 @@ import { AuthGuard } from '../app/share/common/auth-guard';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyModule } from '@ngx-formly/core';
 import { PasswordToggleVisibleFieldType } from './share/common/UI/formly-form/formly-custom-components/password-toggle-visible/password-toggle-visible.component';
 import { PasswordToggleVisibleMatFieldType } from './share/common/UI/formly-form/formly-custom-components/password-toggle-visible-mat/password-toggle-visible-mat.component'
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { IntegerInputComponent } from './share/common/UI/formly-form/types/integer-input/integer-input.component';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 
 function HttpLoaderFactory(http: HttpClient) {
@@ -46,6 +48,13 @@ export function maxValidationMessage(err: any, field: any) {
   return `El valor debe ser menor que ${field.props.max}`;
 }
 
+export function NumberValidator(control: FormControl) {
+  console.log("value:", control.value);
+  console.log("invalid:", control.valid);
+  console.log("touched:", control.touched);
+  return /\d{1,3}/.test(control.value) ? true : { number: true };
+}
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -59,6 +68,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom([
       TranslateModule.forRoot(provideTranslation()),
       FormlyBootstrapModule,
+      FormlyMaterialModule,
       FormlyModule.forRoot({
         validators: [
           {name: 'required', validation: Validators.required },
@@ -68,6 +78,10 @@ export const appConfig: ApplicationConfig = {
           {name: 'mobile', validation: (control) => {
             const mobilePattern = /^\+?[1-9]\d{1,14}$/;
             return mobilePattern.test(control.value) ? null : { mobile: true }
+          },},
+          {name: 'number', validation: (control) => {
+            const numberPattern =  /\d{1,3}/;
+            return numberPattern.test(control.value) ? null : { mobile: true }
           },}
         ],
         // validationMessages: [
@@ -79,7 +93,8 @@ export const appConfig: ApplicationConfig = {
         // ],
         types: [
           { name: 'passwordToggleVisible', component: PasswordToggleVisibleFieldType },
-          { name: 'passwordToggleVisibleMat', component: PasswordToggleVisibleMatFieldType}
+          { name: 'passwordToggleVisibleMat', component: PasswordToggleVisibleMatFieldType},
+          { name: 'integer-input', component: IntegerInputComponent}
         ],
       }),
       ReactiveFormsModule,
@@ -93,5 +108,5 @@ export const appConfig: ApplicationConfig = {
 };
 
 export const backendConfig = {
-  url: 'http://localhost:4000'
+  url: 'http://localhost:3000'
 }

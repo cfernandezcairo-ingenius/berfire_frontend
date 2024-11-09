@@ -24,6 +24,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
   row:any;
   darkMode = false;
   showinNewTab = false;
+  shoWButtonSaveAndNew = false;
 
   constructor(
     private translate: TranslateService,
@@ -59,10 +60,18 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
+      this.shoWButtonSaveAndNew = true;
+      this.model = {
+        isPaid: false,
+        isReturned: false,
+        isSent: false,
+        isUnPaid:false,
+      }
     } else {
-      //Editar
+      //edit
       //this.title = this.translate.instant('editItem');
       this.model = Object.assign({}, this.row);
+      this.shoWButtonSaveAndNew = false;
     }
 
     this.fields = [
@@ -72,7 +81,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-126 col-lg-12',
             type: 'input',
-            key: 'nombre',
+            key: 'name',
             props: {
               required: true,
               label: 'FORM.FIELDS.FIRSTNAME',
@@ -94,7 +103,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'checkbox',
-            key: 'pagado',
+            key: 'isPaid',
             props: {
               label: 'FORM.FIELDS.PAID',
               required:false
@@ -103,7 +112,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'checkbox',
-            key: 'devuelto',
+            key: 'isReturned',
             props: {
               label: 'FORM.FIELDS.RETURNED',
               required:false
@@ -117,7 +126,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'checkbox',
-            key: 'pendiente',
+            key: 'isPending',
             props: {
               label: 'FORM.FIELDS.PENDING',
               required:false
@@ -126,7 +135,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'checkbox',
-            key: 'enviado',
+            key: 'isSent',
             props: {
               label: 'FORM.FIELDS.SENT',
               required:false
@@ -140,7 +149,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'checkbox',
-            key: 'impagado',
+            key: 'isUnPaid',
             props: {
               label: 'FORM.FIELDS.NOTPAID',
               required:false
@@ -195,21 +204,22 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        nombre: this.fg!.get('nombre')?.value,
-        pagado: this.fg!.get('pagado')?.value,
-        pendiente: this.fg!.get('pendiente')?.value,
-        enviado: this.fg!.get('enviado')?.value,
-        impagado: this.fg!.get('impagado')?.value,
+        name: this.fg!.get('name')?.value,
+        isPaid: this.fg!.get('isPaid')?.value === undefined ? false : this.fg!.get('isPaid')?.value,
+        isReturned: this.fg!.get('isReturned')?.value === undefined ? false : this.fg!.get('isReturned')?.value,
+        isPending: this.fg!.get('isPending')?.value === undefined ? false : this.fg!.get('isPending')?.value,
+        isSent: this.fg!.get('isSent')?.value === undefined ? false : this.fg!.get('isSent')?.value,
+        isUnPaid: this.fg!.get('isUnPaid')?.value === undefined ? false : this.fg!.get('isUnPaid')?.value,
       }
       myobs = this.estadosFacturasSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        nombre: this.fg!.get('nombre')?.value,
-        pagado: this.fg!.get('pagado')?.value,
-        pendiente: this.fg!.get('pendiente')?.value,
-        enviado: this.fg!.get('enviado')?.value,
-        impagado: this.fg!.get('impagado')?.value,
+        name: this.fg!.get('name')?.value,
+        isPaid: this.fg!.get('isPaid')?.value,
+        isReturned: this.fg!.get('isReturned')?.value,
+        isSent: this.fg!.get('isSent')?.value,
+        isUnPaid: this.fg!.get('isUnPaid')?.value,
       }
       myobs = this.estadosFacturasSrv.edit(payload);
     }
@@ -243,7 +253,11 @@ export class EstadosFacturasAddEditComponent implements OnInit {
           localStorage.setItem('dataModifiedInNewTab', 'true');
           if (!nuevo) window.close();
         } else {
-          if (!nuevo) this.navigationService.goback();
+          if (nuevo) {
+            this.fg.reset();
+          } else {
+            this.navigationService.goback();
+          }
         }
       },
       error: (error) => {
@@ -261,9 +275,9 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     });
   }
 
-  onsubmitNew(model:any) {
-    this.onSubmit(model, true);
-  }
+  // onsubmitNew(model:any) {
+  //   this.onSubmit(model, true);
+  // }
 
   onCancel() {
     if (this.showinNewTab) {
