@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EstadosFacturasAddEditComponent } from './estados-facturas-add-edit.component';
+import { EstadosFacturasAddEditComponent } from './billStatements-add-edit.component';
 
 describe('EstadosFacturasAddEditComponent', () => {
   let component: EstadosFacturasAddEditComponent;

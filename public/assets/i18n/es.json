@@ -91,7 +91,15 @@
     "payment-forms": "Estados Formas de Pago",
     "request-status": "Estados de los Pedidos",
     "work-status": "Estados del trabajador",
-    "banks": "Bancos"
+    "banks": "Bancos",
+    "advancedSettings": "Ajustes Avanzados",
+    "taxes": "Impuestos",
+    "states-parties-review": "Estados de los partes de revisión",
+    "unsubscribe-equipment-reasons": "Motivos de baja de equipamiento",
+    "populations": "Poblaciones",
+    "pvpRates": "Tarifas PVP",
+    "clients-types": "Tipos de clientes",
+    "contracts-types": "Tipos de contratos"
   }
 }
 

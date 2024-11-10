@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { Observable } from 'rxjs';
-import { EstadosFacturasService } from '../estados-facturas.service';
+import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-estados-facturas-add-edit',
+  selector: 'app-delivery-note-states-add-edit',
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule],
-  templateUrl: './estados-facturas-add-edit.component.html',
-  styleUrl: './estados-facturas-add-edit.component.scss'
+  templateUrl: './delivery-note-states-add-edit.component.html',
+  styleUrl: './delivery-note-states-add-edit.component.scss'
 })
-export class EstadosFacturasAddEditComponent implements OnInit {
+export class DeliveryNoteStatesAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
@@ -24,13 +25,12 @@ export class EstadosFacturasAddEditComponent implements OnInit {
   row:any;
   darkMode = false;
   showinNewTab = false;
-  shoWButtonSaveAndNew = false;
 
   constructor(
     private translate: TranslateService,
     private route: ActivatedRoute,
     private navigationService: NavigationService,
-    private estadosFacturasSrv: EstadosFacturasService,
+    private deliveryNoteStatesSrv: DeliveryNoteStatesService,
     private darkModeService: StyleManager,
     private router: Router
   ) {
@@ -51,7 +51,7 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/invoice-status/edit/new');
+        this.showinNewTab = this.router.url.includes('/dispatch-notes/edit/new');
       }
     });
   }
@@ -60,18 +60,13 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
-      this.shoWButtonSaveAndNew = true;
       this.model = {
-        isPaid: false,
-        isReturned: false,
-        isSent: false,
-        isUnPaid:false,
+        confirmDeliveryNote: false
       }
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
       this.model = Object.assign({}, this.row);
-      this.shoWButtonSaveAndNew = false;
     }
 
     this.fields = [
@@ -101,59 +96,13 @@ export class EstadosFacturasAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isPaid',
-            props: {
-              label: 'FORM.FIELDS.PAID',
-              required:false
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isReturned',
-            props: {
-              label: 'FORM.FIELDS.RETURNED',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isPending',
-            props: {
-              label: 'FORM.FIELDS.PENDING',
-              required:false
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isSent',
-            props: {
-              label: 'FORM.FIELDS.SENT',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
             className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'checkbox',
-            key: 'isUnPaid',
+            key: 'confirmDeliveryNote',
             props: {
-              label: 'FORM.FIELDS.NOTPAID',
+              label: 'FORM.FIELDS.CONFIRM',
               required:false
-            }
+            },
           },
         ],
       }
@@ -166,20 +115,8 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.PAID').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.RETURNED').subscribe((label) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.PENDING').subscribe((label) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.SENT').subscribe((label) => {
-      this.fields[2].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.NOTPAID').subscribe((label) => {
-      this.fields[3].fieldGroup[0].props.label = label;
     });
   }
 
@@ -199,29 +136,22 @@ export class EstadosFacturasAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  onSubmit(model:any) {
     let payload = {};
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg!.get('name')?.value,
-        isPaid: this.fg!.get('isPaid')?.value === undefined ? false : this.fg!.get('isPaid')?.value,
-        isReturned: this.fg!.get('isReturned')?.value === undefined ? false : this.fg!.get('isReturned')?.value,
-        isPending: this.fg!.get('isPending')?.value === undefined ? false : this.fg!.get('isPending')?.value,
-        isSent: this.fg!.get('isSent')?.value === undefined ? false : this.fg!.get('isSent')?.value,
-        isUnPaid: this.fg!.get('isUnPaid')?.value === undefined ? false : this.fg!.get('isUnPaid')?.value,
+        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
       }
-      myobs = this.estadosFacturasSrv.add(payload);
+      myobs = this.deliveryNoteStatesSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
         name: this.fg!.get('name')?.value,
-        isPaid: this.fg!.get('isPaid')?.value,
-        isReturned: this.fg!.get('isReturned')?.value,
-        isSent: this.fg!.get('isSent')?.value,
-        isUnPaid: this.fg!.get('isUnPaid')?.value,
+        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
       }
-      myobs = this.estadosFacturasSrv.edit(payload);
+      myobs = this.deliveryNoteStatesSrv.edit(payload);
     }
     myobs.subscribe({
       next: (res) => {
@@ -246,18 +176,11 @@ export class EstadosFacturasAddEditComponent implements OnInit {
             color: this.darkMode ? '#fff' : '#000',
           })
         }
-        //Aqui tengo que preguntar si nuevo = true
-        //Para limpiar el formulario
-        //y permanecer en la ventana
         if (this.showinNewTab) {
           localStorage.setItem('dataModifiedInNewTab', 'true');
-          if (!nuevo) window.close();
+          window.close();
         } else {
-          if (nuevo) {
-            this.fg.reset();
-          } else {
-            this.navigationService.goback();
-          }
+          this.navigationService.goback();
         }
       },
       error: (error) => {
@@ -274,10 +197,6 @@ export class EstadosFacturasAddEditComponent implements OnInit {
       },
     });
   }
-
-  // onsubmitNew(model:any) {
-  //   this.onSubmit(model, true);
-  // }
 
   onCancel() {
     if (this.showinNewTab) {

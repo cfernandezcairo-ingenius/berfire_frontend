@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TiposContratoComponent } from './tipos-contrato.component';
+import { TiposContratoComponent } from '../../advancedSettings/contractsTypes/tipos-contrato.component';
 
 describe('TiposContratoComponent', () => {
   let component: TiposContratoComponent;

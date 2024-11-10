@@ -418,22 +418,23 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: 'Fabricantes',iconName: ''},
         {displayName: 'Plantillas de documentos',iconName: ''}
       ]},
-      {displayName: 'Ajustes Avanzados',iconName: 'menu',children: [
+      {displayName: this.translate.instant('menu.advancedSettings'),iconName: 'menu',children: [
         {displayName: this.translate.instant('menu.banks'),iconName: '', route: 'banks/list'},
         {displayName: this.translate.instant('menu.dispatch-notes'),iconName: '', route: 'dispatch-notes/list'},
         {displayName: this.translate.instant('menu.invoice-status'),iconName: '', route: 'invoice-status/list'},
         {displayName: this.translate.instant('menu.statement-order'),iconName: '', route: 'statement-order/list'},
         {displayName: this.translate.instant('menu.request-status'),iconName: '', route: 'request-status/list'},
-        {displayName: 'Estados de los partes de revisión',iconName: ''},
+        {displayName: this.translate.instant('menu.states-parties-review') ,iconName: ''},
         {displayName: this.translate.instant('menu.work-status'),iconName: '', route: 'work-status/list'},
         {displayName: this.translate.instant('menu.payment-forms'),iconName: '', route: 'payment-forms/list'},
-        {displayName: 'Impuestos',iconName: ''},
+        {displayName: this.translate.instant('menu.taxes') ,iconName: ''},
         {displayName: 'Logs',iconName: ''},
-        {displayName: 'Motivos de baja de equipamiento',iconName: ''},
-        {displayName: 'Poblaciones',iconName: ''},
-        {displayName: 'Tarifas PVP',iconName: ''},
-        {displayName: 'Tipos de cliente',iconName: ''},
-        {displayName: 'Tipos de contrato',iconName: ''},
+        {displayName: this.translate.instant('menu.unsubscribe-equipment-reasons') ,iconName: ''},
+        {displayName: this.translate.instant('menu.populations'),iconName: ''},
+        {displayName: this.translate.instant('menu.pvpRates') ,iconName: ''},
+        {displayName: this.translate.instant('menu.clients-types'),iconName: ''},
+        //contractsTypes
+        {displayName: this.translate.instant('menu.contracts-types'),iconName: ''},
         {displayName: 'Roles',iconName: ''}
       ]},
       {displayName: 'Gestión Operativa',iconName: 'menu',children: [

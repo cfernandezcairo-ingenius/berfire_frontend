@@ -2,27 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
-import { EstadosFacturasService } from '../estados-facturas.service';
+import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
-export interface IEstadosFacturas {
+export interface IDeliveryNoteStates {
   id: number,
   name: string,
-  isPaid: boolean,
-  isReturned: boolean,
-  isPending: boolean,
-  isSent: boolean,
-  isUnPaid: boolean
+  confirmDeliveryNote: boolean
 }
 
-
 @Component({
-  selector: 'app-estados-facturas-list',
-  templateUrl: './estados-facturas-list.component.html',
-  styleUrl: './estados-facturas-list.component.scss',
+  selector: 'app-delivery-note-states-list',
+  templateUrl: './delivery-note-states-list.component.html',
+  styleUrl: './delivery-note-states-list.component.scss',
   standalone: true,
   imports: [
     TableListComponent,
@@ -31,41 +27,40 @@ export interface IEstadosFacturas {
     TranslateModule
 ]
 })
-export class EstadosFacturasListComponent implements OnInit {
+export class DeliveryNoteStatesListComponent implements OnInit {
 
   dataSource = {
-    data: [] as IEstadosFacturas[]
+    data: [] as IDeliveryNoteStates[]
   };
   darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
+  displayedLabels = ['','Nombre', 'Confirma el albarán'];
 
   constructor(
     private darkModeService: StyleManager,
     private navigationSrv: NavigationService,
     private translate: TranslateService,
-    private estadosFacturasSrv: EstadosFacturasService
+    private deliveryNoteStatesSrv: DeliveryNoteStatesService,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
-  }
-
-  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  ngOnInit(): void {
     this.loading = true;
     this.loadAll();
   }
 
   loadAll() {
-    this.loading = true;
-    this.estadosFacturasSrv.getAll().subscribe(All => {
+    this.deliveryNoteStatesSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -83,7 +78,7 @@ export class EstadosFacturasListComponent implements OnInit {
         this.loading = false;
         this.todoListo = true;
       }
-    })
+    });
   }
 
   handleDataChange() {
@@ -91,27 +86,27 @@ export class EstadosFacturasListComponent implements OnInit {
     //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
     debugger;
     //Aqui tengo que recargar los datos desde el backend
+    this.ngOnInit();
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/invoice-status/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/invoice-status/edit/new/${strRow}`, '_blank')
+    window.open(`/dispatch-notes/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/invoice-status/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/dispatch-notes/delete/${strRow}`)
   }
-
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/invoice-status/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${row}`)
   }
 
 }

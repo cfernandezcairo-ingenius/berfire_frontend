@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EstadosAlbaranesEntregasListComponent } from './estados-albaranes-entregas-list.component';
+import { EstadosAlbaranesEntregasListComponent } from './delivery-note-states-list.component';
 
 describe('EstadosAlbaranesEntregasListComponent', () => {
   let component: EstadosAlbaranesEntregasListComponent;

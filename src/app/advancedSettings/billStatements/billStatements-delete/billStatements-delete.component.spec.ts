@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EstadosFacturasDeleteComponent } from './estados-facturas-delete.component';
+import { BillStatementsDeleteComponent } from './billStatements-delete.component';
 
 describe('EstadosFacturasDeleteComponent', () => {
-  let component: EstadosFacturasDeleteComponent;
-  let fixture: ComponentFixture<EstadosFacturasDeleteComponent>;
+  let component: BillStatementsDeleteComponent;
+  let fixture: ComponentFixture<BillStatementsDeleteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EstadosFacturasDeleteComponent]
+      imports: [BillStatementsDeleteComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EstadosFacturasDeleteComponent);
+    fixture = TestBed.createComponent(BillStatementsDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

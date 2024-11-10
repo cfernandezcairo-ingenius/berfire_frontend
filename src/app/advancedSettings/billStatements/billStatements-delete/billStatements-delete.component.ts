@@ -3,17 +3,17 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { EstadosAlbaranesEntregasService } from '../estados-albaranes-entregas.service';
+import { BillStatementsService } from '../billStatements.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
-  selector: 'app-estados-albaranes-entregas-delete',
+  selector: 'app-billStatements-delete',
   standalone: true,
   imports: [],
-  templateUrl: './estados-albaranes-entregas-delete.component.html',
-  styleUrl: './estados-albaranes-entregas-delete.component.scss'
+  templateUrl: './billStatements-delete.component.html',
+  styleUrl: './billStatements-delete.component.scss'
 })
-export class EstadosAlbaranesEntregasDeleteComponent implements OnInit {
+export class BillStatementsDeleteComponent implements OnInit {
 
   id: any;
   darkMode = false;
@@ -22,7 +22,7 @@ export class EstadosAlbaranesEntregasDeleteComponent implements OnInit {
     private route: ActivatedRoute,
     private translate: TranslateService,
     private darkModeService: StyleManager,
-    private estadosAlbaranesEntregasSrv: EstadosAlbaranesEntregasService,
+    private billStatementsSrv: BillStatementsService,
     private navigationSrv: NavigationService
   ) {
     this.route.params.subscribe((params: { [x: string]: string; }) => {
@@ -50,7 +50,7 @@ export class EstadosAlbaranesEntregasDeleteComponent implements OnInit {
       color: this.darkMode ? '#fff' : '#000',
     }).then(result => {
       if (result.isConfirmed) {
-        this.estadosAlbaranesEntregasSrv.delete(id).subscribe({
+        this.billStatementsSrv.delete(id).subscribe({
           next: (d) => {
             Swal.fire({
               title: this.translate.instant('inform'),

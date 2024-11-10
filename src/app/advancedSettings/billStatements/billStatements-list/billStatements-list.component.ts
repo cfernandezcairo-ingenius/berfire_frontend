@@ -2,23 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
-import { EstadosAlbaranesEntregasService } from '../estados-albaranes-entregas.service';
+import { BillStatementsService } from '../billStatements.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 
-export interface IEstadosAlbaranesEntregas {
+export interface IBillStatements {
   id: number,
   name: string,
-  confirmDeliveryNote: boolean
+  isPaid: boolean,
+  isReturned: boolean,
+  isPending: boolean,
+  isSent: boolean,
+  isUnPaid: boolean
 }
 
+
 @Component({
-  selector: 'app-estados-albaranes-entregas-list',
-  templateUrl: './estados-albaranes-entregas-list.component.html',
-  styleUrl: './estados-albaranes-entregas-list.component.scss',
+  selector: 'app-billStatements-list',
+  templateUrl: './billStatements-list.component.html',
+  styleUrl: './billStatements-list.component.scss',
   standalone: true,
   imports: [
     TableListComponent,
@@ -27,40 +31,41 @@ export interface IEstadosAlbaranesEntregas {
     TranslateModule
 ]
 })
-export class EstadosAlbaranesEntregasListComponent implements OnInit {
+export class BillStatementsListComponent implements OnInit {
 
   dataSource = {
-    data: [] as IEstadosAlbaranesEntregas[]
+    data: [] as IBillStatements[]
   };
   darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Confirma el albarán'];
+  displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
 
   constructor(
     private darkModeService: StyleManager,
     private navigationSrv: NavigationService,
     private translate: TranslateService,
-    private estadosAlbaranesEntregasSrv: EstadosAlbaranesEntregasService,
+    private billStatementsSrv:BillStatementsService
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
+  }
+
+  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
-  }
-
-  ngOnInit(): void {
     this.loading = true;
     this.loadAll();
   }
 
   loadAll() {
-    this.estadosAlbaranesEntregasSrv.getAll().subscribe(All => {
+    this.loading = true;
+    this.billStatementsSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -78,7 +83,7 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
         this.loading = false;
         this.todoListo = true;
       }
-    });
+    })
   }
 
   handleDataChange() {
@@ -86,27 +91,27 @@ export class EstadosAlbaranesEntregasListComponent implements OnInit {
     //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
     debugger;
     //Aqui tengo que recargar los datos desde el backend
-    this.ngOnInit();
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/invoice-status/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/dispatch-notes/edit/new/${strRow}`, '_blank')
+    window.open(`/invoice-status/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/dispatch-notes/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/invoice-status/delete/${strRow}`)
   }
+
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/invoice-status/edit/${row}`)
   }
 
 }

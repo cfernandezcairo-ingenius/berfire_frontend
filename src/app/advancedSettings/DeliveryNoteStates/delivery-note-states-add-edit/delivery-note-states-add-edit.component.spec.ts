@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EstadosAlbaranesEntregasAddEditComponent } from './estados-albaranes-entregas-add-edit.component';
+import { DeliveryNoteStatesAddEditComponent } from './delivery-note-states-add-edit.component';
 
 describe('EstadosAlbaranesEntregasAddEditComponent', () => {
-  let component: EstadosAlbaranesEntregasAddEditComponent;
-  let fixture: ComponentFixture<EstadosAlbaranesEntregasAddEditComponent>;
+  let component: DeliveryNoteStatesAddEditComponent;
+  let fixture: ComponentFixture<DeliveryNoteStatesAddEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EstadosAlbaranesEntregasAddEditComponent]
+      imports: [DeliveryNoteStatesAddEditComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EstadosAlbaranesEntregasAddEditComponent);
+    fixture = TestBed.createComponent(DeliveryNoteStatesAddEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
