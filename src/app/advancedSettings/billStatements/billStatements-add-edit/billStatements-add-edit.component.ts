@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { BillStatementsService } from '../billStatements.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { WindowService } from '../../../share/services/window.service';
 
 @Component({
   selector: 'app-billStatements-add-edit',
@@ -32,7 +33,8 @@ export class BillStatementsAddEditComponent implements OnInit {
     private navigationService: NavigationService,
     private billStatementsSrv: BillStatementsService,
     private darkModeService: StyleManager,
-    private router: Router
+    private router: Router,
+    private windowService: WindowService
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -66,6 +68,7 @@ export class BillStatementsAddEditComponent implements OnInit {
         isReturned: false,
         isSent: false,
         isUnPaid:false,
+        isPending:false
       }
     } else {
       //edit
@@ -220,6 +223,7 @@ export class BillStatementsAddEditComponent implements OnInit {
         isReturned: this.fg!.get('isReturned')?.value,
         isSent: this.fg!.get('isSent')?.value,
         isUnPaid: this.fg!.get('isUnPaid')?.value,
+        isPending: this.fg!.get('isPending')?.value,
       }
       myobs = this.billStatementsSrv.edit(payload);
     }
@@ -250,7 +254,8 @@ export class BillStatementsAddEditComponent implements OnInit {
         //Para limpiar el formulario
         //y permanecer en la ventana
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
+          localStorage.setItem('dataModifiedInNewTabBillStatements', 'false');
+          this.windowService._isOpeningNewTab = false
           if (!nuevo) window.close();
         } else {
           if (nuevo) {

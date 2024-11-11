@@ -51,7 +51,7 @@ export class BanksAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/work-status/edit/new');
+        this.showinNewTab = this.router.url.includes('/banks/edit/new');
       }
     });
   }
@@ -201,7 +201,7 @@ export class BanksAddEditComponent implements OnInit {
         //Para limpiar el formulario
         //y permanecer en la ventana
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
+          localStorage.setItem('dataModifiedInNewTabBanks', 'true');
           if (!nuevo) window.close();
         } else {
           if (nuevo) {

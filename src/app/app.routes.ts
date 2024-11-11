@@ -32,6 +32,7 @@ import { BanksAddEditComponent } from './advancedSettings/banks/banks-add-edit/b
 import { BanksDeleteComponent } from './advancedSettings/banks/banks-delete/banks-delete.component';
 import { BillStatementsListComponent } from './advancedSettings/billStatements/billStatements-list/billStatements-list.component';
 import { BillStatementsAddEditComponent } from './advancedSettings/billStatements/billStatements-add-edit/billStatements-add-edit.component';
+import { AllAddEditNewComponent } from './all-add-edit-new/all-add-edit-new.component';
 
 export const routes: Routes = [
 
@@ -57,6 +58,7 @@ export const routes: Routes = [
   { path: 'invoice-status/edit/:id', component: BillStatementsAddEditComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/delete/:id', component: BillStatementsDeleteComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/edit/new/:id', component: BillStatementsAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'all/edit/new', component: AllAddEditNewComponent, canActivate: [AuthGuard]},
   //statementOrder
   { path: 'statement-order/list', component: StatementOrderListComponent, canActivate: [AuthGuard]},
   { path: 'statement-order/edit/:id', component: StatementOrdersAddEditComponent, canActivate: [AuthGuard]},

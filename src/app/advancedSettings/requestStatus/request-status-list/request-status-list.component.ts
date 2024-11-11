@@ -37,6 +37,8 @@ export class RequestStatusListComponent implements OnInit {
   loading = false;
   todoListo = false;
   displayedLabels = ['','Nombre', 'Código'];
+  displayedLabelsEs = ['','Nombre', 'Código'];
+  displayedLabelsEn = ['','Name', 'Code'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -46,6 +48,13 @@ export class RequestStatusListComponent implements OnInit {
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
+    });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
     });
   }
 

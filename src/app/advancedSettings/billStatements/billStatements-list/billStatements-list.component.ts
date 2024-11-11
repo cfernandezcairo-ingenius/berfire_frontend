@@ -41,6 +41,8 @@ export class BillStatementsListComponent implements OnInit {
   loading = false;
   todoListo = false;
   displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
+  displayedLabelsEs = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
+  displayedLabelsEn = ['','Name', 'is Paid', 'is returned', 'is pending', 'is sent', 'is unpaid'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -51,11 +53,18 @@ export class BillStatementsListComponent implements OnInit {
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
+    });
   }
 
   ngOnInit(): void {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabBillStatements' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -87,10 +96,9 @@ export class BillStatementsListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
+    localStorage.setItem('dataModifiedInNewTabBillStatements', 'false');
     //Aqui tengo que recargar los datos desde el backend
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 

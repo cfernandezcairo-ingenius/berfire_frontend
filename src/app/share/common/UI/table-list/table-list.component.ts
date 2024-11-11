@@ -168,6 +168,7 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   editNew(row:any) {
+    this.windowService._isOpeningNewTab = true;
     this.editRowNueva.emit(row);
   }
 

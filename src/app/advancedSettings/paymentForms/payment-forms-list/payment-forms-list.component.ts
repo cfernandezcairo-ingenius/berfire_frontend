@@ -38,6 +38,8 @@ export class PaymenFormsListComponent implements OnInit {
   loading = false;
   todoListo = false;
   displayedLabels = ['','Nombre', 'Dias', 'Domiciliado'];
+  displayedLabelsEs = ['','Nombre', 'Dias', 'Domiciliado'];
+  displayedLabelsEn = ['','Name', 'Days', 'Domiciled'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -47,6 +49,13 @@ export class PaymenFormsListComponent implements OnInit {
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
+    });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
     });
   }
 

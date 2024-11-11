@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { StyleManager } from '../../share/services/style-manager.service';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { NavigationService } from '../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-login-berfire',
@@ -33,6 +34,7 @@ export class LoginBerfireComponent implements OnInit {
     private authSrv: AuthService,
     private winservice: WindowService,
     private darkModeService: StyleManager,
+    private navigationSrv: NavigationService,
     private router: Router
   ) {
     this.fg = this.fb.group({

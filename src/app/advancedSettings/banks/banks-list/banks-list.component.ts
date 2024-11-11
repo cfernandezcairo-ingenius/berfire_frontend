@@ -37,7 +37,9 @@ export class BanksListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'swift', 'Iban'];
+  displayedLabels = ['','Nombre', 'Código swift', 'Código Iban'];
+  displayedLabelsEs = ['','Nombre', 'Código swift', 'Código Iban'];
+  displayedLabelsEn = ['','Name', 'Swift code', 'Iban Code'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -48,11 +50,18 @@ export class BanksListComponent implements OnInit {
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
+    });
   }
 
   ngOnInit(): void {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabBanks' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -84,10 +93,9 @@ export class BanksListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
+    localStorage.setItem('dataModifiedInNewTabBanks', 'false');
     //Aqui tengo que recargar los datos desde el backend
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 

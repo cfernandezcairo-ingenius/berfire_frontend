@@ -11,11 +11,12 @@ import { StyleManager } from './share/services/style-manager.service';
 import { MatButtonModule } from '@angular/material/button';
 import { TopBarComponent } from "./share/common/UI/top-bar/top-bar.component";
 import { CookieService } from 'ngx-cookie-service';
+import { WindowService } from './share/services/window.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TranslateModule, SideBarComponent, MatButtonToggleGroup, MatButtonModule, MatButtonToggle, MatIconModule, CommonModule, TopBarComponent],
+  imports: [RouterOutlet, TranslateModule, SideBarComponent, CommonModule, TopBarComponent],
   templateUrl: './app.component.html',
   providers: [],
   styleUrl: './app.component.scss'
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private sideBarsrv: SidebarService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    public windowService: WindowService
   ) {
     translate.addLangs(['en', 'es']);
     translate.setDefaultLang('es');
@@ -117,7 +119,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   beforeUnloadHandler = (event: BeforeUnloadEvent) => {
-    localStorage.setItem('access_token', '');
+    // debugger;
+    // if (!this.windowService._isOpeningNewTab) {
+    //   localStorage.setItem('access_token', '');
+    // }
     //event.preventDefault(); // Para algunos navegadores
     //event.returnValue = ''; // Para mostrar un mensaje genérico
   }

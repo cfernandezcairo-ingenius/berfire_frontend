@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
-import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../services/style-manager.service';
 import { AuthService } from '../../../../auth/auth.service';
@@ -10,7 +8,7 @@ import { WindowService } from '../../../services/window.service';
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonToggleGroup, MatButtonToggle, MatIconModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss'
 })

@@ -37,6 +37,8 @@ export class WorkStatusListComponent implements OnInit {
   loading = false;
   todoListo = false;
   displayedLabels = ['','Nombre', 'Descripción'];
+  displayedLabelsEs = ['','Nombre', 'Descripción'];
+  displayedLabelsEn = ['','Name', 'Description'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -46,6 +48,13 @@ export class WorkStatusListComponent implements OnInit {
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
+    });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
     });
   }
 

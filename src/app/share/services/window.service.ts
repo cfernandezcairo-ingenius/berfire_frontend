@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class WindowService {
 
+  public _isOpeningNewTab: boolean = false;
+
   constructor() { }
 
   public get isDeviceTablet() {
@@ -18,5 +20,4 @@ export class WindowService {
   public get isDevicePC() {
     return window.innerWidth > 768;
   }
-
 }

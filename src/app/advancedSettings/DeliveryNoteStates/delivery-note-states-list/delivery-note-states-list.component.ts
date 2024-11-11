@@ -37,6 +37,8 @@ export class DeliveryNoteStatesListComponent implements OnInit {
   loading = false;
   todoListo = false;
   displayedLabels = ['','Nombre', 'Confirma el albarán'];
+  displayedLabelsEs = ['','Nombre', 'Confirma el albarán'];
+  displayedLabelsEn = ['','Name', 'Confirm delivery note'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -50,6 +52,13 @@ export class DeliveryNoteStatesListComponent implements OnInit {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
         this.handleDataChange();
+      }
+    });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
       }
     });
   }
