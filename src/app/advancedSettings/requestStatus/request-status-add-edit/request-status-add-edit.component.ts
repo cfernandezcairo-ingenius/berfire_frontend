@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { RequestStatusService } from '../request-status.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-request-status-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './request-status-add-edit.component.html',
   styleUrl: './request-status-add-edit.component.scss'
 })
@@ -51,7 +52,7 @@ export class RequestStatusAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/payment-form/edit/new');
+        this.showinNewTab = this.router.url.includes('/request-status/edit/new');
       }
     });
   }
@@ -187,7 +188,7 @@ export class RequestStatusAddEditComponent implements OnInit {
         //Para limpiar el formulario
         //y permanecer en la ventana
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
+          localStorage.setItem('dataModifiedInNewTabRequestStatus', 'true');
           if (!nuevo) window.close();
         } else {
           if (nuevo) {

@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { StatementOrderService } from '../statement-order.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-statement-order-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './statement-order-add-edit.component.html',
   styleUrl: './statement-order-add-edit.component.scss'
 })
@@ -209,7 +210,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
         //Para limpiar el formulario
         //y permanecer en la ventana
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
+          localStorage.setItem('dataModifiedInNewTabStatementOrder', 'true');
           if (!nuevo) window.close();
         } else {
           if (nuevo) {

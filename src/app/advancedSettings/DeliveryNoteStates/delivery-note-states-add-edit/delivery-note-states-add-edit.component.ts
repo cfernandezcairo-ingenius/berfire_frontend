@@ -9,11 +9,12 @@ import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-delivery-note-states-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule,CommonModule],
   templateUrl: './delivery-note-states-add-edit.component.html',
   styleUrl: './delivery-note-states-add-edit.component.scss'
 })
@@ -51,7 +52,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/dispatch-notes/edit/new');
+        this.showinNewTab = this.router.url.includes('/delivery-note-states/edit/new');
       }
     });
   }
@@ -177,7 +178,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
           })
         }
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
+          localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'true');
           window.close();
         } else {
           this.navigationService.goback();

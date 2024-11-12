@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { PaymentFormsService } from '../payment-forms.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-payment-forms-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './payment-forms-add-edit.component.html',
   styleUrl: './payment-forms-add-edit.component.scss'
 })

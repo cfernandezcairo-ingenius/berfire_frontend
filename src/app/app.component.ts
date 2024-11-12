@@ -2,13 +2,10 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {SideBarComponent} from './navigation/side-bar/side-bar.component'
-import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
-import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from './navigation/side-bar/sidebar.service';
 import { StyleManager } from './share/services/style-manager.service';
-import { MatButtonModule } from '@angular/material/button';
 import { TopBarComponent } from "./share/common/UI/top-bar/top-bar.component";
 import { CookieService } from 'ngx-cookie-service';
 import { WindowService } from './share/services/window.service';
@@ -32,7 +29,6 @@ export class AppComponent implements OnInit, OnDestroy {
   fechaExpiracion: Date = new Date();
   showTopbar: boolean = true;
 
-
   constructor(
     public translate: TranslateService,
     private darkModeService: StyleManager,
@@ -49,8 +45,17 @@ export class AppComponent implements OnInit, OnDestroy {
     translate.use(browserLang?.match(/en|es/) ? browserLang : 'es');
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
-        this.showTopbar = !this.router.url.includes('/invoice/edit/new');
+        // Se oculta la Barra Top y el sideBar si se ejecuta el componente en nueva pestaña
+        this.showTopbar = !this.router.url.includes('/invoice-status/edit/new')
+        && !this.router.url.includes('/banks/edit/new')
+        && !this.router.url.includes('/delivery-note-states/edit/new')
+        && !this.router.url.includes('/statement-order/edit/new')
+        && !this.router.url.includes('/request-status/edit/new')
+        && !this.router.url.includes('/populations/edit/new')
+        && !this.router.url.includes('/work-status/edit/new')
+        && !this.router.url.includes('/unsubscribe-reasons/edit/new')
+        && !this.router.url.includes('/clients-types/edit/new')
+        && !this.router.url.includes('/contracts-types/edit/new')
       }
     });
   }

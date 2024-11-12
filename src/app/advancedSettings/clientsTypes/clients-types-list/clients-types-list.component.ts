@@ -9,10 +9,10 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-export interface IContractsTypes {
+export interface IClientsTypes {
   id: number,
   name: string,
-  confirmDeliveryNote: boolean
+  description: boolean
 }
 
 @Component({
@@ -30,13 +30,15 @@ export interface IContractsTypes {
 export class ClientsTypesListComponent implements OnInit {
 
   dataSource = {
-    data: [] as IContractsTypes[]
+    data: [] as IClientsTypes[]
   };
   darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Confirma el albarán'];
+  displayedLabels = ['','Nombre', 'Descripción'];
+  displayedLabelsEs = ['','Nombre', 'Descripción'];
+  displayedLabelsEn = ['','Nombre', 'Descripción'];
 
   constructor(
     private darkModeService: StyleManager,
@@ -47,14 +49,21 @@ export class ClientsTypesListComponent implements OnInit {
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
-        this.handleDataChange();
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
       }
     });
   }
 
   ngOnInit(): void {
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'dataModifiedInNewTabClientsTypes' && event.newValue === 'true') {
+        this.handleDataChange();
+      }
+    });
     this.loading = true;
     this.loadAll();
   }
@@ -82,31 +91,29 @@ export class ClientsTypesListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
+    localStorage.setItem('dataModifiedInNewTabClientsTypes', 'false');
     //Aqui tengo que recargar los datos desde el backend
-    this.ngOnInit();
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/clientsTypes/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/clients-types/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/clientsTypes/edit/new/${strRow}`, '_blank')
+    window.open(`/clients-types/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/clientsTypes/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/clients-types/delete/${strRow}`)
   }
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/clientsTypes/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/clients-types/edit/${row}`)
   }
 
 }

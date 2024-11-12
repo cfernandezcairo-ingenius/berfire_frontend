@@ -12,18 +12,18 @@ export class ContractsTypesService {
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/contractsTypes`, payload);
+    return this.http.post<any>(`${backendConfig.url}/contractTypes`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/contractsTypes`, payload);
+    return this.http.post<any>(`${backendConfig.url}/contractTypes`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${backendConfig.url}/contractsTypes`);
+    return this.http.get<any>(`${backendConfig.url}/contractTypes`);
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${backendConfig.url}/contractsTypes/${id}`);
+    return this.http.delete<any>(`${backendConfig.url}/contractTypes/${id}`);
   }
 }

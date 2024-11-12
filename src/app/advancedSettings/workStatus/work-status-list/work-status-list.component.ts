@@ -60,7 +60,7 @@ export class WorkStatusListComponent implements OnInit {
 
   ngOnInit(): void {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabWorkStatus' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -92,10 +92,8 @@ export class WorkStatusListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
-    //Aqui tengo que recargar los datos desde el backend
+    localStorage.setItem('dataModifiedInNewTabWorkStatus', 'false');
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 

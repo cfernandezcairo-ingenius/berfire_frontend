@@ -43,6 +43,8 @@
   "list": "Listado",
   "invoice_add": "Nueva Factura",
   "dispatch-notes": "Estados Albaranes de Entrega",
+  "populations": "Poblaciones",
+  "unsubscribe-reasons": "Motivos baja equipamiento",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "Nombre",
@@ -63,7 +65,12 @@
       "HOME": "Domiciliado",
       "CODE": "Código",
       "SWIFT": "SWIFT",
-      "IBAN": "IBAN"
+      "IBAN": "IBAN",
+      "COUNTRY": "Pais",
+      "PROVINCE": "Provincia",
+      "ACTIVE": "Activo",
+      "DURATION": "Duración",
+      "ISWARNING": "Advertencia"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido",
@@ -79,8 +86,8 @@
     "clients": "Clientes",
     "administration": "Administración",
     "budgets":"Presupuestos",
-    "delivery-notes": "Albaranes",
-    "dispatch-notes": "Estados Albaranes de Entrega",
+    "delivery-note-states": "Estados Albaranes de Entrega",
+    "delivery-note": "Albaranes de Entrega",
     "invoice-status": "Estado de las Facturas",
     "invoice": "Facturas",
     "expirations": "Vencimientos",
@@ -95,7 +102,7 @@
     "advancedSettings": "Ajustes Avanzados",
     "taxes": "Impuestos",
     "states-parties-review": "Estados de los partes de revisión",
-    "unsubscribe-equipment-reasons": "Motivos de baja de equipamiento",
+    "unsubscribe-equipment-reasons": "Motivos baja equipamiento",
     "populations": "Poblaciones",
     "pvpRates": "Tarifas PVP",
     "clients-types": "Tipos de clientes",

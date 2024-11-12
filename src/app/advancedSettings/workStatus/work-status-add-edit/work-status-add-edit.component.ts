@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { WorkStatusService } from '../work-status.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-work-status-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './work-status-add-edit.component.html',
   styleUrl: './work-status-add-edit.component.scss'
 })
@@ -179,7 +180,7 @@ export class WorkStatusAddEditComponent implements OnInit {
         //Para limpiar el formulario
         //y permanecer en la ventana
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
+          localStorage.setItem('dataModifiedInNewTabWorkStatus', 'true');
           if (!nuevo) window.close();
         } else {
           if (nuevo) {

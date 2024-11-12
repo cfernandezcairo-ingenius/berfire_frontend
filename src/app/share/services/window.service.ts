@@ -5,8 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class WindowService {
 
-  public _isOpeningNewTab: boolean = false;
-
   constructor() { }
 
   public get isDeviceTablet() {

@@ -33,6 +33,8 @@ export class FormlyMaterialComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    debugger;
+    let sasa = this.shoWButtonSaveAndNew;
 
   }
 

@@ -43,6 +43,8 @@
   "list": "List",
   "invoice_add": "New Invoice",
   "dispatch-notes": "Dispatch Notes",
+  "populations": "Populations",
+  "unsubscribe-reasons": "Unsubscribe Equipment Reasons",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "First Name",
@@ -63,7 +65,12 @@
       "HOME": "Home",
       "CODE": "Code",
       "SWIFT": "SWIFT",
-      "IBAN": "IBAN"
+      "IBAN": "IBAN",
+      "COUNTRY": "Country",
+      "PROVINCE": "Province",
+      "ACTIVE": "Active",
+      "DURATION": "Duration",
+      "ISWARNING": "is Warning"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required",
@@ -79,8 +86,8 @@
     "clients": "Clients",
     "administration": "Administration",
     "budgets":"Budgets",
-    "delivery-notes": "Delivery notes",
-    "dispatch-notes": "Dispatch notes",
+    "delivery-note-states": "Delivery notes states",
+    "ddelivery-note": "Delivery notes",
     "invoice-status": "Invoice status",
     "invoice": "Invoices",
     "expirations": "Expirations",

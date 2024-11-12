@@ -22,7 +22,6 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-table-list',
@@ -83,7 +82,6 @@ export class TableListComponent implements OnInit, OnChanges {
 
   constructor(
     private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
     private translate: TranslateService,
     private windowService: WindowService,
     private fb: FormBuilder,
@@ -168,7 +166,6 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   editNew(row:any) {
-    this.windowService._isOpeningNewTab = true;
     this.editRowNueva.emit(row);
   }
 

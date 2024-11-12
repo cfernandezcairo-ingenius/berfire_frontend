@@ -9,11 +9,12 @@ import { ContractsTypesService } from '../contracts-types.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './contracts-types-add-edit.component.html',
   styleUrl: './contracts-types-add-edit.component.scss'
 })
@@ -25,6 +26,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
   row:any;
   darkMode = false;
   showinNewTab = false;
+  shoWButtonSaveAndNew = true;
 
   constructor(
     private translate: TranslateService,
@@ -51,7 +53,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/dispatch-notes/edit/new');
+        this.showinNewTab = this.router.url.includes('/contracts-types/edit/new');
       }
     });
   }
@@ -60,13 +62,15 @@ export class ContractsTypesAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
+      this.shoWButtonSaveAndNew = true;
       this.model = {
-        confirmDeliveryNote: false
+        isWarning: false
       }
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
       this.model = Object.assign({}, this.row);
+      this.shoWButtonSaveAndNew = false;
     }
 
     this.fields = [
@@ -74,7 +78,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-126 col-lg-12',
+            className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'input',
             key: 'name',
             props: {
@@ -96,16 +100,42 @@ export class ContractsTypesAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'confirmDeliveryNote',
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'input',
+            key: 'duration',
             props: {
-              label: 'FORM.FIELDS.CONFIRM',
-              required:false
+              label: 'FORM.FIELDS.DURATION',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
             },
           },
+          {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'checkbox',
+            key: 'isWarning',
+            props: {
+              label: 'FORM.FIELDS.ISWARNING',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          }
         ],
       }
+
     ];
     this.updateLabels();
   }
@@ -115,8 +145,11 @@ export class ContractsTypesAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.DURATION').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.ISWARNING').subscribe((label) => {
+      this.fields[1].fieldGroup[1].props.label = label;
     });
   }
 
@@ -136,20 +169,21 @@ export class ContractsTypesAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any) {
+  onSubmit(model:any, nuevo: boolean = false) {
     let payload = {};
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg!.get('name')?.value,
-        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
+        duration: Number(this.fg!.get('duration')?.value),
+        isWarning:  this.fg!.get('isWarning')?.value === undefined ? false : this.fg!.get('isWarning')?.value,
       }
       myobs = this.contractsTypesSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
+        duration: Number(this.fg!.get('duration')?.value),
+        isWarning:  this.fg!.get('isWarning')?.value
       }
       myobs = this.contractsTypesSrv.edit(payload);
     }
@@ -177,10 +211,15 @@ export class ContractsTypesAddEditComponent implements OnInit {
           })
         }
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
-          window.close();
+          localStorage.setItem('dataModifiedInNewTabContractsTypes', 'true');
+          this.showinNewTab = false
+          if (!nuevo) window.close();
         } else {
-          this.navigationService.goback();
+          if (nuevo) {
+            this.fg.reset();
+          } else {
+            this.navigationService.goback();
+          }
         }
       },
       error: (error) => {

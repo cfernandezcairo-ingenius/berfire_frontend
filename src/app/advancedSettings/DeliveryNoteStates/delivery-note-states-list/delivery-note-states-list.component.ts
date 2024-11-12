@@ -50,7 +50,7 @@ export class DeliveryNoteStatesListComponent implements OnInit {
       this.darkMode = dark;
     });
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabDeliveryNoteStates' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -91,31 +91,28 @@ export class DeliveryNoteStatesListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
-    //Aqui tengo que recargar los datos desde el backend
-    this.ngOnInit();
+    localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'false');
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/dispatch-notes/edit/new/${strRow}`, '_blank')
+    window.open(`/delivery-note-states/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/dispatch-notes/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/delivery-note-states/delete/${strRow}`)
   }
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${row}`)
   }
 
 }

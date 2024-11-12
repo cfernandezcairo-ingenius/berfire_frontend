@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientsTypesDeleteComponent } from './clients-types-delete.component';
 
-describe('EstadosAlbaranesEntregasDeleteComponent', () => {
+describe('ClientsTypesDeleteComponent', () => {
   let component: ClientsTypesDeleteComponent;
   let fixture: ComponentFixture<ClientsTypesDeleteComponent>;
 

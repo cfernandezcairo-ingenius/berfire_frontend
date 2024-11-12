@@ -12,18 +12,18 @@ export class ClientsTypesService {
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/clientsTypes`, payload);
+    return this.http.post<any>(`${backendConfig.url}/customerTypes`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/clientsTypes`, payload);
+    return this.http.post<any>(`${backendConfig.url}/customerTypes`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${backendConfig.url}/clientsTypes`);
+    return this.http.get<any>(`${backendConfig.url}/customerTypes`);
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${backendConfig.url}/clientsTypes/${id}`);
+    return this.http.delete<any>(`${backendConfig.url}/customerTypes/${id}`);
   }
 }

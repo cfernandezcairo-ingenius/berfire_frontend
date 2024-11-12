@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { BanksService } from '../banks.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-banks-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './banks-add-edit.component.html',
   styleUrl: './banks-add-edit.component.scss'
 })
@@ -117,7 +118,15 @@ export class BanksAddEditComponent implements OnInit {
             key: 'iban',
             props: {
               label: 'FORM.FIELDS.IBAN',
-              required:false
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
             },
           },
         ],

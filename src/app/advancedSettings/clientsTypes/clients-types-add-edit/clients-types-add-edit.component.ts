@@ -9,11 +9,12 @@ import { ClientsTypesService } from '../clients-types.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './clients-types-add-edit.component.html',
   styleUrl: './clients-types-add-edit.component.scss'
 })
@@ -25,6 +26,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
   row:any;
   darkMode = false;
   showinNewTab = false;
+  shoWButtonSaveAndNew = true;
 
   constructor(
     private translate: TranslateService,
@@ -51,7 +53,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/dispatch-notes/edit/new');
+        this.showinNewTab = this.router.url.includes('/clients-types/edit/new');
       }
     });
   }
@@ -60,6 +62,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
+      this.shoWButtonSaveAndNew = true;
       this.model = {
         confirmDeliveryNote: false
       }
@@ -67,6 +70,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
       //edit
       //this.title = this.translate.instant('editItem');
       this.model = Object.assign({}, this.row);
+      this.shoWButtonSaveAndNew = false;
     }
 
     this.fields = [
@@ -74,7 +78,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-126 col-lg-12',
+            className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'input',
             key: 'name',
             props: {
@@ -97,15 +101,24 @@ export class ClientsTypesAddEditComponent implements OnInit {
         fieldGroup: [
           {
             className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'confirmDeliveryNote',
+            type: 'input',
+            key: 'description',
             props: {
-              label: 'FORM.FIELDS.CONFIRM',
-              required:false
+              label: 'FORM.FIELDS.DESCRIPTION',
+              required:true
             },
-          },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          }
         ],
       }
+
     ];
     this.updateLabels();
   }
@@ -115,7 +128,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
   }
@@ -136,20 +149,20 @@ export class ClientsTypesAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any) {
+  onSubmit(model:any, nuevo: boolean = false) {
     let payload = {};
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg!.get('name')?.value,
-        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
+        description: this.fg!.get('description')?.value
       }
       myobs = this.clientsTypesSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
         name: this.fg!.get('name')?.value,
-        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
+        description: this.fg!.get('description')?.value
       }
       myobs = this.clientsTypesSrv.edit(payload);
     }
@@ -177,10 +190,15 @@ export class ClientsTypesAddEditComponent implements OnInit {
           })
         }
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
-          window.close();
+          localStorage.setItem('dataModifiedInNewTabClientsTypes', 'true');
+          this.showinNewTab = false
+          if (!nuevo) window.close();
         } else {
-          this.navigationService.goback();
+          if (nuevo) {
+            this.fg.reset();
+          } else {
+            this.navigationService.goback();
+          }
         }
       },
       error: (error) => {

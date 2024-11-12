@@ -36,207 +36,7 @@ export class SidenavResponsiveExample implements OnDestroy {
 
   showMenuL = true;
   menu: NavItem [] = [];
-
-  // menu: NavItem [] = [
-  //       {
-  //         displayName: this.translate.instant('clients'),
-  //         iconName: 'person',
-  //         route: 'clients',
-  //       },
-  //       {
-  //         displayName: 'Administración',
-  //         iconName: 'menu',
-  //         route: '',
-  //         children:[
-  //           {displayName: 'Presupuestos', iconName: '', route: 'budgets'},
-  //           {displayName: 'Albaranes', iconName: '', route: 'delivery-notes/list'},
-  //           {displayName: 'Facturas', iconName: '', route: 'invoice/list'},
-  //           {displayName: 'Vencimientos', iconName: '', route: 'expirations'},
-  //           {displayName: 'Presupuestos correctivos', iconName: '', route: 'corrective-budgets'},
-  //           {displayName: 'Gestionar rectificativas', iconName: '', route: 'handle-rectification'},
-  //           {displayName: 'Reportes', iconName: '', route: '' ,children: [
-  //             {displayName: 'Reporte de Facturas', iconName: '', route: 'invoice-report'},
-  //             {displayName: 'Reporte de Albaranes', iconName: '', route: ''},
-  //           ]},
-  //           {
-  //             displayName: 'Facturas de gastos',
-  //             iconName: '',
-  //           },
-  //           {
-  //             displayName: 'Subidas de cuotas',
-  //             iconName: '',
-  //           },
-  //           {
-  //             displayName: 'Modelos 347',
-  //             iconName: '',
-  //           },
-  //           {
-  //             displayName: 'Importes facturados',
-  //             iconName: '',
-  //           },
-  //           {
-  //             displayName: 'Estimación de cobros periódicos',
-  //             iconName: '',
-  //           },
-  //           {
-  //             displayName: 'Reportes de facturación',
-  //             iconName: '',
-  //             children: [
-  //               {displayName: 'Por categorías', iconName: '', route: ''},
-  //               {displayName: 'Por operaciones', iconName: '', route: ''},
-  //               {displayName: 'Deuda por cliente', iconName: '', route: ''},
-  //               {displayName: 'Facturación mensual', iconName: '', route: ''},
-  //             ]
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         displayName: 'Facturación de Proveedores',
-  //         iconName: '',
-  //         children: [
-  //           {displayName: 'Proveedores', iconName: '', route: ''},
-  //           {displayName: 'Facturación de Proveedores', iconName: '', route: '', children: [
-  //             {displayName: 'Facturas de Proveedores', iconName: '', route: ''},
-  //             {displayName: 'Rectificativas de Proveedores', iconName: '', route: ''},
-  //           ]},
-  //           {displayName: 'Vencimientos de Proveedores', iconName: '', route: ''},
-  //           {displayName: 'Remesa', iconName: '', route: ''},
-  //           {displayName: 'Mostrar deuda por Proveedor', iconName: '', route: ''},
-  //           {displayName: 'Modelos 347', iconName: '', route: ''},
-  //           {displayName: 'Propuestas de Compra', iconName: '', route: ''},
-  //           {displayName: 'Remesas', iconName: '', route: ''},
-  //           {displayName: 'Albaranes de Entrega', iconName: '', route: ''},
-  //           {displayName: 'Pedidos', iconName: '', route: ''},
-  //         ],
-  //       },
-  //       {
-  //         displayName: 'Almacén',
-  //         iconName: '',
-  //         children: [
-  //           {displayName: 'Almacenes', iconName: '', route: ''},
-  //           {displayName: 'Categorías', iconName: '', route: ''},
-  //           {displayName: 'Subcategorías', iconName: '', route: ''},
-  //           {displayName: 'Material en espera', iconName: '', route: ''}
-  //         ],
-  //       },
-  //       {
-  //         displayName: 'Trabajos',
-  //         iconName: '',
-  //         children: [
-  //           {displayName: 'Próximas revisiones', iconName: '', route: '', children: [
-  //             {displayName: 'Próximas revisiones RIPCI', iconName: '', route: ''},
-  //             {displayName: 'Próximas revisiones Seguridad', iconName: '', route: ''},
-  //           ]},
-  //           {displayName: 'Revisiones planificadas', iconName: '', route: ''},
-  //           {displayName: 'Calendario de ejecución', iconName: '', route: ''},
-  //           {displayName: 'últimas revisiones', iconName: '', route: '', children: [
-  //             {displayName: 'últimas revisiones RIPCI', iconName: '', route: ''},
-  //             {displayName: 'últimas revisiones Seguridad', iconName: '', route: ''},
-  //           ]},
-  //         ],
-  //       },
-  //       {
-  //         displayName: 'Técnicos',
-  //         iconName: '',
-  //       },
-  //       {
-  //         displayName: 'Proyectos',
-  //         iconName: '',
-  //       },
-  //       {
-  //         displayName: 'Documentos',
-  //         iconName: '',
-  //       },
-  //       {displayName: 'Informes',iconName: '',children: [
-  //         {displayName: 'Informes de trabajos', iconName:'', children: [
-  //           {displayName: 'Tareas Asignadas',iconName: ''},
-  //           {displayName: 'Incidencias',iconName: ''},
-  //           {displayName: 'Confirmaciones de Tareas',iconName: ''},
-  //           {displayName: 'Gráficos de Productividad',iconName: ''},
-  //         ]},
-  //         {displayName: 'Informes de periodicidad', iconName:'', children: [
-  //           {displayName: 'Gráficos de Periodicidades',iconName: ''},
-  //           {displayName: 'Cuotas',iconName: ''},
-  //           {displayName: 'Gráficos mensuales',iconName: ''},
-  //         ]},
-  //         {displayName: 'Mostrar Informes de clientes', iconName:'', children: [
-  //           {displayName: 'Márgenes de beneficio',iconName: ''},
-  //           {displayName: 'Servicios ofrecidos',iconName: ''},
-  //           {displayName: 'Rentabilidad de los clientes',iconName: ''},
-  //           {displayName: 'Programación de actividades con clientes',iconName: ''},
-  //           {displayName: 'Facturas de clientes',iconName: ''},
-  //           {displayName: 'Facturación agrupada',iconName: ''},
-  //           {displayName: 'Presupuestos de clientes',iconName: ''},
-  //         ]},
-  //         {displayName: 'Mostrar Informes de equipos', iconName:'', children: [
-  //           {displayName: 'Equipos',iconName: ''},
-  //           {displayName: 'Historial de un equipo',iconName: ''}
-  //         ]},
-  //       ]
-  //       },
-  //       {displayName: 'Gestionar la configuración',iconName: '',children: [
-  //         {displayName: 'Datos de la Empresa',iconName: ''},
-  //         {displayName: 'Usuarios',iconName: ''},
-  //         {displayName: 'Tipos de partes de revisión',iconName: ''},
-  //         {displayName: 'Fabricantes',iconName: ''},
-  //         {displayName: 'Plantillas de documentos',iconName: ''}
-  //       ]},
-  //       {displayName: 'Ajustes Avanzados',iconName: '',children: [
-  //         {displayName: 'Bancos',iconName: ''},
-  //         {displayName: 'Estados Albaranes de entrega',iconName: '', route: 'dispatch-notes/list'},
-  //         {displayName: 'Estados de las facturas',iconName: '', route: 'invoice-status/list'},
-  //         {displayName: 'Estados de las órdenes de trabajo',iconName: ''},
-  //         {displayName: 'Estados de los pedidos',iconName: ''},
-  //         {displayName: 'Estados de los partes de revisión',iconName: ''},
-  //         {displayName: 'Estados del trabajador',iconName: ''},
-  //         {displayName: 'Formas de pago',iconName: ''},
-  //         {displayName: 'Impuestos',iconName: ''},
-  //         {displayName: 'Logs',iconName: ''},
-  //         {displayName: 'Motivos de baja de equipamiento',iconName: ''},
-  //         {displayName: 'Poblaciones',iconName: ''},
-  //         {displayName: 'Tarifas PVP',iconName: ''},
-  //         {displayName: 'Tipos de cliente',iconName: ''},
-  //         {displayName: 'Tipos de contrato',iconName: ''},
-  //         {displayName: 'Roles',iconName: ''}
-  //       ]},
-  //       {displayName: 'Gestión Operativa',iconName: '',children: [
-  //         {displayName: 'Familias',iconName: ''},
-  //         {displayName: 'Productos',iconName: ''},
-  //         {displayName: 'Servicios',iconName: ''}
-  //       ]
-  //       }
-  // ];
   mobileQuery: MediaQueryList;
-  // menu = [
-  //   {
-  //     displayName: 'Inicio',
-  //     iconName: 'home',
-  //     route: '/home',
-  //     children: []
-  //   },
-  //   {
-  //     displayName: 'Configuración',
-  //     iconName: 'settings',
-  //     route: '/settings',
-  //     children: [
-  //       {
-  //         displayName: 'Perfil',
-  //         iconName: 'person',
-  //         route: '/settings/profile',
-  //         children: [
-  //           { displayName: 'edit', iconName: 'edit', route: '/settings/profile/edit' },
-  //           { displayName: 'Ver', iconName: 'visibility', route: '/settings/profile/view' }
-  //         ]
-  //       },
-  //       {
-  //         displayName: 'Seguridad',
-  //         iconName: 'lock',
-  //         route: '/settings/security',
-  //         children: []
-  //       }
-  //     ]
-  //   }
-  // ];
 
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
 
@@ -286,7 +86,7 @@ export class SidenavResponsiveExample implements OnDestroy {
         route: '',
         children:[
           {displayName: this.translate.instant('menu.budgets'), iconName: '', route: 'budgets'},
-          {displayName: this.translate.instant('menu.delivery-notes'), iconName: '', route: 'delivery-notes/list'},
+          {displayName: this.translate.instant('menu.delivery-note'), iconName: '', route: 'delivery-note/list'},
           {displayName:  this.translate.instant('menu.invoice'), iconName: '', route: 'invoice/list'},
           {displayName: this.translate.instant('menu.expirations'), iconName: '', route: 'expirations'},
           {displayName: this.translate.instant('menu.corrective-budgets'), iconName: '', route: 'corrective-budgets'},
@@ -420,7 +220,7 @@ export class SidenavResponsiveExample implements OnDestroy {
       ]},
       {displayName: this.translate.instant('menu.advancedSettings'),iconName: 'menu',children: [
         {displayName: this.translate.instant('menu.banks'),iconName: '', route: 'banks/list'},
-        {displayName: this.translate.instant('menu.dispatch-notes'),iconName: '', route: 'dispatch-notes/list'},
+        {displayName: this.translate.instant('menu.delivery-note-states'),iconName: '', route: 'delivery-note-states/list'},
         {displayName: this.translate.instant('menu.invoice-status'),iconName: '', route: 'invoice-status/list'},
         {displayName: this.translate.instant('menu.statement-order'),iconName: '', route: 'statement-order/list'},
         {displayName: this.translate.instant('menu.request-status'),iconName: '', route: 'request-status/list'},
@@ -429,12 +229,12 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: this.translate.instant('menu.payment-forms'),iconName: '', route: 'payment-forms/list'},
         {displayName: this.translate.instant('menu.taxes') ,iconName: ''},
         {displayName: 'Logs',iconName: ''},
-        {displayName: this.translate.instant('menu.unsubscribe-equipment-reasons') ,iconName: ''},
-        {displayName: this.translate.instant('menu.populations'),iconName: ''},
+        {displayName: this.translate.instant('menu.unsubscribe-equipment-reasons') ,iconName: '', route: 'unsubscribe-reasons/list'},
+        {displayName: this.translate.instant('menu.populations'),iconName: '', route: 'populations/list'},
         {displayName: this.translate.instant('menu.pvpRates') ,iconName: ''},
-        {displayName: this.translate.instant('menu.clients-types'),iconName: ''},
+        {displayName: this.translate.instant('menu.clients-types'),iconName: '', route: 'clients-types/list'},
         //contractsTypes
-        {displayName: this.translate.instant('menu.contracts-types'),iconName: ''},
+        {displayName: this.translate.instant('menu.contracts-types'),iconName: '', route: 'contracts-types/list'},
         {displayName: 'Roles',iconName: ''}
       ]},
       {displayName: 'Gestión Operativa',iconName: 'menu',children: [
