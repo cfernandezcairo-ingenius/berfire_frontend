@@ -3,27 +3,27 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { DeliveryNoteStatesService } from '../delivery-note-states.service';
+import { TaxesService } from '../taxes.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
-  selector: 'app-delivery-note-states-delete',
+  selector: 'app-taxes-delete',
   standalone: true,
   imports: [],
-  templateUrl: './delivery-note-states-delete.component.html',
-  styleUrl: './delivery-note-states-delete.component.scss'
+  templateUrl: './taxes-delete.component.html',
+  styleUrl: './taxes-delete.component.scss'
 })
-export class DeliveryNoteStatesDeleteComponent implements OnInit {
+export class TaxesDeleteComponent implements OnInit {
 
   id: any;
   darkMode = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private translate: TranslateService,
-    private darkModeService: StyleManager,
-    private deliveryNoteStatesSrv: DeliveryNoteStatesService,
-    private navigationSrv: NavigationService
+    private readonly route: ActivatedRoute,
+    private readonly translate: TranslateService,
+    private readonly darkModeService: StyleManager,
+    private readonly taxesSrv: TaxesService,
+    private readonly navigationSrv: NavigationService
   ) {
     this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.id = JSON.parse(params['id']);
@@ -50,7 +50,7 @@ export class DeliveryNoteStatesDeleteComponent implements OnInit {
       color: this.darkMode ? '#fff' : '#000',
     }).then(result => {
       if (result.isConfirmed) {
-        this.deliveryNoteStatesSrv.delete(id).subscribe({
+        this.taxesSrv.delete(id).subscribe({
           next: (d) => {
             Swal.fire({
               title: this.translate.instant('inform'),

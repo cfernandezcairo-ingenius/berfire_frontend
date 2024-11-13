@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService , TranslateModule } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { ClientsTypesService } from '../clients-types.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
 
 export interface IClientsTypes {
   id: number,
@@ -41,10 +41,10 @@ export class ClientsTypesListComponent implements OnInit {
   displayedLabelsEn = ['','Nombre', 'Descripción'];
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private clientsTypesSrv: ClientsTypesService,
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly clientsTypesSrv: ClientsTypesService,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;

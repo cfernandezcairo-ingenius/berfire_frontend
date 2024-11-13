@@ -28,12 +28,12 @@ export class StatementOrdersAddEditComponent implements OnInit {
   shoWButtonSaveAndNew = false;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private statementOrderSrv: StatementOrderService,
-    private darkModeService: StyleManager,
-    private router: Router
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly statementOrderSrv: StatementOrderService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -68,7 +68,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
       this.shoWButtonSaveAndNew = false;
     }
 
@@ -152,15 +152,13 @@ export class StatementOrdersAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
@@ -169,17 +167,17 @@ export class StatementOrdersAddEditComponent implements OnInit {
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        description: this.fg!.get('description')?.value === undefined ? false : this.fg!.get('description')?.value,
-        finalized: this.fg!.get('finalized')?.value === undefined ? false : this.fg!.get('finalized')?.value,
+        name: this.fg.get('name')?.value,
+        description: this.fg.get('description')?.value === undefined ? false : this.fg.get('description')?.value,
+        finalized: this.fg.get('finalized')?.value === undefined ? false : this.fg.get('finalized')?.value,
       }
       myobs = this.statementOrderSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        description: this.fg!.get('description')?.value,
-        finalized: this.fg!.get('finalized')?.value,
+        name: this.fg.get('name')?.value,
+        description: this.fg.get('description')?.value,
+        finalized: this.fg.get('finalized')?.value,
       }
       myobs = this.statementOrderSrv.edit(payload);
     }

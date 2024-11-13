@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {SideBarComponent} from './navigation/side-bar/side-bar.component'
@@ -30,13 +30,13 @@ export class AppComponent implements OnInit, OnDestroy {
   showTopbar: boolean = true;
 
   constructor(
-    public translate: TranslateService,
-    private darkModeService: StyleManager,
-    public authService: AuthService,
-    private sideBarsrv: SidebarService,
-    private cookieService: CookieService,
-    private router: Router,
-    public windowService: WindowService
+    public readonly translate: TranslateService,
+    private readonly darkModeService: StyleManager,
+    public readonly authService: AuthService,
+    private readonly sideBarsrv: SidebarService,
+    private readonly cookieService: CookieService,
+    private readonly router: Router,
+    public readonly windowService: WindowService
   ) {
     translate.addLangs(['en', 'es']);
     translate.setDefaultLang('es');
@@ -56,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
         && !this.router.url.includes('/unsubscribe-reasons/edit/new')
         && !this.router.url.includes('/clients-types/edit/new')
         && !this.router.url.includes('/contracts-types/edit/new')
+        && !this.router.url.includes('/taxes/edit/new')
       }
     });
   }
@@ -92,10 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
     const miDiv = document.getElementById('container_sidebar');
     miDiv!.classList.toggle('visible');
     this.sidebarVisible = !this.sidebarVisible;
-  }
-
-  submit() {
-
   }
 
   changeLanguage(language: string) {

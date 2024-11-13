@@ -14,7 +14,7 @@ export class WorkStatusService {
     return this.http.post<any>(`${backendConfig.url}/workStatus`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.post<any>(`${backendConfig.url}/workStatus`, payload);
+    return this.http.put<any>(`${backendConfig.url}/workStatus`, payload);
   }
 
   getAll(): Observable<any> {

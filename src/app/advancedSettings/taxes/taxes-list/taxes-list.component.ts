@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
-import { DeliveryNoteStatesService } from '../delivery-note-states.service';
+import { TaxesService } from '../taxes.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 
-export interface IDeliveryNoteStates {
+export interface ITaxes {
   id: number,
-  name: string,
-  confirmDeliveryNote: boolean
+  title: string,
+  value: string,
+  equivalentSurcharge: string,
+  isIGIC: boolean
 }
 
+
 @Component({
-  selector: 'app-delivery-note-states-list',
-  templateUrl: './delivery-note-states-list.component.html',
-  styleUrl: './delivery-note-states-list.component.scss',
+  selector: 'app-taxes-list',
+  templateUrl: './taxes-list.component.html',
+  styleUrl: './taxes-list.component.scss',
   standalone: true,
   imports: [
     TableListComponent,
@@ -27,40 +29,50 @@ export interface IDeliveryNoteStates {
     TranslateModule
 ]
 })
-export class DeliveryNoteStatesListComponent implements OnInit {
+export class TaxesListComponent implements OnInit {
 
   dataSource = {
-    data: [] as IDeliveryNoteStates[]
+    data: [] as ITaxes[]
   };
   darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Confirma el albarán'];
+  displayedLabels = ['','Titulo', 'Valor', 'Recargo', 'es IGIC'];
+  displayedLabelsEs = ['','Titulo', 'Valor', 'Recargo', 'es IGIC'];
+  displayedLabelsEn = ['','Name', 'Country', 'eSurcharge', 'isIGIC'];
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private deliveryNoteStatesSrv: DeliveryNoteStatesService,
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly taxesSrv:TaxesService
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
-        this.handleDataChange();
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
       }
     });
   }
 
   ngOnInit(): void {
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'dataModifiedInNewTabTaxes' && event.newValue === 'true') {
+        this.handleDataChange();
+      }
+    });
     this.loading = true;
     this.loadAll();
   }
 
   loadAll() {
-    this.deliveryNoteStatesSrv.getAll().subscribe(All => {
+    this.loading = true;
+    this.taxesSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -78,35 +90,34 @@ export class DeliveryNoteStatesListComponent implements OnInit {
         this.loading = false;
         this.todoListo = true;
       }
-    });
+    })
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
+    localStorage.setItem('dataModifiedInNewTabTaxes', 'false');
     //Aqui tengo que recargar los datos desde el backend
-    this.ngOnInit();
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/taxes/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/dispatch-notes/edit/new/${strRow}`, '_blank')
+    window.open(`/taxes/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/dispatch-notes/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/taxes/delete/${strRow}`)
   }
+
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/dispatch-notes/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/taxes/edit/${row}`)
   }
 
 }

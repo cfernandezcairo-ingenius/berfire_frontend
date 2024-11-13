@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { backendConfig } from '../../app.config';
 
@@ -8,7 +8,7 @@ import { backendConfig } from '../../app.config';
 })
 export class ClientsTypesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
@@ -16,7 +16,7 @@ export class ClientsTypesService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/customerTypes`, payload);
+    return this.http.put<any>(`${backendConfig.url}/customerTypes`, payload);
   }
 
   getAll(): Observable<any> {

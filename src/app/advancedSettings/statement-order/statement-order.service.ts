@@ -14,7 +14,7 @@ export class StatementOrderService {
     return this.http.post<any>(`${backendConfig.url}/statementsOrder`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.post<any>(`${backendConfig.url}/statementsOrder`, payload);
+    return this.http.put<any>(`${backendConfig.url}/statementsOrder`, payload);
   }
 
   getAll(): Observable<any> {

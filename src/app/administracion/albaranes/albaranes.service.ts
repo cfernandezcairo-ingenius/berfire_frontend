@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 // import { HttpHeaderClass } from '../share/common/httpHeader';
 import { HttpClient } from '@angular/common/http';
 import { backendConfig } from '../../app.config';
@@ -10,7 +10,7 @@ import { FacturasDataSource } from './albaranes-list/albaranes-datasource';
 })
 export class AlbaranesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
@@ -18,7 +18,7 @@ export class AlbaranesService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/delivery-notes/edit`, payload);
+    return this.http.put<any>(`${backendConfig.url}/delivery-notes/edit`, payload);
   }
 
   getAll(): Observable<any> {

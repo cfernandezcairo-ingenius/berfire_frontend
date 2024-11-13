@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
-import { DeliveryNoteStatesService } from '../delivery-note-states.service';
+import { TaxesService } from '../taxes.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { WindowService } from '../../../share/services/window.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-delivery-note-states-add-edit',
+  selector: 'app-taxes-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule],
-  templateUrl: './delivery-note-states-add-edit.component.html',
-  styleUrl: './delivery-note-states-add-edit.component.scss'
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
+  templateUrl: './taxes-add-edit.component.html',
+  styleUrl: './taxes-add-edit.component.scss'
 })
-export class DeliveryNoteStatesAddEditComponent implements OnInit {
+export class TaxesAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
@@ -25,14 +25,16 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
   row:any;
   darkMode = false;
   showinNewTab = false;
+  shoWButtonSaveAndNew = false;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private deliveryNoteStatesSrv: DeliveryNoteStatesService,
-    private darkModeService: StyleManager,
-    private router: Router
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly taxesSrv: TaxesService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router,
+    private readonly windowService: WindowService
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -51,7 +53,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/dispatch-notes/edit/new');
+        this.showinNewTab = this.router.url.includes('/taxes/edit/new');
       }
     });
   }
@@ -60,13 +62,15 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
+      this.shoWButtonSaveAndNew = true;
       this.model = {
-        confirmDeliveryNote: false
+        active: false,
       }
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
+      this.shoWButtonSaveAndNew = false;
     }
 
     this.fields = [
@@ -74,12 +78,12 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-126 col-lg-12',
+            className: 'col-sm-12 col-md-12 col-lg-12',
             type: 'input',
-            key: 'name',
+            key: 'title',
             props: {
               required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
+              label: 'FORM.FIELDS.TITLE',
             },
             validators: {
               validation: ['required'],
@@ -97,26 +101,71 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
         fieldGroup: [
           {
             className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'confirmDeliveryNote',
+            type: 'input',
+            key: 'value',
             props: {
-              label: 'FORM.FIELDS.CONFIRM',
+              label: 'FORM.FIELDS.VALUE',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            },
+          }
+        ],
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'input',
+            key: 'equivalentSurcharge',
+            props: {
+              label: 'FORM.FIELDS.SURCHARGE',
+              required:true
+            },
+            validators: {
+              validation: ['required'],
+            },
+            validation: {
+              messages: {
+                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+              },
+            }
+          },
+          {
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'checkbox',
+            key: 'isIGIC',
+            props: {
+              label: 'FORM.FIELDS.ISIGIC',
               required:false
             },
           },
         ],
-      }
+      },
     ];
     this.updateLabels();
   }
 
   updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.TITLE').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.VALUE').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.SURCHARGE').subscribe((label) => {
+      this.fields[2].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.ISIGIC').subscribe((label) => {
+      this.fields[2].fieldGroup[1].props.label = label;
     });
   }
 
@@ -124,35 +173,36 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
-  onSubmit(model:any) {
+  onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
+    //let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
+        title: this.fg.get('title')?.value,
+        value: this.fg.get('value')?.value,
+        equivalentSurcharge: this.fg.get('equivalentSurcharge')?.value,
+        isIGIC: this.fg.get('isIGIC')?.value === undefined ? false : this.fg.get('isIGIC')?.value,
       }
-      myobs = this.deliveryNoteStatesSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        confirmDeliveryNote: this.fg!.get('confirmDeliveryNote')?.value === undefined ? false : this.fg!.get('confirmDeliveryNote')?.value
+        title: this.fg.get('title')?.value,
+        value: this.fg.get('value')?.value,
+        equivalentSurcharge: this.fg.get('equivalentSurcharge')?.value,
+        isIGIC: this.fg.get('isIGIC')?.value,
       }
-      myobs = this.deliveryNoteStatesSrv.edit(payload);
     }
+    const myobs = this.row.id === 0 ? this.taxesSrv.add(payload) : this.taxesSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -176,12 +226,18 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
             color: this.darkMode ? '#fff' : '#000',
           })
         }
+        //Aqui tengo que preguntar si nuevo = true
+        //Para limpiar el formulario
+        //y permanecer en la ventana
         if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTab', 'true');
-          window.close();
-        } else {
-          this.navigationService.goback();
-        }
+          localStorage.setItem('dataModifiedInNewTabtaxes', 'true');
+          this.showinNewTab = false
+          if (!nuevo) window.close();
+        } else if (nuevo) {
+            this.fg.reset();
+          } else {
+            this.navigationService.goback();
+          }
       },
       error: (error) => {
         console.error('Error:', error);

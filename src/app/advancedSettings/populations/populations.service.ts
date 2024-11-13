@@ -16,7 +16,7 @@ export class PopulationsService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/populations`, payload);
+    return this.http.put<any>(`${backendConfig.url}/populations`, payload);
   }
 
   getAll(): Observable<any> {

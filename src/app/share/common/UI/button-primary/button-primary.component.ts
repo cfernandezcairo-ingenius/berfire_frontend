@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { StyleManager } from '../../../services/style-manager.service';
 import { FormGroup } from '@angular/forms';
 import { NavigationService } from '../../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
-//import { FacturasService } from '../../../../../facturas/facturas.service';
 
 @Component({
   selector: 'app-button-primary',
@@ -23,9 +21,9 @@ export class ButtonPrimaryComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    //private facturasSrv: FacturasService
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    //private readonly facturasSrv: FacturasService
   ) {}
 
   ngOnInit(): void {

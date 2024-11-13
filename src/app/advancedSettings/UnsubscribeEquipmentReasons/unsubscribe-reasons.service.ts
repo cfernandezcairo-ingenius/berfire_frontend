@@ -16,7 +16,7 @@ export class UnsubscribeReasonsService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/motivesBE`, payload);
+    return this.http.put<any>(`${backendConfig.url}/motivesBE`, payload);
   }
 
   getAll(): Observable<any> {

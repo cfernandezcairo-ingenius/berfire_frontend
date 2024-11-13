@@ -4,7 +4,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { WorkStatusService } from '../work-status.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -28,12 +27,12 @@ export class WorkStatusAddEditComponent implements OnInit {
   shoWButtonSaveAndNew = false;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private workStatusSrv: WorkStatusService,
-    private darkModeService: StyleManager,
-    private router: Router
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly workStatusSrv: WorkStatusService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -65,7 +64,7 @@ export class WorkStatusAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
       this.shoWButtonSaveAndNew = false;
     }
 
@@ -124,35 +123,31 @@ export class WorkStatusAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        description: this.fg!.get('description')?.value,
+        name: this.fg.get('name')?.value,
+        description: this.fg.get('description')?.value,
       }
-      myobs = this.workStatusSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        description: this.fg!.get('description')?.value,
+        name: this.fg.get('name')?.value,
+        description: this.fg.get('description')?.value,
       }
-      myobs = this.workStatusSrv.edit(payload);
     }
+    const myobs = this.row.id === 0 ? this.workStatusSrv.add(payload) : this.workStatusSrv.edit(payload)
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -182,13 +177,11 @@ export class WorkStatusAddEditComponent implements OnInit {
         if (this.showinNewTab) {
           localStorage.setItem('dataModifiedInNewTabWorkStatus', 'true');
           if (!nuevo) window.close();
-        } else {
-          if (nuevo) {
+        } else if (nuevo) {
             this.fg.reset();
           } else {
             this.navigationService.goback();
           }
-        }
       },
       error: (error) => {
         console.error('Error:', error);

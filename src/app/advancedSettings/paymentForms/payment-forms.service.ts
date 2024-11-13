@@ -14,7 +14,7 @@ export class PaymentFormsService {
     return this.http.post<any>(`${backendConfig.url}/paymentForms`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.post<any>(`${backendConfig.url}/paymentForms`, payload);
+    return this.http.put<any>(`${backendConfig.url}/paymentForms`, payload);
   }
 
   getAll(): Observable<any> {

@@ -4,7 +4,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { BillStatusService } from '../bill-status.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -29,13 +28,13 @@ export class BillStatusAddEditComponent implements OnInit {
   shoWButtonSaveAndNew = false;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private billStatusSrv: BillStatusService,
-    private darkModeService: StyleManager,
-    private router: Router,
-    private windowService: WindowService
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly billStatusSrv: BillStatusService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router,
+    private readonly windowService: WindowService
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -74,7 +73,7 @@ export class BillStatusAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
       this.shoWButtonSaveAndNew = false;
     }
 
@@ -191,43 +190,39 @@ export class BillStatusAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        isPaid: this.fg!.get('isPaid')?.value === undefined ? false : this.fg!.get('isPaid')?.value,
-        isReturned: this.fg!.get('isReturned')?.value === undefined ? false : this.fg!.get('isReturned')?.value,
-        isPending: this.fg!.get('isPending')?.value === undefined ? false : this.fg!.get('isPending')?.value,
-        isSent: this.fg!.get('isSent')?.value === undefined ? false : this.fg!.get('isSent')?.value,
-        isUnPaid: this.fg!.get('isUnPaid')?.value === undefined ? false : this.fg!.get('isUnPaid')?.value,
+        name: this.fg.get('name')?.value,
+        isPaid: this.fg.get('isPaid')?.value === undefined ? false : this.fg.get('isPaid')?.value,
+        isReturned: this.fg.get('isReturned')?.value === undefined ? false : this.fg.get('isReturned')?.value,
+        isPending: this.fg.get('isPending')?.value === undefined ? false : this.fg.get('isPending')?.value,
+        isSent: this.fg.get('isSent')?.value === undefined ? false : this.fg.get('isSent')?.value,
+        isUnPaid: this.fg.get('isUnPaid')?.value === undefined ? false : this.fg.get('isUnPaid')?.value,
       }
-      myobs = this.billStatusSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        isPaid: this.fg!.get('isPaid')?.value,
-        isReturned: this.fg!.get('isReturned')?.value,
-        isSent: this.fg!.get('isSent')?.value,
-        isUnPaid: this.fg!.get('isUnPaid')?.value,
-        isPending: this.fg!.get('isPending')?.value,
+        name: this.fg.get('name')?.value,
+        isPaid: this.fg.get('isPaid')?.value,
+        isReturned: this.fg.get('isReturned')?.value,
+        isSent: this.fg.get('isSent')?.value,
+        isUnPaid: this.fg.get('isUnPaid')?.value,
+        isPending: this.fg.get('isPending')?.value,
       }
-      myobs = this.billStatusSrv.edit(payload);
     }
+    const myobs = this.row.id === 0 ? this.billStatusSrv.add(payload) : this.billStatusSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -258,13 +253,11 @@ export class BillStatusAddEditComponent implements OnInit {
           localStorage.setItem('dataModifiedInNewTabBillStatements', 'true');
           this.showinNewTab = false
           if (!nuevo) window.close();
-        } else {
-          if (nuevo) {
+        } else if (nuevo) {
             this.fg.reset();
           } else {
             this.navigationService.goback();
           }
-        }
       },
       error: (error) => {
         console.error('Error:', error);

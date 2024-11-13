@@ -1,29 +1,30 @@
-# Usa una imagen base de Node.js
+# Usar la imagen oficial de Node.js como base
 FROM node:20 AS build
 
-# Establece el directorio de trabajo
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copia el package.json y package-lock.json
+# Copiar package.json y package-lock.json
 COPY package*.json ./
 
-# Instala las dependencias
+# Instalar las dependencias
 RUN npm install --force
 
-# Copia el resto de la aplicación
+# Copiar el resto de la aplicación
 COPY . .
 
-# Construye la aplicación
-RUN npm run build -- --configuration production
+# Construir la aplicación
+RUN npm run build:prod
 
-# Usa una imagen de Nginx para servir la aplicación
+# Usar una imagen ligera de Nginx para servir la aplicación
 FROM nginx:alpine
 
-# Copia los archivos construidos al servidor Nginx
+# Copiar los archivos construidos al directorio de Nginx
 COPY --from=build /app/dist/berfire-frontend/browser /usr/share/nginx/html
 
-# Expone el puerto 8085
-EXPOSE 8085
+# Exponer el puerto 80
+EXPOSE 80
 
-# Comando para iniciar Nginx
+# Comando para ejecutar Nginx
 CMD ["nginx", "-g", "daemon off;"]
+

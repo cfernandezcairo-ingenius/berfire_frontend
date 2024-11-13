@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { AlbaranesService } from '../albaranes.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -26,12 +25,12 @@ export class AlbaranesAddEditComponent implements OnInit {
   showinNewTab = false;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private albaranesSrv: AlbaranesService,
-    private darkModeService: StyleManager,
-    private router: Router
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly albaranesSrv: AlbaranesService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -62,7 +61,7 @@ export class AlbaranesAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
     }
 
     this.fields = [
@@ -211,41 +210,37 @@ export class AlbaranesAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
   onSubmit(model:any) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        lastname: this.fg!.get('lastname')?.value,
-        email: this.fg!.get('email')?.value,
-        address: this.fg!.get('address')?.value,
-        mobile: this.fg!.get('mobile')?.value,
+        name: this.fg.get('name')?.value,
+        lastname: this.fg.get('lastname')?.value,
+        email: this.fg.get('email')?.value,
+        address: this.fg.get('address')?.value,
+        mobile: this.fg.get('mobile')?.value,
       }
-      myobs = this.albaranesSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        lastname: this.fg!.get('lastname')?.value,
-        email: this.fg!.get('email')?.value,
-        address: this.fg!.get('address')?.value,
-        mobile: this.fg!.get('mobile')?.value,
+        name: this.fg.get('name')?.value,
+        lastname: this.fg.get('lastname')?.value,
+        email: this.fg.get('email')?.value,
+        address: this.fg.get('address')?.value,
+        mobile: this.fg.get('mobile')?.value,
       }
-      myobs = this.albaranesSrv.edit(payload);
     }
+    const myobs = this.row.id === 0 ? this.albaranesSrv.add(payload) : this.albaranesSrv.edit(payload)
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

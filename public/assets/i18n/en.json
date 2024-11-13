@@ -70,7 +70,11 @@
       "PROVINCE": "Province",
       "ACTIVE": "Active",
       "DURATION": "Duration",
-      "ISWARNING": "is Warning"
+      "ISWARNING": "is Warning",
+      "TITLE": "Title",
+      "VALUE": "Value",
+      "SURCHARGE": "Surcharge",
+      "ISIGIC": "iS IGIC"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required",

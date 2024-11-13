@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { backendConfig } from '../../app.config';
 
@@ -8,13 +8,13 @@ import { backendConfig } from '../../app.config';
 })
 export class BanksService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   add(payload: any): Observable<any> {
     return this.http.post<any>(`${backendConfig.url}/banks`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.post<any>(`${backendConfig.url}/banks`, payload);
+    return this.http.put<any>(`${backendConfig.url}/banks`, payload);
   }
 
   getAll(): Observable<any> {

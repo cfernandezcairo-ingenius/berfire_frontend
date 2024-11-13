@@ -8,7 +8,7 @@ import { backendConfig } from '../../app.config';
 })
 export class DeliveryNoteStatesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
@@ -16,7 +16,7 @@ export class DeliveryNoteStatesService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/DeliveryNoteStates`, payload);
+    return this.http.put<any>(`${backendConfig.url}/DeliveryNoteStates`, payload);
   }
 
   getAll(): Observable<any> {

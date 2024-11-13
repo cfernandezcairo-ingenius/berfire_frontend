@@ -19,11 +19,11 @@ export class BanksDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private translate: TranslateService,
-    private darkModeService: StyleManager,
-    private banksSrv: BanksService,
-    private navigationSrv: NavigationService
+    private readonly route: ActivatedRoute,
+    private readonly translate: TranslateService,
+    private readonly darkModeService: StyleManager,
+    private readonly banksSrv: BanksService,
+    private readonly navigationSrv: NavigationService
   ) {
     this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.id = JSON.parse(params['id']);

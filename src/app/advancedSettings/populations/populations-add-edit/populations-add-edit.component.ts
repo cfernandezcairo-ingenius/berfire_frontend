@@ -29,13 +29,13 @@ export class PopulationsAddEditComponent implements OnInit {
   shoWButtonSaveAndNew = false;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private populationsService: PopulationsService,
-    private darkModeService: StyleManager,
-    private router: Router,
-    private windowService: WindowService
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly populationsService: PopulationsService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router,
+    private readonly windowService: WindowService
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -70,7 +70,7 @@ export class PopulationsAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
       this.shoWButtonSaveAndNew = false;
     }
 
@@ -191,19 +191,19 @@ export class PopulationsAddEditComponent implements OnInit {
     let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        country: this.fg!.get('country')?.value,
-        province: this.fg!.get('province')?.value,
-        active: this.fg!.get('active')?.value === undefined ? false : this.fg!.get('active')?.value,
+        name: this.fg.get('name')?.value,
+        country: this.fg.get('country')?.value,
+        province: this.fg.get('province')?.value,
+        active: this.fg.get('active')?.value === undefined ? false : this.fg.get('active')?.value,
       }
       myobs = this.populationsService.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        name: this.fg!.get('name')?.value,
-        country: this.fg!.get('country')?.value,
-        province: this.fg!.get('province')?.value,
-        active: this.fg!.get('active')?.value,
+        name: this.fg.get('name')?.value,
+        country: this.fg.get('country')?.value,
+        province: this.fg.get('province')?.value,
+        active: this.fg.get('active')?.value,
       }
       myobs = this.populationsService.edit(payload);
     }

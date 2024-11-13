@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { ContractsTypesService } from '../contracts-types.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -29,12 +27,12 @@ export class ContractsTypesAddEditComponent implements OnInit {
   shoWButtonSaveAndNew = true;
 
   constructor(
-    private translate: TranslateService,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService,
-    private contractsTypesSrv: ContractsTypesService,
-    private darkModeService: StyleManager,
-    private router: Router
+    private readonly translate: TranslateService,
+    private readonly route: ActivatedRoute,
+    private readonly navigationService: NavigationService,
+    private readonly contractsTypesSrv: ContractsTypesService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -69,7 +67,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = Object.assign({}, this.row);
+      this.model = { ...this.row};
       this.shoWButtonSaveAndNew = false;
     }
 
@@ -157,36 +155,32 @@ export class ContractsTypesAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
   onSubmit(model:any, nuevo: boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
-        name: this.fg!.get('name')?.value,
-        duration: Number(this.fg!.get('duration')?.value),
-        isWarning:  this.fg!.get('isWarning')?.value === undefined ? false : this.fg!.get('isWarning')?.value,
+        name: this.fg.get('name')?.value,
+        duration: Number(this.fg.get('duration')?.value),
+        isWarning:  this.fg.get('isWarning')?.value === undefined ? false : this.fg.get('isWarning')?.value,
       }
-      myobs = this.contractsTypesSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
-        duration: Number(this.fg!.get('duration')?.value),
-        isWarning:  this.fg!.get('isWarning')?.value
+        duration: Number(this.fg.get('duration')?.value),
+        isWarning:  this.fg.get('isWarning')?.value
       }
-      myobs = this.contractsTypesSrv.edit(payload);
     }
+    const myobs = this.row.id === 0 ? this.contractsTypesSrv.add(payload) : this.contractsTypesSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -214,13 +208,11 @@ export class ContractsTypesAddEditComponent implements OnInit {
           localStorage.setItem('dataModifiedInNewTabContractsTypes', 'true');
           this.showinNewTab = false
           if (!nuevo) window.close();
-        } else {
-          if (nuevo) {
+        } else if (nuevo) {
             this.fg.reset();
           } else {
             this.navigationService.goback();
           }
-        }
       },
       error: (error) => {
         console.error('Error:', error);

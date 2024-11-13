@@ -19,11 +19,11 @@ export class DeliveryNoteStatesDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private translate: TranslateService,
-    private darkModeService: StyleManager,
-    private deliveryNoteStatesSrv: DeliveryNoteStatesService,
-    private navigationSrv: NavigationService
+    private readonly route: ActivatedRoute,
+    private readonly translate: TranslateService,
+    private readonly darkModeService: StyleManager,
+    private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
+    private readonly navigationSrv: NavigationService
   ) {
     this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.id = JSON.parse(params['id']);

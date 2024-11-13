@@ -42,10 +42,10 @@ export class BanksListComponent implements OnInit {
   displayedLabelsEn = ['','Name', 'Swift code', 'Iban Code'];
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private banksSrv: BanksService
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly banksSrv: BanksService
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;

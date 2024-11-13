@@ -29,7 +29,7 @@ export class AlbaranesListComponent implements OnInit {
   todoListo = false;
 
   constructor(
-    private darkModeService: StyleManager,
+    private readonly darkModeService: StyleManager,
     private navigationSrv: NavigationService,
     private translate: TranslateService,
     private albaranesSrv: AlbaranesService

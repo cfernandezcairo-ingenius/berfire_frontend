@@ -45,10 +45,10 @@ export class BillStatusListComponent implements OnInit {
   displayedLabelsEn = ['','Name', 'is Paid', 'is returned', 'is pending', 'is sent', 'is unpaid'];
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private billStatusSrv:BillStatusService
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly billStatusSrv:BillStatusService
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;

@@ -10,7 +10,7 @@ import { FacturasDataSource } from './facturas-list/facturas-datasource';
 })
 export class FacturasService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
@@ -18,7 +18,7 @@ export class FacturasService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/facturas/edit`, payload);
+    return this.http.put<any>(`${backendConfig.url}/facturas/edit`, payload);
   }
 
   getAll(): Observable<any> {

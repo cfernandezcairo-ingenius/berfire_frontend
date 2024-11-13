@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {Location } from '@angular/common';
 
 @Injectable({
@@ -8,8 +8,8 @@ import {Location } from '@angular/common';
 export class NavigationService {
 
     constructor(
-        private _router: Router,
-        private location: Location
+        private readonly _router: Router,
+        private readonly location: Location
     ) {}
 
     public NavigateTo(url: string) {

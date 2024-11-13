@@ -17,6 +17,6 @@ export class ClientsService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/invoice/edit`, payload);
+    return this.http.put<any>(`${backendConfig.url}/invoice/edit`, payload);
   }
 }
