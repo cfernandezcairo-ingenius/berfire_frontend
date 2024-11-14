@@ -70,19 +70,20 @@
       "PROVINCE": "Provincia",
       "ACTIVE": "Activo",
       "DURATION": "Duración",
-      "ISWARNING": "Advertencia",
+      "ISWARNING": "Es aviso",
       "TITLE": "Titulo",
       "VALUE": "Valor",
       "SURCHARGE": "Recargo",
-      "ISIGIC": "Es IGIC"
+      "ISIGIC": "Es IGIC",
+      "FIELD": "Campo"
     },
     "VALIDATION": {
-      "REQUIRED": "El valor del campo es requerido",
-      "MIN_LENGTH": "El valor debe ser mayor que {{minLength}} caracteres",
-      "EMAIL": "El formato no parece correcto",
-      "MAX_LENGTH": "La longitud maxima es de 30 caracteres",
-      "MOBILE": "El formato no parece correcto",
-      "NUMBER": "El valor debe ser un número"
+      "REQUIRED": "El valor del campo es requerido.",
+      "MIN_LENGTH": "El valor debe ser mayor que {{minLength}} caracteres.",
+      "EMAIL": "El formato no parece correcto.",
+      "MAX_LENGTH": "La longitud maxima es de 30 caracteres.",
+      "MOBILE": "El formato no parece correcto.",
+      "NUMBER": "El valor debe ser un número."
     }
   },
   "menu": {
@@ -111,6 +112,12 @@
     "pvpRates": "Tarifas PVP",
     "clients-types": "Tipos de clientes",
     "contracts-types": "Tipos de contratos"
+  },
+  "error": {
+    "messages": {
+      "IsUniqueValidator": "El valor ya existe en la Base de Datos.",
+      "IsInt": "El valor del campo debe ser numérico"
+    }
   }
 }
 

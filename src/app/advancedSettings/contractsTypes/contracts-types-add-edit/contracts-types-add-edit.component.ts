@@ -8,6 +8,7 @@ import { ContractsTypesService } from '../contracts-types.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
+import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
@@ -106,11 +107,12 @@ export class ContractsTypesAddEditComponent implements OnInit {
               required:true
             },
             validators: {
-              validation: ['required'],
+              validation: ['required','number'],
             },
             validation: {
               messages: {
                 required: this.translate.get('FORM.VALIDATION.REQUIRED'),
+                number: this.translate.get('FORM.VALIDATION.NUMBER')
               },
             },
           },
@@ -157,10 +159,12 @@ export class ContractsTypesAddEditComponent implements OnInit {
         field.fieldGroup.forEach((fG: any) => {
           if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
+            fG.validation.messages.number = this.translate.instant('FORM.VALIDATION.NUMBER');
           }
         });
       } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
+          field.validation.messages.number = this.translate.instant('FORM.VALIDATION.NUMBER');
         }
     });
   }
@@ -215,16 +219,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
           }
       },
       error: (error) => {
-        console.error('Error:', error);
-        Swal.fire({
-          title: this.translate.instant('inform'),
-          text: this.translate.instant('save_error'),
-          icon: 'error',
-          showConfirmButton:true,
-          confirmButtonText: 'OK',
-          background: this.darkMode ? '#444' : '#fff',
-          color: this.darkMode ? '#fff' : '#000',
-        })
+        HandleMessagesSubmit(this.translate, error);
       },
     });
   }

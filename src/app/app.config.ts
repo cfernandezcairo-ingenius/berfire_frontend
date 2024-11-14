@@ -81,7 +81,7 @@ export const appConfig: ApplicationConfig = {
           },},
           {name: 'number', validation: (control) => {
             const numberPattern =  /\d{1,3}/;
-            return numberPattern.test(control.value) ? null : { mobile: true }
+            return numberPattern.test(control.value) ? null : { number: true }
           },}
         ],
         // validationMessages: [
@@ -94,7 +94,6 @@ export const appConfig: ApplicationConfig = {
         types: [
           { name: 'passwordToggleVisible', component: PasswordToggleVisibleFieldType },
           { name: 'passwordToggleVisibleMat', component: PasswordToggleVisibleMatFieldType},
-          { name: 'integer-input', component: IntegerInputComponent}
         ],
       }),
       ReactiveFormsModule,

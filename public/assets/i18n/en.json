@@ -74,15 +74,16 @@
       "TITLE": "Title",
       "VALUE": "Value",
       "SURCHARGE": "Surcharge",
-      "ISIGIC": "iS IGIC"
+      "ISIGIC": "iS IGIC",
+      "FIELD": "FIELD"
     },
     "VALIDATION": {
-      "REQUIRED": "Data in the field is required",
-      "MIN_LENGTH": "Data must be larger than {{minLength}} characters",
-      "EMAIL": "Format is not correct",
-      "MAX_LENGTH": "The length of field must be less than 30 caracters",
-       "MOBILE": "Format is not correct",
-       "NUMBER": "Data must be a number"
+      "REQUIRED": "Data in the field is required'",
+      "MIN_LENGTH": "Data must be larger than {{minLength}} characters'",
+      "EMAIL": "Format is not correct.",
+      "MAX_LENGTH": "The length of field must be less than 30 caracters'",
+       "MOBILE": "Format is not correct.",
+       "NUMBER": "Data must be a number."
     }
   },
   "menu": {
@@ -111,5 +112,11 @@
     "pvpRates": "PVP rates",
     "clients-types": "clients types",
     "contracts-types": "Contracts types"
+  },
+  "error": {
+    "messages": {
+      "IsUniqueValidator": "Value exists in Database.",
+      "IsInt": "Data must be a number."
+    }
   }
 }

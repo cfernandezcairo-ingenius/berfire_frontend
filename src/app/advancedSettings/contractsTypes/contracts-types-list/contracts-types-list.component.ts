@@ -35,8 +35,8 @@ export class ContractsTypesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Duración','Advertencia'];
-  displayedLabelsEs = ['','Nombre', 'Duración', 'Advertencia'];
+  displayedLabels = ['','Nombre', 'Duración','Es aviso'];
+  displayedLabelsEs = ['','Nombre', 'Duración', 'Es aviso'];
   displayedLabelsEn = ['','Nombre', 'Duration', 'isWarning'];
 
   constructor(

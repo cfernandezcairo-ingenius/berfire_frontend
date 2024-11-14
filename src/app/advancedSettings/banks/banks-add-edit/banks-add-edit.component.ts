@@ -8,6 +8,7 @@ import { BanksService } from '../banks.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
+import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 
 @Component({
   selector: 'app-banks-add-edit',
@@ -214,16 +215,7 @@ export class BanksAddEditComponent implements OnInit {
           }
       },
       error: (error) => {
-        console.error('Error:', error);
-        Swal.fire({
-          title: this.translate.instant('inform'),
-          text: this.translate.instant('save_error'),
-          icon: 'error',
-          showConfirmButton:true,
-          confirmButtonText: 'OK',
-          background: this.darkMode ? '#444' : '#fff',
-          color: this.darkMode ? '#fff' : '#000',
-        })
+        HandleMessagesSubmit(this.translate, error);
       },
     });
   }

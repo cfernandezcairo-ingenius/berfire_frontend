@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -14,7 +14,7 @@ import { ButtonPrimaryComponent } from "../../button-primary/button-primary.comp
   styleUrl: './formly-material.component.scss',
   encapsulation: ViewEncapsulation.None, // Desactiva el encapsulamiento
 })
-export class FormlyMaterialComponent implements OnInit {
+export class FormlyMaterialComponent {
 [x: string]: any;
   @Input() fields: any;
   @Input() shoWButtonSaveAndNew = false;
@@ -31,12 +31,6 @@ export class FormlyMaterialComponent implements OnInit {
   };
 
   constructor() {}
-
-  ngOnInit(): void {
-    debugger;
-    let sasa = this.shoWButtonSaveAndNew;
-
-  }
 
   toggleShow() {
     this.fields[4].props!.type = this.show ? 'text' : 'password'
