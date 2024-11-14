@@ -116,7 +116,8 @@
   "error": {
     "messages": {
       "IsUniqueValidator": "El valor ya existe en la Base de Datos.",
-      "IsInt": "El valor del campo debe ser numérico"
+      "IsInt": "El valor del campo debe ser numérico",
+      "maxLength": ""
     }
   }
 }

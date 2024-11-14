@@ -1,26 +1,26 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { backendConfig } from '../../app.config';
+import { WindowService } from '../../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopulationsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/populations`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/populations`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${backendConfig.url}/populations`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/populations`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${backendConfig.url}/populations`);
+    return this.http.get<any>(`${this.windowService.apiUrl}/populations`);
     // return new Observable<any>(observer => {
     //   // Simulando un retraso para emular una llamada a una API
     //   setTimeout(() => {
@@ -32,6 +32,6 @@ export class PopulationsService {
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${backendConfig.url}/populations/${id}`);
+    return this.http.delete<any>(`${this.windowService.apiUrl}/populations/${id}`);
   }
 }

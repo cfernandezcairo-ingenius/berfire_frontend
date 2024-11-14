@@ -105,15 +105,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
             key: 'description',
             props: {
               label: 'FORM.FIELDS.DESCRIPTION',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           }
         ],

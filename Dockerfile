@@ -22,9 +22,14 @@ FROM nginx:alpine
 # Copiar los archivos construidos al directorio de Nginx
 COPY --from=build /app/dist/berfire-frontend/browser /usr/share/nginx/html
 
+# Copiar el archivo environment.json
+COPY src/assets/environment.json /usr/share/nginx/html/assets/environment.json
+
+
 # Exponer el puerto 80
 EXPOSE 80
 
 # Comando para ejecutar Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
 

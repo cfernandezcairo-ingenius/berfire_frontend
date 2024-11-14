@@ -2,25 +2,26 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { backendConfig } from '../../app.config';
+import { WindowService } from '../../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaxesService {
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient, private windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/taxes`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/taxes`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${backendConfig.url}/taxes`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/taxes`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${backendConfig.url}/taxes`);
+    return this.http.get<any>(`${this.windowService.apiUrl}/taxes`);
     // return new Observable<any>(observer => {
     //   // Simulando un retraso para emular una llamada a una API
     //   setTimeout(() => {
@@ -32,6 +33,6 @@ export class TaxesService {
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${backendConfig.url}/taxes/${id}`);
+    return this.http.delete<any>(`${this.windowService.apiUrl}/taxes/${id}`);
   }
 }

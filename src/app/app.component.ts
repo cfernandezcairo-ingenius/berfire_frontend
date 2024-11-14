@@ -82,6 +82,9 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       this.translate.use(this.cookieLang);
     }
+    this.windowService.loadConfig().subscribe(config => {
+      this.windowService.setConfig(config);
+    });
   }
 
   ngOnDestroy() {

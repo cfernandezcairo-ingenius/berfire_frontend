@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { backendConfig } from '../app.config';
 import { HttpHeaderClass } from '../share/common/httpHeader';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { WindowService } from '../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 export class AuthService {
   private tokenRenewalInterval: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private windowService: WindowService) { }
 
   login(email: string, password: string): Observable<any> {
     const payload = {
@@ -29,7 +30,7 @@ export class AuthService {
 
   refreshToken(): Observable<any> {
     const accessToken = localStorage.getItem('access_token');
-    return this.http.post<any>(`${backendConfig.url}/refresh-token`,null)
+    return this.http.post<any>(`${this.windowService.apiUrl}/refresh-token`,null)
       .pipe(
         tap((response: { access_token: string }) => {
           localStorage.setItem('access_token', response.access_token);

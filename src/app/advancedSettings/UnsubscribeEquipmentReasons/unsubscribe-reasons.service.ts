@@ -2,25 +2,26 @@ import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { backendConfig } from '../../app.config';
+import { WindowService } from '../../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnsubscribeReasonsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/motivesBE`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/motivesBE`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${backendConfig.url}/motivesBE`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/motivesBE`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${backendConfig.url}/motivesBE`);
+    return this.http.get<any>(`${this.windowService.apiUrl}/motivesBE`);
     // return new Observable<any>(observer => {
     //   // Simulando un retraso para emular una llamada a una API
     //   setTimeout(() => {
@@ -32,6 +33,6 @@ export class UnsubscribeReasonsService {
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${backendConfig.url}/motivesBE/${id}`);
+    return this.http.delete<any>(`${this.windowService.apiUrl}/motivesBE/${id}`);
   }
 }

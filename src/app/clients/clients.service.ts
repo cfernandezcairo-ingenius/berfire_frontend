@@ -13,10 +13,10 @@ export class ClientsService {
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${backendConfig.url}/invoice/add`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/invoice/add`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${backendConfig.url}/invoice/edit`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/invoice/edit`, payload);
   }
 }
