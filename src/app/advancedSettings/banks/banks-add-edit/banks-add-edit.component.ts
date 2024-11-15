@@ -183,11 +183,11 @@ export class BanksAddEditComponent implements OnInit {
       next: (res) => {
         if (res.success === true) {
           Swal.fire({
-            title: this.translate.instant('inform'),
+            title: '',
             text: this.translate.instant('save_ok'),
             icon: 'success',
             showConfirmButton:true,
-            confirmButtonText: 'OK',
+            confirmButtonText: 'Cerrar',
             background: this.darkMode ? '#444' : '#fff',
             color: this.darkMode ? '#fff' : '#000',
           })
