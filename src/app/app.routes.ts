@@ -45,6 +45,9 @@ import { ClientsTypesDeleteComponent } from './advancedSettings/clientsTypes/cli
 import { ContractsTypesListComponent } from './advancedSettings/contractsTypes/contracts-types-list/contracts-types-list.component';
 import { ContractsTypesAddEditComponent } from './advancedSettings/contractsTypes/contracts-types-add-edit/contracts-types-add-edit.component';
 import { ContractsTypesDeleteComponent } from './advancedSettings/contractsTypes/contracts-types-delete/contracts-types-delete.component';
+import { TaxesAddEditComponent } from './advancedSettings/taxes/taxes-add-edit/taxes-add-edit.component';
+import { TaxesListComponent } from './advancedSettings/taxes/taxes-list/taxes-list.component';
+import { TaxesDeleteComponent } from './advancedSettings/taxes/taxes-delete/taxes-delete.component';
 
 export const routes: Routes = [
 
@@ -109,5 +112,9 @@ export const routes: Routes = [
   { path: 'contracts-types/list', component: ContractsTypesListComponent, canActivate: [AuthGuard]},
   { path: 'contracts-types/edit/:id', component: ContractsTypesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'contracts-types/delete/:id', component: ContractsTypesDeleteComponent , canActivate: [AuthGuard]},
-  { path: 'contracts-types/edit/new/:id', component: ContractsTypesAddEditComponent, canActivate: [AuthGuard]}
+  { path: 'contracts-types/edit/new/:id', component: ContractsTypesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'taxes/list', component: TaxesListComponent, canActivate: [AuthGuard]},
+  { path: 'taxes/edit/:id', component: TaxesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'taxes/delete/:id', component: TaxesDeleteComponent , canActivate: [AuthGuard]},
+  { path: 'taxes/edit/new/:id', component: TaxesAddEditComponent, canActivate: [AuthGuard]}
 ];

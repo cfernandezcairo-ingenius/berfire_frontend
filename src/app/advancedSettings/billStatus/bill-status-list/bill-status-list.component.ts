@@ -18,6 +18,11 @@ export interface IBillStatements {
   isUnPaid: boolean
 }
 
+export interface IFilter {
+  field: string,
+  value: string
+}
+
 
 @Component({
   selector: 'app-bill-status-list',
@@ -43,6 +48,7 @@ export class BillStatusListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
   displayedLabelsEs = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
   displayedLabelsEn = ['','Name', 'is Paid', 'is returned', 'is pending', 'is sent', 'is unpaid'];
+  filter: IFilter[] = [];
 
   constructor(
     private readonly darkModeService: StyleManager,
@@ -120,6 +126,21 @@ export class BillStatusListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/invoice-status/edit/${row}`)
+  }
+
+  filterData(event: IFilter) {
+    debugger;
+    let filterTmp: IFilter[] = [];
+    if (this.filter.length === 0) {
+      this.filter.push(event);
+      return;
+    }
+    this.filter.map(f=> {
+      if (f.field === event.field && f.value !== '') {
+        filterTmp.push({field:event.field,value: event.value});
+      }
+    });
+    this.filter = filterTmp;
   }
 
 }

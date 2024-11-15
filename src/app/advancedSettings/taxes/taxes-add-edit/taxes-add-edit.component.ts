@@ -65,7 +65,7 @@ export class TaxesAddEditComponent implements OnInit {
       //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
       this.model = {
-        active: false,
+        isIGIC: false,
       }
     } else {
       //edit

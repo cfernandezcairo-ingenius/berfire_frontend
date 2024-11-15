@@ -15,7 +15,7 @@ export class ButtonAddComponent implements OnInit {
   @Output() newItem = new EventEmitter();
   darkMode = false;
 
-  constructor( private darkModeService: StyleManager){}
+  constructor( private readonly darkModeService: StyleManager){}
 
   ngOnInit(): void {
     this.darkModeService.darkMode$.subscribe(dark => {

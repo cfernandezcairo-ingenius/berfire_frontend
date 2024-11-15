@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { MatTableModule, MatTable } from '@angular/material/table';
+import { Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { MatTableDataSource, MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatIcon } from '@angular/material/icon';
@@ -8,19 +8,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NavigationService } from '../../../../navigation/shared/services/navigation.service';
-import { ButtonIconPrimaryComponent } from '../button-icon-primary/button-icon-primary.component';
 import { StyleManager } from '../../../services/style-manager.service';
-import { ButtonAddComponent } from '../button-add/button-add.component';
-import { PdfGeneratorComponent } from '../export/pdf-generator/pdf-generator.component';
-import { XlsGeneratorComponent } from '../export/xls-generator/xls-generator.component';
 import { WindowService } from '../../../services/window.service';
 import { ModalMenuComponent } from "../modal-menu/modal-menu.component";
 import { MatTableMobileComponent } from '../mat-table-mobile/mat-table-mobile.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
@@ -34,10 +28,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatButtonModule,
     MatMenuModule,
     TranslateModule,
-    ButtonIconPrimaryComponent,
-    ButtonAddComponent,
-    PdfGeneratorComponent,
-    XlsGeneratorComponent,
     ModalMenuComponent,
     MatTableMobileComponent,
     MatFormFieldModule,
@@ -59,6 +49,7 @@ export class TableListComponent implements OnInit, OnChanges {
   @Output() editRow = new EventEmitter();
   @Output() editRowNueva = new EventEmitter();
   @Output() addRow = new EventEmitter();
+  @Output() filter = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -67,8 +58,8 @@ export class TableListComponent implements OnInit, OnChanges {
   private offsetX: number = 0;
   private offsetY: number = 0;
   // Almacena las referencias a las funciones
-  private mouseMoveHandler?: ((e: MouseEvent) => void);
-  private mouseUpHandler?: (() => void);
+  private readonly mouseMoveHandler?: ((e: MouseEvent) => void);
+  private readonly mouseUpHandler?: (() => void);
 
   dataSourceShow = new MatTableDataSource<any>();
 
@@ -81,11 +72,11 @@ export class TableListComponent implements OnInit, OnChanges {
   fg: FormGroup;
 
   constructor(
-    private darkModeService: StyleManager,
-    private translate: TranslateService,
-    private windowService: WindowService,
-    private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private readonly darkModeService: StyleManager,
+    private readonly translate: TranslateService,
+    private readonly windowService: WindowService,
+    private readonly fb: FormBuilder,
+    private readonly cdr: ChangeDetectorRef
   ){
     this.darkModeService.darkMode$.subscribe((dark: boolean) => {
       this.darkMode = dark;
@@ -169,8 +160,9 @@ export class TableListComponent implements OnInit, OnChanges {
     this.editRowNueva.emit(row);
   }
 
-  applyFilter(event:any) {
-    debugger;
+  applyFilter(event:any, field: string) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filter.emit({field: field, value: filterValue});
   }
 
   delete(id: number) {
@@ -202,7 +194,7 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   getChecked(value: any) {
-    return value == true;
+    return value === true;
   }
 
   // moverDiv(e:any) {

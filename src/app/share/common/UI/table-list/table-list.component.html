@@ -1,12 +1,5 @@
 <div *ngIf="!isMobile">
   <div class="mat-elevation-z2" style="margin-top: 50px;" [ngStyle]="darkMode ? { 'background-color': 'black', color: 'white'} : {}">
-    <div class="searchClass">
-      <form [formGroup]="fg">
-      <mat-form-field style="margin-left: 20px;width: 50%;height: 70px;" appearance="fill">
-        <input matInput placeholder="Filter" formControlName="filter">
-      </mat-form-field>
-      </form>
-    </div>
     <table style="display: inline-table;" mat-table [dataSource]="dataSourceShow" class="full-width-table" matSort>
       @for (column of displayedColumns; track column;let index = $index,e = $even) {
         @if (column === 'id') {
@@ -27,6 +20,9 @@
           <ng-container [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{displayedLabels[index]}}
+              <mat-form-field style="width: 100px;margin-left: 10px;height: 65px;opacity: 0.5;">
+                <input matInput (keyup)="applyFilter($event, displayedLabels[index])" placeholder="Filtrar..">
+              </mat-form-field>
             </th>
             <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
               <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString() != 'true' && row[column] === null ? '' : row[column].toString() != 'false'))">{{row[column]}}
@@ -65,9 +61,6 @@
       <app-mat-table-mobile [data]="data" [title]="titleMobileList" [subtitle]="'list'" (editEvent)="edit($event)" (deleteEvent)="delete($event)"></app-mat-table-mobile>
     </div>
   }
-  <div style="position: relative;z-index: 99999;">
-    <app-button-add (newItem)="addItem()"></app-button-add>
-  </div>
 </div>
 
 
