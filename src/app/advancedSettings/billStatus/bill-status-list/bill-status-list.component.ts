@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { BillStatusService } from '../bill-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface IBillStatements {
   id: number,
@@ -49,12 +50,14 @@ export class BillStatusListComponent implements OnInit {
   displayedLabelsEs = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
   displayedLabelsEn = ['','Name', 'is Paid', 'is returned', 'is pending', 'is sent', 'is unpaid'];
   filter: IFilter[] = [];
+  fg: FormGroup
 
   constructor(
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
-    private readonly billStatusSrv:BillStatusService
+    private readonly billStatusSrv:BillStatusService,
+    private readonly fb: FormBuilder,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -65,6 +68,17 @@ export class BillStatusListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      isPaid: [],
+      isReturned: [''],
+      isPending: [''],
+      isSent: [''],
+      isUnPaid: ['']
+    });
+    this.fg.valueChanges.subscribe((f:any) => {
+      debugger;
     });
   }
 

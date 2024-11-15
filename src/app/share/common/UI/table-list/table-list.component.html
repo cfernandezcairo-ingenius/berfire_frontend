@@ -17,21 +17,24 @@
           </ng-container>
         }
         @else {
-          <ng-container [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              {{displayedLabels[index]}}
-              <mat-form-field style="width: 100px;margin-left: 10px;height: 65px;opacity: 0.5;">
-                <input matInput (keyup)="applyFilter($event, displayedLabels[index])" placeholder="Filtrar..">
-              </mat-form-field>
-            </th>
-            <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
-              <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString() != 'true' && row[column] === null ? '' : row[column].toString() != 'false'))">{{row[column]}}
-              </div>
-              <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString()) == 'true' || (row[column] === null ? '' :row[column].toString()) == 'false')">
-                <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
-              </div>
-            </td>
-          </ng-container>
+          <form [formGroup]="fg">
+            <ng-container [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <!-- {{displayedLabels[index]}} -->
+                <mat-form-field floatLabel="auto" style="width: 120px;margin-left: 10px;height: 65px;">
+                  <mat-label>{{displayedLabels[index]}}</mat-label>
+                  <input matInput  placeholder="" [formControlName] = "displayedColumns[index]">
+                </mat-form-field>
+              </th>
+              <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
+                <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString() != 'true' && row[column] === null ? '' : row[column].toString() != 'false'))">{{row[column]}}
+                </div>
+                <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString()) == 'true' || (row[column] === null ? '' :row[column].toString()) == 'false')">
+                  <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
+                </div>
+              </td>
+            </ng-container>
+          </form>
         }
       }
 
@@ -49,8 +52,14 @@
     </mat-paginator>
   </div>
   <div #movible class="movibleClass">
-    <button (click)="addItem()" mat-icon-button class="rotate-button" [ngStyle]="darkMode ? { 'background-color': '#58C472', color: 'white'} : { 'background-color': '#1C75BC'}">
-      <mat-icon class="rotate-icon">add</mat-icon>
+    <button class="rotate-button" style="right: 120px;background-color:#1C75BC;" (click)="addItem()" mat-icon-button matTooltip="Agregar registro">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button style="right: 60px; top:-40px;background-color:#1C75BC;" (click)="search()" mat-icon-button matTooltip="Buscar">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button style="top:-80px;background-color:#1C75BC;color: red;" (click)="cleanSearch()" mat-icon-button matTooltip="Limpiar">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
 </div>

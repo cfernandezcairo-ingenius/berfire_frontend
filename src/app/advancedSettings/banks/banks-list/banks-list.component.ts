@@ -37,9 +37,9 @@ export class BanksListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Código swift', 'Código Iban'];
-  displayedLabelsEs = ['','Nombre', 'Código swift', 'Código Iban'];
-  displayedLabelsEn = ['','Name', 'Swift code', 'Iban Code'];
+  displayedLabels = ['','Nombre', 'Swift', 'Iban'];
+  displayedLabelsEs = ['','Nombre', 'Swift', 'Iban'];
+  displayedLabelsEn = ['','Name', 'Swift', 'Iban'];
 
   constructor(
     private readonly darkModeService: StyleManager,

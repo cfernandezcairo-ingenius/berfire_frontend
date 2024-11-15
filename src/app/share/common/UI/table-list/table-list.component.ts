@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-table-list',
@@ -34,7 +35,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
 ],
   templateUrl: './table-list.component.html',
   styleUrl: './table-list.component.scss',
@@ -45,10 +47,12 @@ export class TableListComponent implements OnInit, OnChanges {
   @Input() dataInput: any;
   @Input() displayedLabels: string[] = [];
   @Input() titleMobileList: string = '';
+  @Input() fg:FormGroup = new FormGroup({});
   @Output() deleteRow = new EventEmitter();
   @Output() editRow = new EventEmitter();
   @Output() editRowNueva = new EventEmitter();
   @Output() addRow = new EventEmitter();
+  @Output() searchData = new EventEmitter();
   @Output() filter = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -69,7 +73,6 @@ export class TableListComponent implements OnInit, OnChanges {
   isMobile = false;
   isTablet = false;
   isPC = true;
-  fg: FormGroup;
 
   constructor(
     private readonly darkModeService: StyleManager,
@@ -84,12 +87,6 @@ export class TableListComponent implements OnInit, OnChanges {
     this.isMobile = windowService.isDeviceMobile;
     this.isTablet = windowService.isDeviceTablet;
     this.isPC = windowService.isDevicePC;
-    this.fg = this.fb.group({
-      filter: ['']
-    });
-    this.fg.controls['filter'].valueChanges.subscribe(f=> {
-      this.dataSourceShow.data = this.filterData(this.dataInput.data, f);
-    });
     this.mouseMoveHandler = this.onMouseMove.bind(this);
     this.mouseUpHandler = this.onMouseUp.bind(this);
    }
@@ -104,7 +101,9 @@ export class TableListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.displayedColumns = Object.keys(this.dataInput.data[0]);
     this.dataSourceShow.data = this.dataInput.data;
-
+    this.displayedColumns.map(d => {
+      this.fg.addControl(d, this.fb.control(''));
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -141,16 +140,16 @@ export class TableListComponent implements OnInit, OnChanges {
     document.removeEventListener('mouseup', this.mouseMoveHandler!);
   }
 
-  filterData(array:any, searchTerm:string) {
-    return array.filter((item:any) => {
-      // Convertir el término de búsqueda a minúsculas
-      const lowerCaseTerm = searchTerm.toLowerCase();
-      // Comprobar si el término de búsqueda está en algún campo del objeto
-      return Object.values(item).some(value =>
-        String(value).toLowerCase().includes(lowerCaseTerm)
-      );
-    });
-  }
+  // filterData(array:any, searchTerm:string) {
+  //   return array.filter((item:any) => {
+  //     // Convertir el término de búsqueda a minúsculas
+  //     const lowerCaseTerm = searchTerm.toLowerCase();
+  //     // Comprobar si el término de búsqueda está en algún campo del objeto
+  //     return Object.values(item).some(value =>
+  //       String(value).toLowerCase().includes(lowerCaseTerm)
+  //     );
+  //   });
+  // }
 
   edit(row:any) {
     this.editRow.emit(row);
@@ -183,6 +182,14 @@ export class TableListComponent implements OnInit, OnChanges {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.addRow.emit(row);
+  }
+
+  search() {
+    this.searchData.emit();
+  }
+
+  cleanSearch() {
+    this.fg.reset();
   }
 
   goToFirstPage() {
