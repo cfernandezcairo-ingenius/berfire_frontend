@@ -16,7 +16,7 @@ export class BanksService {
     return this.http.post<any>(`${this.windowService.apiUrl}/banks`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.put<any>(`${this.windowService.apiUrl}/banks`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/banks/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {
