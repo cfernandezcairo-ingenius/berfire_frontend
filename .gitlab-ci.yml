@@ -35,7 +35,7 @@ deploy-docker-job:
 #####  only:
 #####    - /^develop$/
   # Run this job in a main-branch where a Dockerfile exists
-  #rules:
-  #  - if: $CI_COMMIT_BRANCH == "develop"
-      #exists:
-      #  - Dockerfile
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      exists:
+        - Dockerfile
