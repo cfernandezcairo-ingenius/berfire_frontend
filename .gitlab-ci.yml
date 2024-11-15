@@ -1,0 +1,41 @@
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+# This folder is cached between builds
+# https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+cache:
+  paths:
+    - node_modules/
+
+stages:          # List of stages for jobs, and their order of execution
+  - deploy
+
+deploy-docker-job:
+  # Use the official docker image.
+  image: docker:cli
+  stage: deploy
+  tags:
+    - shell
+  environment: development
+  #services:
+  #  - docker:dind
+  variables:
+    DOCKER_IMAGE_NAME: "berfire_front_test"
+  #####before_script:
+  #####  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
+  # Default branch is also tagged with `latest`
+  script:
+    - echo "Deploying application..."
+    - docker container remove berfire_frontend_angular-app_1 -f     #$(docker ps -a | grep $CI_PROJECT_NAME | awk '{print $1}')
+    - docker rmi berfire_frontend_angular-app    #$(docker images | grep $CI_PROJECT_NAME | awk '{print $3}')
+    - docker-compose -f docker-compose.yml up --build -d
+    - echo "Application successfully deployed."
+#####  only:
+#####    - /^develop$/
+  # Run this job in a main-branch where a Dockerfile exists
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      exists:
+        - Dockerfile
