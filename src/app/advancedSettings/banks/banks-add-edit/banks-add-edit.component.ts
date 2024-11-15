@@ -190,6 +190,7 @@ export class BanksAddEditComponent implements OnInit {
             confirmButtonText: 'Cerrar',
             background: this.darkMode ? '#444' : '#fff',
             color: this.darkMode ? '#fff' : '#000',
+            width: '400px'
           })
         } else {
           Swal.fire({
