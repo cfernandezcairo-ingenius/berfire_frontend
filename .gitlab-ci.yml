@@ -28,8 +28,8 @@ deploy-docker-job:
   # Default branch is also tagged with `latest`
   script:
     - echo "Deploying application..."
-    - docker container remove berfire_front_app_1 -f     #$(docker ps -a | grep $CI_PROJECT_NAME | awk '{print $1}')
-    - docker rmi berfire_front_app    #$(docker images | grep $CI_PROJECT_NAME | awk '{print $3}')
+    - docker container remove berfire_frontend_angular-app_1 -f     #$(docker ps -a | grep $CI_PROJECT_NAME | awk '{print $1}')
+    - docker rmi berfire_frontend_angular-app    #$(docker images | grep $CI_PROJECT_NAME | awk '{print $3}')
     - docker-compose -f docker-compose.yml up --build -d
     - echo "Application successfully deployed."
 #####  only:
