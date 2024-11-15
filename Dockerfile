@@ -23,7 +23,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist/berfire-frontend/browser /usr/share/nginx/html
 
 # Copiar el archivo environment.json
-COPY src/assets/environment.json /usr/share/nginx/html/assets/environment.json
+COPY public/assets/environment.json /usr/share/nginx/html/assets/environment.json
 
 
 # Exponer el puerto 80
