@@ -8,7 +8,7 @@ import { WindowService } from '../../share/services/window.service';
 })
 export class BillStatusService {
 
-  constructor(private readonly http: HttpClient, private windowService: WindowService) { }
+  constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
@@ -16,7 +16,7 @@ export class BillStatusService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${this.windowService.apiUrl}/billStatus`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/billStatus//${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {

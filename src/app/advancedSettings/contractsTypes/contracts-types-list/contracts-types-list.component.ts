@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { ContractsTypesService } from '../contracts-types.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IContractsTypes {
   id: number,
@@ -38,12 +39,14 @@ export class ContractsTypesListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Duración','Es aviso'];
   displayedLabelsEs = ['','Nombre', 'Duración', 'Es aviso'];
   displayedLabelsEn = ['','Nombre', 'Duration', 'isWarning'];
+  fg: FormGroup;
 
   constructor(
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly contractsTypesSrv: ContractsTypesService,
+    private readonly fb: FormBuilder,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -54,6 +57,10 @@ export class ContractsTypesListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      description: [],
     });
   }
 
@@ -113,6 +120,14 @@ export class ContractsTypesListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/contracts-types/edit/${row}`)
+  }
+
+  searchData(event: IContractsTypes) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

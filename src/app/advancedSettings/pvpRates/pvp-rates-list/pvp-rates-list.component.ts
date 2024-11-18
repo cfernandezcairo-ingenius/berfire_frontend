@@ -4,23 +4,22 @@ import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
-import { StatementOrderService } from '../statement-order.service';
+import { PVPRatesService } from '../pvp-rates.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-export interface IIStatementOrder {
+export interface IPvpRates {
   id: number,
   name: string,
   description: string,
-  finalized: boolean,
 }
 
 
 @Component({
-  selector: 'app-statement-order-list',
-  templateUrl: './statement-order-list.component.html',
-  styleUrl: './statement-order-list.component.scss',
+  selector: 'app-pvp-rates-list',
+  templateUrl: './pvp-rates-list.component.html',
+  styleUrl: './pvp-rates-list.component.scss',
   standalone: true,
   imports: [
     TableListComponent,
@@ -29,38 +28,46 @@ export interface IIStatementOrder {
     TranslateModule
 ]
 })
-export class StatementOrderListComponent implements OnInit {
+export class PvPRatesListComponent implements OnInit {
 
   dataSource = {
-    data: [] as IIStatementOrder[]
+    data: [] as IPvpRates[]
   };
   darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Descripción', 'Finalizada'];
+  displayedLabels = ['','Nombre', 'Descripción'];
+  displayedLabelsEs = ['','Nombre', 'Descripción'];
+  displayedLabelsEn = ['','Name', 'Description'];
   fg: FormGroup;
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private StatementOrderSrv: StatementOrderService,
-    private readonly fb: FormBuilder
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly pVPRatesSrv: PVPRatesService,
+    private fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
+    });
     this.fg = this.fb.group({
       name:[''],
       description: [''],
-      finalized: [''],
     });
   }
 
   ngOnInit(): void {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabStatementOrder' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabPvPRates' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -70,7 +77,7 @@ export class StatementOrderListComponent implements OnInit {
 
   loadAll() {
     this.loading = true;
-    this.StatementOrderSrv.getAll().subscribe(All => {
+    this.pVPRatesSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -92,32 +99,32 @@ export class StatementOrderListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabStatementOrder', 'false');
+    localStorage.setItem('dataModifiedInNewTabPvPRates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/statement-order/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/pvp-rates/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/statement-order/edit/new/${strRow}`, '_blank')
+    window.open(`/pvp-rates/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/statement-order/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/pvp-rates/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/statement-order/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/pvp-rates/edit/${row}`)
   }
 
-  searchData(event: IIStatementOrder) {
+  searchData(event: IPvpRates) {
     debugger;
   }
 

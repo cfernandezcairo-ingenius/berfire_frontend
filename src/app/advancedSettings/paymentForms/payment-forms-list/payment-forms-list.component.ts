@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { PaymentFormsService } from '../payment-forms.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IPaymentForms {
   id: number,
@@ -40,12 +41,14 @@ export class PaymenFormsListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Dias', 'Domiciliado'];
   displayedLabelsEs = ['','Nombre', 'Dias', 'Domiciliado'];
   displayedLabelsEn = ['','Name', 'Days', 'Domiciled'];
+  fg: FormGroup;
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private paymentFormsSrv: PaymentFormsService
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly paymentFormsSrv: PaymentFormsService,
+    private fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -56,6 +59,11 @@ export class PaymenFormsListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      days: [''],
+      home: [''],
     });
   }
 
@@ -118,6 +126,14 @@ export class PaymenFormsListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/payment-forms/edit/${row}`)
+  }
+
+  searchData(event: IPaymentForms) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

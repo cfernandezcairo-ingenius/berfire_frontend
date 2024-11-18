@@ -4,20 +4,20 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { PaymentFormsService } from '../payment-forms.service';
+import { PVPRatesService } from '../pvp-rates.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 
 @Component({
-  selector: 'app-payment-forms-add-edit',
+  selector: 'app-pvp-rates-add-edit',
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule],
-  templateUrl: './payment-forms-add-edit.component.html',
-  styleUrl: './payment-forms-add-edit.component.scss'
+  templateUrl: './pvp-rates-add-edit.component.html',
+  styleUrl: './pvp-rates-add-edit.component.scss'
 })
-export class PaymentFormsAddEditComponent implements OnInit {
+export class PVPRatesAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
@@ -31,7 +31,7 @@ export class PaymentFormsAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute,
     private readonly navigationService: NavigationService,
-    private readonly paymentFormsSrv: PaymentFormsService,
+    private readonly pVPRatesSrv: PVPRatesService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router
   ) {
@@ -102,27 +102,9 @@ export class PaymentFormsAddEditComponent implements OnInit {
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'input',
-            key: 'days',
+            key: 'description',
             props: {
-              label: 'FORM.FIELDS.DAYS',
-              required:true
-            },
-            validators: {
-              validation: ['required', 'number'],
-            },
-            validation: {
-              messages: {
-                number: this.translate.get('FORM.VALIDATION.NUMBER'),
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              }
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-12',
-            type: 'checkbox',
-            key: 'home',
-            props: {
-              label: 'FORM.FIELDS.HOME',
+              label: 'FORM.FIELDS.DESCRIPTION',
               required:false
             },
           },
@@ -137,11 +119,8 @@ export class PaymentFormsAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.DAYS').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.HOME').subscribe((label) => {
-      this.fields[1].fieldGroup[1].props.label = label;
     });
   }
 
@@ -164,18 +143,16 @@ export class PaymentFormsAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
-        days: Number(this.fg.get('days')?.value),
-        home: this.fg.get('home')?.value === undefined ? false : this.fg.get('home')?.value,
+        description: Number(this.fg.get('description')?.value),
       }
     } else {
       payload = {
         id: this.row.id,
         name: this.fg.get('name')?.value,
-        days: Number(this.fg.get('days')?.value),
-        home: this.fg.get('home')?.value,
+        description: Number(this.fg.get('description')?.value),
       }
     }
-    const myobs = this.row.id === 0 ? this.paymentFormsSrv.add(payload) : this.paymentFormsSrv.edit(payload);
+    const myobs = this.row.id === 0 ? this.pVPRatesSrv.add(payload) : this.pVPRatesSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

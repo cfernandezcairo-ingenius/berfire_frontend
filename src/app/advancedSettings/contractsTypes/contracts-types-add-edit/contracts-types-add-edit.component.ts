@@ -198,27 +198,22 @@ export class ContractsTypesAddEditComponent implements OnInit {
             color: this.darkMode ? '#fff' : '#000',
           })
         } else {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_error'),
-            icon: 'error',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          HandleMessagesSubmit(this.translate, res.error);
         }
-        if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTabContractsTypes', 'true');
-          this.showinNewTab = false
-          if (!nuevo) window.close();
-        } else if (nuevo) {
-            this.fg.reset();
+        if (res.success === true) {
+          if (this.showinNewTab) {
+            localStorage.setItem('dataModifiedInNewTabContractsTypes', 'true');
+            this.showinNewTab = false
+            if (!nuevo) window.close();
+          } else if (nuevo) {
+              this.fg.reset();
           } else {
             this.navigationService.goback();
           }
+        }
       },
       error: (error) => {
+        debugger;
         HandleMessagesSubmit(this.translate, error);
       },
     });

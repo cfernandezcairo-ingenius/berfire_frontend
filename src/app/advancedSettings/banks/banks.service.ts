@@ -1,4 +1,4 @@
-import { EnvironmentInjector, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { WindowService } from '../../share/services/window.service';
@@ -8,7 +8,7 @@ import { WindowService } from '../../share/services/window.service';
 })
 export class BanksService {
 
-  constructor(private readonly http: HttpClient, private windowService: WindowService) {
+  constructor(private readonly http: HttpClient, private readonly windowService: WindowService) {
 
   }
 

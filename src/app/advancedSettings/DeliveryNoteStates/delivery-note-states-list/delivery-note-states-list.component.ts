@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IDeliveryNoteStates {
   id: number,
@@ -38,12 +39,14 @@ export class DeliveryNoteStatesListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Confirma el albarán'];
   displayedLabelsEs = ['','Nombre', 'Confirma el albarán'];
   displayedLabelsEn = ['','Name', 'Confirm delivery note'];
+  fg: FormGroup;
 
   constructor(
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
+    private readonly fb: FormBuilder,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -59,6 +62,10 @@ export class DeliveryNoteStatesListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      confirmDeliveryNote: [],
     });
   }
 
@@ -112,6 +119,14 @@ export class DeliveryNoteStatesListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${row}`)
+  }
+
+  searchData(event: IDeliveryNoteStates) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

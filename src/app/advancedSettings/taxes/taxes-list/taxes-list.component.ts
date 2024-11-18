@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { TaxesService } from '../taxes.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface ITaxes {
   id: number,
@@ -41,12 +42,14 @@ export class TaxesListComponent implements OnInit {
   displayedLabels = ['','Titulo', 'Valor', 'Recargo', 'es IGIC'];
   displayedLabelsEs = ['','Titulo', 'Valor', 'Recargo', 'es IGIC'];
   displayedLabelsEn = ['','Name', 'Country', 'eSurcharge', 'isIGIC'];
+  fg: FormGroup;
 
   constructor(
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
-    private readonly taxesSrv:TaxesService
+    private readonly taxesSrv:TaxesService,
+    private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -57,6 +60,12 @@ export class TaxesListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      title: [''],
+      value: [''],
+      equivalentSurcharge: [''],
+      isIGIC: ['']
     });
   }
 
@@ -118,6 +127,14 @@ export class TaxesListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/taxes/edit/${row}`)
+  }
+
+  searchData(event: ITaxes) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

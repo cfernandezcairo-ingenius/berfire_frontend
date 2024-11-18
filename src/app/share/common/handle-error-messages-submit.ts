@@ -3,13 +3,14 @@ import Swal from 'sweetalert2';
 
 export function HandleMessagesSubmit(translate: TranslateService, error: any) {
   let titleError = '';
-  if (error.error.message) {
-    titleError = error.error.message;
-    showErrorMessage(translate, titleError);
-    return;
-  }
-  if (error.error.error && error.error.error.lenght > 0 ) {
-    error.error.error.forEach((e:any) => {
+  debugger;
+  // if (error.error.message) {
+  //   titleError = error.error.message;
+  //   showErrorMessage(translate, titleError);
+  //   return;
+  // }
+  if (error && error.length > 0 ) {
+    error.map((e:any) => {
       if (e.constraints.IsUniqueValidator) {
         if (titleError === '') {
           titleError = translate.instant('error.messages.IsUniqueValidator') + " " + translate.instant('FORM.FIELDS.VALUE') + " : '" + e.value + "'";

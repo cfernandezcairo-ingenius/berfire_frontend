@@ -105,15 +105,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
             key: 'description',
             props: {
               label: 'FORM.FIELDS.DESCRIPTION',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
+              required:false
             },
           },
         ],
@@ -195,27 +187,21 @@ export class StatementOrdersAddEditComponent implements OnInit {
             color: this.darkMode ? '#fff' : '#000',
           })
         } else {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_error'),
-            icon: 'error',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          HandleMessagesSubmit(this.translate, res.error);
         }
         //Aqui tengo que preguntar si nuevo = true
         //Para limpiar el formulario
         //y permanecer en la ventana
-        if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTabStatementOrder', 'true');
-          if (!nuevo) window.close();
-        } else {
-          if (nuevo) {
-            this.fg.reset();
+        if (res.success === true) {
+          if (this.showinNewTab) {
+            localStorage.setItem('dataModifiedInNewTabStatementOrder', 'true');
+            if (!nuevo) window.close();
           } else {
-            this.navigationService.goback();
+            if (nuevo) {
+              this.fg.reset();
+            } else {
+              this.navigationService.goback();
+            }
           }
         }
       },
@@ -224,10 +210,6 @@ export class StatementOrdersAddEditComponent implements OnInit {
       },
     });
   }
-
-  // onsubmitNew(model:any) {
-  //   this.onSubmit(model, true);
-  // }
 
   onCancel() {
     if (this.showinNewTab) {

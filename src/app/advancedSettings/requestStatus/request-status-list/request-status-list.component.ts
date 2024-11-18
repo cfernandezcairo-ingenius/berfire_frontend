@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { RequestStatusService } from '../request-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IRequestStatus {
   id: number,
@@ -39,12 +40,14 @@ export class RequestStatusListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Código'];
   displayedLabelsEs = ['','Nombre', 'Código'];
   displayedLabelsEn = ['','Name', 'Code'];
+  fg: FormGroup;
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private requestStatusSrv: RequestStatusService
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly requestStatusSrv: RequestStatusService,
+    private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -55,6 +58,10 @@ export class RequestStatusListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      code: [''],
     });
   }
 
@@ -116,6 +123,14 @@ export class RequestStatusListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/request-status/edit/${row}`)
+  }
+
+  searchData(event: IRequestStatus) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

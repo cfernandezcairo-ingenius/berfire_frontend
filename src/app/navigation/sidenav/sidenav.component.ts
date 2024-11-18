@@ -228,7 +228,7 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: 'Logs',iconName: ''},
         {displayName: this.translate.instant('menu.unsubscribe-equipment-reasons') ,iconName: '', route: 'unsubscribe-reasons/list'},
         {displayName: this.translate.instant('menu.populations'),iconName: '', route: 'populations/list'},
-        {displayName: this.translate.instant('menu.pvpRates') ,iconName: ''},
+        {displayName: this.translate.instant('menu.pvpRates') ,iconName: '', route: 'pvp-rates/list'},
         {displayName: this.translate.instant('menu.clients-types'),iconName: '', route: 'clients-types/list'},
         //contractsTypes
         {displayName: this.translate.instant('menu.contracts-types'),iconName: '', route: 'contracts-types/list'},

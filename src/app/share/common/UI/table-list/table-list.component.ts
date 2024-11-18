@@ -53,6 +53,7 @@ export class TableListComponent implements OnInit, OnChanges {
   @Output() editRowNueva = new EventEmitter();
   @Output() addRow = new EventEmitter();
   @Output() searchData = new EventEmitter();
+  @Output() cleanSearchData = new EventEmitter();
   @Output() filter = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -101,7 +102,7 @@ export class TableListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.displayedColumns = Object.keys(this.dataInput.data[0]);
     this.dataSourceShow.data = this.dataInput.data;
-    this.displayedColumns.map(d => {
+    this.displayedColumns.forEach(d => {
       this.fg.addControl(d, this.fb.control(''));
     });
   }
@@ -159,9 +160,8 @@ export class TableListComponent implements OnInit, OnChanges {
     this.editRowNueva.emit(row);
   }
 
-  applyFilter(event:any, field: string) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filter.emit({field: field, value: filterValue});
+  search() {
+    this.searchData.emit(this.fg.value);
   }
 
   delete(id: number) {
@@ -184,12 +184,9 @@ export class TableListComponent implements OnInit, OnChanges {
     this.addRow.emit(row);
   }
 
-  search() {
-    this.searchData.emit();
-  }
 
   cleanSearch() {
-    this.fg.reset();
+    this.cleanSearchData.emit();
   }
 
   goToFirstPage() {
@@ -203,15 +200,5 @@ export class TableListComponent implements OnInit, OnChanges {
   getChecked(value: any) {
     return value === true;
   }
-
-  // moverDiv(e:any) {
-  //     this.movible!.style.left = e.clientX - this.offsetX + 'px';
-  //     this.movible!.style.top = e.clientY - this.offsetY + 'px';
-  // }
-
-  // soltarDiv() {
-  //     document.removeEventListener('mousemove', this.moverDiv);
-  //     document.removeEventListener('mouseup', this.soltarDiv);
-  // }
 
 }

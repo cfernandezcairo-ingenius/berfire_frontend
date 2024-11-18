@@ -167,25 +167,19 @@ export class ClientsTypesAddEditComponent implements OnInit {
             color: this.darkMode ? '#fff' : '#000',
           })
         } else {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_error'),
-            icon: 'error',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          HandleMessagesSubmit(this.translate, res.error);
         }
-        if (this.showinNewTab) {
-          localStorage.setItem('dataModifiedInNewTabClientsTypes', 'true');
-          this.showinNewTab = false
-          if (!nuevo) window.close();
-        } else if (nuevo) {
-            this.fg.reset();
+        if (res.success === true) {
+          if (this.showinNewTab) {
+            localStorage.setItem('dataModifiedInNewTabClientsTypes', 'true');
+            this.showinNewTab = false
+            if (!nuevo) window.close();
+          } else if (nuevo) {
+              this.fg.reset();
           } else {
             this.navigationService.goback();
           }
+        }
       },
       error: (error) => {
         HandleMessagesSubmit(this.translate, error);

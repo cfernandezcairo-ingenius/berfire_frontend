@@ -7,7 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { BillStatusService } from '../bill-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IBillStatements {
   id: number,
@@ -18,12 +18,6 @@ export interface IBillStatements {
   isSent: boolean,
   isUnPaid: boolean
 }
-
-export interface IFilter {
-  field: string,
-  value: string
-}
-
 
 @Component({
   selector: 'app-bill-status-list',
@@ -49,7 +43,6 @@ export class BillStatusListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
   displayedLabelsEs = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
   displayedLabelsEn = ['','Name', 'is Paid', 'is returned', 'is pending', 'is sent', 'is unpaid'];
-  filter: IFilter[] = [];
   fg: FormGroup
 
   constructor(
@@ -76,9 +69,6 @@ export class BillStatusListComponent implements OnInit {
       isPending: [''],
       isSent: [''],
       isUnPaid: ['']
-    });
-    this.fg.valueChanges.subscribe((f:any) => {
-      debugger;
     });
   }
 
@@ -142,19 +132,12 @@ export class BillStatusListComponent implements OnInit {
     this.navigationSrv.NavigateTo(`/invoice-status/edit/${row}`)
   }
 
-  filterData(event: IFilter) {
+  searchData(event: IBillStatements) {
     debugger;
-    let filterTmp: IFilter[] = [];
-    if (this.filter.length === 0) {
-      this.filter.push(event);
-      return;
-    }
-    this.filter.map(f=> {
-      if (f.field === event.field && f.value !== '') {
-        filterTmp.push({field:event.field,value: event.value});
-      }
-    });
-    this.filter = filterTmp;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

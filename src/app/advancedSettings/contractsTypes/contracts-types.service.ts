@@ -8,15 +8,13 @@ import { WindowService } from '../../share/services/window.service';
 })
 export class ContractsTypesService {
 
-  constructor(private readonly http: HttpClient, private windowService: WindowService) { }
+  constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
-    //const headers = new HttpHeaderClass().defaultHeader;
     return this.http.post<any>(`${this.windowService.apiUrl}/contractTypes`, payload);
   }
   edit(payload: any): Observable<any> {
-    //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${this.windowService.apiUrl}/contractTypes`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/contractTypes/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {

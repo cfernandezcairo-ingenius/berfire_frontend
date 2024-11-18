@@ -11,17 +11,17 @@ export class StatementOrderService {
   constructor(private http: HttpClient,  private windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
-    return this.http.post<any>(`${this.windowService.apiUrl}/statementsOrder`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/orderStatus`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.put<any>(`${this.windowService.apiUrl}/statementsOrder`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/orderStatus/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${this.windowService.apiUrl}/statementsOrder`);
+    return this.http.get<any>(`${this.windowService.apiUrl}/orderStatus`);
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${this.windowService.apiUrl}/statementsOrder/${id}`);
+    return this.http.delete<any>(`${this.windowService.apiUrl}/orderStatus/${id}`);
   }
 }

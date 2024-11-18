@@ -15,7 +15,7 @@ export class RequestStatusService {
     return this.http.post<any>(`${this.windowService.apiUrl}/requestsStatus`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.put<any>(`${this.windowService.apiUrl}/requestsStatus`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/requestsStatus/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {

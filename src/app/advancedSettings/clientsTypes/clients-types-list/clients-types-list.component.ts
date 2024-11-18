@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { ClientsTypesService } from '../clients-types.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 export interface IClientsTypes {
@@ -39,12 +40,14 @@ export class ClientsTypesListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Descripción'];
   displayedLabelsEs = ['','Nombre', 'Descripción'];
   displayedLabelsEn = ['','Nombre', 'Descripción'];
+  fg: FormGroup;
 
   constructor(
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly clientsTypesSrv: ClientsTypesService,
+    private readonly fb: FormBuilder,
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -55,6 +58,10 @@ export class ClientsTypesListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      description: [],
     });
   }
 
@@ -114,6 +121,14 @@ export class ClientsTypesListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/clients-types/edit/${row}`)
+  }
+
+  searchData(event: IClientsTypes) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }

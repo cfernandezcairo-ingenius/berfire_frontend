@@ -30,7 +30,9 @@
                 <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString() != 'true' && row[column] === null ? '' : row[column].toString() != 'false'))">{{row[column]}}
                 </div>
                 <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString()) == 'true' || (row[column] === null ? '' :row[column].toString()) == 'false')">
-                  <mat-checkbox #checkBox [checked]="getChecked(row[column])"></mat-checkbox>
+                  <mat-checkbox #checkBox [checked]="getChecked(row[column])">
+                    <span style="display: none;">{{ row[column] }}</span>
+                  </mat-checkbox>
                 </div>
               </td>
             </ng-container>

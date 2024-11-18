@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { UnsubscribeReasonsService } from '../unsubscribe-reasons.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IUnsubscribeReasons {
   id: number,
@@ -39,12 +40,14 @@ export class UnsubscribeReasonsListComponent implements OnInit {
   displayedLabels = ['','Nombre', 'Descripción'];
   displayedLabelsEs = ['','Nombre', 'Descripción'];
   displayedLabelsEn = ['','Name', 'Description'];
+  fg: FormGroup;
 
   constructor(
     private darkModeService: StyleManager,
     private navigationSrv: NavigationService,
     private translate: TranslateService,
-    private unsubscribeReasonsSrv:UnsubscribeReasonsService
+    private unsubscribeReasonsSrv:UnsubscribeReasonsService,
+    private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -55,6 +58,10 @@ export class UnsubscribeReasonsListComponent implements OnInit {
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
+    });
+    this.fg = this.fb.group({
+      name: [''],
+      description: [''],
     });
   }
 
@@ -116,6 +123,14 @@ export class UnsubscribeReasonsListComponent implements OnInit {
   addItem() {
     const row = JSON.stringify({ id: 0 });
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/edit/${row}`)
+  }
+
+  searchData(event: IUnsubscribeReasons) {
+    debugger;
+  }
+
+  cleanSearchData() {
+    this.fg.reset();
   }
 
 }
