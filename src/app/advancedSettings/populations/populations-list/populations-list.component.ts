@@ -7,6 +7,7 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { PopulationsService } from '../populations.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface IPopulations {
   id: number,
@@ -38,15 +39,27 @@ export class PopulationsListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Pais', 'Provincia', 'Activo'];
-  displayedLabelsEs = ['','Nombre', 'Pais', 'Provincia', 'Activo'];
-  displayedLabelsEn = ['','Name', 'Country', 'Province', 'Active'];
+  displayedLabels: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name:'Nombre',isBoolean:false},
+    { name:'Pais',isBoolean:false},
+    { name: 'Provincia',isBoolean:false},
+    { name: 'Activo', isBoolean:true}
+  ];
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name:'Name',isBoolean:false},
+    { name:'Country',isBoolean:false},
+    { name: 'Province',isBoolean:false},
+    { name: 'Active', isBoolean:true}
+  ];
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private populationsSrv:PopulationsService
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly populationsSrv:PopulationsService
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;

@@ -20,17 +20,28 @@
           <form [formGroup]="fg">
             <ng-container [matColumnDef]="column">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <!-- {{displayedLabels[index]}} -->
-                <mat-form-field floatLabel="auto" style="width: 120px;margin-left: 10px;height: 65px;">
-                  <mat-label>{{displayedLabels[index]}}</mat-label>
-                  <input matInput  placeholder="" [formControlName] = "displayedColumns[index]">
-                </mat-form-field>
+                <div *ngIf="displayedLabels[index].isBoolean === true" >
+                  <mat-form-field floatLabel="auto" style="width: 120px;margin-left: -50%;height: 65px;">
+                    <mat-label style="font-size: smaller;">{{displayedLabels[index].name}}</mat-label>
+                    <mat-select id=`myselect${displayedColumns[index]}` [formControlName] = "displayedColumns[index]">
+                      <mat-option>Ninguno</mat-option>
+                      <mat-option value="false">{{"no" | translate}}</mat-option>
+                      <mat-option value="true">{{"yes" | translate}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+                <div *ngIf="displayedLabels[index].isBoolean === false">
+                  <mat-form-field floatLabel="auto" style="width: 120px;margin-left: -50%;height: 65px;">
+                    <mat-label style="font-size: smaller;">{{displayedLabels[index].name}}</mat-label>
+                    <input matInput  placeholder="" [formControlName] = "displayedColumns[index]">
+                  </mat-form-field>
+              </div>
               </th>
               <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
-                <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString() != 'true' && row[column] === null ? '' : row[column].toString() != 'false'))">{{row[column]}}
-                </div>
-                <div *ngIf="!isMobile && ((row[column] === null ? '' : row[column].toString()) == 'true' || (row[column] === null ? '' :row[column].toString()) == 'false')">
-                  <mat-checkbox #checkBox [checked]="getChecked(row[column])">
+                <div *ngIf="!isMobile && !displayedLabels[index].isBoolean">{{row[column]}}</div>
+                <div *ngIf="!isMobile && displayedLabels[index].isBoolean">
+                  <mat-checkbox #checkBox [disabled]="true" [checked]="getChecked(row[column])">
                     <span style="display: none;">{{ row[column] }}</span>
                   </mat-checkbox>
                 </div>

@@ -8,6 +8,7 @@ import { TaxesService } from '../taxes.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface ITaxes {
   id: number,
@@ -39,9 +40,21 @@ export class TaxesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Titulo', 'Valor', 'Recargo', 'es IGIC'];
-  displayedLabelsEs = ['','Titulo', 'Valor', 'Recargo', 'es IGIC'];
-  displayedLabelsEn = ['','Name', 'Country', 'eSurcharge', 'isIGIC'];
+  displayedLabels:IDisplayedLabels[] = [
+    { name: '',isBoolean: false},
+    { name: 'Titulo',isBoolean:false},
+    { name: 'Valor',isBoolean:false},
+    { name: 'Recargo',isBoolean:false},
+    { name: 'es IGIC', isBoolean:true}
+  ];
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn:IDisplayedLabels[] = [
+    { name: '',isBoolean: false},
+    { name: 'Title',isBoolean:false},
+    { name: 'Value',isBoolean:false},
+    { name: 'Surcharge',isBoolean:false},
+    { name: 'isIGIC', isBoolean:true}
+  ];
   fg: FormGroup;
 
   constructor(

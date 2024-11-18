@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { IDisplayedLabels } from '../../../../navigation/shared/models/app-models';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-table-list',
@@ -36,7 +38,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
 ],
   templateUrl: './table-list.component.html',
   styleUrl: './table-list.component.scss',
@@ -45,7 +48,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class TableListComponent implements OnInit, OnChanges {
 
   @Input() dataInput: any;
-  @Input() displayedLabels: string[] = [];
+  @Input() displayedLabels: IDisplayedLabels[] = [];
   @Input() titleMobileList: string = '';
   @Input() fg:FormGroup = new FormGroup({});
   @Output() deleteRow = new EventEmitter();

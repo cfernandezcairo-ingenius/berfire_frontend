@@ -8,6 +8,7 @@ import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface IDeliveryNoteStates {
   id: number,
@@ -36,9 +37,17 @@ export class DeliveryNoteStatesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Confirma el albarán'];
-  displayedLabelsEs = ['','Nombre', 'Confirma el albarán'];
-  displayedLabelsEn = ['','Name', 'Confirm delivery note'];
+  displayedLabels: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name: 'Nombre',isBoolean:false},
+    { name: 'Confirma',isBoolean:true}
+  ];
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name: 'Name',isBoolean:false},
+    { name: 'Confirm',isBoolean:true}
+  ];
   fg: FormGroup;
 
   constructor(

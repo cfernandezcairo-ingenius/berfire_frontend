@@ -45,6 +45,9 @@
   "dispatch-notes": "Estados Albaranes de Entrega",
   "populations": "Poblaciones",
   "unsubscribe-reasons": "Motivos baja equipamiento",
+  "yes": "Si",
+  "no": "No",
+  "select": "Seleccione..",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "Nombre",

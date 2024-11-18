@@ -8,6 +8,7 @@ import { StatementOrderService } from '../statement-order.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface IIStatementOrder {
   id: number,
@@ -38,14 +39,26 @@ export class StatementOrderListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Descripción', 'Finalizada'];
+  displayedLabels: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name:'Nombre',isBoolean:false},
+    { name: 'Descripción',isBoolean:false},
+    { name: 'Finalizada', isBoolean:true}
+  ];
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name:'Name',isBoolean:false},
+    { name: 'Description',isBoolean:false},
+    { name: 'Finalized', isBoolean:true}
+  ];
   fg: FormGroup;
 
   constructor(
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private translate: TranslateService,
-    private StatementOrderSrv: StatementOrderService,
+    private readonly darkModeService: StyleManager,
+    private readonly navigationSrv: NavigationService,
+    private readonly translate: TranslateService,
+    private readonly StatementOrderSrv: StatementOrderService,
     private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
@@ -55,6 +68,13 @@ export class StatementOrderListComponent implements OnInit {
       name:[''],
       description: [''],
       finalized: [''],
+    });
+    this.translate.onLangChange.subscribe(lc=> {
+      if(this.translate.currentLang === 'es') {
+        this.displayedLabels = this.displayedLabelsEs;
+      } else {
+        this.displayedLabels = this.displayedLabelsEn;
+      }
     });
   }
 

@@ -8,16 +8,8 @@ import { BillStatusService } from '../bill-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IBillStatements, IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
-export interface IBillStatements {
-  id: number,
-  name: string,
-  isPaid: boolean,
-  isReturned: boolean,
-  isPending: boolean,
-  isSent: boolean,
-  isUnPaid: boolean
-}
 
 @Component({
   selector: 'app-bill-status-list',
@@ -40,9 +32,70 @@ export class BillStatusListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
-  displayedLabelsEs = ['','Nombre', 'Es Pagado', 'Es Devuelto', 'Es Pendiente', 'Es Enviado', 'Es impagado'];
-  displayedLabelsEn = ['','Name', 'is Paid', 'is returned', 'is pending', 'is sent', 'is unpaid'];
+  displayedLabels: IDisplayedLabels[] = [
+    {
+      name:'',
+      isBoolean: false
+    },
+    {
+      name: 'Nombre',
+      isBoolean: false
+    },
+    {
+      name: 'Pagado',
+      isBoolean: true
+    },
+    {
+      name: 'Devuelto',
+      isBoolean: true
+    },
+    {
+      name: 'Pendiente',
+      isBoolean: true
+    },
+    {
+      name: 'Enviado',
+      isBoolean: true
+    },
+    {
+      name: 'Impagado',
+      isBoolean: true
+    }
+  ]
+
+
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn: IDisplayedLabels[] =
+  [
+    {
+      name:'',
+      isBoolean: false
+    },
+    {
+      name: 'Name',
+      isBoolean: false
+    },
+    {
+      name: 'Is Paid',
+      isBoolean: true
+    },
+    {
+      name: 'Is returned',
+      isBoolean: true
+    },
+    {
+      name: 'Is Pending',
+      isBoolean: true
+    },
+    {
+      name: 'Is Sending',
+      isBoolean: true
+    },
+    {
+      name: 'Is Unpaid',
+      isBoolean: true
+    }
+  ];
   fg: FormGroup
 
   constructor(

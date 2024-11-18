@@ -8,6 +8,7 @@ import { PVPRatesService } from '../pvp-rates.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface IPvpRates {
   id: number,
@@ -37,9 +38,17 @@ export class PvPRatesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Descripción'];
-  displayedLabelsEs = ['','Nombre', 'Descripción'];
-  displayedLabelsEn = ['','Name', 'Description'];
+  displayedLabels: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name: 'Nombre',isBoolean:false},
+    { name: 'Descripción',isBoolean:false}
+  ];
+  displayedLabelsEs =this.displayedLabels;
+  displayedLabelsEn: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name: 'Name',isBoolean:false},
+    { name: 'Description',isBoolean:false}
+  ];
   fg: FormGroup;
 
   constructor(
@@ -47,7 +56,7 @@ export class PvPRatesListComponent implements OnInit {
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly pVPRatesSrv: PVPRatesService,
-    private fb: FormBuilder
+    private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;

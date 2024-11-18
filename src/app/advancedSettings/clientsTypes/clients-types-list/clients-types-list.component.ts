@@ -8,6 +8,7 @@ import { ClientsTypesService } from '../clients-types.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 
 export interface IClientsTypes {
@@ -37,9 +38,17 @@ export class ClientsTypesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Descripción'];
-  displayedLabelsEs = ['','Nombre', 'Descripción'];
-  displayedLabelsEn = ['','Nombre', 'Descripción'];
+  displayedLabels:IDisplayedLabels[] = [
+    { name: '',isBoolean: false},
+    { name: 'Nombre',isBoolean: false},
+    { name: 'Descripción', isBoolean:false}
+  ];
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn:IDisplayedLabels[] = [
+    { name: '',isBoolean: false},
+    { name: 'Nombre',isBoolean: false},
+    { name: 'Descripción', isBoolean:false}
+  ];
   fg: FormGroup;
 
   constructor(

@@ -8,6 +8,7 @@ import { PaymentFormsService } from '../payment-forms.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface IPaymentForms {
   id: number,
@@ -38,9 +39,19 @@ export class PaymenFormsListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Dias', 'Domiciliado'];
-  displayedLabelsEs = ['','Nombre', 'Dias', 'Domiciliado'];
-  displayedLabelsEn = ['','Name', 'Days', 'Domiciled'];
+  displayedLabels:IDisplayedLabels[] = [
+    { name: '',isBoolean:false},
+    { name: 'Nombre',isBoolean:false},
+    { name: 'Dias',isBoolean:false},
+    { name: 'Domiciliado', isBoolean:true}
+  ];
+  displayedLabelsEs = this.displayedLabels;
+  displayedLabelsEn:IDisplayedLabels[] = [
+    { name: '',isBoolean:false},
+    { name: 'Name',isBoolean:false},
+    { name: 'Days',isBoolean:false},
+    { name: 'Domiciled', isBoolean:true}
+  ];
   fg: FormGroup;
 
   constructor(

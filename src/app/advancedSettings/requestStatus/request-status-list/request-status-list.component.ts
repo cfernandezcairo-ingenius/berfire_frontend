@@ -8,6 +8,7 @@ import { RequestStatusService } from '../request-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
 export interface IRequestStatus {
   id: number,
@@ -37,9 +38,17 @@ export class RequestStatusListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels = ['','Nombre', 'Código'];
-  displayedLabelsEs = ['','Nombre', 'Código'];
-  displayedLabelsEn = ['','Name', 'Code'];
+  displayedLabels:IDisplayedLabels[] = [
+    { name: '',isBoolean:false},
+    { name:'Nombre',isBoolean:false},
+    { name: 'Código', isBoolean:false}
+  ];
+  displayedLabelsEs = this.displayedLabels
+  displayedLabelsEn:IDisplayedLabels[] = [
+    { name: '',isBoolean:false},
+    { name:'Name',isBoolean:false},
+    { name: 'Code', isBoolean:false}
+  ];
   fg: FormGroup;
 
   constructor(

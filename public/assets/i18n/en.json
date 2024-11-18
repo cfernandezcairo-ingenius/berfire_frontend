@@ -45,6 +45,9 @@
   "dispatch-notes": "Dispatch Notes",
   "populations": "Populations",
   "unsubscribe-reasons": "Unsubscribe Equipment Reasons",
+  "yes": "Yes",
+  "no": "No",
+  "select": "Select..",
   "FORM": {
     "FIELDS": {
       "FIRSTNAME": "First Name",
