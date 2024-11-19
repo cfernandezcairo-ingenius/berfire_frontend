@@ -21,6 +21,10 @@ export class DeliveryNoteStatesService {
     return this.http.get<any>(`${this.windowService.apiUrl}/deliveryNoteStatus`);
   }
 
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/deliveryNoteStatus/${payload}`);
+  }
+
   delete(id:any):Observable<any> {
     return this.http.delete<any>(`${this.windowService.apiUrl}/deliveryNoteStatus/${id}`);
   }

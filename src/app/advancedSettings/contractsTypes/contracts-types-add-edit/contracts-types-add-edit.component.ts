@@ -180,6 +180,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
     } else {
       payload = {
         id: this.row.id,
+        name: this.fg.get('name')?.value,
         duration: Number(this.fg.get('duration')?.value),
         isWarning:  this.fg.get('isWarning')?.value
       }
@@ -213,7 +214,6 @@ export class ContractsTypesAddEditComponent implements OnInit {
         }
       },
       error: (error) => {
-        debugger;
         HandleMessagesSubmit(this.translate, error);
       },
     });

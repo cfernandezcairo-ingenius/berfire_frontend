@@ -221,7 +221,7 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: this.translate.instant('menu.invoice-status'),iconName: '', route: 'invoice-status/list'},
         {displayName: this.translate.instant('menu.statement-order'),iconName: '', route: 'statement-order/list'},
         {displayName: this.translate.instant('menu.request-status'),iconName: '', route: 'request-status/list'},
-        {displayName: this.translate.instant('menu.states-parties-review') ,iconName: ''},
+        {displayName: this.translate.instant('menu.states-parties-review') ,iconName: '', route: 'states-parties-review/list'},
         {displayName: this.translate.instant('menu.work-status'),iconName: '', route: 'work-status/list'},
         {displayName: this.translate.instant('menu.payment-forms'),iconName: '', route: 'payment-forms/list'},
         {displayName: this.translate.instant('menu.taxes') ,iconName: '', route: 'taxes/list'},

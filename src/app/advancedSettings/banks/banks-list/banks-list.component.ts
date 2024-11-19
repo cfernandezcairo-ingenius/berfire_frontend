@@ -155,7 +155,33 @@ export class BanksListComponent implements OnInit {
   }
 
   searchData(event: IBanks) {
-    debugger;
+
+    let payload = `?name=${event.name}`;
+    if (event.swift) {
+      payload = payload + `&swift=${event.swift}`;
+    }
+    if (event.Iban) {
+      payload = payload + `&Iban=${event.Iban}`;
+    }
+    this.loading = true;
+    this.banksSrv.getByFields(payload).subscribe(res=> {
+      if (res.data.length === 0) {
+        Swal.fire({
+          title: this.translate.instant('confirm'),
+          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
+          icon: 'info',
+          showConfirmButton:true,
+          showCancelButton: false,
+          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+          background: this.darkMode ? '#444' : '#fff',
+          color: this.darkMode ? '#fff' : '#000',
+        })
+      } else {
+        this.dataSource.data = res.data;
+        this.loading = false;
+        this.todoListo = true;
+      }
+    });
   }
 
   cleanSearchData() {

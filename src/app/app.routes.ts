@@ -51,6 +51,9 @@ import { TaxesDeleteComponent } from './advancedSettings/taxes/taxes-delete/taxe
 import { PvPRatesListComponent } from './advancedSettings/pvpRates/pvp-rates-list/pvp-rates-list.component';
 import { PVPRatesAddEditComponent } from './advancedSettings/pvpRates/pvp-rates-add-edit/pvp-rates-add-edit.component';
 import { PvpRatesDeleteComponent } from './advancedSettings/pvpRates/pvp-rates-delete/pvp-rates-delete.component';
+import { StatesPartiesReviewListComponent } from './advancedSettings/StatesPartiesReview/states-parties-review-list/states-parties-review-list.component';
+import { StatesPartiesReviewAddEditComponent } from './advancedSettings/StatesPartiesReview/states-parties-review-add-edit/states-parties-review-add-edit.component';
+import { StatesPartiesReviewDeleteComponent } from './advancedSettings/StatesPartiesReview/states-parties-review-delete/states-parties-review-delete.component';
 
 export const routes: Routes = [
 
@@ -123,5 +126,9 @@ export const routes: Routes = [
   { path: 'pvp-rates/list', component: PvPRatesListComponent, canActivate: [AuthGuard]},
   { path: 'pvp-rates/edit/:id', component: PVPRatesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'pvp-rates/delete/:id', component: PvpRatesDeleteComponent , canActivate: [AuthGuard]},
-  { path: 'pvp-rates/edit/new/:id', component: PVPRatesAddEditComponent, canActivate: [AuthGuard]}
+  { path: 'pvp-rates/edit/new/:id', component: PVPRatesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'states-parties-review/list', component: StatesPartiesReviewListComponent, canActivate: [AuthGuard]},
+  { path: 'states-parties-review/edit/:id', component: StatesPartiesReviewAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'states-parties-review/delete/:id', component: StatesPartiesReviewDeleteComponent , canActivate: [AuthGuard]},
+  { path: 'states-parties-review/edit/new/:id', component: StatesPartiesReviewAddEditComponent, canActivate: [AuthGuard]}
 ];

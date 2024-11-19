@@ -22,6 +22,10 @@ export class WorkStatusService {
     return this.http.get<any>(`${this.windowService.apiUrl}/workStatus`);
   }
 
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/workStatus/${payload}`);
+  }
+
   delete(id:any):Observable<any> {
     return this.http.delete<any>(`${this.windowService.apiUrl}/workStatus/${id}`);
   }

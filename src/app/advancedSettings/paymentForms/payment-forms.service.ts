@@ -21,6 +21,10 @@ export class PaymentFormsService {
     return this.http.get<any>(`${this.windowService.apiUrl}/paymentForms`);
   }
 
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/paymentForms/${payload}`);
+  }
+
   delete(id:any):Observable<any> {
     return this.http.delete<any>(`${this.windowService.apiUrl}/paymentForms/${id}`);
   }

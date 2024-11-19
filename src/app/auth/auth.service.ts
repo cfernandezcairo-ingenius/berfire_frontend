@@ -19,7 +19,6 @@ export class AuthService {
       email: email,
       password: password
     }
-
     return this.http.post<any>(`${this.windowService.apiUrl}/login`, payload);
   }
 

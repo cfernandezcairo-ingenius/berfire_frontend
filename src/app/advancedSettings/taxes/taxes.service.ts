@@ -14,11 +14,15 @@ export class TaxesService {
     return this.http.post<any>(`${this.windowService.apiUrl}/taxes`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.put<any>(`${this.windowService.apiUrl}/taxes`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/taxes/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/taxes`);
+  }
+
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/taxes/${payload}`);
   }
 
   delete(id:any):Observable<any> {

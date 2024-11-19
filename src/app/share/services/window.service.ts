@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Config {
   apiUrl: string;
@@ -16,7 +17,7 @@ export class WindowService {
   private config: Config = {apiUrl: ' '};
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   public get isDeviceTablet() {
     return window.innerWidth >= 576 && window.innerWidth <= 768;
@@ -31,7 +32,10 @@ export class WindowService {
   }
 
   loadConfig(): Observable<Config> {
-    return this.http.get<Config>('/assets/environment.json');
+    return new Observable<any>(observer => {
+      observer.next({apiUrl: environment.apiUrl}); // Emite los datos
+      observer.complete(); // Completa el observable
+    });
   }
 
   get apiUrl(): string {

@@ -68,7 +68,6 @@ export class LoginBerfireComponent implements OnInit {
         localStorage.setItem('access_token', '');
         this.authSrv.login(this.fg.controls['email'].value, this.fg.controls['password'].value)
         .subscribe(res => {
-          debugger;
           if (res.token) {
             localStorage.setItem('access_token', res.token);
             localStorage.setItem('refresh_token', res.token);

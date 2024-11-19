@@ -59,7 +59,7 @@ export class PaymenFormsListComponent implements OnInit {
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly paymentFormsSrv: PaymentFormsService,
-    private fb: FormBuilder
+    private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -140,7 +140,32 @@ export class PaymenFormsListComponent implements OnInit {
   }
 
   searchData(event: IPaymentForms) {
-    debugger;
+    let payload = `?name=${event.name}`;
+    if (event.days) {
+      payload = payload + `&days=${event.days}`;
+    }
+    if (event.home) {
+      payload = payload + `&home=${event.home}`;
+    }
+    this.loading = true;
+    this.paymentFormsSrv.getByFields(payload).subscribe(res=> {
+      if (res.data.length === 0) {
+        Swal.fire({
+          title: this.translate.instant('confirm'),
+          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
+          icon: 'info',
+          showConfirmButton:true,
+          showCancelButton: false,
+          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+          background: this.darkMode ? '#444' : '#fff',
+          color: this.darkMode ? '#fff' : '#000',
+        })
+      } else {
+        this.dataSource.data = res.data;
+        this.loading = false;
+        this.todoListo = true;
+      }
+    });
   }
 
   cleanSearchData() {

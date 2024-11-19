@@ -57,6 +57,9 @@ export class AppComponent implements OnInit, OnDestroy {
         && !this.router.url.includes('/clients-types/edit/new')
         && !this.router.url.includes('/contracts-types/edit/new')
         && !this.router.url.includes('/taxes/edit/new')
+        && !this.router.url.includes('/states-parties-review/edit/new')
+        && !this.router.url.includes('/payment-forms/edit/new')
+        && !this.router.url.includes('/pvp-rates/edit/new')
       }
     });
   }

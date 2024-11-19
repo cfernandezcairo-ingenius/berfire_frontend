@@ -4,25 +4,24 @@ import { StyleManager } from '../../../share/services/style-manager.service';
 import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
-import { TaxesService } from '../taxes.service';
+import { StatesPartiesReviewService } from '../states-parties-review.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 
-export interface ITaxes {
+export interface IIStatementOrder {
   id: number,
-  title: string,
-  value: string,
-  equivalentSurcharge: string,
-  isIGIC: boolean
+  name: string,
+  description: string,
+  finalized: boolean,
 }
 
 
 @Component({
-  selector: 'app-taxes-list',
-  templateUrl: './taxes-list.component.html',
-  styleUrl: './taxes-list.component.scss',
+  selector: 'app-states-parties-review-list',
+  templateUrl: './states-parties-review-list.component.html',
+  styleUrl: './states-parties-review-list.component.scss',
   standalone: true,
   imports: [
     TableListComponent,
@@ -31,29 +30,27 @@ export interface ITaxes {
     TranslateModule
 ]
 })
-export class TaxesListComponent implements OnInit {
+export class StatesPartiesReviewListComponent implements OnInit {
 
   dataSource = {
-    data: [] as ITaxes[]
+    data: [] as IIStatementOrder[]
   };
   darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels:IDisplayedLabels[] = [
-    { name: '',isBoolean: false},
-    { name: 'Titulo',isBoolean:false},
-    { name: 'Valor',isBoolean:false},
-    { name: 'Recargo',isBoolean:false},
-    { name: 'es IGIC', isBoolean:true}
+  displayedLabels: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name:'Nombre',isBoolean:false},
+    { name: 'Descripción',isBoolean:false},
+    { name: 'Finalizada', isBoolean:true}
   ];
   displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn:IDisplayedLabels[] = [
-    { name: '',isBoolean: false},
-    { name: 'Title',isBoolean:false},
-    { name: 'Value',isBoolean:false},
-    { name: 'Surcharge',isBoolean:false},
-    { name: 'isIGIC', isBoolean:true}
+  displayedLabelsEn: IDisplayedLabels[] = [
+    { name:'',isBoolean:false},
+    { name:'Name',isBoolean:false},
+    { name: 'Description',isBoolean:false},
+    { name: 'Finalized', isBoolean:true}
   ];
   fg: FormGroup;
 
@@ -61,11 +58,16 @@ export class TaxesListComponent implements OnInit {
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
-    private readonly taxesSrv:TaxesService,
+    private readonly statesPartiesReviewSrv: StatesPartiesReviewService,
     private readonly fb: FormBuilder
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
+    });
+    this.fg = this.fb.group({
+      name:[''],
+      description: [''],
+      finalized: [''],
     });
     this.translate.onLangChange.subscribe(lc=> {
       if(this.translate.currentLang === 'es') {
@@ -74,17 +76,11 @@ export class TaxesListComponent implements OnInit {
         this.displayedLabels = this.displayedLabelsEn;
       }
     });
-    this.fg = this.fb.group({
-      title: [''],
-      value: [''],
-      equivalentSurcharge: [''],
-      isIGIC: ['']
-    });
   }
 
   ngOnInit(): void {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabTaxes' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabStatesPartiesReview' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -94,7 +90,7 @@ export class TaxesListComponent implements OnInit {
 
   loadAll() {
     this.loading = true;
-    this.taxesSrv.getAll().subscribe(All => {
+    this.statesPartiesReviewSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -116,46 +112,42 @@ export class TaxesListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabTaxes', 'false');
-    //Aqui tengo que recargar los datos desde el backend
+    localStorage.setItem('dataModifiedInNewTabStatesPartiesReview', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
-    this.navigationSrv.NavigateTo(`/taxes/edit/${strRow}`)
+    this.navigationSrv.NavigateTo(`/states-parties-review/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
-    window.open(`/taxes/edit/new/${strRow}`, '_blank')
+    window.open(`/states-parties-review/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
-    this.navigationSrv.NavigateTo(`/taxes/delete/${strRow}`)
+    this.navigationSrv.NavigateTo(`/states-parties-review/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/taxes/edit/${row}`)
+    this.navigationSrv.NavigateTo(`/states-parties-review/edit/${row}`)
   }
 
-  searchData(event: ITaxes) {
+  searchData(event: IIStatementOrder) {
 
-    let payload = `?title=${event.title}`;
-    if (event.value) {
-      payload = payload + `&value=${event.value}`;
+    let payload = `?name=${event.name}`;
+    if (event.description) {
+      payload = payload + `&description=${event.description}`;
     }
-    if (event.equivalentSurcharge) {
-      payload = payload + `&equivalentSurcharge=${event.equivalentSurcharge}`;
-    }
-    if (event.isIGIC) {
-      payload = payload + `&isIGIC=${event.isIGIC}`;
+    if (event.finalized) {
+      payload = payload + `&finalized=${event.finalized}`;
     }
     this.loading = true;
-    this.taxesSrv.getByFields(payload).subscribe(res=> {
+    this.statesPartiesReviewSrv.getByFields(payload).subscribe(res=> {
       if (res.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),

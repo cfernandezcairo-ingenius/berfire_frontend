@@ -4,21 +4,21 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { UnsubscribeReasonsService } from '../unsubscribe-reasons.service';
+import { Observable } from 'rxjs';
+import { StatesPartiesReviewService } from '../states-parties-review.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { WindowService } from '../../../share/services/window.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 
 @Component({
-  selector: 'app-unsubscribe-reasons-add-edit',
+  selector: 'app-states-parties-review-add-edit',
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule],
-  templateUrl: './unsubscribe-reasons-add-edit.component.html',
-  styleUrl: './unsubscribe-reasons-add-edit.component.scss'
+  templateUrl: './states-parties-review-add-edit.component.html',
+  styleUrl: './states-parties-review-add-edit.component.scss'
 })
-export class UnsubscribeReasonsAddEditComponent implements OnInit {
+export class StatesPartiesReviewAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
@@ -32,10 +32,9 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute,
     private readonly navigationService: NavigationService,
-    private readonly unsubscribeReasonsSrv: UnsubscribeReasonsService,
+    private readonly statesPartiesReviewSrv: StatesPartiesReviewService,
     private readonly darkModeService: StyleManager,
-    private readonly router: Router,
-    private readonly windowService: WindowService
+    private readonly router: Router
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -54,7 +53,7 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/unsubscribe-reasons/edit/new');
+        this.showinNewTab = this.router.url.includes('/states-parties-review/edit/new');
       }
     });
   }
@@ -105,10 +104,23 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
               label: 'FORM.FIELDS.DESCRIPTION',
               required:false
             },
-          }
+          },
         ],
-      }
-
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
+          {
+            className: 'col-sm-12 col-md-12 col-lg-12',
+            type: 'checkbox',
+            key: 'finalized',
+            props: {
+              label: 'FORM.FIELDS.FINALIZED',
+              required:false
+            },
+          },
+        ],
+      },
     ];
     this.updateLabels();
   }
@@ -121,7 +133,9 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
     this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-
+    this.translate.get('FORM.FIELDS.FINALIZED').subscribe((label) => {
+      this.fields[2].fieldGroup[0].props.label = label;
+    });
   }
 
   updateValidationMessages() {
@@ -140,19 +154,23 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
+    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value,
+        description: this.fg.get('description')?.value === undefined ? false : this.fg.get('description')?.value,
+        finalized: this.fg.get('finalized')?.value === undefined ? false : this.fg.get('finalized')?.value,
       }
+      myobs = this.statesPartiesReviewSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
         name: this.fg.get('name')?.value,
         description: this.fg.get('description')?.value,
+        finalized: this.fg.get('finalized')?.value,
       }
+      myobs = this.statesPartiesReviewSrv.edit(payload);
     }
-    const myobs = this.row.id === 0 ? this.unsubscribeReasonsSrv.add(payload) : this.unsubscribeReasonsSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -173,13 +191,14 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
         //y permanecer en la ventana
         if (res.success === true) {
           if (this.showinNewTab) {
-            localStorage.setItem('dataModifiedInNewTabUnsubscribeReasons', 'true');
-            this.showinNewTab = false
+            localStorage.setItem('dataModifiedInNewTabStatementOrder', 'true');
             if (!nuevo) window.close();
-          } else if (nuevo) {
-              this.fg.reset();
           } else {
-            this.navigationService.goback();
+            if (nuevo) {
+              this.fg.reset();
+            } else {
+              this.navigationService.goback();
+            }
           }
         }
       },

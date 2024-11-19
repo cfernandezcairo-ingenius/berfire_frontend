@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 
 export function HandleMessagesSubmit(translate: TranslateService, error: any) {
   let titleError = '';
-  debugger;
   // if (error.error.message) {
   //   titleError = error.error.message;
   //   showErrorMessage(translate, titleError);

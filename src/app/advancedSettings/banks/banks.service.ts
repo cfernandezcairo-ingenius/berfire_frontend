@@ -23,6 +23,10 @@ export class BanksService {
     return this.http.get<any>(`${this.windowService.apiUrl}/banks`);
   }
 
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/banks/${payload}`);
+  }
+
   delete(id:any):Observable<any> {
     return this.http.delete<any>(`${this.windowService.apiUrl}/banks/${id}`);
   }

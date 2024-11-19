@@ -186,11 +186,47 @@ export class BillStatusListComponent implements OnInit {
   }
 
   searchData(event: IBillStatements) {
-    debugger;
+
+    let payload = `?name=${event.name}`;
+    if (event.isPaid) {
+      payload = payload + `&isPaid=${event.isPaid}`;
+    }
+    if (event.isReturned) {
+      payload = payload + `&isReturned=${event.isReturned}`;
+    }
+    if (event.isPending) {
+      payload = payload + `&isPending=${event.isPending}`;
+    }
+    if (event.isSent) {
+      payload = payload + `&isSent=${event.isSent}`;
+    }
+    if (event.isUnPaid) {
+      payload = payload + `&isUnPaid=${event.isUnPaid}`;
+    }
+    this.loading = true;
+    this.billStatusSrv.getByFields(payload).subscribe(res=> {
+      if (res.data.length === 0) {
+        Swal.fire({
+          title: this.translate.instant('confirm'),
+          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
+          icon: 'info',
+          showConfirmButton:true,
+          showCancelButton: false,
+          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+          background: this.darkMode ? '#444' : '#fff',
+          color: this.darkMode ? '#fff' : '#000',
+        })
+      } else {
+        this.dataSource.data = res.data;
+        this.loading = false;
+        this.todoListo = true;
+      }
+    });
   }
 
   cleanSearchData() {
     this.fg.reset();
+    this.loadAll();
   }
 
 }

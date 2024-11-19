@@ -16,11 +16,15 @@ export class BillStatusService {
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${this.windowService.apiUrl}/billStatus//${payload.id}`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/billStatus/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/billStatus`);
+  }
+
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/billStatus/${payload}`);
   }
 
   delete(id:any):Observable<any> {
