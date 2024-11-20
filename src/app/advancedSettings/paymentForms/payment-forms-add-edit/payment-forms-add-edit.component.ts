@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
@@ -15,7 +15,8 @@ import { HandleMessagesSubmit } from '../../../share/common/handle-error-message
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule],
   templateUrl: './payment-forms-add-edit.component.html',
-  styleUrl: './payment-forms-add-edit.component.scss'
+  styleUrl: './payment-forms-add-edit.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class PaymentFormsAddEditComponent implements OnInit {
 
@@ -105,7 +106,11 @@ export class PaymentFormsAddEditComponent implements OnInit {
             key: 'days',
             props: {
               label: 'FORM.FIELDS.DAYS',
-              required:true
+              type: 'number',
+              step: 1,
+              required: true,
+              min: 0,
+              max: 999,
             },
             validators: {
               validation: ['required', 'number'],
@@ -118,7 +123,7 @@ export class PaymentFormsAddEditComponent implements OnInit {
             },
           },
           {
-            className: 'col-sm-12 col-md-6 col-lg-12',
+            className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'checkbox',
             key: 'home',
             props: {
@@ -196,7 +201,7 @@ export class PaymentFormsAddEditComponent implements OnInit {
         //y permanecer en la ventana
         if (res.success === true) {
           if (this.showinNewTab) {
-            localStorage.setItem('dataModifiedInNewTab', 'true');
+            localStorage.setItem('dataModifiedInNewTabPaymentForms', 'true');
             if (!nuevo) window.close();
           } else if (nuevo) {
               this.fg.reset();

@@ -133,4 +133,41 @@ export class PopulationsListComponent implements OnInit {
     this.navigationSrv.NavigateTo(`/populations/edit/${row}`)
   }
 
+  searchData(event: IPopulations) {
+    let payload = `?name=${event.name}`;
+    if (event.country) {
+      payload = payload + `&country=${event.country}`;
+    }
+    if (event.province) {
+      payload = payload + `&province=${event.province}`;
+    }
+    if (event.active) {
+      payload = payload + `&active=${event.active}`;
+    }
+    this.loading = true;
+    this.populationsSrv.getByFields(payload).subscribe(res=> {
+      if (res.data.length === 0) {
+        Swal.fire({
+          title: this.translate.instant('confirm'),
+          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
+          icon: 'info',
+          showConfirmButton:true,
+          showCancelButton: false,
+          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+          background: this.darkMode ? '#444' : '#fff',
+          color: this.darkMode ? '#fff' : '#000',
+        })
+      } else {
+        this.dataSource.data = res.data;
+        this.loading = false;
+        this.todoListo = true;
+      }
+    });
+  }
+
+ cleanSearchData() {
+    // this.fg.reset();
+    this.loadAll();
+  }
+
 }

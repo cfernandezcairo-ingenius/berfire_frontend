@@ -62,6 +62,9 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
+      this.model = {
+        finalized: false,
+      }
       this.shoWButtonSaveAndNew = true;
     } else {
       //edit
@@ -154,14 +157,12 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value === undefined ? false : this.fg.get('description')?.value,
+        description: this.fg.get('description')?.value === undefined ? null : this.fg.get('description')?.value,
         finalized: this.fg.get('finalized')?.value === undefined ? false : this.fg.get('finalized')?.value,
       }
-      myobs = this.statesPartiesReviewSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
@@ -169,8 +170,8 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
         description: this.fg.get('description')?.value,
         finalized: this.fg.get('finalized')?.value,
       }
-      myobs = this.statesPartiesReviewSrv.edit(payload);
     }
+    const myobs = this.row.id === 0 ? this.statesPartiesReviewSrv.add(payload) : this.statesPartiesReviewSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

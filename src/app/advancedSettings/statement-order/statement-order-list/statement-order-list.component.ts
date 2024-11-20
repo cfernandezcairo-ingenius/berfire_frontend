@@ -167,8 +167,9 @@ export class StatementOrderListComponent implements OnInit {
     });
   }
 
-  cleanSearchData() {
+ cleanSearchData() {
     this.fg.reset();
+    this.loadAll();
   }
 
 }

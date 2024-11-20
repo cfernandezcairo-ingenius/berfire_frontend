@@ -167,8 +167,9 @@ export class StatesPartiesReviewListComponent implements OnInit {
     });
   }
 
-  cleanSearchData() {
+ cleanSearchData() {
     this.fg.reset();
+    this.loadAll();
   }
 
 }

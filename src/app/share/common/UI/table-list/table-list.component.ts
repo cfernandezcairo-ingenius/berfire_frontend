@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, ElementRef, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
@@ -47,7 +47,7 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class TableListComponent implements OnInit, OnChanges {
 
-  @Input() dataInput: any;
+  @Input() dataInput: { data: any[]; } | undefined;
   @Input() displayedLabels: IDisplayedLabels[] = [];
   @Input() titleMobileList: string = '';
   @Input() fg:FormGroup = new FormGroup({});
@@ -103,15 +103,16 @@ export class TableListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.displayedColumns = Object.keys(this.dataInput.data[0]);
-    this.dataSourceShow.data = this.dataInput.data;
+    this.displayedColumns = Object.keys(this.dataInput!.data[0]);
+    this.dataSourceShow.data = this.dataInput!.data;
     this.displayedColumns.forEach(d => {
       this.fg.addControl(d, this.fb.control(''));
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.dataSourceShow.data = this.dataInput.data;
+  ngOnChanges(): void {
+
+    this.dataSourceShow.data = this.dataInput!.data;
   }
 
   ngAfterViewInit(): void {

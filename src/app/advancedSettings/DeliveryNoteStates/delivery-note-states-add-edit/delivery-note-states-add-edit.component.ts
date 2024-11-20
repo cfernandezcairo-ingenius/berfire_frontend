@@ -139,7 +139,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
-        confirmDeliveryNote: this.fg.get('confirmDeliveryNote')?.value === undefined ? false : this.fg.get('confirmDeliveryNote')?.value
+        confirmDeliveryNote: this.fg.get('confirmDeliveryNote')?.value === undefined ? null : this.fg.get('confirmDeliveryNote')?.value
       }
     } else {
       payload = {

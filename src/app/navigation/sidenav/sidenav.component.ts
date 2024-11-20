@@ -170,8 +170,7 @@ export class SidenavResponsiveExample implements OnDestroy {
         ],
       },
       {
-        displayName: 'Técnicos',
-        iconName: '',
+        displayName: this.translate.instant('menu.technicals'),iconName: '', route: 'technicals/list'
       },
       {
         displayName: 'Proyectos',
@@ -212,8 +211,8 @@ export class SidenavResponsiveExample implements OnDestroy {
         {displayName: 'Datos de la Empresa',iconName: ''},
         {displayName: 'Usuarios',iconName: ''},
         {displayName: 'Tipos de partes de revisión',iconName: ''},
-        {displayName: 'Fabricantes',iconName: ''},
-        {displayName: 'Plantillas de documentos',iconName: ''}
+        {displayName: this.translate.instant('menu.manufacturers'),iconName: '', route: 'manufacturers/list'},
+        {displayName: this.translate.instant('menu.documents-templates'),iconName: '', route: 'documents-templates/list'},
       ]},
       {displayName: this.translate.instant('menu.advancedSettings'),iconName: 'menu',children: [
         {displayName: this.translate.instant('menu.banks'),iconName: '', route: 'banks/list'},

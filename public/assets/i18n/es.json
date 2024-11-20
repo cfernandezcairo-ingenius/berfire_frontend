@@ -78,7 +78,14 @@
       "VALUE": "Valor",
       "SURCHARGE": "Recargo",
       "ISIGIC": "Es IGIC",
-      "FIELD": "Campo"
+      "FIELD": "Campo",
+      "FIRSTSURNAME": "Primer Apellido",
+      "SECONDSURNAME": "Segundo Apellido",
+      "USER": "Usuario",
+      "TEMPLATETYPE": "Tipo de plantilla",
+      "RENDERTYPE": "Tipo de Renderizado",
+      "PREDETERMINED": "Predeterminado",
+      "TEMPLATE": "Plantilla"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido.",
@@ -114,7 +121,10 @@
     "populations": "Poblaciones",
     "pvpRates": "Tarifas PVP",
     "clients-types": "Tipos de clientes",
-    "contracts-types": "Tipos de contratos"
+    "contracts-types": "Tipos de contratos",
+    "manufacturers": "Fabricantes",
+    "technicals": "Técnicos",
+    "documents-templates": "Plantillas de Documentos"
   },
   "error": {
     "messages": {

@@ -159,8 +159,9 @@ export class ContractsTypesListComponent implements OnInit {
     });
   }
 
-  cleanSearchData() {
+ cleanSearchData() {
     this.fg.reset();
+    this.loadAll();
   }
 
 }

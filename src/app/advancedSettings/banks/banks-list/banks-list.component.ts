@@ -44,7 +44,7 @@ export class BanksListComponent implements OnInit {
       name:'', isBoolean: false
     },
     {
-      name: 'Nombre', isBoolean: false,
+      name: 'Nombre', isBoolean: false
      },
      {
       name:'Swift',isBoolean: false
@@ -59,7 +59,7 @@ export class BanksListComponent implements OnInit {
       name:'', isBoolean: false
     },
     {
-      name: 'Name', isBoolean: false,
+      name: 'Name', isBoolean: false
      },
      {
       name:'Swift',isBoolean: false
@@ -102,6 +102,7 @@ export class BanksListComponent implements OnInit {
     });
     this.loading = true;
     this.loadAll();
+    let sasa = this.displayedLabelsEs;
   }
 
   loadAll() {
@@ -184,8 +185,9 @@ export class BanksListComponent implements OnInit {
     });
   }
 
-  cleanSearchData() {
+ cleanSearchData() {
     this.fg.reset();
+    this.loadAll();
   }
 
 }

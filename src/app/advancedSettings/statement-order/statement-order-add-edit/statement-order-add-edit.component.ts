@@ -161,7 +161,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value === undefined ? false : this.fg.get('description')?.value,
+        description: this.fg.get('description')?.value === undefined ? null : this.fg.get('description')?.value,
         finalized: this.fg.get('finalized')?.value === undefined ? false : this.fg.get('finalized')?.value,
       }
       myobs = this.statementOrderSrv.add(payload);

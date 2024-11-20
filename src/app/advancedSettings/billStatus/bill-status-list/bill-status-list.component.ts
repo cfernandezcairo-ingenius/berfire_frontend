@@ -151,7 +151,7 @@ export class BillStatusListComponent implements OnInit {
         })
         this.addItem();
       } else {
-        this.dataSource.data = All.data;
+        this.dataSource = { data: All.data };
         this.loading = false;
         this.todoListo = true;
       }
@@ -217,7 +217,7 @@ export class BillStatusListComponent implements OnInit {
           color: this.darkMode ? '#fff' : '#000',
         })
       } else {
-        this.dataSource.data = res.data;
+        this.dataSource = { data: res.data };
         this.loading = false;
         this.todoListo = true;
       }

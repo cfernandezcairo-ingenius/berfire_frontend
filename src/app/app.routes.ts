@@ -2,14 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginBerfireComponent } from './auth/login-berfire/login-berfire.component';
 import { AuthGuard } from './share/common/auth-guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FacturasListComponent } from './administracion/facturas/facturas-list/facturas-list.component';
-import { FacturasAddEditComponent } from './administracion/facturas/facturas-add-edit/facturas-add-edit.component';
-import { ClientsListComponent } from './clients/clients-list/clients-list.component';
-import { PresupuestosComponent } from './administracion/presupuestos/presupuestos.component';
-import { VencimientosComponent } from './administracion/vencimientos/vencimientos.component';
-import { PreupuestosCorrectivoaComponent } from './administracion/preupuestos-correctivoa/preupuestos-correctivoa.component';
-import { GestionarRectificativasComponent } from './administracion/gestionar-rectificativas/gestionar-rectificativas.component';
-import { ReportesFacturacionComponent } from './administracion/reportes-facturacion/reportes-facturacion.component';
 import { DeliveryNoteStatesListComponent } from './advancedSettings/DeliveryNoteStates/delivery-note-states-list/delivery-note-states-list.component';
 import { DeliveryNoteStatesAddEditComponent } from './advancedSettings/DeliveryNoteStates/delivery-note-states-add-edit/delivery-note-states-add-edit.component';
 import { DeliveryNoteStatesDeleteComponent } from './advancedSettings/DeliveryNoteStates/delivery-note-states-delete/delivery-note-states-delete.component'
@@ -31,8 +23,8 @@ import { BanksDeleteComponent } from './advancedSettings/banks/banks-delete/bank
 import { BillStatusListComponent } from './advancedSettings/billStatus/bill-status-list/bill-status-list.component';
 import { BillStatusAddEditComponent } from './advancedSettings/billStatus/bill-status-add-edit/bill-status-add-edit.component';
 import { AllAddEditNewComponent } from './all-add-edit-new/all-add-edit-new.component';
-import { AlbaranesListComponent } from './administracion/albaranes/albaranes-list/albaranes-list.component';
-import { AlbaranesAddEditComponent } from './administracion/albaranes/albaranes-add-edit/albaranes-add-edit.component';
+//import { AlbaranesListComponent } from './administracion/albaranes/albaranes-list/albaranes-list.component';
+//import { AlbaranesAddEditComponent } from './administracion/albaranes/albaranes-add-edit/albaranes-add-edit.component';
 import { PopulationsListComponent } from './advancedSettings/populations/populations-list/populations-list.component';
 import { PopulationsAddEditComponent } from './advancedSettings/populations/populations-add-edit/populations-add-edit.component';
 import { PopulationsDeleteComponent } from './advancedSettings/populations/populations-delete/populations-delete.component';
@@ -54,29 +46,37 @@ import { PvpRatesDeleteComponent } from './advancedSettings/pvpRates/pvp-rates-d
 import { StatesPartiesReviewListComponent } from './advancedSettings/StatesPartiesReview/states-parties-review-list/states-parties-review-list.component';
 import { StatesPartiesReviewAddEditComponent } from './advancedSettings/StatesPartiesReview/states-parties-review-add-edit/states-parties-review-add-edit.component';
 import { StatesPartiesReviewDeleteComponent } from './advancedSettings/StatesPartiesReview/states-parties-review-delete/states-parties-review-delete.component';
+import { ManufacturersAddEditComponent } from './configuration/manufacturers/manufacturers-add-edit/manufacturers-add-edit.component';
+import { ManufacturersDeleteComponent } from './configuration/manufacturers/manufacturers-delete/manufacturers-delete.component';
+import { ManufacturersListComponent } from './configuration/manufacturers/manufacturers-list/manufacturers-list.component';
+import { TechnicalsListComponent } from './technicals/technicals-list/technicals-list.component';
+import { TechnicalsAddEditComponent } from './technicals/technicals-add-edit/technicals-add-edit.component';
+import { DocumentsTemplatesListComponent } from './configuration/documents-templates/documents-templates-list/documents-templates-list.component';
+import { DocumentsTemplatesAddEditComponent } from './configuration/documents-templates/documents-templates-add-edit/documents-templates-add-edit.component';
+import { DocumentsTemplatesDeleteComponent } from './configuration/documents-templates/documents-templates-delete/documents-templates-delete.component';
 
 export const routes: Routes = [
 
   { path: '',redirectTo: "invoice/list", pathMatch: "full" },
   { path: 'login', component: LoginBerfireComponent },
   { path: 'dashboard', component: DashboardComponent,  canActivate: [AuthGuard] },
-  { path: 'invoice/list', component: FacturasListComponent, canActivate: [AuthGuard]},
-  { path: 'invoice/edit/:id', component: FacturasAddEditComponent, canActivate: [AuthGuard]},
-  { path: 'invoice/edit/new/:id', component: FacturasAddEditComponent, canActivate: [AuthGuard]},
-  { path: 'clients', component: ClientsListComponent, canActivate: [AuthGuard]},
-  { path: 'budgets', component: PresupuestosComponent, canActivate: [AuthGuard]},
+  // { path: 'invoice/list', component: FacturasListComponent, canActivate: [AuthGuard]},
+  // { path: 'invoice/edit/:id', component: FacturasAddEditComponent, canActivate: [AuthGuard]},
+  // { path: 'invoice/edit/new/:id', component: FacturasAddEditComponent, canActivate: [AuthGuard]},
+  // { path: 'clients', component: ClientsListComponent, canActivate: [AuthGuard]},
+  // { path: 'budgets', component: PresupuestosComponent, canActivate: [AuthGuard]},
   { path: 'delivery-note-states/list', component: DeliveryNoteStatesListComponent, canActivate: [AuthGuard]},
   { path: 'delivery-note-states/edit/:id', component: DeliveryNoteStatesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'delivery-note-states/edit/new/:id', component: DeliveryNoteStatesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'delivery-note-states/delete/:id', component: DeliveryNoteStatesDeleteComponent, canActivate: [AuthGuard]},
-  { path: 'delivery-note/list', component: AlbaranesListComponent, canActivate: [AuthGuard]},
-  { path: 'delivery-note/edit/:id', component: AlbaranesAddEditComponent, canActivate: [AuthGuard]},
+  //{ path: 'delivery-note/list', component: AlbaranesListComponent, canActivate: [AuthGuard]},
+  //{ path: 'delivery-note/edit/:id', component: AlbaranesAddEditComponent, canActivate: [AuthGuard]},
   // { path: 'delivery-note/delete/:id', component: Alba DeliveryNoteStatesDeleteComponent, canActivate: [AuthGuard]},
-  { path: 'delivery-note/edit/new/:id', component: AlbaranesAddEditComponent, canActivate: [AuthGuard]},
-  { path: 'expirations', component:VencimientosComponent, canActivate: [AuthGuard]},
-  { path: 'corrective-budgets', component: PreupuestosCorrectivoaComponent, canActivate: [AuthGuard]},
-  { path: 'handle-rectification', component: GestionarRectificativasComponent, canActivate: [AuthGuard]},
-  { path: 'invoice-report', component: ReportesFacturacionComponent, canActivate: [AuthGuard]},
+  //{ path: 'delivery-note/edit/new/:id', component: AlbaranesAddEditComponent, canActivate: [AuthGuard]},
+  // { path: 'expirations', component:VencimientosComponent, canActivate: [AuthGuard]},
+  // { path: 'corrective-budgets', component: PreupuestosCorrectivoaComponent, canActivate: [AuthGuard]},
+  // { path: 'handle-rectification', component: GestionarRectificativasComponent, canActivate: [AuthGuard]},
+  // { path: 'invoice-report', component: ReportesFacturacionComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/list', component: BillStatusListComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/edit/:id', component: BillStatusAddEditComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/delete/:id', component: BillStatusDeleteComponent, canActivate: [AuthGuard]},
@@ -130,5 +130,17 @@ export const routes: Routes = [
   { path: 'states-parties-review/list', component: StatesPartiesReviewListComponent, canActivate: [AuthGuard]},
   { path: 'states-parties-review/edit/:id', component: StatesPartiesReviewAddEditComponent, canActivate: [AuthGuard]},
   { path: 'states-parties-review/delete/:id', component: StatesPartiesReviewDeleteComponent , canActivate: [AuthGuard]},
-  { path: 'states-parties-review/edit/new/:id', component: StatesPartiesReviewAddEditComponent, canActivate: [AuthGuard]}
+  { path: 'states-parties-review/edit/new/:id', component: StatesPartiesReviewAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'manufacturers/list', component: ManufacturersListComponent, canActivate: [AuthGuard]},
+  { path: 'manufacturers/edit/:id', component: ManufacturersAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'manufacturers/delete/:id', component: ManufacturersDeleteComponent , canActivate: [AuthGuard]},
+  { path: 'manufacturers/edit/new/:id', component: ManufacturersAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'technicals/list', component: TechnicalsListComponent, canActivate: [AuthGuard]},
+  { path: 'technicals/edit/:id', component: TechnicalsAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'technicals/delete/:id', component: TechnicalsListComponent , canActivate: [AuthGuard]},
+  { path: 'technicals/edit/new/:id', component: TechnicalsAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'documents-templates/list', component: DocumentsTemplatesListComponent, canActivate: [AuthGuard]},
+  { path: 'documents-templates/edit/:id', component: DocumentsTemplatesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'documents-templates/delete/:id', component: DocumentsTemplatesDeleteComponent , canActivate: [AuthGuard]},
+  { path: 'documents-templates/edit/new/:id', component: DocumentsTemplatesAddEditComponent, canActivate: [AuthGuard]},
 ];

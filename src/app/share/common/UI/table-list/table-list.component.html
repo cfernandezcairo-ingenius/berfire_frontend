@@ -56,7 +56,7 @@
     </table>
 
     <mat-paginator #paginator
-        [length]="dataInput.length"
+        [length]="dataInput!.data.length"
         [showFirstLastButtons]="true"
         [pageIndex]="0"
         [pageSize]="10"
@@ -78,7 +78,7 @@
 </div>
 
 <div *ngIf="isMobile" style="margin-top: 75px;">
-  @for (data of dataInput.data; track data;let index = $index,e = $even) {
+  @for (data of dataInput?.data; track data;let index = $index,e = $even) {
     <div style="margin-top: 10px;">
       <app-mat-table-mobile [data]="data" [title]="titleMobileList" [subtitle]="'list'" (editEvent)="edit($event)" (deleteEvent)="delete($event)"></app-mat-table-mobile>
     </div>

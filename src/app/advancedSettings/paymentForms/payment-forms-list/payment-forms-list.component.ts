@@ -80,7 +80,7 @@ export class PaymenFormsListComponent implements OnInit {
 
   ngOnInit(): void {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTab' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabPaymentForms' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -112,10 +112,8 @@ export class PaymenFormsListComponent implements OnInit {
   }
 
   handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTab', 'false');
-    //this.payload = JSON.parse(localStorage.getItem('payloadNewTab')!);
-    debugger;
-    //Aqui tengo que recargar los datos desde el backend
+    localStorage.setItem('dataModifiedInNewTabPaymentForms', 'false');
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
@@ -168,8 +166,9 @@ export class PaymenFormsListComponent implements OnInit {
     });
   }
 
-  cleanSearchData() {
+ cleanSearchData() {
     this.fg.reset();
+    this.loadAll();
   }
 
 }

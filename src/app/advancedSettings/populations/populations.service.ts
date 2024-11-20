@@ -21,14 +21,10 @@ export class PopulationsService {
 
   getAll(): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/populations`);
-    // return new Observable<any>(observer => {
-    //   // Simulando un retraso para emular una llamada a una API
-    //   setTimeout(() => {
-    //     const mockData = new EstadosFacturasDataSource();
-    //     observer.next(mockData); // Emite los datos
-    //     observer.complete(); // Completa el observable
-    //   }, 1000); // 2 segundos de retraso
-    // });
+  }
+
+  getByFields(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/populations/${payload}`);
   }
 
   delete(id:any):Observable<any> {
