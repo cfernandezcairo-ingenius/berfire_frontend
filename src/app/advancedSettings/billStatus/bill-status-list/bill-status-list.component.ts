@@ -205,6 +205,7 @@ export class BillStatusListComponent implements OnInit {
     }
     this.loading = true;
     this.billStatusSrv.getByFields(payload).subscribe(res=> {
+      this.loading = false;
       if (res.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -218,10 +219,10 @@ export class BillStatusListComponent implements OnInit {
         })
       } else {
         this.dataSource = { data: res.data };
-        this.loading = false;
-        this.todoListo = true;
+
       }
     });
+    this.todoListo = true;
   }
 
   cleanSearchData() {

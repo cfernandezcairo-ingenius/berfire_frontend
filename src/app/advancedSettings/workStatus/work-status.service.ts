@@ -9,7 +9,7 @@ import { WindowService } from '../../share/services/window.service';
 })
 export class WorkStatusService {
 
-  constructor(private http: HttpClient, private windowService: WindowService) { }
+  constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     return this.http.post<any>(`${this.windowService.apiUrl}/workStatus`, payload);
@@ -20,6 +20,10 @@ export class WorkStatusService {
 
   getAll(): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/workStatus`);
+  }
+
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/workStatus/${payload.id}`);
   }
 
   getByFields(payload:any): Observable<any> {

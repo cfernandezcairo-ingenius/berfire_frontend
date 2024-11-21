@@ -21,6 +21,10 @@ export class UnsubscribeReasonsService {
     return this.http.get<any>(`${this.windowService.apiUrl}/reasonLowEquipment`);
   }
 
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/reasonLowEquipment/${payload.id}`);
+  }
+
   getByFields(payload:any): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/reasonLowEquipment/${payload}`);
   }

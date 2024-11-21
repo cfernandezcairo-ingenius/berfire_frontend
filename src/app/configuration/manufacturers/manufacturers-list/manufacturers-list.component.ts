@@ -103,7 +103,7 @@ export class ManufacturersListComponent implements OnInit {
         })
         this.addItem();
       } else {
-        this.dataSource.data = All.data;
+        this.dataSource = { data: All.data };;
         this.loading = false;
         this.todoListo = true;
       }
@@ -146,6 +146,7 @@ export class ManufacturersListComponent implements OnInit {
     }
     this.loading = true;
     this.manufacturersSrv.getByFields(payload).subscribe(res=> {
+      this.loading = false;
       if (res.data.length === 0) {
         Swal.fire({
           title: this.translate.instant('confirm'),
@@ -158,11 +159,10 @@ export class ManufacturersListComponent implements OnInit {
           color: this.darkMode ? '#fff' : '#000',
         })
       } else {
-        this.dataSource.data = res.data;
-        this.loading = false;
-        this.todoListo = true;
+        this.dataSource = { data: res.data };
       }
     });
+    this.todoListo = true;
   }
 
  cleanSearchData() {

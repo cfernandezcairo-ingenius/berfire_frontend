@@ -11,21 +11,25 @@ export class StatesPartiesReviewService {
   constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
-    return this.http.post<any>(`${this.windowService.apiUrl}/prStatus`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/prStates`, payload);
   }
   edit(payload: any): Observable<any> {
-    return this.http.put<any>(`${this.windowService.apiUrl}/prStatus/${payload.id}`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/prStates/${payload.id}`, payload);
   }
 
   getAll(): Observable<any> {
-    return this.http.get<any>(`${this.windowService.apiUrl}/prStatus`);
+    return this.http.get<any>(`${this.windowService.apiUrl}/prStates`);
+  }
+
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/prStates/${payload.id}`);
   }
 
   getByFields(payload:any): Observable<any> {
-    return this.http.get<any>(`${this.windowService.apiUrl}/prStatus/${payload}`);
+    return this.http.get<any>(`${this.windowService.apiUrl}/prStates/${payload}`);
   }
 
   delete(id:any):Observable<any> {
-    return this.http.delete<any>(`${this.windowService.apiUrl}/prStatus/${id}`);
+    return this.http.delete<any>(`${this.windowService.apiUrl}/prStates/${id}`);
   }
 }

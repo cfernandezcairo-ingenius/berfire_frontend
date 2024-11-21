@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { WindowService } from '../../share/services/window.service';
@@ -21,6 +21,10 @@ export class PopulationsService {
 
   getAll(): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/populations`);
+  }
+
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/populations/${payload.id}`);
   }
 
   getByFields(payload:any): Observable<any> {

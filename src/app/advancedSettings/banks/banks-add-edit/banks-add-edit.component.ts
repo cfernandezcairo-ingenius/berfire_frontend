@@ -9,11 +9,12 @@ import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
+import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 
 @Component({
   selector: 'app-banks-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './banks-add-edit.component.html',
   styleUrl: './banks-add-edit.component.scss'
 })
@@ -26,6 +27,7 @@ export class BanksAddEditComponent implements OnInit {
   darkMode = false;
   showinNewTab = false;
   shoWButtonSaveAndNew = false;
+  loading = false;
 
   constructor(
     private readonly translate: TranslateService,
@@ -63,9 +65,30 @@ export class BanksAddEditComponent implements OnInit {
       //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
-      this.model = { ...this.row};
+      let payload = {
+        id: this.row.id
+      }
+      this.loading = true;
+      this.banksSrv.getById(payload).subscribe({
+        next:(res => {
+          this.model = { ...res.data};
+        }),
+        error: () => {
+          Swal.fire({
+            title: this.translate.instant('inform'),
+            text: this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!',
+            icon: 'error',
+            showConfirmButton:true,
+            showCancelButton: false,
+            confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+            background: this.darkMode ? '#444' : '#fff',
+            color: this.darkMode ? '#fff' : '#000',
+          });
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
       this.shoWButtonSaveAndNew = false;
     }
 

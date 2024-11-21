@@ -21,6 +21,10 @@ export class TaxesService {
     return this.http.get<any>(`${this.windowService.apiUrl}/taxes`);
   }
 
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/taxes/${payload.id}`);
+  }
+
   getByFields(payload:any): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/taxes/${payload}`);
   }

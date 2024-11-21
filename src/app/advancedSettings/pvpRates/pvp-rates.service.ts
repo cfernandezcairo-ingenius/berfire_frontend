@@ -21,6 +21,10 @@ export class PVPRatesService {
     return this.http.get<any>(`${this.windowService.apiUrl}/pvpRates`);
   }
 
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/pvpRates/${payload.id}`);
+  }
+
   getByFields(payload:any): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/pvpRates/${payload}`);
   }

@@ -4,17 +4,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { StatementOrderService } from '../statement-order.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
+import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 
 @Component({
   selector: 'app-statement-order-add-edit',
   standalone: true,
-  imports: [FormlyBaseComponent, TranslateModule, CommonModule],
+  imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './statement-order-add-edit.component.html',
   styleUrl: './statement-order-add-edit.component.scss'
 })
@@ -27,6 +27,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
   darkMode = false;
   showinNewTab = false;
   shoWButtonSaveAndNew = false;
+  loading = false;
 
   constructor(
     private readonly translate: TranslateService,
@@ -69,7 +70,30 @@ export class StatementOrdersAddEditComponent implements OnInit {
     } else {
       //edit
       //this.title = this.translate.instant('editItem');
-      this.model = { ...this.row};
+      let payload = {
+        id: this.row.id
+      }
+      this.loading = true;
+      this.statementOrderSrv.getById(payload).subscribe({
+        next:(res => {
+          this.model = { ...res.data};
+        }),
+        error: () => {
+          Swal.fire({
+            title: this.translate.instant('inform'),
+            text: this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!',
+            icon: 'error',
+            showConfirmButton:true,
+            showCancelButton: false,
+            confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
+            background: this.darkMode ? '#444' : '#fff',
+            color: this.darkMode ? '#fff' : '#000',
+          });
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
       this.shoWButtonSaveAndNew = false;
     }
 
@@ -157,14 +181,12 @@ export class StatementOrdersAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         description: this.fg.get('description')?.value === undefined ? null : this.fg.get('description')?.value,
         finalized: this.fg.get('finalized')?.value === undefined ? false : this.fg.get('finalized')?.value,
       }
-      myobs = this.statementOrderSrv.add(payload);
     } else {
       payload = {
         id: this.row.id,
@@ -172,8 +194,9 @@ export class StatementOrdersAddEditComponent implements OnInit {
         description: this.fg.get('description')?.value,
         finalized: this.fg.get('finalized')?.value,
       }
-      myobs = this.statementOrderSrv.edit(payload);
+
     }
+    let myobs = this.row.id === 0 ? this.statementOrderSrv.add(payload) :  this.statementOrderSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -196,13 +219,11 @@ export class StatementOrdersAddEditComponent implements OnInit {
           if (this.showinNewTab) {
             localStorage.setItem('dataModifiedInNewTabStatementOrder', 'true');
             if (!nuevo) window.close();
-          } else {
-            if (nuevo) {
+          } else if (nuevo) {
               this.fg.reset();
             } else {
               this.navigationService.goback();
             }
-          }
         }
       },
       error: (error) => {

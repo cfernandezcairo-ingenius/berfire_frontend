@@ -23,6 +23,10 @@ export class ClientsTypesService {
     return this.http.get<any>(`${this.windowService.apiUrl}/customerTypes`);
   }
 
+  getById(payload:any): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/customerTypes/${payload.id}`);
+  }
+
   getByFields(payload:any): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/customerTypes/${payload}`);
   }
