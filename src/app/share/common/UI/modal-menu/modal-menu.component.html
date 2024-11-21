@@ -1,0 +1,25 @@
+<div>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon [ngStyle]="darkMode ? { 'background-color': 'black', color: 'white'} : { color: 'black'}">more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <div [ngStyle]="!darkMode ? { 'background-color': 'white'} : {}">
+      <button (click)="edit(row)" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>{{'edit' | translate}}</span>
+      </button>
+    </div>
+    <div [ngStyle]="!darkMode ? { 'background-color': 'white'} : {}">
+      <button (click)="editNewPagina(row)" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>{{'editNueva' | translate}}</span>
+      </button>
+    </div>
+    <div [ngStyle]="!darkMode ? { 'background-color': 'white'} : {}">
+      <button  (click)="delete(row.id)" mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>{{'delete' | translate}}</span>
+      </button>
+    </div>
+  </mat-menu>
+</div>

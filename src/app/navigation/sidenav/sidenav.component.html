@@ -1,0 +1,76 @@
+<div class="example-container">
+  <!-- <mat-toolbar color="primary" class="example-toolbar">
+    <h1 class="example-app-name"></h1>
+  </mat-toolbar> -->
+  <div class="btn-menu-container" (click)="showMenu()" *ngIf="isAuthenticated() && showMenuL">
+    <div class="btn-menu">{{'menu.title' | translate}}
+    </div>
+  </div>
+  <mat-sidenav-container class="example-sidenav-container" style="background-color: #58c0c8;">
+    <mat-sidenav mode="side" fixedInViewport="true" opened>
+      <mat-list>
+        <span *ngFor="let item of menu">
+          <ng-container *ngIf="item.children && item.children.length > 0; else singleItem">
+            <mat-accordion style=" background-color: #1c75bc;">
+              <mat-expansion-panel style=" background-color: #1c75bc;" hideToggle>
+                <mat-expansion-panel-header style=" background-color: #1c75bc;">
+                  <mat-panel-title>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" style="color: white" >
+                      <mat-icon>{{item.iconName}}</mat-icon>
+                      {{item.displayName}}
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <span *ngFor="let child of item.children" style=" background-color: #1c75bc;">
+                  <ng-container *ngIf="child.children && child.children.length > 0; else leafItem">
+                    <mat-accordion style=" background-color: #1c75bc;">
+                      <mat-expansion-panel style=" background-color: #1c75bc;"  hideToggle>
+                        <mat-expansion-panel-header style=" background-color: #1c75bc;">
+                          <mat-panel-title>
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="color: white">
+                              <mat-icon>{{child.iconName}}</mat-icon>
+                              {{child.displayName}}
+                            </div>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <span *ngFor="let grandChild of child.children">
+                          <mat-list-item>
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="color: #b8e8f6">
+                              <mat-icon>{{grandChild.iconName}}</mat-icon>
+                              {{grandChild.displayName}}
+                            </div>
+                          </mat-list-item>
+                        </span>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </ng-container>
+                  <ng-template #leafItem>
+                    <mat-list-item class="mat-list-item-leaf" (click)="navigateTo(child)" >
+                      <div fxLayout="row" fxLayoutAlign="space-between center" style="color: #b8e8f6">
+                        <mat-icon>{{child.iconName}}</mat-icon>
+                        {{child.displayName}}
+                      </div>
+                    </mat-list-item>
+                  </ng-template>
+                </span>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </ng-container>
+          <ng-template #singleItem>
+            <mat-list-item class="mat-list-item-single" style=" background-color: #1c75bc;" (click)="navigateTo(item)">
+              <div fxLayout="row" fxLayoutAlign="space-between center" style="color: white">
+                <mat-icon>{{item.iconName}}</mat-icon>
+                {{item.displayName}}
+              </div>
+            </mat-list-item>
+          </ng-template>
+        </span>
+      </mat-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <p>Contenido principal aquí.</p>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

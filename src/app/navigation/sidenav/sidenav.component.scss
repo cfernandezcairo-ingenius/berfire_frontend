@@ -1,0 +1,117 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.custom-list-item {
+  transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.custom-list-item:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el mouse */
+}
+
+// .mat-mdc-list-item:not(.mat-mdc-list-item-interactive), .mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
+//   cursor: pointer;
+// }
+
+.mat-expansion-panel-body {
+  padding: 0 24px 16px;
+  background-color: #1c75bc !important;
+}
+
+.mat-expansion-panel-content {
+  background-color: #1c75bc !important;
+}
+
+.btn-menu-container {
+  position: relative;margin-top: 30px;
+  background-color: transparent;
+  :hover {
+    background-color: #2E3192;
+    cursor: pointer;
+  }
+}
+
+.btn-menu {
+  position: absolute;
+  height: 40px;
+  width: 100px;
+  right: -80px;
+  top: -22px;
+  border-radius: 1rem;
+  border: solid 1px;
+  //background-color: aquamarine;
+  background-color: #1c75bc;
+  color: white;
+  text-align: end;
+  padding-right: 10px;
+  padding-top: 5px;
+  @media(max-width: 576px) {
+    top: -70px;
+    text-align: center;
+  }
+}
+
+.mat-list-item-leaf {
+  background-color: #1c75bc;
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.mat-list-item-single {
+  background-color: #1c75bc;
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.mat-expansion-indicator svg {
+    fill: white;
+}
+
+.mat-accordion .mat-expansion-panel:first-of-type {
+  border-top-right-radius:0px;
+  border-top-left-radius:0px;
+}
+.mat-accordion .mat-expansion-panel:last-of-type {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.mat-expansion-panel-body {
+  padding: 0 24px 16px;
+  background-color: #1c75bc;
+}

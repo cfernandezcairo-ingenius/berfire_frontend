@@ -1,0 +1,126 @@
+
+.full-width-table {
+  width: 100%;
+}
+
+.full-width-table-dm {
+    background-color: black;
+}
+
+.container {
+  color: black;
+
+}
+.containerDarkMode {
+  background-color: black;
+  color: white;
+}
+
+.pdfClass {
+  right: 120px;
+  bottom: 20px;
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+}
+
+@media (max-width: 576px) {
+  td {
+    display: block;
+    width: 100%;
+  }
+  th {
+    display: none;
+  }
+}
+
+.mat-row-even {
+  background-color: #F0F0F0;
+}
+
+.mat-row-odd {
+  background-color: #F5F5DC;
+}
+
+.searchClass {
+  position: relative;
+  width: 50%;
+  margin-top: 10px;
+  margin-left: 40%;
+  background-color: transparent;
+  height: 50px;
+  border: solid;
+  border-radius: 15px;
+  border-width: 1px;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}
+
+.btn-firstPage {
+  border: none;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  font-size: larger;
+  color: rgba(26, 27, 31, 0.38);
+  font-weight: 600;
+}
+
+.btn-lastPage {
+  border: none;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  font-size: larger;
+  margin-left: 10px;
+  color: rgba(26, 27, 31, 0.38);
+  font-weight: 600;
+}
+
+// para el boton add
+
+mat-icon {
+  color: white;
+}
+
+.rotate-button {
+  border-width: thin;
+  border-radius: 50%;
+  cursor: move;
+  width: 70px;
+  height: 70px;
+  z-index: 99999;
+}
+
+.rotate-icon {
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+rotate-icon-red {
+  transition: transform 0.3s ease;
+  color: red;
+}
+
+.rotate-button:hover .rotate-icon {
+  transform: rotate(360deg);
+}
+
+.movibleClass {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  cursor: move;
+  top: 12%;
+  right: 1px;
+}

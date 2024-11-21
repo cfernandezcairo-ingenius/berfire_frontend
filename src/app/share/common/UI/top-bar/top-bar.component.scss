@@ -1,0 +1,168 @@
+.barraTop {
+  width: 100%;
+  height: 60px;
+  //border-color: #21C38A;
+  //border: solid 1px;
+  position: relative;
+  background-color: #1C75BC;
+  display: flex;
+  flex-direction: row;
+  @media(max-width: 576px) {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.barraTopDarkMode {
+  width: 100%;
+  height: 60px;
+  //border-color: white;
+  //border: solid 1px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: #2d3436;
+  color: #dfe6e9;
+  @media(max-width: 576x) {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.menu-container {
+  margin-top: 10px;
+  align-content: center;
+  padding-left: 10px;
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.idiomas {
+  position: absolute;
+  right: 5px;
+  top:15px;
+}
+
+.idiomaIngles {
+  transition: all .5s ease;
+}
+
+.idiomaEspanol {
+  transition: all .5s ease;
+}
+
+.idiomaIngles:hover {
+  cursor: pointer;
+  -webkit-transform:scale(1.25);
+  -moz-transform:scale(1.25);
+  -ms-transform:scale(1.25);
+  -o-transform:scale(1.25);
+  transform:scale(1.25);
+}
+
+.idiomaEspanol:hover {
+  cursor: pointer;
+  -webkit-transform:scale(1.25);
+  -moz-transform:scale(1.25);
+  -ms-transform:scale(1.25);
+  -o-transform:scale(1.25);
+  transform:scale(1.25);
+}
+
+// Slider dark mode
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 4px;
+  bottom: 2.5px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.imgNoche {
+  margin-left: 5px;
+  border-radius: 50%;
+}
+
+.toggleinMobile {
+  position: relative;
+  margin-top: 10px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-menu-container-bar {
+  position: relative;margin-top: 30px;
+  :hover{
+    cursor: pointer;
+  }
+}
+
+.btn-menu-bar {
+  position: relative;
+  height: 40px;
+  width: 100px;
+  margin-top: 75px;
+  border-radius: 1rem;
+  border: solid 1px;
+  background-color: aquamarine;
+  text-align: center;
+  @media(max-width: 576px) {
+    margin-top: 55px;
+  }
+}

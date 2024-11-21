@@ -1,0 +1,89 @@
+<div *ngIf="!isMobile">
+  <div class="mat-elevation-z2" style="margin-top: 50px;" [ngStyle]="darkMode ? { 'background-color': 'black', color: 'white'} : {}">
+    <table style="display: inline-table;" mat-table [dataSource]="dataSourceShow" class="full-width-table" matSort>
+      @for (column of displayedColumns; track column;let index = $index,e = $even) {
+        @if (column === 'id') {
+          <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{"actions" | translate}}</th>
+              <td  mat-cell *matCellDef="let row">
+                <div *ngIf="isMobile" style="display: flex;flex-direction: row;">
+                  <div style="display: flex; font-weight:bold;align-items: center;">{{"actions" | translate}}</div>
+                  <app-modal-menu style="margin-left: 6px;" [row]="row" (menuEdit)="edit($event)" (menuEditNueva)="editNew($event)" (menuDelete)="delete($event)"></app-modal-menu>
+                </div>
+                <div *ngIf="!isMobile">
+                  <app-modal-menu [row]="row" (menuEdit)="edit($event)" (menuEditNueva)="editNew($event)" (menuDelete)="delete($event)"></app-modal-menu>
+                </div>
+              </td>
+          </ng-container>
+        }
+        @else {
+          <form [formGroup]="fg">
+            <ng-container [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <div *ngIf="displayedLabels[index].isBoolean === true" >
+                  <mat-form-field floatLabel="auto" style="width: 120px;margin-left: -50%;height: 65px;">
+                    <mat-label style="font-size: smaller;">{{displayedLabels[index].name}}</mat-label>
+                    <mat-select id=`myselect${displayedColumns[index]}` [formControlName] = "displayedColumns[index]">
+                      <mat-option>Ninguno</mat-option>
+                      <mat-option value="false">{{"no" | translate}}</mat-option>
+                      <mat-option value="true">{{"yes" | translate}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+                <div *ngIf="displayedLabels[index].isBoolean === false">
+                  <mat-form-field floatLabel="auto" style="width: 120px;margin-left: -50%;height: 65px;">
+                    <mat-label style="font-size: smaller;">{{displayedLabels[index].name}}</mat-label>
+                    <input matInput  placeholder="" [formControlName] = "displayedColumns[index]">
+                  </mat-form-field>
+              </div>
+              </th>
+              <td [ngClass]="isMobile && e ? 'mat-row-even' : isMobile ? 'mat-row-odd': ''" mat-cell *matCellDef="let row">
+                <div *ngIf="!isMobile && !displayedLabels[index].isBoolean">{{row[column]}}</div>
+                <div *ngIf="!isMobile && displayedLabels[index].isBoolean">
+                  <mat-checkbox #checkBox [disabled]="true" [checked]="getChecked(row[column])">
+                    <span style="display: none;">{{ row[column] }}</span>
+                  </mat-checkbox>
+                </div>
+              </td>
+            </ng-container>
+          </form>
+        }
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator #paginator
+        [length]="dataInput!.data.length"
+        [showFirstLastButtons]="true"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]"
+        aria-label="Select page">
+    </mat-paginator>
+  </div>
+  <div #movible class="movibleClass">
+    <button class="rotate-button" style="right: 120px;background-color:#1C75BC;" (click)="addItem()" mat-icon-button matTooltip="Agregar registro">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button style="right: 60px; top:-40px;background-color:#1C75BC;" (click)="search()" mat-icon-button matTooltip="Buscar">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button style="top:-80px;background-color:#1C75BC;color: red;" (click)="cleanSearch()" mat-icon-button matTooltip="Limpiar">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="isMobile" style="margin-top: 75px;">
+  @for (data of dataInput?.data; track data;let index = $index,e = $even) {
+    <div style="margin-top: 10px;">
+      <app-mat-table-mobile [data]="data" [title]="titleMobileList" [subtitle]="'list'" (editEvent)="edit($event)" (deleteEvent)="delete($event)"></app-mat-table-mobile>
+    </div>
+  }
+</div>
+
+
+

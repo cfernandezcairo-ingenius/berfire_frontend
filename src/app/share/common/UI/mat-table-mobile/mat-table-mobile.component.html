@@ -1,0 +1,29 @@
+<div style="width: 95%;margin-left: auto;margin-right: auto;">
+  <mat-card [ngStyle]="darkMode ? {'background-color': '#2D3436'} : {'background-color': '#F5F5DC'}" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title> {{title | translate}}</mat-card-title>
+      <mat-card-subtitle>{{subtitle | translate}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <div style="display: flex;flex-direction: column; width: 100%;">
+        <table>
+          @for (item of dataNew; track $index) {
+            <tr>
+              <td align="right">
+                <label style="font-weight: bold;">{{item.clave}}:</label>
+              </td>
+              <td align="left">
+                <label *ngIf="item.valor != 'true' && item.valor != 'false'" style="margin-left: 5px;">{{item.valor}}</label>
+                <mat-checkbox *ngIf="item.valor == 'true' || item.valor == 'false'" #checkBox [checked]="getChecked(item.valor)"></mat-checkbox>
+              </td>
+            </tr>
+        }
+        </table>
+        <div style="margin-top: 10px;display: flex;justify-content: center; flex-direction: column;gap: 15px;">
+          <button style="width: 100%;transition: all .5s ease;" (click)="edit()" class="btn btn-primary" [ngStyle]=" darkMode ? {'background-color': '#58C472', color: 'white'} : {}">{{"edit" | translate}}</button>
+          <button (click)="delete()" style="width: 100%;;transition: all .5s ease;" class="btn btn-danger" [ngStyle]=" darkMode ? {'background-color': '#F23E5C', color: 'white'} : {}">{{"delete" | translate}}</button>
+        </div>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

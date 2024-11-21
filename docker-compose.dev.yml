@@ -1,0 +1,19 @@
+services:
+  angular-app:
+    env_file: .env.develop
+    build:
+      context: .
+      dockerfile: Dockerfile.develop
+    restart: always
+    container_name: com-ingenius-berfire-front
+    hostname: com-ingenius-berfire-front
+    networks:
+      - 'com-ingenius-berfire-network'
+    ports:
+      - 8888:80
+    healthcheck:
+      test: "exit 0"
+
+networks:
+  com-ingenius-berfire-network:
+    driver: bridge
