@@ -1,41 +1,179 @@
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
-image: node:latest
+image: 
+    name: node:18-alpine
 
-# This folder is cached between builds
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+
+stages:
+  - install
+  - sonarqube-check
+  - sonarqube-vulnerability-report
+  - test
+  - compile
+  - deploy
+
+  # This folder is cached between builds
 # https://docs.gitlab.com/ee/ci/yaml/index.html#cache
 cache:
   paths:
     - node_modules/
 
-stages:          # List of stages for jobs, and their order of execution
-  - deploy
+cache:
+  key: "${CI_COMMIT_SHORT_SHA}"
+  paths:
+    - node_modules/
+
+install:modules:
+  stage: install
+  tags:
+    - docker
+  cache:
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - node_modules/
+  after_script:
+    - node -v && npm -v
+  script:
+  - npm i --force
+##########  - sleep 60
+
+sonarqube-check:
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  stage: sonarqube-check
+  tags:
+      - docker
+  cache:
+    policy: pull
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - sonar-scanner/
+  script: 
+    - sonar-scanner
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      exists:
+        - sonar-project.properties
+
+sonarqube-vulnerability-report:
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  stage: sonarqube-vulnerability-report
+  tags:
+      - docker
+  script:
+    - 'curl -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/gitlab_sast_export?projectKey=berfire_berfire_frontend_59f79e9c-d2c9-4bf2-a976-5915c1aaeeb6&branch=${CI_COMMIT_BRANCH}&pullRequest=${CI_MERGE_REQUEST_IID}" -o gl-sast-sonar-report.json'
+  allow_failure: true
+  artifacts:
+    expire_in: 1 day
+    reports:
+      sast: gl-sast-sonar-report.json
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      exists:
+        - sonar-project.properties
+  
+.unit-test:
+  stage: test
+  tags:
+      - docker
+  cache:
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - node_modules/
+    policy: pull
+  before_script:
+    - node -v && npm -v
+  script:
+    - echo "Running unit tests... This will take about 60 seconds."
+    ##########- npm run test
+
+.lint-test:   # This job also runs in the test stage.
+  stage: test    # It can run at the same time as unit-test-job (in parallel).
+  tags:
+      - docker
+  cache:
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - node_modules/
+    policy: pull
+  before_script:
+    - node -v && npm -v
+  script:
+    - echo "Linting code... This will take about 10 seconds."
+    ##########- npm run lint
+
+.cov-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  tags:
+      - docker
+  cache:
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - node_modules/
+    policy: pull
+  before_script:
+    - node -v && npm -v
+  script:
+    - echo "Running coverage tests... This will take about 60 seconds."
+    ##########- npm run test:cov
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" # Run code quality job in merge request pipelines
+
+.e2e-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  tags:
+    - docker
+  cache:
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - node_modules/
+    policy: pull
+  before_script:
+    - node -v && npm -v
+  script:
+    - echo "Running e2e tests... This will take about 60 seconds."
+    ##########- npm run test:e2e
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" # Run code quality job in merge request pipelines
+
+compile:
+  stage: compile
+  tags:
+    - docker
+  script:
+##########    - sleep 90
+    - npm install --force
+    - npm run build:prod
 
 deploy-docker-job:
   # Use the official docker image.
-  image: docker:cli
+  image: 
+    name: docker:cli
   stage: deploy
-  tags:
-    - shell
   environment: development
-  #services:
-  #  - docker:dind
+  services:
+    - docker:dind
   variables:
-    DOCKER_IMAGE_NAME: "berfire_front_test"
+    DOCKER_IMAGE_NAME: "com/ingenius/berfire/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH:$CI_COMMIT_SHORT_SHA"
   #####before_script:
   #####  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
   # Default branch is also tagged with `latest`
   script:
     - echo "Deploying application..."
-    - docker container remove berfire_frontend_angular-app_1 -f     #$(docker ps -a | grep $CI_PROJECT_NAME | awk '{print $1}')
-    - docker rmi berfire_frontend_angular-app    #$(docker images | grep $CI_PROJECT_NAME | awk '{print $3}')
-    - docker-compose -f docker-compose.yml up --build -d
+    - docker rm -f $(docker ps -a --no-trunc | grep $CI_PROJECT_NAME | awk '{print $1}') 2> /dev/null || true
+    - docker rmi $(docker images | grep $CI_PROJECT_NAME | awk '{print $3}') 2> /dev/null || true
+    - docker-compose -f docker-compose.dev.yml up -d --build
     - echo "Application successfully deployed."
-#####  only:
-#####    - /^develop$/
   # Run this job in a main-branch where a Dockerfile exists
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_COMMIT_BRANCH == "main"
       exists:
-        - Dockerfile
+        - Dockerfile.develop
