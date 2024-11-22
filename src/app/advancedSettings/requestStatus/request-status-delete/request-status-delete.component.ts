@@ -55,7 +55,7 @@ export class RequestStatusDeleteComponent implements OnInit {
       if (result.isConfirmed) {
         this.requestStatusSrv.delete(id).subscribe({
           next: (d) => {
-            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!');
+            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', this.translate.currentLang);
             this.navigationSrv.goback();
           },
           error: (error) => {

@@ -94,7 +94,7 @@ export class StatementOrderListComponent implements OnInit {
     this.loading = true;
     this.StatementOrderSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.');
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
       } else {
         this.dataSource = { data: All.data };;
@@ -143,7 +143,7 @@ export class StatementOrderListComponent implements OnInit {
     this.StatementOrderSrv.getByFields(payload).subscribe(res=> {
       this.loading = false;
       if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.');
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
       } else {
         this.dataSource = { data: res.data };
       }

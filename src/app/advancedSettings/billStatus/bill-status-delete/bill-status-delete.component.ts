@@ -55,7 +55,7 @@ export class BillStatusDeleteComponent implements OnInit {
       if (result.isConfirmed) {
         this.billStatusSrv.delete(id).subscribe({
           next: (d) => {
-            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', , this.translate.currentLang)
+            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', this.translate.currentLang)
             this.navigationSrv.goback();
           },
           error: (error) => {

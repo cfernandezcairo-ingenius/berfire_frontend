@@ -198,7 +198,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
-          openSnackBar(this.matSnackBar,this.translate.instant('save_ok'));
+          openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
           HandleMessagesSubmit(this.translate, res.error);
         }
