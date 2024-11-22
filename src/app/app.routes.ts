@@ -52,6 +52,9 @@ import { TechnicalsAddEditComponent } from './technicals/technicals-add-edit/tec
 import { DocumentsTemplatesListComponent } from './configuration/documents-templates/documents-templates-list/documents-templates-list.component';
 import { DocumentsTemplatesAddEditComponent } from './configuration/documents-templates/documents-templates-add-edit/documents-templates-add-edit.component';
 import { DocumentsTemplatesDeleteComponent } from './configuration/documents-templates/documents-templates-delete/documents-templates-delete.component';
+import { PrTypesListComponent } from './configuration/prTypes/prTypes-list/prTypes-list.component';
+import { PrTypesAddEditComponent } from './configuration/prTypes/prTypes-add-edit/prTypes-add-edit.component';
+import { PrTypesDeleteComponent } from './configuration/prTypes/prTypes-delete/prTypes-delete.component';
 
 export const routes: Routes = [
 
@@ -128,4 +131,8 @@ export const routes: Routes = [
   { path: 'documents-templates/edit/:id', component: DocumentsTemplatesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'documents-templates/delete/:id', component: DocumentsTemplatesDeleteComponent , canActivate: [AuthGuard]},
   { path: 'documents-templates/edit/new/:id', component: DocumentsTemplatesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'prTypes/list', component: PrTypesListComponent, canActivate: [AuthGuard]},
+  { path: 'prTypes/edit/:id', component: PrTypesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'prTypes/delete/:id', component: PrTypesDeleteComponent , canActivate: [AuthGuard]},
+  { path: 'prTypes/edit/new/:id', component: PrTypesAddEditComponent, canActivate: [AuthGuard]},
 ];

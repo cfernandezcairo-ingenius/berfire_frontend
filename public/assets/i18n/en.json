@@ -126,7 +126,8 @@
     "contracts-types": "Contracts types",
     "manufacturers": "Manufacturers",
     "technicals": "technicals",
-    "documents-templates": "Documents Templates"
+    "documents-templates": "Documents Templates",
+    "prTypes": "PR Types"
   },
   "error": {
     "messages": {

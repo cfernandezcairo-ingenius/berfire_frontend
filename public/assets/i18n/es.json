@@ -126,7 +126,8 @@
     "contracts-types": "Tipos de contratos",
     "manufacturers": "Fabricantes",
     "technicals": "Técnicos",
-    "documents-templates": "Plantillas de Documentos"
+    "documents-templates": "Plantillas de Documentos",
+    "prTypes": "Tipos de partes de revisión"
   },
   "error": {
     "messages": {
