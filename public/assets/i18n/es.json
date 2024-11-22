@@ -85,7 +85,9 @@
       "TEMPLATETYPE": "Tipo de plantilla",
       "RENDERTYPE": "Tipo de Renderizado",
       "PREDETERMINED": "Predeterminado",
-      "TEMPLATE": "Plantilla"
+      "TEMPLATE": "Plantilla",
+      "TEAMNAME": "Nombre Equipo",
+      "TEAMTITLE": "Titulo Equipo"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido.",

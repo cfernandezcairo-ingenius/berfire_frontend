@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { StyleManager } from '../../share/services/style-manager.service';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NavigationService } from '../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-login-berfire',
@@ -30,21 +29,18 @@ export class LoginBerfireComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private fb: FormBuilder,
-    private authSrv: AuthService,
-    private winservice: WindowService,
-    private darkModeService: StyleManager,
-    private navigationSrv: NavigationService,
-    private router: Router
+    private readonly fb: FormBuilder,
+    private readonly authSrv: AuthService,
+    private readonly winservice: WindowService,
+    private readonly darkModeService: StyleManager,
+    private readonly router: Router
   ) {
     this.fg = this.fb.group({
       token: [''],
       email: ['reynol@ingeniuscuba.com', [Validators.required, Validators.email]],
       password: ['12345', Validators.required],
     });
-    this.isPC = this.winservice.isDevicePC;
-    this.isTablet = this.winservice.isDeviceTablet;
-    this.isMobile = this.winservice.isDeviceMobile;
+    this.setLayout();
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
@@ -52,9 +48,13 @@ export class LoginBerfireComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-        this.isPC = this.winservice.isDevicePC;
-        this.isTablet = this.winservice.isDeviceTablet;
-        this.isMobile = this.winservice.isDeviceMobile;
+      this.setLayout();
+    }
+
+    setLayout() {
+      this.isPC = this.winservice.isDevicePC;
+      this.isTablet = this.winservice.isDeviceTablet;
+      this.isMobile = this.winservice.isDeviceMobile;
     }
 
     ngOnInit(): void {

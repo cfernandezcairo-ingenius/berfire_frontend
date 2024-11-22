@@ -88,18 +88,14 @@ export class TableListComponent implements OnInit, OnChanges {
     this.darkModeService.darkMode$.subscribe((dark: boolean) => {
       this.darkMode = dark;
     });
-    this.isMobile = windowService.isDeviceMobile;
-    this.isTablet = windowService.isDeviceTablet;
-    this.isPC = windowService.isDevicePC;
+    this.setLayout();
     this.mouseMoveHandler = this.onMouseMove.bind(this);
     this.mouseUpHandler = this.onMouseUp.bind(this);
    }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-      this.isPC = this.windowService.isDevicePC;
-      this.isTablet = this.windowService.isDeviceTablet;
-      this.isMobile = this.windowService.isDeviceMobile;
+      this.setLayout();
   }
 
   ngOnInit(): void {
@@ -108,6 +104,12 @@ export class TableListComponent implements OnInit, OnChanges {
     this.displayedColumns.forEach(d => {
       this.fg.addControl(d, this.fb.control(''));
     });
+  }
+
+  setLayout() {
+    this.isPC = this.windowService.isDevicePC;
+    this.isTablet = this.windowService.isDeviceTablet;
+    this.isMobile = this.windowService.isDeviceMobile;
   }
 
   ngOnChanges(): void {

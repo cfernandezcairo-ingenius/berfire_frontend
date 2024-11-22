@@ -4,13 +4,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { StatesPartiesReviewService } from '../states-parties-review.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { showMessage } from '../../../share/common/UI/sweetalert2';
 
 @Component({
   selector: 'app-states-parties-review-add-edit',
@@ -36,7 +38,8 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
     private readonly navigationService: NavigationService,
     private readonly statesPartiesReviewSrv: StatesPartiesReviewService,
     private readonly darkModeService: StyleManager,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly matSnackBar: MatSnackBar
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -80,16 +83,10 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
           this.model = { ...res.data};
         }),
         error: () => {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!',
-            icon: 'error',
-            showConfirmButton:true,
-            showCancelButton: false,
-            confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          });
+          let title = this.translate.instant('inform');
+          let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
+          let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
+          showMessage(title, text,'error',true,false,confirmButtonText)
         },
         complete: () => {
           this.loading = false;
@@ -135,20 +132,6 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
           },
         ],
       },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'finalized',
-            props: {
-              label: 'FORM.FIELDS.FINALIZED',
-              required:false
-            },
-          },
-        ],
-      },
     ];
     this.updateLabels();
   }
@@ -186,29 +169,19 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
       payload = {
         name: this.fg.get('name')?.value,
         description: this.fg.get('description')?.value === undefined ? null : this.fg.get('description')?.value,
-        finalized: this.fg.get('finalized')?.value === undefined ? false : this.fg.get('finalized')?.value,
       }
     } else {
       payload = {
         id: this.row.id,
         name: this.fg.get('name')?.value,
         description: this.fg.get('description')?.value,
-        finalized: this.fg.get('finalized')?.value,
       }
     }
     const myobs = this.row.id === 0 ? this.statesPartiesReviewSrv.add(payload) : this.statesPartiesReviewSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_ok'),
-            icon: 'success',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          openSnackBar(this.matSnackBar,this.translate.instant('save_ok'));
         } else {
           HandleMessagesSubmit(this.translate, res.error);
         }

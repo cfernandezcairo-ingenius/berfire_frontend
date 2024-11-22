@@ -85,7 +85,9 @@
       "TEMPLATETYPE": "Template Type",
       "RENDERTYPE": "Render Type",
       "PREDETERMINED": "Predetermined",
-      "TEMPLATE": "Template"
+      "TEMPLATE": "Template",
+      "TEAMNAME": "Team Name",
+      "TEAMTITLE": "Team Title"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required'",

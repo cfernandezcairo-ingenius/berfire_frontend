@@ -5,7 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { PaymentFormsService } from '../payment-forms.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-payment-forms-delete',
   standalone: true,
@@ -23,7 +24,8 @@ export class PaymentFormsDeleteComponent implements OnInit {
     private translate: TranslateService,
     private darkModeService: StyleManager,
     private paymentFormsSrv: PaymentFormsService,
-    private navigationSrv: NavigationService
+    private navigationSrv: NavigationService,
+    private matSnackBar: MatSnackBar
   ) {
     this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.id = JSON.parse(params['id']);
@@ -52,17 +54,7 @@ export class PaymentFormsDeleteComponent implements OnInit {
       if (result.isConfirmed) {
         this.paymentFormsSrv.delete(id).subscribe({
           next: (d) => {
-            Swal.fire({
-              title: this.translate.instant('inform'),
-              text: this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!',
-              icon: 'success',
-              showConfirmButton:true,
-              showCancelButton: false,
-              confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-              cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-              background: this.darkMode ? '#444' : '#fff',
-              color: this.darkMode ? '#fff' : '#000',
-            });
+            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!');
             this.navigationSrv.goback();
           },
           error: (error) => {

@@ -34,4 +34,12 @@ export class PopulationsService {
   delete(id:any):Observable<any> {
     return this.http.delete<any>(`${this.windowService.apiUrl}/populations/${id}`);
   }
+
+  getCountries(): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/countries`);
+  }
+
+  getProvinces(country: string): Observable<any> {
+    return this.http.get<any>(`${this.windowService.apiUrl}/countries/${country}`);
+  }
 }
