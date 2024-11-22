@@ -26,26 +26,28 @@ export class TopBarComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private darkModeService: StyleManager,
+    private readonly darkModeService: StyleManager,
     public authService: AuthService,
-    private windowService: WindowService,
+    private readonly windowService: WindowService,
   ) {
-    this.isMobile = windowService.isDeviceMobile;
-    this.isTablet = windowService.isDeviceTablet;
-    this.isPC = windowService.isDevicePC;
+    this.setLayout();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-      this.isPC = this.windowService.isDevicePC;
-      this.isTablet = this.windowService.isDeviceTablet;
-      this.isMobile = this.windowService.isDeviceMobile;
+      this.setLayout();
   }
 
   ngOnInit(): void {
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
+  }
+
+  setLayout() {
+    this.isPC = this.windowService.isDevicePC;
+    this.isTablet = this.windowService.isDeviceTablet;
+    this.isMobile = this.windowService.isDeviceMobile;
   }
 
   onValChange(item: any) {

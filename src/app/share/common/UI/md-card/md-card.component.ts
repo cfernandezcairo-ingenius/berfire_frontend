@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions } from '@angular/material/card';
 import { StyleManager } from '../../../services/style-manager.service';
 import { WindowService } from '../../../services/window.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,11 +10,11 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-md-card',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardSubtitle, MatCardTitle, MatCardActions, FormsModule, ReactiveFormsModule, CommonModule, MatButtonModule, MatIcon ],
+  imports: [MatCard, MatCardActions, FormsModule, ReactiveFormsModule, CommonModule, MatButtonModule, MatIcon ],
   templateUrl: './md-card.component.html',
   styleUrl: './md-card.component.scss'
 })
-export class MDCardComponent implements OnInit {
+export class MDCardComponent  {
 
   @Input() title: string = '';
   @Input() valor:string = '';
@@ -25,24 +25,22 @@ export class MDCardComponent implements OnInit {
   isPC = true;
 
 
-  constructor (private darkModeService:StyleManager, private windowService: WindowService) {
+  constructor (private readonly darkModeService:StyleManager, private readonly windowService: WindowService) {
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
-    this.isMobile = windowService.isDeviceMobile;
-    this.isTablet = windowService.isDeviceTablet;
-    this.isPC = windowService.isDevicePC;
+    this.setLayout();
    }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-      this.isPC = this.windowService.isDevicePC;
-      this.isTablet = this.windowService.isDeviceTablet;
-      this.isMobile = this.windowService.isDeviceMobile;
+      this.setLayout();
   }
 
-  ngOnInit(): void {
-
+  setLayout() {
+    this.isPC = this.windowService.isDevicePC;
+    this.isTablet = this.windowService.isDeviceTablet;
+    this.isMobile = this.windowService.isDeviceMobile;
   }
 
 }

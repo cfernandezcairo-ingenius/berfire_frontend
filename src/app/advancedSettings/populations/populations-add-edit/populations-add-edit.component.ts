@@ -4,14 +4,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
 import { PopulationsService } from '../populations.service';
 import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { WindowService } from '../../../share/services/window.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { showMessage } from '../../../share/common/UI/sweetalert2';
 
 @Component({
   selector: 'app-populations-add-edit',
@@ -30,6 +31,8 @@ export class PopulationsAddEditComponent implements OnInit {
   showinNewTab = false;
   shoWButtonSaveAndNew = false;
   loading = false;
+  countries: any;
+  selectedCountry = '';
 
   constructor(
     private readonly translate: TranslateService,
@@ -38,7 +41,7 @@ export class PopulationsAddEditComponent implements OnInit {
     private readonly populationsService: PopulationsService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,
-    private readonly windowService: WindowService
+    private readonly matSnackBar: MatSnackBar
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -65,33 +68,28 @@ export class PopulationsAddEditComponent implements OnInit {
   ngOnInit(): void {
     if (this.row.id === 0) {
       //Agregar
-      //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
       this.model = {
         active: false,
       }
     } else {
       //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.row.id
       }
       this.loading = true;
       this.populationsService.getById(payload).subscribe({
         next:(res => {
+          debugger;
           this.model = { ...res.data};
+          this.selectedCountry = res.data.country;
+          this.updateOptionsProvinces();
         }),
         error: () => {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!',
-            icon: 'error',
-            showConfirmButton:true,
-            showCancelButton: false,
-            confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          });
+          let title = this.translate.instant('inform');
+          let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
+          let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
+          showMessage(title, text,'error',true,false,confirmButtonText)
         },
         complete: () => {
           this.loading = false;
@@ -127,12 +125,18 @@ export class PopulationsAddEditComponent implements OnInit {
         fieldGroupClassName: 'row',
         fieldGroup: [
           {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
+            className: 'col-sm-12 col-md-6 col-lg-6',
+            type: 'select',
             key: 'country',
             props: {
               label: 'FORM.FIELDS.COUNTRY',
-              required:true
+              required:true,
+              options: [
+                { label: 'Opción 1', value: '1' },
+                { label: 'Opción 2', value: '2' },
+                { label: 'Opción 3', value: '3' },
+              ],
+              change: (field:any, $event:any) => this.onSelectChange(field, $event),
             },
             validators: {
               validation: ['required'],
@@ -142,18 +146,14 @@ export class PopulationsAddEditComponent implements OnInit {
                 required: this.translate.get('FORM.VALIDATION.REQUIRED'),
               },
             },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
+          },
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
+            type: 'select',
             key: 'province',
             props: {
               label: 'FORM.FIELDS.PROVINCE',
+              options: [],
               required:true
             },
             validators: {
@@ -164,7 +164,12 @@ export class PopulationsAddEditComponent implements OnInit {
                 required: this.translate.get('FORM.VALIDATION.REQUIRED'),
               },
             }
-          },
+          }
+        ],
+      },
+      {
+        fieldGroupClassName: 'row',
+        fieldGroup: [
           {
             className: 'col-sm-12 col-md-6 col-lg-6',
             type: 'checkbox',
@@ -178,6 +183,47 @@ export class PopulationsAddEditComponent implements OnInit {
       },
     ];
     this.updateLabels();
+    this.updateOptionsCountries();
+  }
+
+  onSelectChange(field:any, event:any) {
+    this.selectedCountry = this.countries.filter((c:any) => c.country_short_name === event.value)[0].country_name_en;
+    this.updateOptionsProvinces();
+  }
+
+  updateOptionsCountries() {
+    this.loading = true;
+    this.populationsService.getCountries().subscribe(countries => {
+      this.loading = false;
+      this.countries = countries.data;
+      this.fields.map((field:any) => {
+          const selectField = field.fieldGroup.find((field: { key: string; }) => field.key === 'country');
+          if (selectField) {
+            selectField.props.options = this.countries.map((option: any) => ({
+              label: this.translate.currentLang === 'es' ? option.country_name_es : option.country_name_en,
+              value: option.country_short_name
+            }));
+          }
+      });
+
+    });
+  }
+
+  updateOptionsProvinces() {
+    this.loading = true;
+    this.populationsService.getProvinces(this.selectedCountry).subscribe(provinces => {
+      this.loading = false;
+      this.fields.map((field:any) => {
+          const selectField = field.fieldGroup.find((field: { key: string; }) => field.key === 'province');
+          if (selectField) {
+            selectField.props.options = provinces.data.map((option: any) => ({
+              label: option.state_name,
+              value: option.state_name
+            }));
+          }
+      });
+
+    });
   }
 
   updateLabels() {
@@ -189,10 +235,10 @@ export class PopulationsAddEditComponent implements OnInit {
       this.fields[1].fieldGroup[0].props.label = label;
     });
     this.translate.get('FORM.FIELDS.PROVINCE').subscribe((label) => {
-      this.fields[2].fieldGroup[0].props.label = label;
+      this.fields[1].fieldGroup[1].props.label = label;
     });
     this.translate.get('FORM.FIELDS.ACTIVE').subscribe((label) => {
-      this.fields[2].fieldGroup[1].props.label = label;
+      this.fields[2].fieldGroup[0].props.label = label;
     });
   }
 
@@ -200,21 +246,18 @@ export class PopulationsAddEditComponent implements OnInit {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
-          if (fG.validation && fG.validation.messages) {
+          if (fG.validation?.messages) {
             fG.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
           }
         });
-      } else {
-        if (field.validation && field.validation.messages) {
+      } else if (field.validation?.messages) {
           field.validation.messages.required = this.translate.instant('FORM.VALIDATION.REQUIRED');
         }
-      }
     });
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    let myobs = new Observable<any>;
     if (this.row.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
@@ -222,7 +265,6 @@ export class PopulationsAddEditComponent implements OnInit {
         province: this.fg.get('province')?.value,
         active: this.fg.get('active')?.value === undefined ? false : this.fg.get('active')?.value,
       }
-      myobs = this.populationsService.add(payload);
     } else {
       payload = {
         id: this.row.id,
@@ -231,30 +273,14 @@ export class PopulationsAddEditComponent implements OnInit {
         province: this.fg.get('province')?.value,
         active: this.fg.get('active')?.value,
       }
-      myobs = this.populationsService.edit(payload);
     }
+    let myobs = this.row.id === 0 ? this.populationsService.add(payload) : this.populationsService.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_ok'),
-            icon: 'success',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_error'),
-            icon: 'error',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          HandleMessagesSubmit(this.translate, res.error);
         }
         //Aqui tengo que preguntar si nuevo = true
         //Para limpiar el formulario
@@ -263,13 +289,11 @@ export class PopulationsAddEditComponent implements OnInit {
           localStorage.setItem('dataModifiedInNewTabPopulations', 'true');
           this.showinNewTab = false
           if (!nuevo) window.close();
-        } else {
-          if (nuevo) {
+        } else if (nuevo) {
             this.fg.reset();
           } else {
             this.navigationService.goback();
           }
-        }
       },
       error: (error) => {
         HandleMessagesSubmit(this.translate, error);

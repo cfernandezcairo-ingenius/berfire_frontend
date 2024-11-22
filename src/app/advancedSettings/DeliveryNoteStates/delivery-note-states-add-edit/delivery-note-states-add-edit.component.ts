@@ -5,11 +5,13 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
-import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { showMessage } from '../../../share/common/UI/sweetalert2';
 
 @Component({
   selector: 'app-delivery-note-states-add-edit',
@@ -35,7 +37,8 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     private readonly navigationService: NavigationService,
     private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
     private readonly darkModeService: StyleManager,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly matSnackBar: MatSnackBar
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
@@ -78,16 +81,10 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
           this.model = { ...res.data};
         }),
         error: () => {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!',
-            icon: 'error',
-            showConfirmButton:true,
-            showCancelButton: false,
-            confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          });
+          let title = this.translate.instant('inform');
+          let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
+          let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
+          showMessage(title, text,'error',true,false,confirmButtonText)
         },
         complete: () => {
           this.loading = false;
@@ -179,25 +176,9 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_ok'),
-            icon: 'success',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
-          Swal.fire({
-            title: this.translate.instant('inform'),
-            text: this.translate.instant('save_error'),
-            icon: 'error',
-            showConfirmButton:true,
-            confirmButtonText: 'OK',
-            background: this.darkMode ? '#444' : '#fff',
-            color: this.darkMode ? '#fff' : '#000',
-          })
+          HandleMessagesSubmit(this.translate, res.error);
         }
         if (this.showinNewTab) {
           localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'true');

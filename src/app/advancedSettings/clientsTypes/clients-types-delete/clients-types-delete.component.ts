@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { ClientsTypesService } from '../clients-types.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-clients-types-delete',
@@ -23,7 +25,8 @@ export class ClientsTypesDeleteComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly clientsTypesSrv: ClientsTypesService,
-    private readonly navigationSrv: NavigationService
+    private readonly navigationSrv: NavigationService,
+    private readonly matSnackBar: MatSnackBar
   ) {
     this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.id = JSON.parse(params['id']);
@@ -52,17 +55,7 @@ export class ClientsTypesDeleteComponent implements OnInit {
       if (result.isConfirmed) {
         this.clientsTypesSrv.delete(id).subscribe({
           next: (d) => {
-            Swal.fire({
-              title: this.translate.instant('inform'),
-              text: this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!',
-              icon: 'success',
-              showConfirmButton:true,
-              showCancelButton: false,
-              confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-              cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-              background: this.darkMode ? '#444' : '#fff',
-              color: this.darkMode ? '#fff' : '#000',
-            });
+            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', this.translate.currentLang)
             this.navigationSrv.goback();
           },
           error: (error) => {

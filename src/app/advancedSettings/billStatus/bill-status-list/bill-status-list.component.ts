@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { BillStatusService } from '../bill-status.service';
@@ -9,7 +8,8 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IBillStatements, IDisplayedLabels } from '../../../navigation/shared/models/app-models';
-
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-bill-status-list',
@@ -104,6 +104,7 @@ export class BillStatusListComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly billStatusSrv:BillStatusService,
     private readonly fb: FormBuilder,
+    private readonly matSnackBar: MatSnackBar
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -139,16 +140,7 @@ export class BillStatusListComponent implements OnInit {
     this.loading = true;
     this.billStatusSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
-        Swal.fire({
-          title: this.translate.instant('confirm'),
-          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
-          icon: 'info',
-          showConfirmButton:true,
-          showCancelButton: false,
-          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-          background: this.darkMode ? '#444' : '#fff',
-          color: this.darkMode ? '#fff' : '#000',
-        })
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
       } else {
         this.dataSource = { data: All.data };
@@ -207,16 +199,7 @@ export class BillStatusListComponent implements OnInit {
     this.billStatusSrv.getByFields(payload).subscribe(res=> {
       this.loading = false;
       if (res.data.length === 0) {
-        Swal.fire({
-          title: this.translate.instant('confirm'),
-          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
-          icon: 'info',
-          showConfirmButton:true,
-          showCancelButton: false,
-          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-          background: this.darkMode ? '#444' : '#fff',
-          color: this.darkMode ? '#fff' : '#000',
-        })
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.');
       } else {
         this.dataSource = { data: res.data };
 

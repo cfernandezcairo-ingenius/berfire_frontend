@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { PopulationsService } from '../populations.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
+import { openSnackBar } from '../../../share/common/UI/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface IPopulations {
   id: number,
@@ -59,7 +60,8 @@ export class PopulationsListComponent implements OnInit {
     private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
-    private readonly populationsSrv:PopulationsService
+    private readonly populationsSrv:PopulationsService,
+    private readonly matSnackBar: MatSnackBar
   ){
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -87,16 +89,7 @@ export class PopulationsListComponent implements OnInit {
     this.loading = true;
     this.populationsSrv.getAll().subscribe(All => {
       if (All.data.length === 0) {
-        Swal.fire({
-          title: this.translate.instant('confirm'),
-          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
-          icon: 'info',
-          showConfirmButton:true,
-          showCancelButton: false,
-          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-          background: this.darkMode ? '#444' : '#fff',
-          color: this.darkMode ? '#fff' : '#000',
-        })
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
       } else {
         this.dataSource = { data: All.data };;
@@ -148,16 +141,7 @@ export class PopulationsListComponent implements OnInit {
     this.populationsSrv.getByFields(payload).subscribe(res=> {
       this.loading = false;
       if (res.data.length === 0) {
-        Swal.fire({
-          title: this.translate.instant('confirm'),
-          text: this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.',
-          icon: 'info',
-          showConfirmButton:true,
-          showCancelButton: false,
-          confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-          background: this.darkMode ? '#444' : '#fff',
-          color: this.darkMode ? '#fff' : '#000',
-        })
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
       } else {
         this.dataSource = { data: res.data };
       }
