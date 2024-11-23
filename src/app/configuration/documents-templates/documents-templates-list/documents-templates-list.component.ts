@@ -140,6 +140,7 @@ export class DocumentsTemplatesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.documentsTemplatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/documents-templates/delete/${strRow}`)
   }
 

@@ -38,6 +38,7 @@ const TRANSLATIONS = {
 describe('DocumentsTemplatesListComponent', () => {
   let component: DocumentsTemplatesListComponent;
   let fixture: ComponentFixture<DocumentsTemplatesListComponent>;
+  let mockTranslateService: jasmine.SpyObj<TranslateService>;
   let documentsTemplatesSrv: jasmine.SpyObj<DocumentsTemplatesService>;
   let matSnackBar: jasmine.SpyObj<MatSnackBar>;
   let translate: jasmine.SpyObj<TranslateService>;
@@ -45,6 +46,7 @@ describe('DocumentsTemplatesListComponent', () => {
   let langChangeSubject: Subject<void>;
 
   beforeEach(async () => {
+    mockTranslateService = jasmine.createSpyObj('TranslateService', ['instant', 'currentLang', "USE_DEFAULT_LANG"]);
     documentsTemplatesSrv = jasmine.createSpyObj('DocumentsTemplatesService', ['getAll', 'getByFields']);
     matSnackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
     langChangeSubject = new Subject<void>();
@@ -53,6 +55,7 @@ describe('DocumentsTemplatesListComponent', () => {
     Object.defineProperty(translate, 'onLangChange', { value: langChangeSubject.asObservable() });
 
     navigationSrv = jasmine.createSpyObj('NavigationService', ['NavigateTo']);
+    mockTranslateService.currentLang = 'es'; // Establecer un idioma por defecto
 
     await TestBed.configureTestingModule({
       imports: [

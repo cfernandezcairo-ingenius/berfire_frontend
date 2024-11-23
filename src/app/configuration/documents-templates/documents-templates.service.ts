@@ -7,7 +7,8 @@ import { WindowService } from '../../share/services/window.service';
   providedIn: 'root'
 })
 export class DocumentsTemplatesService {
-  static getByFields: any;
+
+  public _idToDelete: number = 0;
 
   constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 

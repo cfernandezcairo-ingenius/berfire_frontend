@@ -119,6 +119,7 @@ export class PopulationsListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.populationsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/populations/delete/${strRow}`)
   }
 

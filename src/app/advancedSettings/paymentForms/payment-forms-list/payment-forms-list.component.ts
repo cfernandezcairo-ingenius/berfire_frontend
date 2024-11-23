@@ -123,6 +123,7 @@ export class PaymenFormsListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.paymentFormsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/payment-forms/delete/${strRow}`)
   }
 

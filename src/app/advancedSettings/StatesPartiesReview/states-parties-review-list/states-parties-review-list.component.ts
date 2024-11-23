@@ -119,6 +119,7 @@ export class StatesPartiesReviewListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.statesPartiesReviewSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/states-parties-review/delete/${strRow}`)
   }
 

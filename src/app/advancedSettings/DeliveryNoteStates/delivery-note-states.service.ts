@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { WindowService } from '../../share/services/window.service';
 
@@ -7,7 +7,7 @@ import { WindowService } from '../../share/services/window.service';
   providedIn: 'root'
 })
 export class DeliveryNoteStatesService {
-
+  public _idToDelete: number = 0;
   constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {

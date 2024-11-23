@@ -140,6 +140,7 @@ export class BanksListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.banksSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/banks/delete/${strRow}`)
   }
 

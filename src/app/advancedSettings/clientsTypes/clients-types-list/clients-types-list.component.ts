@@ -119,6 +119,7 @@ export class ClientsTypesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.clientsTypesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/clients-types/delete/${strRow}`)
   }
   addItem() {

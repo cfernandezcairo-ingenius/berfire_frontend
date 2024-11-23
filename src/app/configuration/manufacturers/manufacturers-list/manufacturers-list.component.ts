@@ -122,6 +122,7 @@ export class ManufacturersListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.manufacturersSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/manufacturers/delete/${strRow}`)
   }
 

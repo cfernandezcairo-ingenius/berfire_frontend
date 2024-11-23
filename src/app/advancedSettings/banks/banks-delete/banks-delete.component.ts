@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -14,7 +13,7 @@ import { openSnackBar } from '../../../share/common/UI/utils';
   imports: [],
   templateUrl: './banks-delete.component.html',
   styleUrl: './banks-delete.component.scss',
-  providers:[ActivatedRoute, TranslateService, RouterModule]
+  providers:[TranslateService]
 })
 export class BanksDeleteComponent implements OnInit {
 
@@ -22,22 +21,19 @@ export class BanksDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly banksSrv: BanksService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.banksSrv._idToDelete;
     this.delete(this.id);
   }
 

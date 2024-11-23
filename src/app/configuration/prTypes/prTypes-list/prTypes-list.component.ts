@@ -129,6 +129,7 @@ export class PrTypesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.prTypesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/prTypes/delete/${strRow}`)
   }
 

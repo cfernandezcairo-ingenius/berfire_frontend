@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -14,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [],
   templateUrl: './pvp-rates-delete.component.html',
   styleUrl: './pvp-rates-delete.component.scss',
-  providers: [ActivatedRoute, RouterModule, TranslateService]
+  providers: [TranslateService]
 })
 export class PvpRatesDeleteComponent implements OnInit {
 
@@ -22,22 +21,19 @@ export class PvpRatesDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private darkModeService: StyleManager,
     private pVPRatesSrv: PVPRatesService,
     private navigationSrv: NavigationService,
     private matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.pVPRatesSrv._idToDelete;
     this.delete(this.id);
   }
 

@@ -120,6 +120,7 @@ export class UnsubscribeReasonsListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.unsubscribeReasonsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/delete/${strRow}`)
   }
 

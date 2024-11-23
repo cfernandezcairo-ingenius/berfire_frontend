@@ -117,6 +117,7 @@ export class DeliveryNoteStatesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.deliveryNoteStatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/delivery-note-states/delete/${strRow}`)
   }
   addItem() {

@@ -171,6 +171,7 @@ export class BillStatusListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.billStatusSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/invoice-status/delete/${strRow}`)
   }
 

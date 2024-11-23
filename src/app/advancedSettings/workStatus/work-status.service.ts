@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { backendConfig } from '../../app.config';
 import { WindowService } from '../../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkStatusService {
+
+  public _idToDelete: number = 0;
 
   constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 

@@ -120,6 +120,7 @@ export class RequestStatusListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.requestStatusSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/request-status/delete/${strRow}`)
   }
 

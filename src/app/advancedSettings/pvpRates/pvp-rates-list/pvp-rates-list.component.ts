@@ -119,6 +119,7 @@ export class PvPRatesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.pVPRatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/pvp-rates/delete/${strRow}`)
   }
 

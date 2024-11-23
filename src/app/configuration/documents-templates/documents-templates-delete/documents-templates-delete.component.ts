@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -14,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [],
   templateUrl: './documents-templates-delete.component.html',
   styleUrl: './documents-templates-delete.component.scss',
-  providers: [ActivatedRoute, RouterModule,TranslateService]
+  providers: [TranslateService]
 })
 export class DocumentsTemplatesDeleteComponent implements OnInit {
 
@@ -22,36 +21,31 @@ export class DocumentsTemplatesDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly documentsTemplatesSrv: DocumentsTemplatesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.documentsTemplatesSrv._idToDelete;
     this.delete(this.id);
   }
 
   delete(id: number) {
     Swal.fire({
       title: this.translate.instant('confirm'),
-      text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',
+      text: this.translate.instant('continue'),
       icon: 'question',
       showConfirmButton:true,
       showCancelButton: true,
-      confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-      cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
+      confirmButtonText: this.translate.instant('accept'),
+      cancelButtonText: this.translate.instant('cancel'),
     }).then(result => {
       if (result.isConfirmed) {
         this.documentsTemplatesSrv.delete(id).subscribe({

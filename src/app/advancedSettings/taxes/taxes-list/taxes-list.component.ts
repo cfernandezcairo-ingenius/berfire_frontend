@@ -128,6 +128,7 @@ export class TaxesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.taxesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/taxes/delete/${strRow}`)
   }
 

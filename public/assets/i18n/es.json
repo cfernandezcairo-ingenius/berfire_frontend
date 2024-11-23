@@ -29,6 +29,8 @@
   "exportXLS": "Exportar a Excel",
   "addItem": "Agregar Registro",
   "editItem": "edit Registro",
+  "continue": "Desea continuar?",
+  "accept": "Aceptar",
   "save_ok": "Registro guardado con éxito.",
   "save_error": "Error al guardar el registro",
   "inform": "Resultado",

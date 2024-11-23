@@ -123,6 +123,7 @@ export class StatementOrderListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.StatementOrderSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/statement-order/delete/${strRow}`)
   }
 

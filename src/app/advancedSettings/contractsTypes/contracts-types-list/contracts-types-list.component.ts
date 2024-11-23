@@ -121,6 +121,7 @@ export class ContractsTypesListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.contractsTypesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/contracts-types/delete/${strRow}`)
   }
   addItem() {

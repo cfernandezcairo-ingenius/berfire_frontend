@@ -119,6 +119,7 @@ export class WorkStatusListComponent implements OnInit {
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.workStatusSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/work-status/delete/${strRow}`)
   }
 
