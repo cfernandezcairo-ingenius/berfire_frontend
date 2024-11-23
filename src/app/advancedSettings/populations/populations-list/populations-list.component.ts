@@ -29,7 +29,8 @@ export interface IPopulations {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class PopulationsListComponent implements OnInit {
 

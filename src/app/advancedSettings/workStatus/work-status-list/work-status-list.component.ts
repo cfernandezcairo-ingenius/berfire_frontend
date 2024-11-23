@@ -28,7 +28,8 @@ export interface IWorkStatus {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class WorkStatusListComponent implements OnInit {
 

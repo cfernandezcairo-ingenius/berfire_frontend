@@ -11,6 +11,7 @@ import { SidebarService } from '../side-bar/sidebar.service';
 import { AuthService } from '../../auth/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 export interface NavItem {
   displayName: string;
@@ -20,16 +21,15 @@ export interface NavItem {
   children?: NavItem[];
 }
 
-/** @title Responsive sidenav */
 @Component({
   selector: 'app-sidenav-responsive',
   standalone: true,
   imports: [MatIconModule, MatSidenavContainer, MatSidenav, MatListModule, MatExpansionModule, MatCheckboxModule, MatSidenavContent , CommonModule, TranslateModule],
   templateUrl: 'sidenav.component.html',
   styleUrls: ['sidenav.component.scss'],
-  //encapsulation: ViewEncapsulation.None
+  providers: [HttpClient, TranslateService]
 })
-export class SidenavResponsiveExample implements OnDestroy {
+export class SidenavComponent implements OnDestroy {
 
   showMenuL = true;
   menu: NavItem [] = [];
@@ -37,7 +37,7 @@ export class SidenavResponsiveExample implements OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly sidebarService: SidebarService,
     private readonly authService: AuthService,
     private readonly router: Router,

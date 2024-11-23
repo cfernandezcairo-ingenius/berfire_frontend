@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,7 +13,8 @@ import { openSnackBar } from '../../../share/common/UI/utils';
   standalone: true,
   imports: [],
   templateUrl: './bill-status-delete.component.html',
-  styleUrl: './bill-status-delete.component.scss'
+  styleUrl: './bill-status-delete.component.scss',
+  providers:[ActivatedRoute, TranslateService, RouterModule]
 })
 export class BillStatusDeleteComponent implements OnInit {
 

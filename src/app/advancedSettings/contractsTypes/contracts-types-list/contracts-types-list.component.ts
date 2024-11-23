@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export interface IContractsTypes {
   id: number,
   name: string,
-  description: boolean
+  description: string
 }
 
 @Component({
@@ -28,6 +28,8 @@ export interface IContractsTypes {
     CommonModule,
     TranslateModule
 ]
+,
+providers: [TranslateService]
 })
 export class ContractsTypesListComponent implements OnInit {
 

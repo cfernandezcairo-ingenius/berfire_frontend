@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateStore } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './delivery-note-states-delete.component.html',
-  styleUrl: './delivery-note-states-delete.component.scss'
+  styleUrl: './delivery-note-states-delete.component.scss',
+  providers: [TranslateService, TranslateStore,ActivatedRoute, RouterModule]
 })
 export class DeliveryNoteStatesDeleteComponent implements OnInit {
 

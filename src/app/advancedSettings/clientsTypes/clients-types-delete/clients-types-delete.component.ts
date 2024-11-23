@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './clients-types-delete.component.html',
-  styleUrl: './clients-types-delete.component.scss'
+  styleUrl: './clients-types-delete.component.scss',
+  providers: [ActivatedRoute, TranslateService, RouterModule]
 })
 export class ClientsTypesDeleteComponent implements OnInit {
 

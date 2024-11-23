@@ -29,7 +29,8 @@ export interface IBanks {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class BanksListComponent implements OnInit {
 

@@ -29,7 +29,8 @@ export interface IManufacturers {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class ManufacturersListComponent implements OnInit {
 

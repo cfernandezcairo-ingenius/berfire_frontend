@@ -28,7 +28,8 @@ export interface IPrStatus {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class StatesPartiesReviewListComponent implements OnInit {
 

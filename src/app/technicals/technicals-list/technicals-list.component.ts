@@ -30,7 +30,8 @@ export interface ITechnicals {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class TechnicalsListComponent implements OnInit {
 

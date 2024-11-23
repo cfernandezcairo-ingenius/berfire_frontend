@@ -28,7 +28,8 @@ export interface IPvpRates {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class PvPRatesListComponent implements OnInit {
 

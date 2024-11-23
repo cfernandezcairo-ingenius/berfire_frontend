@@ -22,6 +22,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CommonModule,
     TranslateModule
 ]
+,
+providers: [TranslateService]
 })
 export class BillStatusListComponent implements OnInit {
 

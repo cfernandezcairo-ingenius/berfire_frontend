@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -27,7 +27,8 @@ export interface IDeliveryNoteStates {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService, TranslateStore]
 })
 export class DeliveryNoteStatesListComponent implements OnInit {
 

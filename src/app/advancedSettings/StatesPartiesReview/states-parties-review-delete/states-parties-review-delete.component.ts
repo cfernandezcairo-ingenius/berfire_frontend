@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './states-parties-review-delete.component.html',
-  styleUrl: './states-parties-review-delete.component.scss'
+  styleUrl: './states-parties-review-delete.component.scss',
+  providers: [TranslateService, ActivatedRoute, RouterModule]
 })
 export class StatesPartiesReviewDeleteComponent implements OnInit {
 

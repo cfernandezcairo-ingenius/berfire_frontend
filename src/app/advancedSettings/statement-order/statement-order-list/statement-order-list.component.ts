@@ -29,7 +29,8 @@ export interface IIStatementOrder {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class StatementOrderListComponent implements OnInit {
 

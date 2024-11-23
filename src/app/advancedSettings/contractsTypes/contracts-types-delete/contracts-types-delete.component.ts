@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ActivationEnd } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -14,6 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [],
   templateUrl: './contracts-types-delete.component.html',
   styleUrl: './contracts-types-delete.component.scss'
+  ,
+providers: [TranslateService, ActivationEnd]
 })
 export class ContractsTypesDeleteComponent implements OnInit {
 

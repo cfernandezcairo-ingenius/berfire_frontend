@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BanksListComponent } from './banks-list.component';
-import { BanksService } from '../banks.service';
+import { StatesPartiesReviewListComponent  } from './states-parties-review-list.component';
+import { StatesPartiesReviewService } from '../states-parties-review.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -35,17 +35,17 @@ const TRANSLATIONS = {
   [ENGLISH_LANGUAGE]: ENGLISH_TRANSLATIONS
 };
 
-describe('BanksListComponent', () => {
-  let component: BanksListComponent;
-  let fixture: ComponentFixture<BanksListComponent>;
-  let banksSrv: jasmine.SpyObj<BanksService>;
+describe('StatesPartiesReviewListComponent', () => {
+  let component: StatesPartiesReviewListComponent;
+  let fixture: ComponentFixture<StatesPartiesReviewListComponent>;
+  let statesPartiesReviewSrv: jasmine.SpyObj<StatesPartiesReviewService>;
   let matSnackBar: jasmine.SpyObj<MatSnackBar>;
   let translate: jasmine.SpyObj<TranslateService>;
   let navigationSrv: jasmine.SpyObj<NavigationService>;
   let langChangeSubject: Subject<void>;
 
   beforeEach(async () => {
-    banksSrv = jasmine.createSpyObj('BanksService', ['getAll', 'getByFields']);
+    statesPartiesReviewSrv = jasmine.createSpyObj('StatesPartiesReviewService', ['getAll', 'getByFields']);
     matSnackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
     langChangeSubject = new Subject<void>();
     translate = jasmine.createSpyObj('TranslateService', ['setDefaultLang', 'use', 'get']);
@@ -62,7 +62,7 @@ describe('BanksListComponent', () => {
       ],
       declarations: [],
       providers: [
-        { provide: BanksService, useValue: banksSrv },
+        { provide: StatesPartiesReviewService, useValue: statesPartiesReviewSrv },
         { provide: MatSnackBar, useValue: matSnackBar },
         { provide: TranslateService, useValue: translate },
         { provide: NavigationService, useValue: navigationSrv },
@@ -70,7 +70,7 @@ describe('BanksListComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BanksListComponent);
+    fixture = TestBed.createComponent(StatesPartiesReviewListComponent);
     component = fixture.componentInstance;
   });
 
@@ -79,19 +79,19 @@ describe('BanksListComponent', () => {
   });
 
   it('should load all documents templates', () => {
-    const mockData = { data: [{ id: 1, name: 'Template 1', templateType: 'Type 1', renderType: 'Render 1', predetermined: false, description: 'Description 1', template: 'Template Content' }] };
-    banksSrv.getAll.and.returnValue(of(mockData));
+    const mockData = { data: [{ id: 1, name: 'Template 1', description: 'country1'}] };
+    statesPartiesReviewSrv.getAll.and.returnValue(of(mockData));
 
     component.loadAll();
 
-    expect(banksSrv.getAll).toHaveBeenCalled();
+    expect(statesPartiesReviewSrv.getAll).toHaveBeenCalled();
     expect(component.dataSource.data.length).toBe(1);
     expect(component.loading).toBeFalse();
   });
 
   it('should handle empty data when loading', () => {
     const mockData = { data: [] };
-    banksSrv.getAll.and.returnValue(of(mockData));
+    statesPartiesReviewSrv.getAll.and.returnValue(of(mockData));
 
     component.loadAll();
 
@@ -100,15 +100,15 @@ describe('BanksListComponent', () => {
   });
 
   it('should handle errors when loading', () => {
-    banksSrv.getAll.and.returnValue(of({ data: [] }));
+    statesPartiesReviewSrv.getAll.and.returnValue(of({ data: [] }));
     component.loadAll();
     expect(matSnackBar.open).toHaveBeenCalledWith('The data returned empty.', 'Close', Object({ duration: 2000 }));
   });
 
   it('should handle empty data when searching', () => {
-    const searchEvent = { id: 0, name: 'Template 1', swift: 'Type 1', Iban: 0 };
+    const searchEvent = {  id: 1, name: 'Template 1', description: 'country1' };
     const mockData = { data: [] };
-    banksSrv.getByFields.and.returnValue(of(mockData));
+    statesPartiesReviewSrv.getByFields.and.returnValue(of(mockData));
 
     component.searchData(searchEvent);
 
@@ -119,30 +119,30 @@ describe('BanksListComponent', () => {
     const row = { id: 1 };
     component.edit(row);
 
-    expect(navigationSrv.NavigateTo).toHaveBeenCalledWith(`/banks/edit/${JSON.stringify(row)}`);
+    expect(navigationSrv.NavigateTo).toHaveBeenCalledWith(`/states-parties-review/edit/${JSON.stringify(row)}`);
   });
 
   it('should navigate to add page', () => {
     component.addItem();
 
-    expect(navigationSrv.NavigateTo).toHaveBeenCalledWith('/banks/edit/' + JSON.stringify({ id: 0 }));
+    expect(navigationSrv.NavigateTo).toHaveBeenCalledWith('/states-parties-review/edit/' + JSON.stringify({ id: 0 }));
   });
 
   it('should navigate to delete page', () => {
     const id = 1;
     component.delete(id);
 
-    expect(navigationSrv.NavigateTo).toHaveBeenCalledWith(`/banks/delete/${JSON.stringify(id)}`);
+    expect(navigationSrv.NavigateTo).toHaveBeenCalledWith(`/states-parties-review/delete/${JSON.stringify(id)}`);
   });
 
   it('should search data correctly', () => {
-    const searchEvent = { data: { id: 1, name: 'Template 1', swift: 'Type 1', Iban:0} };
+    const searchEvent = { data: {  id: 1, name: 'Template 1', description: 'country1' } };
     const mockData = { data: [searchEvent] };
-    banksSrv.getByFields.and.returnValue(of(mockData));
+    statesPartiesReviewSrv.getByFields.and.returnValue(of(mockData));
 
     component.searchData(searchEvent.data);
 
-    expect(banksSrv.getByFields).toHaveBeenCalled();
+    expect(statesPartiesReviewSrv.getByFields).toHaveBeenCalled();
     expect(component.dataSource.data.length).toBe(1);
     expect(component.loading).toBeFalse();
   });

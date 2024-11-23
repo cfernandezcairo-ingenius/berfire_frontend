@@ -30,7 +30,8 @@ export interface IprTypes {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class PrTypesListComponent implements OnInit {
 

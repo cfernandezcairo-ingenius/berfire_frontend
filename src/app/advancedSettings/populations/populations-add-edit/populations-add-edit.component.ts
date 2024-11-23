@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { PopulationsService } from '../populations.service';
 import Swal from 'sweetalert2';
@@ -19,7 +19,8 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './populations-add-edit.component.html',
-  styleUrl: './populations-add-edit.component.scss'
+  styleUrl: './populations-add-edit.component.scss',
+  providers: [TranslateService, ActivatedRoute, RouterModule]
 })
 export class PopulationsAddEditComponent implements OnInit {
 
@@ -37,7 +38,7 @@ export class PopulationsAddEditComponent implements OnInit {
   constructor(
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly populationsService: PopulationsService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,

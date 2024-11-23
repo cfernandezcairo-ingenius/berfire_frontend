@@ -12,7 +12,8 @@ import { ButtonIconPrimaryComponent } from '../../button-icon-primary/button-ico
   standalone: true,
   imports: [MatButtonModule, CommonModule, MatIconModule, TranslateModule, ButtonIconPrimaryComponent],
   templateUrl: './xls-generator.component.html',
-  styleUrl: './xls-generator.component.scss'
+  styleUrl: './xls-generator.component.scss',
+  providers: [TranslateService]
 })
 export class XlsGeneratorComponent {
 

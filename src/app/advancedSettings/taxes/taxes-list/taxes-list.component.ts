@@ -30,7 +30,8 @@ export interface ITaxes {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class TaxesListComponent implements OnInit {
 

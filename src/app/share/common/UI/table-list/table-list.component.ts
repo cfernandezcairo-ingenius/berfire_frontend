@@ -43,7 +43,8 @@ import { MatSelectModule } from '@angular/material/select';
 ],
   templateUrl: './table-list.component.html',
   styleUrl: './table-list.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [TranslateService]
 })
 export class TableListComponent implements OnInit, OnChanges {
 

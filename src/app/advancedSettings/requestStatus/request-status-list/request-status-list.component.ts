@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { RequestStatusService } from '../request-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -28,7 +28,8 @@ export interface IRequestStatus {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService, TranslateStore]
 })
 export class RequestStatusListComponent implements OnInit {
 

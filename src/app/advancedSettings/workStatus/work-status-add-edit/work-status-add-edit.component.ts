@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { WorkStatusService } from '../work-status.service';
 import Swal from 'sweetalert2';
@@ -19,7 +19,8 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './work-status-add-edit.component.html',
-  styleUrl: './work-status-add-edit.component.scss'
+  styleUrl: './work-status-add-edit.component.scss',
+  providers: [TranslateService, TranslateStore, RouterModule]
 })
 export class WorkStatusAddEditComponent implements OnInit {
 
@@ -35,7 +36,7 @@ export class WorkStatusAddEditComponent implements OnInit {
   constructor(
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly workStatusSrv: WorkStatusService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,

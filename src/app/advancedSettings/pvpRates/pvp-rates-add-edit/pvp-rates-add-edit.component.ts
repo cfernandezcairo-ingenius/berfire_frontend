@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { PVPRatesService } from '../pvp-rates.service';
-import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -19,7 +18,8 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './pvp-rates-add-edit.component.html',
-  styleUrl: './pvp-rates-add-edit.component.scss'
+  styleUrl: './pvp-rates-add-edit.component.scss',
+  providers: [TranslateService, ActivatedRoute, RouterModule]
 })
 export class PVPRatesAddEditComponent implements OnInit {
 
@@ -35,7 +35,7 @@ export class PVPRatesAddEditComponent implements OnInit {
   constructor(
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly pVPRatesSrv: PVPRatesService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,

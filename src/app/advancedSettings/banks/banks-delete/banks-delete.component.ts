@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,7 +13,8 @@ import { openSnackBar } from '../../../share/common/UI/utils';
   standalone: true,
   imports: [],
   templateUrl: './banks-delete.component.html',
-  styleUrl: './banks-delete.component.scss'
+  styleUrl: './banks-delete.component.scss',
+  providers:[ActivatedRoute, TranslateService, RouterModule]
 })
 export class BanksDeleteComponent implements OnInit {
 

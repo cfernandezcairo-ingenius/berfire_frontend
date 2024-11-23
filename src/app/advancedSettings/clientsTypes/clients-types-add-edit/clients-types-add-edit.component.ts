@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateService , TranslateModule } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { ClientsTypesService } from '../clients-types.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -20,6 +20,8 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './clients-types-add-edit.component.html',
   styleUrl: './clients-types-add-edit.component.scss'
+  ,
+providers: [TranslateService, ActivatedRoute, RouterModule]
 })
 export class ClientsTypesAddEditComponent implements OnInit {
 
@@ -35,7 +37,7 @@ export class ClientsTypesAddEditComponent implements OnInit {
   constructor(
     private readonly translate: TranslateService,
     private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly clientsTypesSrv: ClientsTypesService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,

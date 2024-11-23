@@ -13,6 +13,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports:[CommonModule, MatIconModule, TranslateModule],
   templateUrl: './side-bar-items.component.html',
   styleUrls: ['./side-bar-items.component.scss'],
+  providers: [TranslateService]
 })
 export class SideBarItemsComponent implements OnInit {
 

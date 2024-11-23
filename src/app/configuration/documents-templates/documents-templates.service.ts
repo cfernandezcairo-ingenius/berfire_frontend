@@ -7,6 +7,7 @@ import { WindowService } from '../../share/services/window.service';
   providedIn: 'root'
 })
 export class DocumentsTemplatesService {
+  static getByFields: any;
 
   constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 

@@ -10,7 +10,8 @@ import { WindowService } from '../../../services/window.service';
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.scss'
+  styleUrl: './top-bar.component.scss',
+  providers: [TranslateService]
 })
 export class TopBarComponent implements OnInit {
 

@@ -29,7 +29,8 @@ export interface IPaymentForms {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers:[TranslateService]
 })
 export class PaymenFormsListComponent implements OnInit {
 
