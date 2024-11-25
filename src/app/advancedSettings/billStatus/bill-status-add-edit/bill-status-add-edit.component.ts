@@ -49,9 +49,6 @@ export class BillStatusAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
@@ -69,8 +66,6 @@ export class BillStatusAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.billStatusSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
       this.model = {
         isPaid: false,
@@ -80,8 +75,6 @@ export class BillStatusAddEditComponent implements OnInit {
         isPending:false
       }
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }

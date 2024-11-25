@@ -65,15 +65,11 @@ export class ContractsTypesAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.contractsTypesSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
       this.model = {
         isWarning: false
       }
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }

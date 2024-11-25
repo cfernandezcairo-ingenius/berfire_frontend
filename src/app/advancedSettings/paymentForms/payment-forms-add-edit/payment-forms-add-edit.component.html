@@ -1,6 +1,6 @@
-<app-spinner style="justify-content: center;align-items: center;margin: auto;" *ngIf="loading"></app-spinner>
+<app-spinner class="spinnerClass" *ngIf="loading"></app-spinner>
 <div [ngStyle]="showinNewTab ? {'margin-top': '80px'} : {}">
-  <div style="text-align: center;font-size: xx-large;color: #2E3192;font-weight: 500;">
+  <div class="add-edit-component-title">
     <p>{{'menu.payment-forms' | translate}}</p>
   </div>
   <app-formly-base [theme]="'material'" [shoWButtonSaveAndNew]="shoWButtonSaveAndNew" [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event, false)" (submitEventNew)="onSubmit($event, true)" (cancelEvent)="onCancel()"></app-formly-base>
