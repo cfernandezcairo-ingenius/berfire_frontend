@@ -9,6 +9,7 @@ import { WindowService } from '../../share/services/window.service';
 export class PrTypesService {
 
   public _idToDelete: number = 0;
+  public _idToEdit: number = 0;
 
   constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { }
 

@@ -66,4 +66,28 @@ describe('ClientsTypesDeleteComponent', () => {
 
     expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ icon: 'error' })); // Check if error alert is shown
   });
+
+  it('should call delete service and show snackbar on user confirmation', async () => {
+    // Simulate confirmation dialog
+    spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: true } as any));
+
+    component.delete(1);
+
+    await fixture.whenStable(); // Wait for all promises to resolve
+
+    // Expect delete service to be called
+    expect(mockClientsTypesService.delete).toHaveBeenCalledWith(1);
+  });
+
+  // it('should not call delete service on user Cancel', async () => {
+  //   // Simulate confirmation dialog
+  //   spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: false } as any));
+
+  //   //component.delete(1);
+
+  //   //await fixture.whenStable(); // Wait for all promises to resolve
+
+  //   // Expect delete service to be called
+  //   expect(mockClientsTypesService.delete).not.toHaveBeenCalled();
+  // });
 });

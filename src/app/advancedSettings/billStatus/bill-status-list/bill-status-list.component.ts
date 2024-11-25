@@ -161,11 +161,13 @@ export class BillStatusListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.billStatusSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/invoice-status/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.billStatusSrv._idToEdit = row.id;
     window.open(`/invoice-status/edit/new/${strRow}`, '_blank')
   }
 

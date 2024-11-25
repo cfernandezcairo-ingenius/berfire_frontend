@@ -110,11 +110,13 @@ export class UnsubscribeReasonsListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.unsubscribeReasonsSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.unsubscribeReasonsSrv._idToEdit = row.id;
     window.open(`/unsubscribe-reasons/edit/new/${strRow}`, '_blank')
   }
 
@@ -126,6 +128,7 @@ export class UnsubscribeReasonsListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.unsubscribeReasonsSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/edit/${row}`)
   }
 

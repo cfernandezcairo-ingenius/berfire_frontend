@@ -17,8 +17,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ClientsTypesDeleteComponent implements OnInit {
 
-  id: any;
-  darkMode = false;
+  id: number = 0;
+  darkMode: boolean = false;
 
   constructor(
     private readonly translate: TranslateService,

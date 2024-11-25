@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { PaymentFormsService } from '../payment-forms.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -20,22 +20,21 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   templateUrl: './payment-forms-add-edit.component.html',
   styleUrl: './payment-forms-add-edit.component.scss',
   encapsulation: ViewEncapsulation.None,
-  providers: [TranslateService, ActivatedRoute, RouterModule]
+  providers: [TranslateService]
 })
 export class PaymentFormsAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
-  darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = false;
+  id: number = 0;
+  darkMode:boolean = false;
+  showinNewTab:boolean = false;
+  shoWButtonSaveAndNew: boolean = false;
   loading = false;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
     public readonly navigationService: NavigationService,
     private readonly paymentFormsSrv: PaymentFormsService,
     private readonly darkModeService: StyleManager,
@@ -47,9 +46,6 @@ export class PaymentFormsAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
     this.fg.valueChanges.subscribe(v=> {
       //Aqui tengo los datos para cuando capture el submit
     });
@@ -62,10 +58,14 @@ export class PaymentFormsAddEditComponent implements OnInit {
         this.showinNewTab = this.router.url.includes('/payment-form/edit/new');
       }
     });
+    this.id = 0;
+    this.showinNewTab = false;
+    this.shoWButtonSaveAndNew = true;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
+    this.id = this.paymentFormsSrv._idToEdit;
+    if (this.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
       this.model = {
@@ -77,7 +77,7 @@ export class PaymentFormsAddEditComponent implements OnInit {
       //edit
       //this.title = this.translate.instant('editItem');
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.paymentFormsSrv.getById(payload).subscribe({
@@ -189,7 +189,7 @@ export class PaymentFormsAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         days: Number(this.fg.get('days')?.value),
@@ -197,13 +197,13 @@ export class PaymentFormsAddEditComponent implements OnInit {
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         name: this.fg.get('name')?.value,
         days: Number(this.fg.get('days')?.value),
         home: this.fg.get('home')?.value,
       }
     }
-    const myobs = this.row.id === 0 ? this.paymentFormsSrv.add(payload) : this.paymentFormsSrv.edit(payload);
+    const myobs = this.id === 0 ? this.paymentFormsSrv.add(payload) : this.paymentFormsSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

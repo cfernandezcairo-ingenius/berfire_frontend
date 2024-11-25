@@ -107,11 +107,13 @@ export class DeliveryNoteStatesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.deliveryNoteStatesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.deliveryNoteStatesSrv._idToEdit = row.id;
     window.open(`/delivery-note-states/edit/new/${strRow}`, '_blank')
   }
 
@@ -122,6 +124,7 @@ export class DeliveryNoteStatesListComponent implements OnInit {
   }
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.deliveryNoteStatesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${row}`)
   }
 

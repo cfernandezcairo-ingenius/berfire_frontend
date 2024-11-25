@@ -110,11 +110,13 @@ export class RequestStatusListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.requestStatusSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/request-status/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.requestStatusSrv._idToEdit = row.id;
     window.open(`/request-status/edit/new/${strRow}`, '_blank')
   }
 
@@ -126,6 +128,7 @@ export class RequestStatusListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.requestStatusSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/request-status/edit/${row}`)
   }
 

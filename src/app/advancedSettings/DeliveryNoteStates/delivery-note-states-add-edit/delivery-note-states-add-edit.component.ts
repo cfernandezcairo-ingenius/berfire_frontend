@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -19,22 +19,21 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   imports: [FormlyBaseComponent, TranslateModule,CommonModule, SpinnerComponent],
   templateUrl: './delivery-note-states-add-edit.component.html',
   styleUrl: './delivery-note-states-add-edit.component.scss',
-  providers: [TranslateService, ActivatedRoute,RouterModule]
+  providers: [TranslateService]
 })
 export class DeliveryNoteStatesAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
   darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = true;
+  id: number = 0;
+  showinNewTab: boolean = false;
+  shoWButtonSaveAndNew: boolean = true;
   loading = false;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
     public readonly navigationService: NavigationService,
     private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
     private readonly darkModeService: StyleManager,
@@ -46,9 +45,6 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
     this.fg.valueChanges.subscribe(v=> {
       //Aqui tengo los datos para cuando capture el submit
     });
@@ -61,10 +57,14 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
         this.showinNewTab = this.router.url.includes('/delivery-note-states/edit/new');
       }
     });
+    this.id = 0;
+    this.showinNewTab = false;
+    this.shoWButtonSaveAndNew = true;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
+    this.id = this.deliveryNoteStatesSrv._idToEdit;
+    if (this.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
       this.model = {
@@ -74,7 +74,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
       //edit
       //this.title = this.translate.instant('editItem');
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.deliveryNoteStatesSrv.getById(payload).subscribe({
@@ -161,19 +161,19 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
 
   onSubmit(model:any) {
     let payload = {};
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         confirmDeliveryNote: this.fg.get('confirmDeliveryNote')?.value === undefined ? null : this.fg.get('confirmDeliveryNote')?.value
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         name: this.fg.get('name')?.value,
         confirmDeliveryNote: this.fg.get('confirmDeliveryNote')?.value === undefined ? false : this.fg.get('confirmDeliveryNote')?.value
       }
     }
-    const myobs = this.row.id === 0 ? this.deliveryNoteStatesSrv.add(payload) : this.deliveryNoteStatesSrv.edit(payload)
+    const myobs = this.id === 0 ? this.deliveryNoteStatesSrv.add(payload) : this.deliveryNoteStatesSrv.edit(payload)
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

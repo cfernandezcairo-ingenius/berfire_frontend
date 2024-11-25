@@ -119,11 +119,13 @@ export class PrTypesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.prTypesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/prTypes/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.prTypesSrv._idToEdit = row.id;
     window.open(`/prTypes/edit/new/${strRow}`, '_blank')
   }
 
@@ -135,6 +137,7 @@ export class PrTypesListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.prTypesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/prTypes/edit/${row}`)
   }
 

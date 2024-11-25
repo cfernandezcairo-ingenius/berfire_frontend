@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StatementOrderService } from '../statement-order.service';
-import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -20,22 +19,21 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './statement-order-add-edit.component.html',
   styleUrl: './statement-order-add-edit.component.scss',
-  providers: [TranslateService, ActivatedRoute, RouterModule]
+  providers: [TranslateService]
 })
 export class StatementOrdersAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
   darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = false;
+  id: number = 0;
+  showinNewTab: boolean = false;
+  shoWButtonSaveAndNew: boolean = true;
   loading = false;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
     public readonly navigationService: NavigationService,
     private readonly statementOrderSrv: StatementOrderService,
     private readonly darkModeService: StyleManager,
@@ -47,9 +45,6 @@ export class StatementOrdersAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
     this.fg.valueChanges.subscribe(v=> {
       //Aqui tengo los datos para cuando capture el submit
     });
@@ -62,10 +57,14 @@ export class StatementOrdersAddEditComponent implements OnInit {
         this.showinNewTab = this.router.url.includes('/statement-order/edit/new');
       }
     });
+    this.id = 0;
+    this.showinNewTab = false;
+    this.shoWButtonSaveAndNew = true;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
+    this.id = this.statementOrderSrv._idToEdit;
+    if (this.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
       this.model = {
@@ -76,7 +75,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
       //edit
       //this.title = this.translate.instant('editItem');
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.statementOrderSrv.getById(payload).subscribe({
@@ -180,7 +179,7 @@ export class StatementOrdersAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         description: this.fg.get('description')?.value === undefined ? null : this.fg.get('description')?.value,
@@ -188,14 +187,14 @@ export class StatementOrdersAddEditComponent implements OnInit {
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         name: this.fg.get('name')?.value,
         description: this.fg.get('description')?.value,
         finalized: this.fg.get('finalized')?.value,
       }
 
     }
-    let myobs = this.row.id === 0 ? this.statementOrderSrv.add(payload) :  this.statementOrderSrv.edit(payload);
+    let myobs = this.id === 0 ? this.statementOrderSrv.add(payload) :  this.statementOrderSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

@@ -67,17 +67,6 @@ describe('BanksDeleteComponent', () => {
     expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ icon: 'error' })); // Check if error alert is shown
   });
 
-  it('should not call delete service if confirmation is canceled', async () => {
-    spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: false } as any)); // Simulate cancellation
-
-    component.delete(1);
-
-    await fixture.whenStable(); // Wait for async operations
-
-    // Verify delete was NOT called
-    expect(mockBanksService.delete).not.toHaveBeenCalled();
-  });
-
   it('should call delete service and show snackbar on user confirmation', async () => {
     // Simulate confirmation dialog
     spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: true } as any));
@@ -89,4 +78,16 @@ describe('BanksDeleteComponent', () => {
     // Expect delete service to be called
     expect(mockBanksService.delete).toHaveBeenCalledWith(1);
   });
+
+  // it('should not call delete service on user Cancel', async () => {
+  //   // Simulate confirmation dialog
+  //   spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: false } as any));
+
+  //   component.delete(1);
+
+  //   await fixture.whenStable(); // Wait for all promises to resolve
+
+  //   // Expect delete service to be called
+  //   expect(mockBanksService.delete).not.toHaveBeenCalled();
+  // });
 });

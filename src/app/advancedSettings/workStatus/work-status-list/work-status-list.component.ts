@@ -109,11 +109,13 @@ export class WorkStatusListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.workStatusSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/work-status/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.workStatusSrv._idToEdit = row.id;
     window.open(`/work-status/edit/new/${strRow}`, '_blank')
   }
 
@@ -125,6 +127,7 @@ export class WorkStatusListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.workStatusSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/work-status/edit/${row}`)
   }
 

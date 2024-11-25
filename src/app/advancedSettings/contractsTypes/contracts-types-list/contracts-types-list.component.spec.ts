@@ -106,7 +106,7 @@ describe('ContractsTypesListComponent', () => {
   });
 
   it('should handle empty data when searching', () => {
-    const searchEvent = { id: 0, name: 'Template 1', description:'Type 1' };
+    const searchEvent = { id: 0, name: 'Template 1', duration: 1, isWarning: false };
     const mockData = { data: [] };
     contractsTypesSrv.getByFields.and.returnValue(of(mockData));
 
@@ -136,7 +136,7 @@ describe('ContractsTypesListComponent', () => {
   });
 
   it('should search data correctly', () => {
-    const searchEvent = { data: { id: 0, name: 'Template 1', description: 'Type 1' } };
+    const searchEvent = { data: { id: 0, name: 'Template 1', duration: 1, isWarning: false } };
     const mockData = { data: [searchEvent] };
     contractsTypesSrv.getByFields.and.returnValue(of(mockData));
 

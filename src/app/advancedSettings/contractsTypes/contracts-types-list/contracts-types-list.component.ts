@@ -14,7 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export interface IContractsTypes {
   id: number,
   name: string,
-  description: string
+  duration: number,
+  isWarning: boolean
 }
 
 @Component({
@@ -49,7 +50,7 @@ export class ContractsTypesListComponent implements OnInit {
   displayedLabelsEs = this.displayedLabels
   displayedLabelsEn: IDisplayedLabels[] = [
     { name:'', isBoolean: false},
-    { name: 'Namwe',isBoolean: false},
+    { name: 'Name',isBoolean: false},
     { name: 'Duration', isBoolean:false},
     { name: 'isWarning', isBoolean: true}
   ];
@@ -111,11 +112,13 @@ export class ContractsTypesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.contractsTypesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/contracts-types/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.contractsTypesSrv._idToEdit = row.id;
     window.open(`/contracts-types/edit/new/${strRow}`, '_blank')
   }
 
@@ -126,13 +129,17 @@ export class ContractsTypesListComponent implements OnInit {
   }
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.contractsTypesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/contracts-types/edit/${row}`)
   }
 
   searchData(event: IContractsTypes) {
     let payload = `?name=${event.name}`;
-    if (event.description) {
-      payload = payload + `&description=${event.description}`;
+    if (event.duration) {
+      payload = payload + `&duration=${event.duration}`;
+    }
+    if (event.isWarning) {
+      payload = payload + `&isWarning=${event.isWarning}`;
     }
     this.loading = true;
     this.contractsTypesSrv.getByFields(payload).subscribe(res=> {

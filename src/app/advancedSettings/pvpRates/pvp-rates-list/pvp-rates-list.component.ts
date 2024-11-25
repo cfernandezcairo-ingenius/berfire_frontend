@@ -109,11 +109,13 @@ export class PvPRatesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.pVPRatesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/pvp-rates/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.pVPRatesSrv._idToEdit = row.id;
     window.open(`/pvp-rates/edit/new/${strRow}`, '_blank')
   }
 
@@ -125,6 +127,7 @@ export class PvPRatesListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.pVPRatesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/pvp-rates/edit/${row}`)
   }
 

@@ -67,14 +67,15 @@ describe('BillStatusDeleteComponent', () => {
     expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ icon: 'error' })); // Check if error alert is shown
   });
 
-  // it('should not call delete service if confirmation is canceled', async () => {
-  //   spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: false } as any)); // Simulate cancellation
+  // it('should not call delete service on user Cancel', async () => {
+  //   // Simulate confirmation dialog
+  //   spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: false } as any));
 
-  //   // component.delete(1);
+  //   //component.delete(1);
 
-  //   // await fixture.whenStable(); // Wait for async operations
+  //   await fixture.whenStable(); // Wait for all promises to resolve
 
-  //   // Verify delete was NOT called
+  //   // Expect delete service to be called
   //   expect(mockBillStatusService.delete).not.toHaveBeenCalled();
   // });
 

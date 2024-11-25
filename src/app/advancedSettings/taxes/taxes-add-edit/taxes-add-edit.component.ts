@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { TaxesService } from '../taxes.service';
-import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { WindowService } from '../../../share/services/window.service';
 import { CommonModule } from '@angular/common';
@@ -21,22 +20,21 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './taxes-add-edit.component.html',
   styleUrl: './taxes-add-edit.component.scss',
-  providers: [TranslateService, ActivatedRoute, RouterModule]
+  providers: [TranslateService]
 })
 export class TaxesAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
   darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = false;
+  id: number = 0;
+  showinNewTab: boolean = false;
+  shoWButtonSaveAndNew:boolean = true;
   loading = false;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
     public readonly navigationService: NavigationService,
     private readonly taxesSrv: TaxesService,
     private readonly darkModeService: StyleManager,
@@ -48,12 +46,6 @@ export class TaxesAddEditComponent implements OnInit {
       this.model.lang = this.translate.currentLang;
       this.updateLabels();
       this.updateValidationMessages();
-    })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
     });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
@@ -64,10 +56,14 @@ export class TaxesAddEditComponent implements OnInit {
         this.showinNewTab = this.router.url.includes('/taxes/edit/new');
       }
     });
+    this.id = 0;
+    this.showinNewTab = false;
+    this.shoWButtonSaveAndNew = true;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
+    this.id = this.taxesSrv._idToEdit;
+    if (this.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
@@ -78,7 +74,7 @@ export class TaxesAddEditComponent implements OnInit {
       //edit
       //this.title = this.translate.instant('editItem');
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.taxesSrv.getById(payload).subscribe({
@@ -211,7 +207,7 @@ export class TaxesAddEditComponent implements OnInit {
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     //let myobs = new Observable<any>;
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         title: this.fg.get('title')?.value,
         value: this.fg.get('value')?.value,
@@ -220,14 +216,14 @@ export class TaxesAddEditComponent implements OnInit {
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         title: this.fg.get('title')?.value,
         value: this.fg.get('value')?.value,
         equivalentSurcharge: this.fg.get('equivalentSurcharge')?.value,
         isIGIC: this.fg.get('isIGIC')?.value,
       }
     }
-    const myobs = this.row.id === 0 ? this.taxesSrv.add(payload) : this.taxesSrv.edit(payload);
+    const myobs = this.id === 0 ? this.taxesSrv.add(payload) : this.taxesSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {
