@@ -63,14 +63,11 @@ export class TechnicalsAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.technicalsSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
       this.shoWButtonSaveAndNew = true;
       this.model = {
 
       }
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }

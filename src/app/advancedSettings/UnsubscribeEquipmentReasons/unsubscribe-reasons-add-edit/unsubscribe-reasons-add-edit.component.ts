@@ -67,12 +67,8 @@ export class UnsubscribeReasonsAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.unsubscribeReasonsSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }

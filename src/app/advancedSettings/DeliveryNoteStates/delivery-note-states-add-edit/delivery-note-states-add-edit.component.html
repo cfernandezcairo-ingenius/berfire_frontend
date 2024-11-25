@@ -1,6 +1,6 @@
-<app-spinner style="justify-content: center;align-items: center;margin: auto;" *ngIf="loading"></app-spinner>
+<app-spinner  *ngIf="loading" class="spinnerClass"></app-spinner>
 <div [ngStyle]="showinNewTab ? {'margin-top': '80px'} : {}">
-  <div style="text-align: center;font-size: xx-large;color: #1C75BC;font-weight: 500;">
+  <div class="add-edit-component-title">
     <p>{{'dispatch-notes' | translate}}</p>
   </div>
   <app-formly-base [theme]="'material'" [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event)" (cancelEvent)="onCancel()"></app-formly-base>

@@ -46,15 +46,11 @@ export class BanksAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/banks/edit/new');
       }
     });
@@ -67,8 +63,6 @@ export class BanksAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.banksSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
     } else {
       let payload = {
@@ -209,9 +203,6 @@ export class BanksAddEditComponent implements OnInit {
         } else {
           HandleMessagesSubmit(this.translate, res.error);
         }
-        //Aqui tengo que preguntar si nuevo = true
-        //Para limpiar el formulario
-        //y permanecer en la ventana
         if (res.success === true) {
           if (this.showinNewTab) {
             localStorage.setItem('dataModifiedInNewTabBanks', 'true');
@@ -233,7 +224,6 @@ export class BanksAddEditComponent implements OnInit {
     if (this.showinNewTab) {
       window.close();
     } else {
-    //Aqui tengo que regresar a la ultima ruta
     this.navigationService.goback();
     }
   }

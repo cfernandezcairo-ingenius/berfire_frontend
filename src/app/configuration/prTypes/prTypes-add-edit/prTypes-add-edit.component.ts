@@ -54,7 +54,6 @@ export class PrTypesAddEditComponent implements OnInit {
     });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/prTypes/edit/new');
       }
     });
@@ -66,12 +65,8 @@ export class PrTypesAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.prTypesSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }

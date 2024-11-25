@@ -70,7 +70,6 @@ export const routes: Routes = [
   { path: 'invoice-status/delete/:id', component: BillStatusDeleteComponent, canActivate: [AuthGuard]},
   { path: 'invoice-status/edit/new/:id', component: BillStatusAddEditComponent, canActivate: [AuthGuard]},
   { path: 'all/edit/new', component: AllAddEditNewComponent, canActivate: [AuthGuard]},
-  //statementOrder
   { path: 'statement-order/list', component: StatementOrderListComponent, canActivate: [AuthGuard]},
   { path: 'statement-order/edit/:id', component: StatementOrdersAddEditComponent, canActivate: [AuthGuard]},
   { path: 'statement-order/delete/:id', component: StatementOrderDeleteComponent, canActivate: [AuthGuard]},

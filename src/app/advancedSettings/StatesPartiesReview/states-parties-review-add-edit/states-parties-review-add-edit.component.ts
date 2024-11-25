@@ -65,15 +65,11 @@ export class StatesPartiesReviewAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.statesPartiesReviewSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
       this.model = {
         finalized: false,
       }
       this.shoWButtonSaveAndNew = true;
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }

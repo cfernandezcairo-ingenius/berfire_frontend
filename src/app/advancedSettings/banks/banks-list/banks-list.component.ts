@@ -123,7 +123,6 @@ export class BanksListComponent implements OnInit {
 
   handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabBanks', 'false');
-    //Aqui tengo que recargar los datos desde el backend
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 

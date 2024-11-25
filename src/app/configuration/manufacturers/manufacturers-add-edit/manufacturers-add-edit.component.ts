@@ -63,14 +63,11 @@ export class ManufacturersAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.manufacturersSrv._idToEdit;
     if (this.id === 0) {
-      //Agregar
       this.shoWButtonSaveAndNew = true;
       this.model = {
         isActive: false
       }
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
         id: this.id
       }
