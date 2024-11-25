@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,7 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './unsubscribe-reasons-delete.component.html',
-  styleUrl: './unsubscribe-reasons-delete.component.scss'
+  styleUrl: './unsubscribe-reasons-delete.component.scss',
+  providers: [TranslateService]
 })
 export class UnsubscribeReasonsDeleteComponent implements OnInit {
 
@@ -21,22 +21,19 @@ export class UnsubscribeReasonsDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private darkModeService: StyleManager,
     private unsubscribeReasonsSrv: UnsubscribeReasonsService,
     private navigationSrv: NavigationService,
     private matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.unsubscribeReasonsSrv._idToDelete;
     this.delete(this.id);
   }
 

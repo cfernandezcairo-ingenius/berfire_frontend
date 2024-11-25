@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateStore } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -13,7 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './delivery-note-states-delete.component.html',
-  styleUrl: './delivery-note-states-delete.component.scss'
+  styleUrl: './delivery-note-states-delete.component.scss',
+  providers: [TranslateService, TranslateStore]
 })
 export class DeliveryNoteStatesDeleteComponent implements OnInit {
 
@@ -21,22 +21,19 @@ export class DeliveryNoteStatesDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.deliveryNoteStatesSrv._idToDelete;
     this.delete(this.id);
   }
 

@@ -8,13 +8,14 @@ import { Router } from '@angular/router';
 import { StyleManager } from '../../share/services/style-manager.service';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-berfire',
   standalone: true,
   imports: [FormsModule , ReactiveFormsModule, CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, MatLabel],
   templateUrl: './login-berfire.component.html',
-  providers: [],
+  providers: [HttpClient],
   styleUrl: './login-berfire.component.scss',
   encapsulation: ViewEncapsulation.None, // Desactiva el encapsulamiento
 })

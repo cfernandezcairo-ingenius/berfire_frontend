@@ -13,7 +13,8 @@ import { ButtonIconPrimaryComponent } from "../../button-icon-primary/button-ico
   standalone: true,
   imports: [MatButtonModule, CommonModule, MatIconModule, TranslateModule, ButtonIconPrimaryComponent],
   templateUrl: './pdf-generator.component.html',
-  styleUrl: './pdf-generator.component.scss'
+  styleUrl: './pdf-generator.component.scss',
+  providers: [TranslateService]
 })
 export class PdfGeneratorComponent {
 

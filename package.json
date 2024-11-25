@@ -51,12 +51,14 @@
     "@angular/localize": "^18.2.6",
     "@ngx-formly/schematics": "^6.3.7",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^22.9.2",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ngx-translate-testing": "^7.0.0",
     "typescript": "~5.5.2"
   }
 }

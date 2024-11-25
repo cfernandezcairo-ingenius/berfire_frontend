@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,7 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './prTypes-delete.component.html',
-  styleUrl: './prTypes-delete.component.scss'
+  styleUrl: './prTypes-delete.component.scss',
+  providers: [TranslateService]
 })
 export class PrTypesDeleteComponent implements OnInit {
 
@@ -21,22 +21,19 @@ export class PrTypesDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly prTypesSrv: PrTypesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.prTypesSrv._idToDelete;
     this.delete(this.id);
   }
 

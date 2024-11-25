@@ -6,14 +6,15 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SidebarService } from './sidebar.service';
-import { SidenavResponsiveExample } from "../sidenav/sidenav.component";
+import { SidenavComponent } from "../sidenav/sidenav.component";
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [SideBarItemsComponent, CommonModule, MatIconModule, TranslateModule, SidenavResponsiveExample],
+  imports: [CommonModule, MatIconModule, TranslateModule, SidenavComponent],
   templateUrl: './side-bar.component.html',
-  styleUrls: ['./side-bar.component.scss']
+  styleUrls: ['./side-bar.component.scss'],
+  providers: [TranslateService]
 })
 export class SideBarComponent implements OnInit {
 

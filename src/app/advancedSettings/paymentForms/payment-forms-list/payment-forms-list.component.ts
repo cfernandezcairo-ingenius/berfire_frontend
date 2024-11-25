@@ -29,7 +29,8 @@ export interface IPaymentForms {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers:[TranslateService]
 })
 export class PaymenFormsListComponent implements OnInit {
 
@@ -112,21 +113,25 @@ export class PaymenFormsListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.paymentFormsSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/payment-forms/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.paymentFormsSrv._idToEdit = row.id;
     window.open(`/payment-forms/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.paymentFormsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/payment-forms/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.paymentFormsSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/payment-forms/edit/${row}`)
   }
 

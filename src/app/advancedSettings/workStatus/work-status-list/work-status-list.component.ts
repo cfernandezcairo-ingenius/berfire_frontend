@@ -28,7 +28,8 @@ export interface IWorkStatus {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class WorkStatusListComponent implements OnInit {
 
@@ -108,21 +109,25 @@ export class WorkStatusListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.workStatusSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/work-status/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.workStatusSrv._idToEdit = row.id;
     window.open(`/work-status/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.workStatusSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/work-status/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.workStatusSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/work-status/edit/${row}`)
   }
 

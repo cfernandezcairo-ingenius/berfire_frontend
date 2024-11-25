@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpHeaderClass } from '../share/common/httpHeader';
 import { HttpClient } from '@angular/common/http';
-import { backendConfig } from '../app.config';
+import { WindowService } from '../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientsService {
 
-  constructor(private http: HttpClient) { }
+  public _idToDelete: number = 0;
+
+  constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.post<any>(`${this.windowService.apiUrl}/invoice/add`, payload);
+    return this.http.post<any>(`${this.windowService.apiUrl}/cliests/add`, payload);
   }
   edit(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;
-    return this.http.put<any>(`${this.windowService.apiUrl}/invoice/edit`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/clients/edit`, payload);
   }
 }

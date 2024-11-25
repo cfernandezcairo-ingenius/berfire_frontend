@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { WindowService } from '../../share/services/window.service';
 
@@ -7,8 +7,10 @@ import { WindowService } from '../../share/services/window.service';
   providedIn: 'root'
 })
 export class PopulationsService {
+  public _idToDelete: number = 0;
+  public _idToEdit: number = 0;
 
-  constructor(private http: HttpClient, private windowService: WindowService) { }
+  constructor(private readonly http: HttpClient, private readonly windowService: WindowService) { }
 
   add(payload: any): Observable<any> {
     //const headers = new HttpHeaderClass().defaultHeader;

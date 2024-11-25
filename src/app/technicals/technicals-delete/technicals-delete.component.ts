@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../share/services/style-manager.service';
@@ -13,7 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './technicals-delete.component.html',
-  styleUrl: './technicals-delete.component.scss'
+  styleUrl: './technicals-delete.component.scss',
+  providers: [TranslateService]
 })
 export class TechnicalsDeleteComponent implements OnInit {
 
@@ -21,22 +21,19 @@ export class TechnicalsDeleteComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly technicalsSrv: TechnicalsService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.technicalsSrv._idToDelete;
     this.delete(this.id);
   }
 

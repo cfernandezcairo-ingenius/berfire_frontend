@@ -15,7 +15,7 @@ import { WindowService } from './share/services/window.service';
   standalone: true,
   imports: [RouterOutlet, TranslateModule, SideBarComponent, CommonModule, TopBarComponent],
   templateUrl: './app.component.html',
-  providers: [],
+  providers: [TranslateService],
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {

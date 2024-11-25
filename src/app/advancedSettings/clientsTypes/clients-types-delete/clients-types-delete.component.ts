@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -13,30 +12,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [],
   templateUrl: './clients-types-delete.component.html',
-  styleUrl: './clients-types-delete.component.scss'
+  styleUrl: './clients-types-delete.component.scss',
+  providers: [TranslateService]
 })
 export class ClientsTypesDeleteComponent implements OnInit {
 
-  id: any;
-  darkMode = false;
+  id: number = 0;
+  darkMode: boolean = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly darkModeService: StyleManager,
     private readonly clientsTypesSrv: ClientsTypesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.id = JSON.parse(params['id']);
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
   }
 
   ngOnInit(): void {
+    this.id = this.clientsTypesSrv._idToDelete;
     this.delete(this.id);
   }
 

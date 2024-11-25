@@ -29,7 +29,8 @@ export interface IPopulations {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class PopulationsListComponent implements OnInit {
 
@@ -108,21 +109,25 @@ export class PopulationsListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.populationsSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/populations/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.populationsSrv._idToEdit = row.id;
     window.open(`/populations/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.populationsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/populations/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.populationsSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/populations/edit/${row}`)
   }
 

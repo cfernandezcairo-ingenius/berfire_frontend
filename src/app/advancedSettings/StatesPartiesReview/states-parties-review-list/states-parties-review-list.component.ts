@@ -28,7 +28,8 @@ export interface IPrStatus {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class StatesPartiesReviewListComponent implements OnInit {
 
@@ -108,21 +109,25 @@ export class StatesPartiesReviewListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.statesPartiesReviewSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/states-parties-review/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.statesPartiesReviewSrv._idToEdit = row.id;
     window.open(`/states-parties-review/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.statesPartiesReviewSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/states-parties-review/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.statesPartiesReviewSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/states-parties-review/edit/${row}`)
   }
 

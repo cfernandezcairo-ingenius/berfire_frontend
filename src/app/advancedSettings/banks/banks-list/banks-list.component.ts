@@ -29,7 +29,8 @@ export interface IBanks {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class BanksListComponent implements OnInit {
 
@@ -129,16 +130,19 @@ export class BanksListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.banksSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/banks/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.banksSrv._idToEdit = row.id;
     window.open(`/banks/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.banksSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/banks/delete/${strRow}`)
   }
 

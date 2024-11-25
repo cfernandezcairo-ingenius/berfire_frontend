@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DocumentsTemplatesService } from '../documents-templates.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -32,7 +32,7 @@ export interface IDocumentsTemplates {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
 })
 export class DocumentsTemplatesListComponent implements OnInit {
 
@@ -43,6 +43,7 @@ export class DocumentsTemplatesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
+  title: string = '';
 
   displayedLabels:IDisplayedLabels[] = [
     { name: '',isBoolean:false},
@@ -95,6 +96,9 @@ export class DocumentsTemplatesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.translate.get('menu.documents-templates').subscribe((translatedTitle: string) => {
+      this.title = translatedTitle;
+    });
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabTemplates' && event.newValue === 'true') {
         this.handleDataChange();
@@ -126,21 +130,25 @@ export class DocumentsTemplatesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.documentsTemplatesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/documents-templates/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.documentsTemplatesSrv._idToEdit = row.id;
     window.open(`/documents-templates/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.documentsTemplatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/documents-templates/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.documentsTemplatesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/documents-templates/edit/${row}`)
   }
 

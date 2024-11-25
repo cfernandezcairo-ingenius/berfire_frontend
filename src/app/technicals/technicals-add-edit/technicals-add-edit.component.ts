@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../navigation/shared/services/navigation.service';
 import { TechnicalsService } from '../technicals.service';
-import Swal from 'sweetalert2';
 import { StyleManager } from '../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../share/common/handle-error-messages-submit';
@@ -19,23 +18,24 @@ import { showMessage } from '../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './technicals-add-edit.component.html',
-  styleUrl: './technicals-add-edit.component.scss'
+  styleUrl: './technicals-add-edit.component.scss',
+  providers: [TranslateService]
 })
 export class TechnicalsAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
   darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = false;
+  id:number = 0;
+  showinNewTab:boolean = false;
+  shoWButtonSaveAndNew:boolean = true;
   loading = false;
+  fb: any;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly technicalsSrv: TechnicalsService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,
@@ -46,12 +46,6 @@ export class TechnicalsAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
@@ -61,10 +55,14 @@ export class TechnicalsAddEditComponent implements OnInit {
         this.showinNewTab = this.router.url.includes('/technicals/edit/new');
       }
     });
+    this.id = 0;
+    this.showinNewTab = false;
+    this.shoWButtonSaveAndNew = true;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
+    this.id = this.technicalsSrv._idToEdit;
+    if (this.id === 0) {
       //Agregar
       this.shoWButtonSaveAndNew = true;
       this.model = {
@@ -74,7 +72,7 @@ export class TechnicalsAddEditComponent implements OnInit {
       //edit
       //this.title = this.translate.instant('editItem');
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.technicalsSrv.getById(payload).subscribe({
@@ -198,23 +196,23 @@ export class TechnicalsAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         firstSurname: this.fg.get('firstSurname')?.value,
-        secondtSurName: this.fg.get('secondtSurName')?.value,
+        secondSurName: this.fg.get('secondSurName')?.value,
         user: Number(this.fg.get('user')?.value)
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         name: this.fg.get('name')?.value,
         firstSurname: this.fg.get('firstSurname')?.value,
-        secondtSurName: this.fg.get('secondtSurName')?.value,
+        secondSurName: this.fg.get('secondSurName')?.value,
         user: Number(this.fg.get('user')?.value)
       }
     }
-    const myobs = this.row.id === 0 ? this.technicalsSrv.add(payload) : this.technicalsSrv.edit(payload)
+    const myobs = this.id === 0 ? this.technicalsSrv.add(payload) : this.technicalsSrv.edit(payload)
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

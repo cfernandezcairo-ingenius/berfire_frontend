@@ -12,7 +12,8 @@ import { ChartBarComponent } from '../share/common/UI/chart-bar/chart-bar.compon
   standalone: true,
   imports: [MDCardComponent, CommonModule, ChartPieComponent, ChartBarComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
+  providers: [TranslateService]
 })
 export class DashboardComponent implements OnInit {
 

@@ -29,6 +29,8 @@
   "exportXLS": "Export to Excel",
   "addItem": "Add Register",
   "editItem": "Edit Register",
+  "continue": "Do you want to continue?",
+  "accept": "Accept",
   "save_ok": "Item saved succesfully",
   "save_error": "Item not saved, error",
   "inform": "Result",

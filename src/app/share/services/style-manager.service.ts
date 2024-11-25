@@ -9,7 +9,7 @@ export class StyleManager {
   cookieValue = '';
   fechaExpiracion: Date = new Date();
 
-  constructor(private cookieService: CookieService) {
+  constructor(private readonly cookieService: CookieService) {
     this.cookieValue = this.cookieService.get('darkMode');
     if (this.cookieValue.length === 0) {
       this.fechaExpiracion.setTime(this.fechaExpiracion.getTime() + (10 *365 * 24 * 60 * 60 * 1000));//10 años

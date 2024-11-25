@@ -30,7 +30,8 @@ export interface ITechnicals {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService]
 })
 export class TechnicalsListComponent implements OnInit {
 
@@ -114,11 +115,13 @@ export class TechnicalsListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.technicalsSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/technicals/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.technicalsSrv._idToEdit = row.id;
     window.open(`/technicals/edit/new/${strRow}`, '_blank')
   }
 
@@ -129,6 +132,7 @@ export class TechnicalsListComponent implements OnInit {
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.technicalsSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/technicals/edit/${row}`)
   }
 

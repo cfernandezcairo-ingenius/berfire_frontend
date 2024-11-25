@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateService , TranslateModule } from '@ngx-translate/core';
+import { TranslateService , TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { ClientsTypesService } from '../clients-types.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export interface IClientsTypes {
   id: number,
   name: string,
-  description: boolean
+  description: string
 }
 
 @Component({
@@ -28,6 +28,8 @@ export interface IClientsTypes {
     CommonModule,
     TranslateModule
 ]
+,
+providers: [TranslateService, TranslateStore]
 })
 export class ClientsTypesListComponent implements OnInit {
 
@@ -107,20 +109,24 @@ export class ClientsTypesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.clientsTypesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/clients-types/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.clientsTypesSrv._idToEdit = row.id;
     window.open(`/clients-types/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.clientsTypesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/clients-types/delete/${strRow}`)
   }
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.clientsTypesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/clients-types/edit/${row}`)
   }
 

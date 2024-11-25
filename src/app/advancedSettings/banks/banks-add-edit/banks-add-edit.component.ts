@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { BanksService } from '../banks.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
@@ -18,23 +18,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './banks-add-edit.component.html',
-  styleUrl: './banks-add-edit.component.scss'
+  styleUrl: './banks-add-edit.component.scss',
+  providers: [TranslateService]
 })
 export class BanksAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
-  darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = false;
+  darkMode:boolean = false;
+  showinNewTab:boolean = false;
+  shoWButtonSaveAndNew:boolean = false;
   loading = false;
+  fb: any;
+  id: number = 0;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly banksSrv: BanksService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,
@@ -45,9 +46,6 @@ export class BanksAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
     this.fg.valueChanges.subscribe(v=> {
       //Aqui tengo los datos para cuando capture el submit
     });
@@ -60,16 +58,21 @@ export class BanksAddEditComponent implements OnInit {
         this.showinNewTab = this.router.url.includes('/banks/edit/new');
       }
     });
+    this.id = 0;
+    this.darkMode = false;
+    this.showinNewTab = true;
+    this.shoWButtonSaveAndNew = false;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
+    this.id = this.banksSrv._idToEdit;
+    if (this.id === 0) {
       //Agregar
       //this.title = this.translate.instant('addItem');
       this.shoWButtonSaveAndNew = true;
     } else {
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.banksSrv.getById(payload).subscribe({
@@ -184,7 +187,7 @@ export class BanksAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         swift: this.fg.get('swift')?.value,
@@ -192,13 +195,13 @@ export class BanksAddEditComponent implements OnInit {
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         name: this.fg.get('name')?.value,
         swift: this.fg.get('swift')?.value,
         iban: Number(this.fg.get('iban')?.value)
       }
     }
-    const  myobs = this.row.id === 0 ?  this.banksSrv.add(payload) : this.banksSrv.edit(payload);
+    const  myobs = this.id === 0 ?  this.banksSrv.add(payload) : this.banksSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

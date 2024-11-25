@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -27,7 +27,8 @@ export interface IDeliveryNoteStates {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService, TranslateStore]
 })
 export class DeliveryNoteStatesListComponent implements OnInit {
 
@@ -106,20 +107,24 @@ export class DeliveryNoteStatesListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.deliveryNoteStatesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.deliveryNoteStatesSrv._idToEdit = row.id;
     window.open(`/delivery-note-states/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.deliveryNoteStatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/delivery-note-states/delete/${strRow}`)
   }
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.deliveryNoteStatesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${row}`)
   }
 

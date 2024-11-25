@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { DocumentsTemplatesService } from '../documents-templates.service';
-import Swal from 'sweetalert2';
 import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -20,23 +19,24 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './documents-templates-add-edit.component.html',
   styleUrl: './documents-templates-add-edit.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [TranslateService, TranslateStore]
 })
 export class DocumentsTemplatesAddEditComponent implements OnInit {
 
   fields: any;
   model:any = {};
   fg = new FormGroup({});
-  row:any;
   darkMode = false;
-  showinNewTab = false;
-  shoWButtonSaveAndNew = false;
+  id: number = 0;
+  showinNewTab:boolean = false;
+  shoWButtonSaveAndNew:boolean = true;
   loading = false;
+  fb: any;
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly route: ActivatedRoute,
-    private readonly navigationService: NavigationService,
+    public readonly navigationService: NavigationService,
     private readonly documentsTemplatesSrv: DocumentsTemplatesService,
     private readonly darkModeService: StyleManager,
     private readonly router: Router,
@@ -47,36 +47,26 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.route.params.subscribe((params: { [x: string]: string; }) => {
-      this.row = JSON.parse(params['id']);
-    });
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
-        this.showinNewTab = this.router.url.includes('/payment-form/edit/new');
+        this.showinNewTab = this.router.url.includes('/documents-templates/edit/new');
       }
     });
+    this.id = 0;
+    this.showinNewTab = false;
+    this.shoWButtonSaveAndNew = true;
   }
 
   ngOnInit(): void {
-    if (this.row.id === 0) {
-      //Agregar
-      //this.title = this.translate.instant('addItem');
+    this.id = this.documentsTemplatesSrv._idToEdit;
+    if (this.id === 0) {
       this.model = {
         predetermined: false,
       }
       this.shoWButtonSaveAndNew = true;
     } else {
-      //edit
-      //this.title = this.translate.instant('editItem');
       let payload = {
-        id: this.row.id
+        id: this.id
       }
       this.loading = true;
       this.documentsTemplatesSrv.getById(payload).subscribe({
@@ -253,7 +243,7 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    if (this.row.id === 0) {
+    if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,
         templateType: this.fg.get('templateType')?.value,
@@ -264,7 +254,7 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
       }
     } else {
       payload = {
-        id: this.row.id,
+        id: this.id,
         name: this.fg.get('name')?.value,
         templateType: this.fg.get('templateType')?.value,
         renderType: this.fg.get('renderType')?.value,
@@ -273,7 +263,7 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
         template: this.fg.get('template')?.value
       }
     }
-    const myobs = this.row.id === 0 ? this.documentsTemplatesSrv.add(payload) : this.documentsTemplatesSrv.edit(payload);
+    const myobs = this.id === 0 ? this.documentsTemplatesSrv.add(payload) : this.documentsTemplatesSrv.edit(payload);
     myobs.subscribe({
       next: (res) => {
         if (res.success === true) {

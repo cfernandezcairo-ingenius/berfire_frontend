@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { StyleManager } from '../../../share/services/style-manager.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { UnsubscribeReasonsService } from '../unsubscribe-reasons.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -28,7 +28,8 @@ export interface IUnsubscribeReasons {
     SpinnerComponent,
     CommonModule,
     TranslateModule
-]
+],
+providers: [TranslateService, TranslateStore]
 })
 export class UnsubscribeReasonsListComponent implements OnInit {
 
@@ -109,21 +110,25 @@ export class UnsubscribeReasonsListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.unsubscribeReasonsSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.unsubscribeReasonsSrv._idToEdit = row.id;
     window.open(`/unsubscribe-reasons/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.unsubscribeReasonsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/delete/${strRow}`)
   }
 
   addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.unsubscribeReasonsSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/unsubscribe-reasons/edit/${row}`)
   }
 

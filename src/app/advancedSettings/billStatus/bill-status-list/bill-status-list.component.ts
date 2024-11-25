@@ -22,6 +22,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CommonModule,
     TranslateModule
 ]
+,
+providers: [TranslateService]
 })
 export class BillStatusListComponent implements OnInit {
 
@@ -159,16 +161,19 @@ export class BillStatusListComponent implements OnInit {
 
   edit(row:any) {
     const strRow = JSON.stringify(row);
+    this.billStatusSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/invoice-status/edit/${strRow}`)
   }
 
   editNew(row:any) {
     const strRow = JSON.stringify(row);
+    this.billStatusSrv._idToEdit = row.id;
     window.open(`/invoice-status/edit/new/${strRow}`, '_blank')
   }
 
   delete(id: number) {
     const strRow = JSON.stringify(id);
+    this.billStatusSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/invoice-status/delete/${strRow}`)
   }
 
