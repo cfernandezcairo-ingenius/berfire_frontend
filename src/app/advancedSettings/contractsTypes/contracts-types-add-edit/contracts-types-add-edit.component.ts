@@ -17,7 +17,7 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, CommonModule, SpinnerComponent, TranslateModule],
   templateUrl: './contracts-types-add-edit.component.html',
-  styleUrl: './contracts-types-add-edit.component.scss',
+  styles: '',
   providers: [TranslateService]
 })
 export class ContractsTypesAddEditComponent implements OnInit {
@@ -77,7 +77,8 @@ export class ContractsTypesAddEditComponent implements OnInit {
           let title = this.translate.instant('inform');
           let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
           let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
-          showMessage(title, text,'error',true,false,confirmButtonText)
+          let cancelButtonText = this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel';
+          showMessage(title, text,'error',true,false,confirmButtonText, cancelButtonText)
         },
         complete: () => {
           this.loading = false;

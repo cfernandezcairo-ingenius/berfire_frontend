@@ -77,7 +77,8 @@ export class ClientsTypesAddEditComponent implements OnInit {
           let title = this.translate.instant('inform');
           let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
           let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
-          showMessage(title, text,'error',true,false,confirmButtonText)
+          let cancelButtonText = this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel';
+          showMessage(title, text,'error',true,false,confirmButtonText, cancelButtonText)
         },
         complete: () => {
           this.loading = false;

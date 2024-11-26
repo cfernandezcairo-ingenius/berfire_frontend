@@ -5,7 +5,7 @@
       <img *ngIf="isMobile" id="miImagen" src="logoBerFire.jpg" alt="Logo" style="width: 100px; height: 85px; aspect-ratio: 16/9; object-fit: contain; object-position: center;">
     </div>
   </div>
-  <div class="btn-menu-container-bar" (click)="showMenu()" *ngIf="isMobile && isAuthenticated">
+  <div onkeypress="" class="btn-menu-container-bar" (click)="showMenu()" *ngIf="isMobile && isAuthenticated">
     <div class="btn-menu-bar">
       <span style="position: absolute;top: 15%;left: 30%;">Menú</span>
     </div>
@@ -13,10 +13,10 @@
   <div class="idiomas">
     <div style="display: flex;flex-direction: row;">
       <div style="position: relative;display: flex;flex-direction: row;justify-content: end;margin-left: 10px;margin-right: 10px;">
-        <div class="idiomaEspanol" (click)="changeLanguage('Espanol')" [ngStyle]="translate.currentLang === 'en' ? {opacity: 0.5} : {}">
+        <div onkeypress="" class="idiomaEspanol" (click)="changeLanguage('Espanol')" [ngStyle]="translate.currentLang === 'en' ? {opacity: 0.5} : {}">
           <img src="banderaEspanol.png" width="36px" alt="español">
         </div>
-        <div class="idiomaIngles" (click)="changeLanguage('Ingles')" [ngStyle]="translate.currentLang === 'es' ? {opacity: 0.5} : {}">
+        <div onkeypress="" class="idiomaIngles" (click)="changeLanguage('Ingles')" [ngStyle]="translate.currentLang === 'es' ? {opacity: 0.5} : {}">
           <img style="margin-left: 10px;" src="banderaIngles.png" width="36px" alt="ingles">
         </div>
       </div>

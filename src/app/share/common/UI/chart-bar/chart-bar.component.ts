@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
@@ -12,7 +12,7 @@ import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle }
   templateUrl: './chart-bar.component.html',
   styleUrl: './chart-bar.component.scss'
 })
-export class ChartBarComponent implements OnInit {
+export class ChartBarComponent {
 
   @Input() data: any;
   title = '';
@@ -24,7 +24,7 @@ export class ChartBarComponent implements OnInit {
   chartLegend:any;
 
 
-    public barChartLegend = true;
+  public barChartLegend = true;
   public barChartPlugins = [];
 
   public barChartData: ChartConfiguration<'bar'>['data'] = {
@@ -42,9 +42,6 @@ export class ChartBarComponent implements OnInit {
 
   constructor() {}
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
-  ngOnInit(): void {
-  }
 
 
 }

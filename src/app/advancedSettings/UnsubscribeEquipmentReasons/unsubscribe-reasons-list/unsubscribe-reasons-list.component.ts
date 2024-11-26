@@ -20,7 +20,7 @@ export interface IUnsubscribeReasons {
 @Component({
   selector: 'app-unsubscribe-reasons-list',
   templateUrl: './unsubscribe-reasons-list.component.html',
-  styleUrl: './unsubscribe-reasons-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

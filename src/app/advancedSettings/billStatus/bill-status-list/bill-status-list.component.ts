@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-bill-status-list',
   templateUrl: './bill-status-list.component.html',
-  styleUrl: './bill-status-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

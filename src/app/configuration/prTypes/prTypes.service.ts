@@ -1,38 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BaseService } from '../../base-components/base.service';
 import { HttpClient } from '@angular/common/http';
 import { WindowService } from '../../share/services/window.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrTypesService {
+export class PrTypesService extends BaseService {
 
-  public _idToDelete: number = 0;
-  public _idToEdit: number = 0;
+  override _idToDelete: number = 0;
+  override _idToEdit: number = 0;
 
-  constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { }
+  constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { super(); }
 
-  add(payload: any): Observable<any> {
+  override add(payload: any): Observable<any> {
     return this.http.post<any>(`${this.windowService.apiUrl}/pRTypes`, payload);
   }
-  edit(payload: any): Observable<any> {
+  override edit(payload: any): Observable<any> {
     return this.http.put<any>(`${this.windowService.apiUrl}/pRTypes/${payload.id}`, payload);
   }
 
-  getAll(): Observable<any> {
+  override getAll(): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/pRTypes`);
   }
 
-  getById(payload:any): Observable<any> {
+  override getById(payload:any): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/pRTypes/${payload.id}`);
   }
 
-  getByFields(payload:any): Observable<any> {
+  override getByFields(payload:any): Observable<any> {
     return this.http.get<any>(`${this.windowService.apiUrl}/pRTypes/${payload}`);
   }
 
-  delete(id:any):Observable<any> {
+  override delete(id:any):Observable<any> {
     return this.http.delete<any>(`${this.windowService.apiUrl}/pRTypes/${id}`);
   }
 }

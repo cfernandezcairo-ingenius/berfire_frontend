@@ -1,38 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
-import { PrTypesService } from '../prTypes.service';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseDeleteComponent } from '../../../base-components/base-delete.component';
+import { PrTypesService } from '../prTypes.service';
 
 @Component({
-  selector: 'app-prTypes-delete',
+  selector: 'app-prTypes-deletePr',
   standalone: true,
   imports: [],
   template: ``,
   styles: [],
-  providers: [TranslateService]
+  providers: []
 })
-export class PrTypesDeleteComponent implements OnInit {
+export class PrTypesDeleteComponent extends BaseDeleteComponent {
 
-  id: any;
-  darkMode = false;
+  prTypesSrv: any;
 
   constructor(
-    private readonly translate: TranslateService,
-    private readonly prTypesSrv: PrTypesService,
-    private readonly navigationSrv: NavigationService,
-    private readonly matSnackBar: MatSnackBar
   ) {
+    super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.prTypesSrv = this.baseSrv as PrTypesService;
     this.id = this.prTypesSrv._idToDelete;
     this.delete(this.id);
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     Swal.fire({
       title: this.translate.instant('confirm'),
       text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',
@@ -41,31 +36,23 @@ export class PrTypesDeleteComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
       cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
     }).then(result => {
       if (result.isConfirmed) {
         this.prTypesSrv.delete(id).subscribe({
           next: (d:any) => {
-            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', this.translate.currentLang);
+            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deletePrd succesfully!!', this.translate.currentLang);
             this.navigationSrv.goback();
           },
           error: (error:any) => {
             Swal.fire({
               title: this.translate.instant('inform'),
-              text: this.translate.currentLang === 'es' ? 'Error al delete el Registro.!!!' : 'Error deleting data!!',
+              text: this.translate.currentLang === 'es' ? 'Error al eliminar el Registro.!!!' : 'Error deleting data!!',
               icon: 'error',
               showConfirmButton:true,
               showCancelButton: false,
               confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-              background: this.darkMode ? '#444' : '#fff',
-              color: this.darkMode ? '#fff' : '#000',
             });
-          },
-          complete: () => {
-
           }
-
         });
       } else {
         return;

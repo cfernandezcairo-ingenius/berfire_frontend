@@ -21,6 +21,7 @@
 
 .menu__group {
     padding: 1rem 1rem 0 1rem;
+    height: 40px;
 }
 
 .menu__group-items {
@@ -38,11 +39,6 @@
   :hover {
     cursor: pointer;
   }
-}
-
-.menu__group {
-  padding: 1rem 1rem 0 1rem;
-  height: 40px;
 }
 
 .menu__group-title {

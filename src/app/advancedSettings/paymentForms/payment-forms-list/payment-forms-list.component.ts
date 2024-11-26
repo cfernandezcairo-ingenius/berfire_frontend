@@ -21,7 +21,7 @@ export interface IPaymentForms {
 @Component({
   selector: 'app-payment-forms-list',
   templateUrl: './payment-forms-list.component.html',
-  styleUrl: './payment-forms-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

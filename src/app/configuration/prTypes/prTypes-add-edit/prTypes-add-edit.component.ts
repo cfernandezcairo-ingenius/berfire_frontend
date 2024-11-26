@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { NavigationEnd } from '@angular/router';
 import { PrTypesService } from '../prTypes.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-prTypes-add-edit',
@@ -20,36 +18,26 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   styleUrl: './prTypes-add-edit.component.scss',
   providers: [TranslateService]
 })
-export class PrTypesAddEditComponent implements OnInit {
+export class PrTypesAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode = false;
-  id:number = 0;
-  showinNewTab:boolean = false;
-  shoWButtonSaveAndNew:boolean = true;
-  loading = false;
-  fb: any;
+  prTypesSrv: any;
 
   constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly prTypesSrv: PrTypesService,
-    private readonly router: Router,
-    private readonly matSnackBar: MatSnackBar
+
   ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
+    super();
+    this.translate.onLangChange.subscribe({
+      next:(ch:any) => {
+        this.model.lang = this.translate.currentLang;
+        this.updateLabels();
+        this.updateValidationMessages();
+      }
     })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showinNewTab = this.router.url.includes('/prTypes/edit/new');
+    this.router.events.subscribe({
+      next: (event:any) => {
+        if (event instanceof NavigationEnd) {
+          this.showinNewTab = this.router.url.includes('/prTypes/edit/new');
+        }
       }
     });
     this.id = 0;
@@ -57,7 +45,8 @@ export class PrTypesAddEditComponent implements OnInit {
     this.shoWButtonSaveAndNew = true;
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.prTypesSrv = this.baseSrv as PrTypesService;
     this.id = this.prTypesSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -67,14 +56,13 @@ export class PrTypesAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.prTypesSrv.getById(payload).subscribe({
-        next:(res => {
-          this.model = { ...res.data};
-        }),
+        next:(res:any) => { this.model = { ...res.data}; },
         error: () => {
           let title = this.translate.instant('inform');
           let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
           let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
-          showMessage(title, text,'error',true,false,confirmButtonText)
+          let cancelButtonText = this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel';
+          showMessage(title, text,'error',true,false,confirmButtonText, cancelButtonText)
         },
         complete: () => {
           this.loading = false;
@@ -171,23 +159,23 @@ export class PrTypesAddEditComponent implements OnInit {
     this.updateLabels();
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.TEAMNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.TEAMNAME').subscribe((label: any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.TEAMTITLE').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.TEAMTITLE').subscribe((label: any) => {
       this.fields[1].fieldGroup[1].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label: any) => {
       this.fields[2].fieldGroup[0].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -201,7 +189,7 @@ export class PrTypesAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  override onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
 
     if (this.id === 0) {
@@ -222,7 +210,7 @@ export class PrTypesAddEditComponent implements OnInit {
     }
     const myobs = this.id === 0 ? this.prTypesSrv.add(payload) : this.prTypesSrv.edit(payload);
     myobs.subscribe({
-      next: (res) => {
+      next: (res:any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
@@ -242,13 +230,13 @@ export class PrTypesAddEditComponent implements OnInit {
           }
         }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

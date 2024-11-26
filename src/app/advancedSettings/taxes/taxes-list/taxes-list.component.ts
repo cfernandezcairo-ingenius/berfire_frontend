@@ -22,7 +22,7 @@ export interface ITaxes {
 @Component({
   selector: 'app-taxes-list',
   templateUrl: './taxes-list.component.html',
-  styleUrl: './taxes-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,
