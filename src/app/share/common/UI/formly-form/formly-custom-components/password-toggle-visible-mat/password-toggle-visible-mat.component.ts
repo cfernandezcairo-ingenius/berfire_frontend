@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { FieldType, FieldTypeConfig, FormlyField, FormlyModule } from '@ngx-formly/core';
+import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   selector: 'formly-field-password-toggle-visible-mat',

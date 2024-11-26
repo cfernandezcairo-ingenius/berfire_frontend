@@ -40,15 +40,15 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
   loading = false;
   todoListo = false;
 
-  displayedLabels: IDisplayedLabels[] = [
+  override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Nombre',isBoolean:false},
     { name:'Nombre Equipo',isBoolean:false},
     { name: 'Titulo Equipo',isBoolean:false},
     { name: 'description', isBoolean:false}
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn: IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Name',isBoolean:false},
     { name: 'Team Name',isBoolean:false},
@@ -67,18 +67,6 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
       teamName:[''],
       teamTitle: [''],
       description: [''],
-    });
-    this.translate.onLangChange.subscribe((lc: any)=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
     });
   }
 

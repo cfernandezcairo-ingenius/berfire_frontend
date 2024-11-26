@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NavigationEnd } from '@angular/router';
 import { PrTypesService } from '../prTypes.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -26,23 +25,6 @@ export class PrTypesAddEditComponent extends BaseAddEditComponent {
 
   ) {
     super();
-    this.translate.onLangChange.subscribe({
-      next:(ch:any) => {
-        this.model.lang = this.translate.currentLang;
-        this.updateLabels();
-        this.updateValidationMessages();
-      }
-    })
-    this.router.events.subscribe({
-      next: (event:any) => {
-        if (event instanceof NavigationEnd) {
-          this.showinNewTab = this.router.url.includes('/prTypes/edit/new');
-        }
-      }
-    });
-    this.id = 0;
-    this.showinNewTab = false;
-    this.shoWButtonSaveAndNew = true;
   }
 
   override ngOnInit(): void {

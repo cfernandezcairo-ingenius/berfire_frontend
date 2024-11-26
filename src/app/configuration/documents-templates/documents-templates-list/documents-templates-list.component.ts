@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DocumentsTemplatesService } from '../documents-templates.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
 
 export interface IDocumentsTemplates {
   id: number,
@@ -33,18 +32,17 @@ export interface IDocumentsTemplates {
     TranslateModule
 ],
 })
-export class DocumentsTemplatesListComponent implements OnInit {
+export class DocumentsTemplatesListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as IDocumentsTemplates[]
   };
-  darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
   title: string = '';
 
-  displayedLabels:IDisplayedLabels[] = [
+  override displayedLabels:IDisplayedLabels[] = [
     { name: '',isBoolean:false},
     { name: 'Nombre',isBoolean:false},
     { name: 'Tipo plantilla',isBoolean:false},
@@ -53,8 +51,8 @@ export class DocumentsTemplatesListComponent implements OnInit {
     { name: 'Descripción', isBoolean:false},
     { name: 'Plantilla', isBoolean:false},
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn:IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn:IDisplayedLabels[] = [
     { name: '',isBoolean:false},
     { name: 'Name',isBoolean:false},
     { name: 'Template type',isBoolean:false},
@@ -65,21 +63,20 @@ export class DocumentsTemplatesListComponent implements OnInit {
   ];
   fg: FormGroup;
 
-  constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly documentsTemplatesSrv: DocumentsTemplatesService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
+  documentsTemplatesSrv: any;
+
+  constructor
+  (
   ){
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
+    super();
+    this.translate.get('menu.documents-templates').subscribe((translatedTitle: string) => {
+      this.title = translatedTitle;
+    });
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'dataModifiedInNewTabTemplates' && event.newValue === 'true') {
+        this.handleDataChange();
       }
     });
-
     this.fg = this.fb.group({
       name:[''],
       templateType: [''],
@@ -90,22 +87,15 @@ export class DocumentsTemplatesListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.translate.get('menu.documents-templates').subscribe((translatedTitle: string) => {
-      this.title = translatedTitle;
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabTemplates' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
+  override ngOnInit(): void {
+    this.documentsTemplatesSrv = this.baseSrv as DocumentsTemplatesService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.documentsTemplatesSrv.getAll().subscribe(All => {
+    this.documentsTemplatesSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -117,37 +107,37 @@ export class DocumentsTemplatesListComponent implements OnInit {
     })
   }
 
-  handleDataChange() {
+ override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabTemplates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.documentsTemplatesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/documents-templates/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.documentsTemplatesSrv._idToEdit = row.id;
     window.open(`/documents-templates/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.documentsTemplatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/documents-templates/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.documentsTemplatesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/documents-templates/edit/${row}`)
   }
 
-    searchData(event: IDocumentsTemplates) {
+  override searchData(event: IDocumentsTemplates) {
     let payload = `?name=${event.name}`;
     if (event.templateType) {
       payload = payload + `&templateType=${event.templateType}`;
@@ -165,7 +155,7 @@ export class DocumentsTemplatesListComponent implements OnInit {
       payload = payload + `&template=${event.template}`;
     }
     this.loading = true;
-    this.documentsTemplatesSrv.getByFields(payload).subscribe(res=> {
+    this.documentsTemplatesSrv.getByFields(payload).subscribe((res:any)=> {
       this.loading = false;
       if (res.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
@@ -176,7 +166,7 @@ export class DocumentsTemplatesListComponent implements OnInit {
     this.todoListo = true;
   }
 
- cleanSearchData() {
+ override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }

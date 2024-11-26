@@ -1,6 +1,6 @@
 import { MenuItemsENG } from '../shared/models/menu-items-en';
 import { MenuItems } from '../shared/models/menu-items-es';
-import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -15,7 +15,7 @@ import { SidenavComponent } from "../sidenav/sidenav.component";
   styleUrls: ['./side-bar.component.scss'],
   providers: [TranslateService]
 })
-export class SideBarComponent implements OnInit {
+export class SideBarComponent {
 
   @Output() showCalendar = new EventEmitter<boolean>();
 
@@ -35,24 +35,12 @@ export class SideBarComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    // this.Menu.map(menu => {
-    //   menu.name = this.translate.instant(menu.name);
-    //   if (menu.childrens) {
-    //     menu.childrens?.map(ch => {
-    //       ch.name = this.translate.instant(ch.name);
-    //       ch.tooltip = this.translate.instant(ch.tooltip);
-    //     });
-    //   }
-    // })
-  }
-
   switchCollapsed(i: number) {
     this.Menu[i].collapsed = !this.Menu[i].collapsed;
   }
 
   setMenuHidden() {
-    //this.sideBarsrv.setVisible(false);
+    this.sideBarsrv.setVisible(false);
   }
 
 }

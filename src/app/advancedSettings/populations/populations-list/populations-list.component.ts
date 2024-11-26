@@ -97,7 +97,6 @@ export class PopulationsListComponent implements OnInit {
 
   handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabPopulations', 'false');
-    //Aqui tengo que recargar los datos desde el backend
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
@@ -150,7 +149,7 @@ export class PopulationsListComponent implements OnInit {
   }
 
  cleanSearchData() {
-    // this.fg.reset();
+    //this.fg.reset();
     this.loadAll();
   }
 
