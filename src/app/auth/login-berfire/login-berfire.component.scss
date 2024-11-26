@@ -10,7 +10,6 @@
   @media (min-width: 640px) {
     padding: 1.25rem;
     align-items: start;
-    //justify-content: end;
   }
 }
 
@@ -36,10 +35,6 @@
 }
 .accessClass {
   position: relative;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
   text-align: center;
   margin-top: 80px;
   font-size: x-large;
@@ -55,8 +50,6 @@
     font-size: 0.875rem;
   };
   line-height: 1.25rem;
-  //--tw-text-opacity: 1;
-  //color: rgb(46 62 75 / var(--tw-text-opacity));
   margin-bottom: 5px;
 }
 
@@ -68,8 +61,6 @@
     font-size: 0.875rem;
   };
   line-height: 1.25rem;
-  //--tw-text-opacity: 1;
-  //color: rgb(46 62 75 / var(--tw-text-opacity));
   margin-bottom: 5px;
   margin-top: 10px;
 }
@@ -84,9 +75,7 @@
   margin-top: 1.5rem;
   font-size: 2rem;
   --tw-text-opacity: 1;
-  //color: rgba(var(--gray-600), var(--tw-text-opacity));
   color: #2E3192;
-  //font-weight: 600;
 }
 
 .labelPassword {
@@ -95,12 +84,10 @@
   @media(min-width: 640px) {
     font-size: 0.875rem;
   };
-  //font-weight: 700;
 
 }
 
 .inputEmail {
-  //background-color: #fff;
   border-color: rgba(var(--gray-500), var(--tw-border-opacity, 1));
   border-width: 1px;
   border-radius: 0;
@@ -172,7 +159,6 @@ input.disabled {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   color: #fff;
   --tw-bg-opacity: 1;
-   // background-color: rgb(63 88 109 / var(--tw-bg-opacity));
   background-color: #1c75bc;
   width: 180px;
   height: 54px;
@@ -257,8 +243,6 @@ input.disabled {
   -o-transform:scale(1.25);
   transform:scale(1.25);
 }
-
-// Slider dark mode
 
 .switch {
   position: relative;

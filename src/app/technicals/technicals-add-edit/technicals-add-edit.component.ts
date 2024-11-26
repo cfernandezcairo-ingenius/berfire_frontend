@@ -5,7 +5,6 @@ import { FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../navigation/shared/services/navigation.service';
 import { TechnicalsService } from '../technicals.service';
-import { StyleManager } from '../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../share/common/UI/spinner/spinner.component';
@@ -18,7 +17,7 @@ import { showMessage } from '../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './technicals-add-edit.component.html',
-  styleUrl: './technicals-add-edit.component.scss',
+  styles: '',
   providers: [TranslateService]
 })
 export class TechnicalsAddEditComponent implements OnInit {
@@ -37,7 +36,6 @@ export class TechnicalsAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     public readonly navigationService: NavigationService,
     private readonly technicalsSrv: TechnicalsService,
-    private readonly darkModeService: StyleManager,
     private readonly router: Router,
     private readonly matSnackBar: MatSnackBar
   ) {
@@ -46,9 +44,6 @@ export class TechnicalsAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas

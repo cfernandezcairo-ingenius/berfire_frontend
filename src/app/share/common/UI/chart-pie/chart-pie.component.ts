@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartOptions, ChartTypeRegistry } from 'chart.js';
-import { BaseChartDirective, ThemeService } from 'ng2-charts';
+import { BaseChartDirective } from 'ng2-charts';
 import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 
 
@@ -14,9 +13,6 @@ import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle }
 })
 export class ChartPieComponent implements OnInit {
 
-  //@Input() chartData: any;
-  //@Input() chartOptions: any;
-  //bar, radar, pie , polarArea, doughnut, bubble and scatter
   @Input() data: any;
   title = '';
   darkMode = false;

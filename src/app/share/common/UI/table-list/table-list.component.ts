@@ -8,7 +8,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../services/style-manager.service';
 import { WindowService } from '../../../services/window.service';
 import { ModalMenuComponent } from "../modal-menu/modal-menu.component";
 import { MatTableMobileComponent } from '../mat-table-mobile/mat-table-mobile.component';
@@ -80,15 +79,11 @@ export class TableListComponent implements OnInit, OnChanges {
   isPC = true;
 
   constructor(
-    private readonly darkModeService: StyleManager,
     private readonly translate: TranslateService,
     private readonly windowService: WindowService,
     private readonly fb: FormBuilder,
     private readonly cdr: ChangeDetectorRef
   ){
-    this.darkModeService.darkMode$.subscribe((dark: boolean) => {
-      this.darkMode = dark;
-    });
     this.setLayout();
     this.mouseMoveHandler = this.onMouseMove.bind(this);
     this.mouseUpHandler = this.onMouseUp.bind(this);

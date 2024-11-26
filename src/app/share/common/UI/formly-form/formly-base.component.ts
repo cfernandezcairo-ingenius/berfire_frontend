@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormlyBootstrapComponent } from "./formly-bootstrap/formly-bootstrap.component";
+import { FormlyBootstrapComponentt } from "./formly-bootstrap/formly-bootstrap.component";
 import { FormlyMaterialComponent } from './formly-material/formly-material.component';
-import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-formly-base',
   standalone: true,
-  imports: [FormlyBootstrapComponent, FormlyMaterialComponent],
+  imports: [FormlyBootstrapComponentt, FormlyMaterialComponent],
   templateUrl: './formly-base.component.html',
   styleUrl: './formly-base.component.scss',
 })

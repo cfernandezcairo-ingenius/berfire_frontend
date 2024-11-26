@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { RequestStatusService } from '../request-status.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
@@ -11,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-request-status-delete',
   standalone: true,
   imports: [],
-  templateUrl: './request-status-delete.component.html',
-  styleUrl: './request-status-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class RequestStatusDeleteComponent implements OnInit {
@@ -22,14 +21,10 @@ export class RequestStatusDeleteComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private darkModeService: StyleManager,
     private requestStatusSrv: RequestStatusService,
     private navigationSrv: NavigationService,
     private matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

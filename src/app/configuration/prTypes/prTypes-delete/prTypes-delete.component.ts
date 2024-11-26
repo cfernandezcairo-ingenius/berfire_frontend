@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { PrTypesService } from '../prTypes.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
@@ -11,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-prTypes-delete',
   standalone: true,
   imports: [],
-  templateUrl: './prTypes-delete.component.html',
-  styleUrl: './prTypes-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class PrTypesDeleteComponent implements OnInit {
@@ -22,14 +21,10 @@ export class PrTypesDeleteComponent implements OnInit {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     private readonly prTypesSrv: PrTypesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

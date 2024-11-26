@@ -4,14 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
-import { StyleManager } from '../../../services/style-manager.service';
 
 @Component({
   selector: 'app-modal-menu',
   standalone: true,
   imports: [ MatButtonModule, MatMenuModule, MatIcon, CommonModule, TranslateModule],
   templateUrl: './modal-menu.component.html',
-  styleUrl: './modal-menu.component.scss'
+  styles: ''
 })
 export class ModalMenuComponent {
 
@@ -21,10 +20,7 @@ export class ModalMenuComponent {
   @Output() menuDelete = new EventEmitter();
   darkMode = false;
 
-  constructor(private darkModeService: StyleManager) {
-    this.darkModeService.darkMode$.subscribe((dark: boolean) => {
-      this.darkMode = dark;
-    });
+  constructor() {
   }
 
 

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
-import { StyleManager } from '../../../services/style-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -31,10 +30,7 @@ export class MatTableMobileComponent implements OnInit {
   dataNew: strucNew[] = [];
   darkMode = false;
 
-  constructor(private darkModeService: StyleManager) {
-    this.darkModeService.darkMode$.subscribe((dark: boolean) => {
-      this.darkMode = dark;
-    });
+  constructor() {
   }
 
   ngOnInit(): void {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { ClientsTypesService } from '../clients-types.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
@@ -11,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-clients-types-delete',
   standalone: true,
   imports: [],
-  templateUrl: './clients-types-delete.component.html',
-  styleUrl: './clients-types-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class ClientsTypesDeleteComponent implements OnInit {
@@ -22,14 +21,10 @@ export class ClientsTypesDeleteComponent implements OnInit {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     private readonly clientsTypesSrv: ClientsTypesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

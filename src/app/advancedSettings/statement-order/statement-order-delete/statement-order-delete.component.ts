@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { StatementOrderService } from '../statement-order.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
@@ -11,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-statement-order-delete',
   standalone: true,
   imports: [],
-  templateUrl: './statement-order-delete.component.html',
-  styleUrl: './statement-order-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class StatementOrderDeleteComponent implements OnInit {
@@ -22,14 +21,10 @@ export class StatementOrderDeleteComponent implements OnInit {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     private readonly statementOrderSrv: StatementOrderService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

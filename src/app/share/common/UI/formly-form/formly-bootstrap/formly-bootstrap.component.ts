@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { CommonModule } from '@angular/common';
-import { StyleManager } from '../../../../services/style-manager.service';
 import { ButtonSecondaryComponent } from "../../button-secondary/button-secondary.component";
 import { ButtonPrimaryComponent } from "../../button-primary/button-primary.component";
 
@@ -14,7 +13,7 @@ import { ButtonPrimaryComponent } from "../../button-primary/button-primary.comp
   templateUrl: './formly-bootstrap.component.html',
   styleUrl: './formly-bootstrap.component.scss',
 })
-export class FormlyBootstrapComponent implements OnInit {
+export class FormlyBootstrapComponentt {
   @Input() fields: any;
   @Input() model:any;
   @Input() fg: any;
@@ -24,13 +23,7 @@ export class FormlyBootstrapComponent implements OnInit {
   show = false;
   darkMode = false;
 
-  constructor(private darkModeService: StyleManager) { }
-
-  ngOnInit(): void {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
-  }
+  constructor() { }
 
   onSubmit(model: any) {
     this.submitEvent.emit(model);

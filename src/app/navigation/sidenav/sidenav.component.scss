@@ -42,10 +42,6 @@ table {
   background-color: rgba(0, 0, 0, 0.1); /* Color de fondo al pasar el mouse */
 }
 
-// .mat-mdc-list-item:not(.mat-mdc-list-item-interactive), .mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
-//   cursor: pointer;
-// }
-
 .mat-expansion-panel-body {
   padding: 0 24px 16px;
   background-color: #1c75bc !important;
@@ -72,7 +68,6 @@ table {
   top: -22px;
   border-radius: 1rem;
   border: solid 1px;
-  //background-color: aquamarine;
   background-color: #1c75bc;
   color: white;
   text-align: end;

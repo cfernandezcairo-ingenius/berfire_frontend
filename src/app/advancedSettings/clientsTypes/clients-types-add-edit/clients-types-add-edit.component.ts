@@ -5,8 +5,6 @@ import { FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { ClientsTypesService } from '../clients-types.service';
-import { StyleManager } from '../../../share/services/style-manager.service';
-
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
@@ -38,7 +36,6 @@ export class ClientsTypesAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     public readonly navigationService: NavigationService,
     private readonly clientsTypesSrv: ClientsTypesService,
-    private readonly darkModeService: StyleManager,
     private readonly router: Router,
     private readonly matSnackBar: MatSnackBar
   ) {
@@ -49,9 +46,6 @@ export class ClientsTypesAddEditComponent implements OnInit {
     })
     this.fg.valueChanges.subscribe(v=> {
       //Aqui tengo los datos para cuando capture el submit
-    });
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
     });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

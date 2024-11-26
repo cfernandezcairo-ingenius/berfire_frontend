@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartOptions, ChartTypeRegistry } from 'chart.js';
-import { BaseChartDirective, ThemeService } from 'ng2-charts';
+import { ChartConfiguration } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 
 
@@ -14,9 +14,6 @@ import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle }
 })
 export class ChartBarComponent implements OnInit {
 
-  //@Input() chartData: any;
-  //@Input() chartOptions: any;
-  //bar, radar, pie , polarArea, doughnut, bubble and scatter
   @Input() data: any;
   title = '';
   darkMode = false;
@@ -27,10 +24,7 @@ export class ChartBarComponent implements OnInit {
   chartLegend:any;
 
 
-  /////////////////////////GRAPH BAR//////////////////////////////////////////////////////////////
-
-
-  public barChartLegend = true;
+    public barChartLegend = true;
   public barChartPlugins = [];
 
   public barChartData: ChartConfiguration<'bar'>['data'] = {
@@ -45,7 +39,6 @@ export class ChartBarComponent implements OnInit {
     responsive: false,
   };
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
 
   constructor() {}
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;

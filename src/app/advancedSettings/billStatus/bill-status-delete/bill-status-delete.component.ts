@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { BillStatusService } from '../bill-status.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,8 +10,8 @@ import { openSnackBar } from '../../../share/common/UI/utils';
   selector: 'app-bill-status-delete',
   standalone: true,
   imports: [],
-  templateUrl: './bill-status-delete.component.html',
-  styleUrl: './bill-status-delete.component.scss',
+  template: ``,
+  styles: [],
   providers:[TranslateService]
 })
 export class BillStatusDeleteComponent implements OnInit {
@@ -22,14 +21,10 @@ export class BillStatusDeleteComponent implements OnInit {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     private readonly billStatusSrv: BillStatusService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

@@ -2,7 +2,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
-import {  MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -45,7 +45,6 @@ export class SidenavComponent implements OnDestroy {
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
         this.showMenuL = !this.router.url.includes('/invoice/edit/new');
       }
     });
@@ -214,7 +213,6 @@ export class SidenavComponent implements OnDestroy {
         {displayName: this.translate.instant('menu.populations'),iconName: '', route: 'populations/list'},
         {displayName: this.translate.instant('menu.pvpRates') ,iconName: '', route: 'pvp-rates/list'},
         {displayName: this.translate.instant('menu.clients-types'),iconName: '', route: 'clients-types/list'},
-        //contractsTypes
         {displayName: this.translate.instant('menu.contracts-types'),iconName: '', route: 'contracts-types/list'},
         {displayName: 'Roles',iconName: ''}
       ]},
@@ -232,7 +230,6 @@ export class SidenavComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
   navigateTo(item: any) {

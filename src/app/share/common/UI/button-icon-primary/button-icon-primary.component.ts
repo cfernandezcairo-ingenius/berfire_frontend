@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { StyleManager } from '../../../services/style-manager.service';
-import { FormGroup } from '@angular/forms';
-import { NavigationService } from '../../../../navigation/shared/services/navigation.service';
-import { Observable } from 'rxjs';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({

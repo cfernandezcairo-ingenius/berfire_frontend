@@ -1,7 +1,6 @@
 import { MenuItemsENG } from '../shared/models/menu-items-en';
 import { MenuItems } from '../shared/models/menu-items-es';
 import { Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { SideBarItemsComponent } from './side-bar-items/side-bar-items.component';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';

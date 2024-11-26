@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { StyleManager } from '../../../../services/style-manager.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,12 +22,8 @@ export class PdfGeneratorComponent {
   darkMode = false;
 
   constructor(
-    private darkModeService: StyleManager,
     private translate: TranslateService
   ){
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   addImage() {
@@ -67,11 +62,6 @@ export class PdfGeneratorComponent {
 		doc.setFontSize(16);
 		doc.text('My Angular PDF Generator', 60, 10);
 		doc.setFontSize(12);
-		// doc.text(
-		// 	'This is a comprehensive guide on generating PDFs with Angular.',
-		// 	10,
-		// 	20,
-		// );
 
     //Tratamiento del logo
     const imgUrl = 'ingeniusLogo.png';
