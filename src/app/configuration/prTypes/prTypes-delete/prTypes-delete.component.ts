@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-prTypes-delete',
   standalone: true,
   imports: [],
-  templateUrl: './prTypes-delete.component.html',
-  styleUrl: './prTypes-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class PrTypesDeleteComponent implements OnInit {

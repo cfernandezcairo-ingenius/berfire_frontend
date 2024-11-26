@@ -11,10 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-contracts-types-delete',
   standalone: true,
   imports: [],
-  templateUrl: './contracts-types-delete.component.html',
-  styleUrl: './contracts-types-delete.component.scss'
-  ,
-providers: [TranslateService]
+  template: ``,
+  styles: [],
+  providers: [TranslateService]
 })
 export class ContractsTypesDeleteComponent implements OnInit {
 

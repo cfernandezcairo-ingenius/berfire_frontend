@@ -1,5 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { backendConfig } from '../../app.config';
+import { HttpHeaders } from '@angular/common/http';
 
 export class HttpHeaderClass {
 
@@ -13,20 +12,5 @@ export class HttpHeaderClass {
         {
           'Content-Type': 'application/json',
         });
-
-    //   let token = localStorage.getItem('access_token');
-    //   if (token) {
-    //     return new HttpHeaders(
-    //       {
-
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${token}`
-    //       });
-    //   } else {
-    //     return new HttpHeaders(
-    //       {
-    //         'Content-Type': 'application/json',
-    //       });
-    //   }
     }
 }

@@ -1,8 +1,5 @@
 <div class="example-container">
-  <!-- <mat-toolbar color="primary" class="example-toolbar">
-    <h1 class="example-app-name"></h1>
-  </mat-toolbar> -->
-  <div class="btn-menu-container" (click)="showMenu()" *ngIf="isAuthenticated() && showMenuL">
+ <div onkeypress="" class="btn-menu-container" (click)="showMenu()" *ngIf="isAuthenticated() && showMenuL">
     <div class="btn-menu">{{'menu.title' | translate}}
     </div>
   </div>
@@ -45,7 +42,7 @@
                     </mat-accordion>
                   </ng-container>
                   <ng-template #leafItem>
-                    <mat-list-item class="mat-list-item-leaf" (click)="navigateTo(child)" >
+                    <mat-list-item onkeypress="" class="mat-list-item-leaf" (click)="navigateTo(child)" >
                       <div fxLayout="row" fxLayoutAlign="space-between center" style="color: #b8e8f6">
                         <mat-icon>{{child.iconName}}</mat-icon>
                         {{child.displayName}}
@@ -57,7 +54,7 @@
             </mat-accordion>
           </ng-container>
           <ng-template #singleItem>
-            <mat-list-item class="mat-list-item-single" style=" background-color: #1c75bc;" (click)="navigateTo(item)">
+            <mat-list-item onkeypress="" class="mat-list-item-single" style=" background-color: #1c75bc;" (click)="navigateTo(item)">
               <div fxLayout="row" fxLayoutAlign="space-between center" style="color: white">
                 <mat-icon>{{item.iconName}}</mat-icon>
                 {{item.displayName}}

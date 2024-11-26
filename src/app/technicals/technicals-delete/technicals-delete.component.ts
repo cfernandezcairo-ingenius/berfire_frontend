@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-technicals-delete',
   standalone: true,
   imports: [],
-  templateUrl: './technicals-delete.component.html',
-  styleUrl: './technicals-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class TechnicalsDeleteComponent implements OnInit {

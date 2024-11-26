@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-populations-delete',
   standalone: true,
   imports: [],
-  templateUrl: './populations-delete.component.html',
-  styleUrl: './populations-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class PopulationsDeleteComponent implements OnInit {

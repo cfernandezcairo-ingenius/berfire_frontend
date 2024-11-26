@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-statement-order-delete',
   standalone: true,
   imports: [],
-  templateUrl: './statement-order-delete.component.html',
-  styleUrl: './statement-order-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class StatementOrderDeleteComponent implements OnInit {

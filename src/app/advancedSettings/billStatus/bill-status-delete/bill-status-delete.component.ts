@@ -11,8 +11,8 @@ import { openSnackBar } from '../../../share/common/UI/utils';
   selector: 'app-bill-status-delete',
   standalone: true,
   imports: [],
-  templateUrl: './bill-status-delete.component.html',
-  styleUrl: './bill-status-delete.component.scss',
+  template: ``,
+  styles: [],
   providers:[TranslateService]
 })
 export class BillStatusDeleteComponent implements OnInit {

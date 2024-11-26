@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-states-parties-review-delete',
   standalone: true,
   imports: [],
-  templateUrl: './states-parties-review-delete.component.html',
-  styleUrl: './states-parties-review-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class StatesPartiesReviewDeleteComponent implements OnInit {

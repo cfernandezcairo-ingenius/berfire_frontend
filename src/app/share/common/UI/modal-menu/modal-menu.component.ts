@@ -11,7 +11,7 @@ import { StyleManager } from '../../../services/style-manager.service';
   standalone: true,
   imports: [ MatButtonModule, MatMenuModule, MatIcon, CommonModule, TranslateModule],
   templateUrl: './modal-menu.component.html',
-  styleUrl: './modal-menu.component.scss'
+  styles: ''
 })
 export class ModalMenuComponent {
 

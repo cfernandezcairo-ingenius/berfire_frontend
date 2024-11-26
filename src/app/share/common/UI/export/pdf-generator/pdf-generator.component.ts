@@ -67,11 +67,6 @@ export class PdfGeneratorComponent {
 		doc.setFontSize(16);
 		doc.text('My Angular PDF Generator', 60, 10);
 		doc.setFontSize(12);
-		// doc.text(
-		// 	'This is a comprehensive guide on generating PDFs with Angular.',
-		// 	10,
-		// 	20,
-		// );
 
     //Tratamiento del logo
     const imgUrl = 'ingeniusLogo.png';

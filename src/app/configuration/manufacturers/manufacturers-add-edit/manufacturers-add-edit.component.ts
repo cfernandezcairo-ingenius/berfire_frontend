@@ -18,7 +18,7 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   standalone: true,
   imports: [FormlyBaseComponent, TranslateModule, CommonModule, SpinnerComponent],
   templateUrl: './manufacturers-add-edit.component.html',
-  styleUrl: './manufacturers-add-edit.component.scss',
+  styles: '',
   providers: [TranslateService]
 })
 export class ManufacturersAddEditComponent implements OnInit {

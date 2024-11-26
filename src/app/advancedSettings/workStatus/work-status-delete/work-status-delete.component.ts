@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-request-status-delete',
   standalone: true,
   imports: [],
-  templateUrl: './work-status-delete.component.html',
-  styleUrl: './work-status-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class WorkStatusDeleteComponent implements OnInit {

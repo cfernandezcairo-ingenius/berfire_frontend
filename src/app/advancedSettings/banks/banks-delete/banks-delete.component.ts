@@ -11,8 +11,8 @@ import { openSnackBar } from '../../../share/common/UI/utils';
   selector: 'app-banks-delete',
   standalone: true,
   imports: [],
-  templateUrl: './banks-delete.component.html',
-  styleUrl: './banks-delete.component.scss',
+  template: ``,
+  styles: [],
   providers:[TranslateService]
 })
 export class BanksDeleteComponent implements OnInit {

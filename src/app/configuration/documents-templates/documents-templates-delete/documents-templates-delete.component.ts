@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-documents-templates-delete',
   standalone: true,
   imports: [],
-  templateUrl: './documents-templates-delete.component.html',
-  styleUrl: './documents-templates-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class DocumentsTemplatesDeleteComponent implements OnInit {

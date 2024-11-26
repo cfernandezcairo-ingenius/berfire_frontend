@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-payment-forms-delete',
   standalone: true,
   imports: [],
-  templateUrl: './payment-forms-delete.component.html',
-  styleUrl: './payment-forms-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class PaymentFormsDeleteComponent implements OnInit {

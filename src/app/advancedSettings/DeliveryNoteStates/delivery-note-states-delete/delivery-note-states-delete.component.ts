@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-delivery-note-states-delete',
   standalone: true,
   imports: [],
-  templateUrl: './delivery-note-states-delete.component.html',
-  styleUrl: './delivery-note-states-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService, TranslateStore]
 })
 export class DeliveryNoteStatesDeleteComponent implements OnInit {

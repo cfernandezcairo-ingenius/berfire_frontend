@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-manufacturers-delete',
   standalone: true,
   imports: [],
-  templateUrl: './manufacturers-delete.component.html',
-  styleUrl: './manufacturers-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class ManufacturersDeleteComponent implements OnInit {

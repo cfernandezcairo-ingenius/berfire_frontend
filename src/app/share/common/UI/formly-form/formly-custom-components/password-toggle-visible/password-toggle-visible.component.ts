@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FieldType, FieldTypeConfig, FormlyField, FormlyModule } from '@ngx-formly/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   selector: 'formly-field-password-toggle-visible',
@@ -10,7 +10,7 @@ import { FieldType, FieldTypeConfig, FormlyField, FormlyModule } from '@ngx-form
   template: `<div style="position: relative;display: flex;flex-direction: column;">
   <label for="inputPassword">Password</label>
   <input class="form-control" [type]="show ? 'text' : 'password'"  id="inputPassword" [formControl]="formControl" [formlyAttributes]="field">
-  <div (click)="toggleShow()" class="visibilityClass" aria-label="Toggle password visibility">
+  <div onkeypress="" (click)="toggleShow()" class="visibilityClass" aria-label="Toggle password visibility">
     <div *ngIf="!show">
         <svg style="font-weight: 300;width: 1.5rem;height: 1.5rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>

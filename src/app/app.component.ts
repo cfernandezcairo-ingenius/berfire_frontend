@@ -131,12 +131,4 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  beforeUnloadHandler = (event: BeforeUnloadEvent) => {
-    // debugger;
-    // if (!this.windowService._isOpeningNewTab) {
-    //   localStorage.setItem('access_token', '');
-    // }
-    //event.preventDefault(); // Para algunos navegadores
-    //event.returnValue = ''; // Para mostrar un mensaje genérico
-  }
 }

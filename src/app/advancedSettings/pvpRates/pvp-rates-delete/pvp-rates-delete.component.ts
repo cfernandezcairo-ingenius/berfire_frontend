@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-pvp-rates-delete',
   standalone: true,
   imports: [],
-  templateUrl: './pvp-rates-delete.component.html',
-  styleUrl: './pvp-rates-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class PvpRatesDeleteComponent implements OnInit {

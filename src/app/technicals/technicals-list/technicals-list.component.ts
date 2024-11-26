@@ -23,7 +23,7 @@ export interface ITechnicals {
 @Component({
   selector: 'app-technicals-list',
   templateUrl: './technicals-list.component.html',
-  styleUrl: './technicals-list.component.scss',
+  styles:'',
   standalone: true,
   imports: [
     TableListComponent,

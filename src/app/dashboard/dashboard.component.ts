@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MDCardComponent } from "../share/common/UI/md-card/md-card.component";
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../auth/auth.service';

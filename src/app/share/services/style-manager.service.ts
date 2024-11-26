@@ -29,8 +29,6 @@ export class StyleManager {
     if (this.isDark.getValue()) {
       this.updateBodyClassList(false);
     } else {
-      // const href = 'dark-theme.css';
-      // getLinkElementForKey('dark-theme').setAttribute('href', href);
       this.updateBodyClassList(true);
     }
     this.isDark.next(!this.isDark.getValue());

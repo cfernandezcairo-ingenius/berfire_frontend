@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-taxes-delete',
   standalone: true,
   imports: [],
-  templateUrl: './taxes-delete.component.html',
-  styleUrl: './taxes-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class TaxesDeleteComponent implements OnInit {

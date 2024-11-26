@@ -11,8 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-unsubscribe-reasons-delete',
   standalone: true,
   imports: [],
-  templateUrl: './unsubscribe-reasons-delete.component.html',
-  styleUrl: './unsubscribe-reasons-delete.component.scss',
+  template: ``,
+  styles: [],
   providers: [TranslateService]
 })
 export class UnsubscribeReasonsDeleteComponent implements OnInit {
