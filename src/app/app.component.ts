@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    window.addEventListener('beforeunload', this.beforeUnloadHandler);
+  // window.addEventListener('beforeunload', this.beforeUnloadHandler);
     this.darkModeService.darkMode$.subscribe(dark => {
       this.darkMode = dark;
     });
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // delete el listener al destruir el componente
-    window.removeEventListener('beforeunload', this.beforeUnloadHandler);
+    //window.removeEventListener('beforeunload', this.beforeUnloadHandler);
   }
 
   showMenu() {
