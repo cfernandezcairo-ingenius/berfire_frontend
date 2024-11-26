@@ -21,7 +21,7 @@ export interface IBanks {
 @Component({
   selector: 'app-banks-list',
   templateUrl: './banks-list.component.html',
-  styleUrl: './banks-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

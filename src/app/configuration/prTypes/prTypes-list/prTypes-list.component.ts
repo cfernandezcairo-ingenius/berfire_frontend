@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
-import { PrTypesService } from '../prTypes.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
+import { PrTypesService } from '../prTypes.service';
 
 export interface IprTypes {
   id: number,
@@ -32,12 +31,11 @@ export interface IprTypes {
 ],
 providers: [TranslateService]
 })
-export class PrTypesListComponent implements OnInit {
+export class PrTypesListComponent extends BaseListComponent implements OnInit {
 
   dataSource = {
     data: [] as IprTypes[]
   };
-  darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
@@ -58,85 +56,85 @@ export class PrTypesListComponent implements OnInit {
     { name: 'Description', isBoolean:false}
   ];
   fg: FormGroup;
+  prTypesSrv: any;
 
   constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly prTypesSrv: PrTypesService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
-  ){
 
+  ){
+    super();
     this.fg = this.fb.group({
       name:[''],
       teamName:[''],
       teamTitle: [''],
       description: [''],
     });
-    this.translate.onLangChange.subscribe(lc=> {
+    this.translate.onLangChange.subscribe((lc: any)=> {
       if(this.translate.currentLang === 'es') {
         this.displayedLabels = this.displayedLabelsEs;
       } else {
         this.displayedLabels = this.displayedLabelsEn;
       }
     });
-  }
-
-  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  override ngOnInit(): void {
+    this.prTypesSrv = this.baseSrv as PrTypesService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.prTypesSrv.getAll().subscribe(All => {
-      if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-        this.addItem();
-      } else {
-        this.dataSource = { data: All.data };;
-        this.loading = false;
-        this.todoListo = true;
+    this.prTypesSrv.getAll().subscribe({
+      next: (All:any) => {
+        if (All.data.length === 0) {
+          openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
+          this.addItem();
+        } else {
+          this.dataSource = { data: All.data };
+          this.loading = false;
+          this.todoListo = true;
+        }
       }
-    })
+    });
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabPrTypes', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.prTypesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/prTypes/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.prTypesSrv._idToEdit = row.id;
     window.open(`/prTypes/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.prTypesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/prTypes/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.prTypesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/prTypes/edit/${row}`)
   }
 
-  searchData(event: IprTypes) {
+  override searchData(event: IprTypes) {
 
     let payload = `?name=${event.name}`;
     if (event.description) {
@@ -152,18 +150,20 @@ export class PrTypesListComponent implements OnInit {
       payload = payload + `&description=${event.description}`;
     }
     this.loading = true;
-    this.prTypesSrv.getByFields(payload).subscribe(res=> {
-      this.loading = false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
+    this.prTypesSrv.getByFields(payload).subscribe({
+      next:(res:any) => {
+        this.loading = false;
+        if (res.data.length === 0) {
+          openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
+        } else {
+          this.dataSource = { data: res.data };
+        }
       }
     });
     this.todoListo = true;
   }
 
- cleanSearchData() {
+  override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }

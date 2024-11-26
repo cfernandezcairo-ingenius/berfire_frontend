@@ -19,7 +19,7 @@ export interface IDeliveryNoteStates {
 @Component({
   selector: 'app-delivery-note-states-list',
   templateUrl: './delivery-note-states-list.component.html',
-  styleUrl: './delivery-note-states-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

@@ -25,7 +25,6 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
-    const accessToken = localStorage.getItem('access_token');
     return this.http.post<any>(`${this.windowService.apiUrl}/refresh-token`,null)
       .pipe(
         tap((response: { access_token: string }) => {

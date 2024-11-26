@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     [formlyAttributes]="field"
   />
 </mat-form-field>`,
-  styleUrl: './integer-input.component.scss'
+  styles: ''
 })
 export class IntegerInputComponent extends FieldType<FieldTypeConfig> {
   @ViewChild(MatInput) formFieldControl!: MatInput;

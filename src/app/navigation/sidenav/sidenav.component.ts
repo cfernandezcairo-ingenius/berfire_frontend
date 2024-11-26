@@ -1,5 +1,5 @@
 import {MediaMatcher} from '@angular/cdk/layout';
-import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -29,7 +29,7 @@ export interface NavItem {
   styleUrls: ['sidenav.component.scss'],
   providers: [HttpClient, TranslateService]
 })
-export class SidenavComponent implements OnDestroy {
+export class SidenavComponent {
 
   showMenuL = true;
   menu: NavItem [] = [];
@@ -227,9 +227,6 @@ export class SidenavComponent implements OnDestroy {
 
   showMenu() {
     this.sidebarService.toggleVisible();
-  }
-
-  ngOnDestroy(): void {
   }
 
   navigateTo(item: any) {

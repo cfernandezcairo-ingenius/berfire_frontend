@@ -20,7 +20,7 @@ export interface IPrStatus {
 @Component({
   selector: 'app-states-parties-review-list',
   templateUrl: './states-parties-review-list.component.html',
-  styleUrl: './states-parties-review-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

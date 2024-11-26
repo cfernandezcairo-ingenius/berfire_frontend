@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 
@@ -11,7 +11,7 @@ import { MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle }
   templateUrl: './chart-pie.component.html',
   styleUrl: './chart-pie.component.scss'
 })
-export class ChartPieComponent implements OnInit {
+export class ChartPieComponent {
 
   @Input() data: any;
   title = '';
@@ -19,9 +19,5 @@ export class ChartPieComponent implements OnInit {
 
   constructor() {}
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
-  ngOnInit(): void {
-  }
-
 
 }

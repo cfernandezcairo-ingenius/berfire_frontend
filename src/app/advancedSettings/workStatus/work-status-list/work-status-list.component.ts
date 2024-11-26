@@ -20,7 +20,7 @@ export interface IWorkStatus {
 @Component({
   selector: 'app-work-status-list',
   templateUrl: './work-status-list.component.html',
-  styleUrl: './work-status-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

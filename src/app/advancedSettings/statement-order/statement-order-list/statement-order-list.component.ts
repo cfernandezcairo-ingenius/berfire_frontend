@@ -21,7 +21,7 @@ export interface IIStatementOrder {
 @Component({
   selector: 'app-statement-order-list',
   templateUrl: './statement-order-list.component.html',
-  styleUrl: './statement-order-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

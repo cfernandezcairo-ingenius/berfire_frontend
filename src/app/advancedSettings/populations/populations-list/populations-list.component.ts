@@ -21,7 +21,7 @@ export interface IPopulations {
 @Component({
   selector: 'app-populations-list',
   templateUrl: './populations-list.component.html',
-  styleUrl: './populations-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

@@ -20,7 +20,7 @@ export interface IContractsTypes {
 @Component({
   selector: 'app-contracts-types-list',
   templateUrl: './contracts-types-list.component.html',
-  styleUrl: './contracts-types-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

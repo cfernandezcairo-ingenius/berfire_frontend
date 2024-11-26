@@ -19,7 +19,7 @@ export interface IClientsTypes {
 @Component({
   selector: 'app-clients-types-list',
   templateUrl: './clients-types-list.component.html',
-  styleUrl: './clients-types-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

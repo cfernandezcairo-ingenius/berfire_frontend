@@ -20,7 +20,7 @@ export interface IPvpRates {
 @Component({
   selector: 'app-pvp-rates-list',
   templateUrl: './pvp-rates-list.component.html',
-  styleUrl: './pvp-rates-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,

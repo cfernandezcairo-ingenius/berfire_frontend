@@ -1,6 +1,6 @@
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
-export function showMessage(title:string, text:string, icon:SweetAlertIcon, showConfirmButton: boolean, showCancelButton:boolean, confirmButtonText:string) {
+export function showMessage(title:string, text:string, icon:SweetAlertIcon, showConfirmButton: boolean, showCancelButton:boolean, confirmButtonText:string, cancelButtonText: string) {
 
   Swal.fire({
     title: title,
@@ -9,7 +9,6 @@ export function showMessage(title:string, text:string, icon:SweetAlertIcon, show
     showConfirmButton:showConfirmButton,
     showCancelButton: showCancelButton,
     confirmButtonText: confirmButtonText,
-    //background: this.darkMode ? '#444' : '#fff',
-    //color: this.darkMode ? '#fff' : '#000',
+    cancelButtonText: cancelButtonText
   });
 }

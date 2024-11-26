@@ -1,5 +1,5 @@
 import { MenuItemChildren } from '../../shared/models/menu.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrls: ['./side-bar-items.component.scss'],
   providers: [TranslateService]
 })
-export class SideBarItemsComponent implements OnInit {
+export class SideBarItemsComponent {
 
   @Input() childrens: MenuItemChildren[] | undefined;
 
@@ -24,10 +24,6 @@ export class SideBarItemsComponent implements OnInit {
     private _navigationService: NavigationService,
     private sideBarsrv: SidebarService
     ) { }
-
-  ngOnInit() {
-
-  }
 
   navigateTo(url:string) {
     this.sideBarsrv.setVisible(false);

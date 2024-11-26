@@ -48,7 +48,7 @@
   font-weight: 500;
   @media(min-width: 640px) {
     font-size: 0.875rem;
-  };
+  }
   line-height: 1.25rem;
   margin-bottom: 5px;
 }
@@ -59,7 +59,7 @@
   font-weight: 500;
   @media(min-width: 640px) {
     font-size: 0.875rem;
-  };
+  }
   line-height: 1.25rem;
   margin-bottom: 5px;
   margin-top: 10px;
@@ -78,14 +78,6 @@
   color: #2E3192;
 }
 
-.labelPassword {
-  display: block;
-  font-size: 1rem;
-  @media(min-width: 640px) {
-    font-size: 0.875rem;
-  };
-
-}
 
 .inputEmail {
   border-color: rgba(var(--gray-500), var(--tw-border-opacity, 1));
@@ -95,20 +87,10 @@
   font-size: 1rem;
   line-height: 1.5rem;
   box-shadow: 0 0 #0000;
-  --tw-border-opacity: 1;
-  border-color: rgb(135 156 175 / var(--tw-border-opacity));
-  padding: 0.5rem;
   width: 96%;
-  border-width: 1px;
-  border-radius: 0.375rem;
   @media(min-width: 640px) {
     font-size: 0.875rem;
   }
-}
-
-input.focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(135 156 175 / var(--tw-border-opacity));
 }
 input.disabled {
   cursor: not-allowed;
