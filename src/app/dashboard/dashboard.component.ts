@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MDCardComponent } from "../share/common/UI/md-card/md-card.component";
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../auth/auth.service';
-import { StyleManager } from '../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { ChartPieComponent } from '../share/common/UI/chart-pie/chart-pie.component';
 import { ChartBarComponent } from '../share/common/UI/chart-bar/chart-bar.component';
@@ -15,7 +14,7 @@ import { ChartBarComponent } from '../share/common/UI/chart-bar/chart-bar.compon
   styleUrl: './dashboard.component.scss',
   providers: [TranslateService]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   darkMode = false;
   pieChart = {
@@ -49,13 +48,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private darkModeService: StyleManager,
     public authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
-  }
 }

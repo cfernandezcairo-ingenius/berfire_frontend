@@ -5,7 +5,6 @@ import { FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { PVPRatesService } from '../pvp-rates.service';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
@@ -36,24 +35,16 @@ export class PVPRatesAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     public readonly navigationService: NavigationService,
     private readonly pVPRatesSrv: PVPRatesService,
-    private readonly darkModeService: StyleManager,
     private readonly router: Router,
     private readonly matSnackBar: MatSnackBar
   ) {
     this.translate.onLangChange.subscribe(ch=> {
       this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
+      this.updateLabelsPr();
+      this.updateValidationMessagesPr();
     })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/payment-form/edit/new');
       }
     });
@@ -132,10 +123,10 @@ export class PVPRatesAddEditComponent implements OnInit {
         ],
       },
     ];
-    this.updateLabels();
+    this.updateLabelsPr();
   }
 
-  updateLabels() {
+  updateLabelsPr() {
 
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
       this.fields[0].fieldGroup[0].props.label = label;
@@ -145,7 +136,7 @@ export class PVPRatesAddEditComponent implements OnInit {
     });
   }
 
-  updateValidationMessages() {
+  updateValidationMessagesPr() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {

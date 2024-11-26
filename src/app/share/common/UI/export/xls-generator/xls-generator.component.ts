@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { StyleManager } from '../../../../services/style-manager.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import * as XLSX from 'xlsx';
@@ -22,12 +21,8 @@ export class XlsGeneratorComponent {
   darkMode = false;
 
   constructor(
-    private darkModeService: StyleManager,
     private translate: TranslateService
   ){
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   exportAsExcel()

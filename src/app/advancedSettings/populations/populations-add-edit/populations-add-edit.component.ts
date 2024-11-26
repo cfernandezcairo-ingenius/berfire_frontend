@@ -5,7 +5,6 @@ import { FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { PopulationsService } from '../populations.service';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
@@ -38,7 +37,6 @@ export class PopulationsAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     public readonly navigationService: NavigationService,
     private readonly populationsService: PopulationsService,
-    private readonly darkModeService: StyleManager,
     private readonly router: Router,
     private readonly matSnackBar: MatSnackBar
   ) {
@@ -47,12 +45,6 @@ export class PopulationsAddEditComponent implements OnInit {
       this.updateLabels();
       this.updateValidationMessages();
     })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas

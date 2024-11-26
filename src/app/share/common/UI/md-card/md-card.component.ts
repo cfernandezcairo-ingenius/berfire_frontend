@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, HostListener } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCard, MatCardActions } from '@angular/material/card';
-import { StyleManager } from '../../../services/style-manager.service';
 import { WindowService } from '../../../services/window.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -25,10 +24,7 @@ export class MDCardComponent  {
   isPC = true;
 
 
-  constructor (private readonly darkModeService:StyleManager, private readonly windowService: WindowService) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
+  constructor (private readonly windowService: WindowService) {
     this.setLayout();
    }
 

@@ -5,7 +5,6 @@ import {SideBarComponent} from './navigation/side-bar/side-bar.component'
 import { AuthService } from './auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from './navigation/side-bar/sidebar.service';
-import { StyleManager } from './share/services/style-manager.service';
 import { TopBarComponent } from "./share/common/UI/top-bar/top-bar.component";
 import { CookieService } from 'ngx-cookie-service';
 import { WindowService } from './share/services/window.service';
@@ -31,7 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     public readonly translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     public readonly authService: AuthService,
     private readonly sideBarsrv: SidebarService,
     private readonly cookieService: CookieService,
@@ -70,11 +68,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  // window.addEventListener('beforeunload', this.beforeUnloadHandler);
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
-
     this.sideBarsrv.toggleVisible$.subscribe((visible) => {
       if (visible !== this.sidebarVisible) {
         const miDiv = document.getElementById('container_sidebar');
@@ -119,16 +112,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   toggleShow() {
     this.show = !this.show;
-  }
-
-  onValChange(item: any) {
-    if (this.darkMode) {
-      if (item === 'sunny') {
-         this.darkModeService .toggleDarkTheme();
-      }
-    } else {
-        this.darkModeService .toggleDarkTheme();
-    }
   }
 
 }

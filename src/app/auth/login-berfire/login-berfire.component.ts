@@ -1,11 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { WindowService } from '../../share/services/window.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { StyleManager } from '../../share/services/style-manager.service';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClient } from '@angular/common/http';
@@ -19,7 +18,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './login-berfire.component.scss',
   encapsulation: ViewEncapsulation.None, // Desactiva el encapsulamiento
 })
-export class LoginBerfireComponent implements OnInit {
+export class LoginBerfireComponent  {
 
   isLoading = false;
   fg: FormGroup;
@@ -33,7 +32,6 @@ export class LoginBerfireComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly authSrv: AuthService,
     private readonly winservice: WindowService,
-    private readonly darkModeService: StyleManager,
     private readonly router: Router
   ) {
     this.fg = this.fb.group({
@@ -42,9 +40,6 @@ export class LoginBerfireComponent implements OnInit {
       password: ['12345', Validators.required],
     });
     this.setLayout();
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
     @HostListener('window:resize', ['$event'])
@@ -56,12 +51,6 @@ export class LoginBerfireComponent implements OnInit {
       this.isPC = this.winservice.isDevicePC;
       this.isTablet = this.winservice.isDeviceTablet;
       this.isMobile = this.winservice.isDeviceMobile;
-    }
-
-    ngOnInit(): void {
-      this.darkModeService.darkMode$.subscribe(dark => {
-        this.darkMode = dark;
-      });
     }
 
     onSubmit() {

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../services/style-manager.service';
 import { AuthService } from '../../../../auth/auth.service';
 import { WindowService } from '../../../services/window.service';
 
@@ -13,7 +12,7 @@ import { WindowService } from '../../../services/window.service';
   styleUrl: './top-bar.component.scss',
   providers: [TranslateService]
 })
-export class TopBarComponent implements OnInit {
+export class TopBarComponent {
 
   @Output() darkModeChange = new EventEmitter();
   @Output() languageChange = new EventEmitter();
@@ -27,7 +26,6 @@ export class TopBarComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     public authService: AuthService,
     private readonly windowService: WindowService,
   ) {
@@ -37,12 +35,6 @@ export class TopBarComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
       this.setLayout();
-  }
-
-  ngOnInit(): void {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   setLayout() {

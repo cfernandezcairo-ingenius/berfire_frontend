@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { StyleManager } from '../../../services/style-manager.service';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from '../../../../navigation/shared/services/navigation.service';
 
@@ -11,19 +10,13 @@ import { NavigationService } from '../../../../navigation/shared/services/naviga
   templateUrl: './button-secondary.component.html',
   styleUrl: './button-secondary.component.scss'
 })
-export class ButtonSecondaryComponent implements OnInit {
+export class ButtonSecondaryComponent  {
 
   @Output() cancel = new EventEmitter();
 
   darkMode = false;
 
-  constructor(private darkModeService: StyleManager, private navigationSrv: NavigationService) {}
-
-  ngOnInit(): void {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
-  }
+  constructor(private navigationSrv: NavigationService) {}
 
   onCancel() {
     this.cancel.emit();

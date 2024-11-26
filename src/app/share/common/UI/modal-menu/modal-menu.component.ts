@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
-import { StyleManager } from '../../../services/style-manager.service';
 
 @Component({
   selector: 'app-modal-menu',
@@ -21,10 +20,7 @@ export class ModalMenuComponent {
   @Output() menuDelete = new EventEmitter();
   darkMode = false;
 
-  constructor(private darkModeService: StyleManager) {
-    this.darkModeService.darkMode$.subscribe((dark: boolean) => {
-      this.darkMode = dark;
-    });
+  constructor() {
   }
 
 

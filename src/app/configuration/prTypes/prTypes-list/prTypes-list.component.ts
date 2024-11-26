@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { PrTypesService } from '../prTypes.service';
@@ -23,7 +22,7 @@ export interface IprTypes {
 @Component({
   selector: 'app-prTypes-list',
   templateUrl: './prTypes-list.component.html',
-  styleUrl: './prTypes-list.component.scss',
+  styles:'',
   standalone: true,
   imports: [
     TableListComponent,
@@ -61,16 +60,12 @@ export class PrTypesListComponent implements OnInit {
   fg: FormGroup;
 
   constructor(
-    private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly prTypesSrv: PrTypesService,
     private readonly fb: FormBuilder,
     private readonly matSnackBar: MatSnackBar
   ){
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
 
     this.fg = this.fb.group({
       name:[''],

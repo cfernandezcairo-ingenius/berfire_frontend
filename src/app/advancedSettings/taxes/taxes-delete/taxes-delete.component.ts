@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { TaxesService } from '../taxes.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
@@ -22,14 +21,10 @@ export class TaxesDeleteComponent implements OnInit {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly darkModeService: StyleManager,
     private readonly taxesSrv: TaxesService,
     private readonly navigationSrv: NavigationService,
     private readonly matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

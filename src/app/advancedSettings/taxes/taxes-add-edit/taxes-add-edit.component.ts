@@ -5,7 +5,6 @@ import { FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { TaxesService } from '../taxes.service';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { WindowService } from '../../../share/services/window.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -37,7 +36,6 @@ export class TaxesAddEditComponent implements OnInit {
     private readonly translate: TranslateService,
     public readonly navigationService: NavigationService,
     private readonly taxesSrv: TaxesService,
-    private readonly darkModeService: StyleManager,
     private readonly router: Router,
     private readonly windowService: WindowService,
     private readonly matSnackBar: MatSnackBar
@@ -46,9 +44,6 @@ export class TaxesAddEditComponent implements OnInit {
       this.model.lang = this.translate.currentLang;
       this.updateLabels();
       this.updateValidationMessages();
-    });
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
     });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

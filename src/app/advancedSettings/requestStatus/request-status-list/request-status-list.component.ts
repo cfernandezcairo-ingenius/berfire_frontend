@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { RequestStatusService } from '../request-status.service';
@@ -54,16 +53,12 @@ export class RequestStatusListComponent implements OnInit {
   fg: FormGroup;
 
   constructor(
-    private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
     private readonly translate: TranslateService,
     private readonly requestStatusSrv: RequestStatusService,
     private readonly fb: FormBuilder,
     private readonly matSnackBar: MatSnackBar
   ){
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
     this.translate.onLangChange.subscribe(lc=> {
       if(this.translate.currentLang === 'es') {
         this.displayedLabels = this.displayedLabelsEs;

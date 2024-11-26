@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-import { StyleManager } from '../../../share/services/style-manager.service';
 import { PVPRatesService } from '../pvp-rates.service';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
@@ -22,14 +21,10 @@ export class PvpRatesDeleteComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private darkModeService: StyleManager,
     private pVPRatesSrv: PVPRatesService,
     private navigationSrv: NavigationService,
     private matSnackBar: MatSnackBar
   ) {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
   }
 
   ngOnInit(): void {

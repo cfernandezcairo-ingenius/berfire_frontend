@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { StyleManager } from '../../../services/style-manager.service';
 import { FormGroup } from '@angular/forms';
 import { NavigationService } from '../../../../navigation/shared/services/navigation.service';
 
@@ -12,7 +11,7 @@ import { NavigationService } from '../../../../navigation/shared/services/naviga
   templateUrl: './button-primary.component.html',
   styleUrl: './button-primary.component.scss'
 })
-export class ButtonPrimaryComponent implements OnInit {
+export class ButtonPrimaryComponent {
 
   @Input() fg: FormGroup | undefined;
   @Input() buttonText: string = 'Guardar'
@@ -21,16 +20,8 @@ export class ButtonPrimaryComponent implements OnInit {
   darkMode = false;
 
   constructor(
-    private readonly darkModeService: StyleManager,
     private readonly navigationSrv: NavigationService,
-    //private readonly facturasSrv: FacturasService
   ) {}
-
-  ngOnInit(): void {
-    this.darkModeService.darkMode$.subscribe(dark => {
-      this.darkMode = dark;
-    });
-  }
 
   onSubmit() {
     this.addEdit.emit();
