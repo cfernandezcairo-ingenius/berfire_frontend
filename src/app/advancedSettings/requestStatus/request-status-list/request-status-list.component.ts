@@ -20,7 +20,7 @@ export interface IRequestStatus {
 @Component({
   selector: 'app-request-status-list',
   templateUrl: './request-status-list.component.html',
-  styleUrl: './request-status-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,
