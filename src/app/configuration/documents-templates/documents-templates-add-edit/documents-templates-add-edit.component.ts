@@ -1,16 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { DocumentsTemplatesService } from '../documents-templates.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-documents-templates-add-edit',
@@ -21,41 +18,16 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   encapsulation: ViewEncapsulation.None,
   providers: [TranslateService, TranslateStore]
 })
-export class DocumentsTemplatesAddEditComponent implements OnInit {
+export class DocumentsTemplatesAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode = false;
-  id: number = 0;
-  showinNewTab:boolean = false;
-  shoWButtonSaveAndNew:boolean = true;
-  loading = false;
-  fb: any;
+  documentsTemplatesSrv:any;
 
-  constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly documentsTemplatesSrv: DocumentsTemplatesService,
-    private readonly router: Router,
-    private readonly matSnackBar: MatSnackBar
-  ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
-    })
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showinNewTab = this.router.url.includes('/documents-templates/edit/new');
-      }
-    });
-    this.id = 0;
-    this.showinNewTab = false;
-    this.shoWButtonSaveAndNew = true;
+    constructor() {
+    super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.documentsTemplatesSrv = this.baseSrv as DocumentsTemplatesService;
     this.id = this.documentsTemplatesSrv._idToEdit;
     if (this.id === 0) {
       this.model = {
@@ -68,7 +40,7 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.documentsTemplatesSrv.getById(payload).subscribe({
-        next:(res => {
+        next:((res:any) => {
           this.model = { ...res.data};
         }),
         error: () => {
@@ -204,29 +176,29 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
     this.updateLabels();
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.TEMPLATETYPE').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.TEMPLATETYPE').subscribe((label:any) => {
       this.fields[0].fieldGroup[1].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.RENDERTYPE').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.RENDERTYPE').subscribe((label:any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.PREDETERMINED').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.PREDETERMINED').subscribe((label:any) => {
       this.fields[1].fieldGroup[1].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label:any) => {
       this.fields[2].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.TEMPLATE').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.TEMPLATE').subscribe((label:any) => {
       this.fields[3].fieldGroup[0].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -240,7 +212,7 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  override onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {
       payload = {
@@ -264,7 +236,7 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
     }
     const myobs = this.id === 0 ? this.documentsTemplatesSrv.add(payload) : this.documentsTemplatesSrv.edit(payload);
     myobs.subscribe({
-      next: (res) => {
+      next: (res:any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
@@ -284,13 +256,13 @@ export class DocumentsTemplatesAddEditComponent implements OnInit {
           }
         }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

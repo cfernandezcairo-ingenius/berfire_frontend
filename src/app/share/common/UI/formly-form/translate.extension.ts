@@ -7,7 +7,7 @@ export class TranslateExtension implements FormlyExtension {
 
   prePopulate(field: FormlyFieldConfig) {
 
-    const props = field.props || {};
+    const props = field.props ?? {};
     if (!props['translate'] || props['_translated']) { return; }
     props['_translated' ] = true;
     field.expressions = { ...(field.expressions || {}), 'props.label': this.translate.stream(props.label!), };}}

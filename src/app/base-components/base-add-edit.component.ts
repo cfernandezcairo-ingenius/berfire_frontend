@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../navigation/shared/services/navigation.service';
 import { BaseService } from './base.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -35,7 +35,20 @@ export class BaseAddEditComponent implements OnInit {
   constructor(
 
   ) {
-
+    this.translate.onLangChange.subscribe({
+      next:(ch:any) => {
+        this.model.lang = this.translate.currentLang;
+        this.updateLabels();
+        this.updateValidationMessages();
+      }
+    })
+    this.router.events.subscribe({
+      next: (event:any) => {
+        if (event instanceof NavigationEnd) {
+          this.showinNewTab = this.router.url.includes('/prTypes/edit/new');
+        }
+      }
+    });
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;

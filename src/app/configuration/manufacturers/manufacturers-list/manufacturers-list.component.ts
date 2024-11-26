@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { ManufacturersService  } from '../manufacturers.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
 
 export interface IManufacturers {
   id: number,
@@ -21,7 +20,7 @@ export interface IManufacturers {
 @Component({
   selector: 'app-manufacturers-list',
   templateUrl: './manufacturers-list.component.html',
-  styleUrl: './manufacturers-list.component.scss',
+  styles: '',
   standalone: true,
   imports: [
     TableListComponent,
@@ -31,63 +30,49 @@ export interface IManufacturers {
 ],
 providers: [TranslateService]
 })
-export class ManufacturersListComponent implements OnInit {
+export class ManufacturersListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as IManufacturers[]
   };
-  darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels: IDisplayedLabels[] = [
+  override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name: 'Nombre',isBoolean:false},
     { name: 'Descripción', isBoolean:false},
     { name: 'Active', isBoolean:true}
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn: IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name: 'Name',isBoolean:false},
     { name: 'Description', isBoolean:false},
     { name: 'isActive', isBoolean:true}
   ];
   fg: FormGroup;
+  manufacturersSrv:any;
 
   constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly manufacturersSrv: ManufacturersService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
+
   ){
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
+    super();
     this.fg = this.fb.group({
       name: [''],
       description: [''],
     });
   }
 
-  ngOnInit(): void {
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabManufacturers' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
+  override ngOnInit(): void {
+    this.manufacturersSrv = this.baseSrv as ManufacturersService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.manufacturersSrv.getAll().subscribe(All => {
+    this.manufacturersSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -99,37 +84,37 @@ export class ManufacturersListComponent implements OnInit {
     })
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabManufacturers', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.manufacturersSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/manufacturers/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.manufacturersSrv._idToEdit = row.id;
     window.open(`/manufacturers/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.manufacturersSrv._idToDelete = id;
-    this.manufacturersSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/manufacturers/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
+    this.manufacturersSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/manufacturers/edit/${row}`)
   }
 
-  searchData(event: IManufacturers) {
+  override searchData(event: IManufacturers) {
     let payload = `?name=${event.name}`;
     if (event.description) {
       payload = payload + `&description=${event.description}`;
@@ -138,18 +123,23 @@ export class ManufacturersListComponent implements OnInit {
       payload = payload + `&isActive=${event.description}`;
     }
     this.loading = true;
-    this.manufacturersSrv.getByFields(payload).subscribe(res=> {
-      this.loading = false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
+    this.manufacturersSrv.getByFields(payload).subscribe({
+      next: (res:any) => {
+        this.loading = false;
+        if (res.data.length === 0) {
+          openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
+        } else {
+          this.dataSource = { data: res.data };
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
       }
     });
     this.todoListo = true;
   }
 
- cleanSearchData() {
+ override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }

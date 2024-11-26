@@ -9,8 +9,8 @@ import { WindowService } from '../../share/services/window.service';
 })
 export class PrTypesService extends BaseService {
 
-  override _idToDelete: number = 0;
-  override _idToEdit: number = 0;
+  public override _idToDelete: number = 0;
+  public override _idToEdit: number = 0;
 
   constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { super(); }
 

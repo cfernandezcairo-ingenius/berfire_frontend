@@ -4,19 +4,12 @@
     scrollbar-width: thin;
     overflow: auto;
     background-color: #242D35;
-    //background-color: #1E293B;
-    //background-color: #2D3436;
     border: 1px solid;
     border-color: white;
     ::-webkit-scrollbar {
         display: none;
-        // background-color: transparent;
-        // width:  0;
-        // height: 0;
     }
-    //border-right: 1px solid rgba(0, 0, 0, .2);
-    //background-color: white;
-    //box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+
 }
 
 .menu__group {
@@ -35,7 +28,6 @@
   display: flex;
   padding: 5px;
   border: none;
-  //font-weight: bold;
   :hover {
     cursor: pointer;
   }
