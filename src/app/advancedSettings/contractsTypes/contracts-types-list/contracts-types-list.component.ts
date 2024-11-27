@@ -6,7 +6,6 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -85,7 +84,7 @@ export class ContractsTypesListComponent extends BaseListComponent {
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
-  override searchData(event: IContractsTypes) {
+  searchData(event: IContractsTypes) {
     let payload = `?name=${event.name}`;
     if (event.duration) {
       payload = payload + `&duration=${event.duration}`;
@@ -94,14 +93,7 @@ export class ContractsTypesListComponent extends BaseListComponent {
       payload = payload + `&isWarning=${event.isWarning}`;
     }
     this.loading = true;
-    this.contractsTypesSrv.getByFields(payload).subscribe((res:any) => {
-      this.loading = false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
-      }
-    });
+    super.searchDataBase(payload);
     this.todoListo = true;
   }
 

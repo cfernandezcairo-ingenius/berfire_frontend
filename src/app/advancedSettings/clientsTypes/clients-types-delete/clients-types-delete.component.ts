@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { ClientsTypesService } from '../clients-types.service';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseDeleteComponent } from '../../../base-components/base-delete.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-clients-types-delete',
@@ -15,50 +15,17 @@ import { BaseDeleteComponent } from '../../../base-components/base-delete.compon
 })
 export class ClientsTypesDeleteComponent extends BaseDeleteComponent {
 
-  clientsTypesSrv: any;
-
-  constructor() {super();}
-
-  override ngOnInit(): void {
-    this.clientsTypesSrv = this.baseSrv as ClientsTypesService;
-    this.id = this.clientsTypesSrv._idToDelete;
-    this.delete(this.id);
+  constructor(
+    private readonly clientsTypesSrv: ClientsTypesService,
+    public  override readonly translate: TranslateService,
+    public override readonly navigationSrv: NavigationService,
+    public override readonly matSnackBar: MatSnackBar
+  ) {
+    super(clientsTypesSrv,translate,navigationSrv,matSnackBar);
   }
 
-  override delete(id: number) {
-    Swal.fire({
-      title: this.translate.instant('confirm'),
-      text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',
-      icon: 'question',
-      showConfirmButton:true,
-      showCancelButton: true,
-      confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-      cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.clientsTypesSrv.delete(id).subscribe({
-          next: (d:any) => {
-            openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', this.translate.currentLang)
-            this.navigationSrv.goback();
-          },
-          error: (error:any) => {
-            Swal.fire({
-              title: this.translate.instant('inform'),
-              text: this.translate.currentLang === 'es' ? 'Error al delete el Registro.!!!' : 'Error deleting data!!',
-              icon: 'error',
-              showConfirmButton:true,
-              showCancelButton: false,
-              confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-            });
-          },
-          complete: () => {
-
-          }
-
-        });
-      } else {
-        return;
-      }
-    });
+  override ngOnInit(): void {
+    this.id = this.clientsTypesSrv._idToDelete;
+    super.deleteBase(this.id);
   }
 }

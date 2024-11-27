@@ -89,8 +89,16 @@ export class BaseListComponent implements OnInit {
     this.navigationSrv.NavigateTo(`${this.newRoute}`)
   }
 
-  searchData(event: any) {
-    console.log('Metodo searchData');
+  searchDataBase(payload: any) {
+    this.baseSrv.getByFields(payload).subscribe((res:any)=> {
+      this.loading = false;
+      if (res.data.length === 0) {
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
+      } else {
+        this.dataSource = { data: res.data };
+      }
+      this.todoListo = true;
+    });
   }
 
  cleanSearchData() {

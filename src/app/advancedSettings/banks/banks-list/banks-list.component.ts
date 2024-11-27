@@ -100,7 +100,7 @@ export class BanksListComponent extends BaseListComponent {
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
-  override searchData(event: IBanks) {
+  searchData(event: IBanks) {
 
     let payload = `?name=${event.name}`;
     if (event.swift) {
@@ -110,20 +110,11 @@ export class BanksListComponent extends BaseListComponent {
       payload = payload + `&Iban=${event.Iban}`;
     }
     this.loading = true;
-    this.banksSrv.getByFields(payload).subscribe((res:any)=> {
-      this.loading = false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
-      }
-      this.todoListo = true;
-    });
+    super.searchDataBase(payload);
   }
 
  override cleanSearchData() {
-    this.fg!.reset();
+    this.fg.reset();
     this.loadAll();
   }
-
 }
