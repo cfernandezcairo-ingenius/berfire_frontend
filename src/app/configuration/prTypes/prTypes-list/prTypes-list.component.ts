@@ -68,6 +68,11 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
       teamTitle: [''],
       description: [''],
     });
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
+        this.handleDataChange();
+      }
+    });
   }
 
   override ngOnInit(): void {

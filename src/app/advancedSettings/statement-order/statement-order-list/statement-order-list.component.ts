@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { StatementOrderService } from '../statement-order.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
+import { FormGroup } from '@angular/forms';
 
 export interface IIStatementOrder {
   id: number,
@@ -31,23 +30,22 @@ export interface IIStatementOrder {
 ],
 providers: [TranslateService]
 })
-export class StatementOrderListComponent implements OnInit {
+export class StatementOrderListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as IIStatementOrder[]
   };
-  darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels: IDisplayedLabels[] = [
+  override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Nombre',isBoolean:false},
     { name: 'Descripción',isBoolean:false},
     { name: 'Finalizada', isBoolean:true}
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn: IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Name',isBoolean:false},
     { name: 'Description',isBoolean:false},
@@ -55,40 +53,31 @@ export class StatementOrderListComponent implements OnInit {
   ];
   fg: FormGroup;
 
-  constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly StatementOrderSrv: StatementOrderService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
-  ){
+  StatementOrderSrv:any
+
+  constructor(){
+    super();
     this.fg = this.fb.group({
       name:[''],
       description: [''],
       finalized: [''],
     });
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
-  }
-
-  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabStatementOrder' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  override ngOnInit(): void {
+    this.StatementOrderSrv = this.baseSrv as StatementOrderService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.StatementOrderSrv.getAll().subscribe(All => {
+    this.StatementOrderSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -100,37 +89,37 @@ export class StatementOrderListComponent implements OnInit {
     })
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabStatementOrder', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.StatementOrderSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/statement-order/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.StatementOrderSrv._idToEdit = row.id;
     window.open(`/statement-order/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.StatementOrderSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/statement-order/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.StatementOrderSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/statement-order/edit/${row}`)
   }
 
-  searchData(event: IIStatementOrder) {
+  overridesearchData(event: IIStatementOrder) {
 
     let payload = `?name=${event.name}`;
     if (event.description) {
@@ -140,7 +129,7 @@ export class StatementOrderListComponent implements OnInit {
       payload = payload + `&finalized=${event.finalized}`;
     }
     this.loading = true;
-    this.StatementOrderSrv.getByFields(payload).subscribe(res=> {
+    this.StatementOrderSrv.getByFields(payload).subscribe((res:any)=> {
       this.loading = false;
       if (res.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
@@ -151,7 +140,7 @@ export class StatementOrderListComponent implements OnInit {
     this.todoListo = true;
   }
 
- cleanSearchData() {
+ override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }

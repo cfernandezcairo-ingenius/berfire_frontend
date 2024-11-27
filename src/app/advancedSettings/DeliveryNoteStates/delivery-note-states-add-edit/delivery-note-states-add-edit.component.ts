@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { NavigationEnd } from '@angular/router';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-delivery-note-states-add-edit',
@@ -20,33 +18,15 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   styleUrl: './delivery-note-states-add-edit.component.scss',
   providers: [TranslateService]
 })
-export class DeliveryNoteStatesAddEditComponent implements OnInit {
+export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode = false;
-  id: number = 0;
-  showinNewTab: boolean = false;
-  shoWButtonSaveAndNew: boolean = true;
-  loading = false;
+  deliveryNoteStatesSrv:any;
 
   constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
-    private readonly router: Router,
-    private readonly matSnackBar: MatSnackBar
+
   ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
-    })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
-    this.router.events.subscribe(event => {
+    super();
+    this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/delivery-note-states/edit/new');
@@ -57,7 +37,8 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     this.shoWButtonSaveAndNew = true;
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.deliveryNoteStatesSrv = this.baseSrv as DeliveryNoteStatesService;
     this.id = this.deliveryNoteStatesSrv._idToEdit;
     if (this.id === 0) {
       this.model = {
@@ -69,7 +50,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.deliveryNoteStatesSrv.getById(payload).subscribe({
-        next:(res => {
+        next:((res:any) => {
           this.model = { ...res.data};
         }),
         error: () => {
@@ -127,17 +108,17 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     this.updateLabels();
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label:any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -151,7 +132,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any) {
+  override onSubmit(model:any) {
     let payload = {};
     if (this.id === 0) {
       payload = {
@@ -167,7 +148,7 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
     }
     const myobs = this.id === 0 ? this.deliveryNoteStatesSrv.add(payload) : this.deliveryNoteStatesSrv.edit(payload)
     myobs.subscribe({
-      next: (res) => {
+      next: (res:any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
@@ -180,13 +161,13 @@ export class DeliveryNoteStatesAddEditComponent implements OnInit {
           this.navigationService.goback();
         }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

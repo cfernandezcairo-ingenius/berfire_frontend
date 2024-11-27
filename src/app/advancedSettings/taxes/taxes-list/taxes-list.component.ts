@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { TaxesService } from '../taxes.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
 
 export interface ITaxes {
   id: number,
@@ -32,7 +31,7 @@ export interface ITaxes {
 ],
 providers: [TranslateService]
 })
-export class TaxesListComponent implements OnInit {
+export class TaxesListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as ITaxes[]
@@ -41,15 +40,15 @@ export class TaxesListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels:IDisplayedLabels[] = [
+  override displayedLabels:IDisplayedLabels[] = [
     { name: '',isBoolean: false},
     { name: 'Titulo',isBoolean:false},
     { name: 'Valor',isBoolean:false},
     { name: 'Recargo',isBoolean:false},
     { name: 'es IGIC', isBoolean:true}
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn:IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn:IDisplayedLabels[] = [
     { name: '',isBoolean: false},
     { name: 'Title',isBoolean:false},
     { name: 'Value',isBoolean:false},
@@ -58,41 +57,31 @@ export class TaxesListComponent implements OnInit {
   ];
   fg: FormGroup;
 
-  constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly taxesSrv:TaxesService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
-  ){
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
+  taxesSrv:any;
+
+  constructor(){super();
     this.fg = this.fb.group({
       title: [''],
       value: [''],
       equivalentSurcharge: [''],
       isIGIC: ['']
     });
-  }
-
-  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabTaxes' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  override ngOnInit(): void {
+    this.taxesSrv = this.baseSrv as TaxesService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.taxesSrv.getAll().subscribe(All => {
+    this.taxesSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -104,38 +93,38 @@ export class TaxesListComponent implements OnInit {
     })
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabTaxes', 'false');
     //Aqui tengo que recargar los datos desde el backend
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.taxesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/taxes/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.taxesSrv._idToEdit = row.id;
     window.open(`/taxes/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.taxesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/taxes/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.taxesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/taxes/edit/${row}`)
   }
 
-  searchData(event: ITaxes) {
+  override searchData(event: ITaxes) {
 
     let payload = `?title=${event.title}`;
     if (event.value) {
@@ -148,7 +137,7 @@ export class TaxesListComponent implements OnInit {
       payload = payload + `&isIGIC=${event.isIGIC}`;
     }
     this.loading = true;
-    this.taxesSrv.getByFields(payload).subscribe(res=> {
+    this.taxesSrv.getByFields(payload).subscribe((res:any)=> {
       this.loading =false;
       if (res.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
@@ -159,7 +148,7 @@ export class TaxesListComponent implements OnInit {
     this.todoListo = true;
   }
 
- cleanSearchData() {
+  override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }

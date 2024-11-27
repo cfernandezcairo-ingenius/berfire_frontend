@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { NavigationEnd } from '@angular/router';
 import { PopulationsService } from '../populations.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-populations-add-edit',
@@ -20,32 +18,15 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   styles: '',
   providers: [TranslateService]
 })
-export class PopulationsAddEditComponent implements OnInit {
+export class PopulationsAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode = false;
-  id: number = 0;
-  showinNewTab:boolean = false;
-  shoWButtonSaveAndNew:boolean = true;
-  loading = false;
   countries: any;
   selectedCountry = '';
+  populationsService:any;
 
-  constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly populationsService: PopulationsService,
-    private readonly router: Router,
-    private readonly matSnackBar: MatSnackBar
-  ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
-    })
-    this.router.events.subscribe(event => {
+  constructor() {
+    super();
+    this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/populations/edit/new');
@@ -56,7 +37,8 @@ export class PopulationsAddEditComponent implements OnInit {
     this.shoWButtonSaveAndNew = true;
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.populationsService = this.baseSrv as PopulationsService;
     this.id = this.populationsService._idToEdit;
     if (this.id === 0) {
       //Agregar
@@ -71,13 +53,12 @@ export class PopulationsAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.populationsService.getById(payload).subscribe({
-        next:(res => {
-          debugger;
+        next:(res:any) => {
           this.model = { ...res.data};
           this.selectedCountry = res.data.country;
           this.updateOptionsProvinces();
-        }),
-        error: () => {
+        },
+        error: (erro:any) => {
           let title = this.translate.instant('inform');
           let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
           let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
@@ -186,7 +167,7 @@ export class PopulationsAddEditComponent implements OnInit {
 
   updateOptionsCountries() {
     this.loading = true;
-    this.populationsService.getCountries().subscribe(countries => {
+    this.populationsService.getCountries().subscribe((countries:any) => {
       this.loading = false;
       this.countries = countries.data;
       this.fields.map((field:any) => {
@@ -204,7 +185,7 @@ export class PopulationsAddEditComponent implements OnInit {
 
   updateOptionsProvinces() {
     this.loading = true;
-    this.populationsService.getProvinces(this.selectedCountry).subscribe(provinces => {
+    this.populationsService.getProvinces(this.selectedCountry).subscribe((provinces:any) => {
       this.loading = false;
       this.fields.map((field:any) => {
           const selectField = field.fieldGroup.find((field: { key: string; }) => field.key === 'province');
@@ -219,23 +200,23 @@ export class PopulationsAddEditComponent implements OnInit {
     });
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.COUNTRY').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.COUNTRY').subscribe((label:any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.PROVINCE').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.PROVINCE').subscribe((label:any) => {
       this.fields[1].fieldGroup[1].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.ACTIVE').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.ACTIVE').subscribe((label:any) => {
       this.fields[2].fieldGroup[0].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -249,7 +230,7 @@ export class PopulationsAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  override onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {
       payload = {
@@ -269,7 +250,7 @@ export class PopulationsAddEditComponent implements OnInit {
     }
     let myobs = this.id === 0 ? this.populationsService.add(payload) : this.populationsService.edit(payload);
     myobs.subscribe({
-      next: (res) => {
+      next: (res:any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
@@ -288,13 +269,13 @@ export class PopulationsAddEditComponent implements OnInit {
             this.navigationService.goback();
           }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

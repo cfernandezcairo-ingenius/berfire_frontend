@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { Component } from '@angular/core';
 import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { RequestStatusService } from '../request-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
 
 export interface IRequestStatus {
   id: number,
@@ -30,7 +29,7 @@ export interface IRequestStatus {
 ],
 providers: [TranslateService, TranslateStore]
 })
-export class RequestStatusListComponent implements OnInit {
+export class RequestStatusListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as IRequestStatus[]
@@ -39,52 +38,42 @@ export class RequestStatusListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels:IDisplayedLabels[] = [
+  override displayedLabels:IDisplayedLabels[] = [
     { name: '',isBoolean:false},
     { name:'Nombre',isBoolean:false},
     { name: 'Código', isBoolean:false}
   ];
-  displayedLabelsEs = this.displayedLabels
-  displayedLabelsEn:IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels
+  override displayedLabelsEn:IDisplayedLabels[] = [
     { name: '',isBoolean:false},
     { name:'Name',isBoolean:false},
     { name: 'Code', isBoolean:false}
   ];
   fg: FormGroup;
+  requestStatusSrv: any;
 
-  constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly requestStatusSrv: RequestStatusService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
-  ){
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
+  constructor(){
+    super();
     this.fg = this.fb.group({
       name:[''],
       code: [''],
     });
-  }
-
-  ngOnInit(): void {
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabRequestStatus' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  override ngOnInit(): void {
+    this.requestStatusSrv = this.baseSrv as RequestStatusService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.requestStatusSrv.getAll().subscribe(All => {
+    this.requestStatusSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -96,44 +85,44 @@ export class RequestStatusListComponent implements OnInit {
     })
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     debugger;
     localStorage.setItem('dataModifiedInNewTabRequestStatus', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new');
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.requestStatusSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/request-status/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.requestStatusSrv._idToEdit = row.id;
     window.open(`/request-status/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.requestStatusSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/request-status/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.requestStatusSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/request-status/edit/${row}`)
   }
 
-  searchData(event: IRequestStatus) {
+  override searchData(event: IRequestStatus) {
     let payload = `?name=${event.name}`;
     if (event.code) {
       payload = payload + `&code=${event.code}`;
     }
     this.loading = true;
-    this.requestStatusSrv.getByFields(payload).subscribe(res=> {
+    this.requestStatusSrv.getByFields(payload).subscribe((res:any)=> {
       this.loading = false;
       if (res.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
@@ -144,7 +133,7 @@ export class RequestStatusListComponent implements OnInit {
     this.todoListo = true;
   }
 
- cleanSearchData() {
+ override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }
