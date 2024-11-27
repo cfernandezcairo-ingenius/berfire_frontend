@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
+import { FormGroup } from '@angular/forms';
 
 export interface IPopulations {
   id: number,
@@ -54,11 +55,18 @@ export class PopulationsListComponent extends BaseListComponent {
     { name: 'Province',isBoolean:false},
     { name: 'Active', isBoolean:true}
   ];
+  fg: FormGroup;
 
   populationsSrv:any;
 
   constructor(){
     super();
+    this.fg = this.fb.group({
+      name:[''],
+      country: [''],
+      province: [''],
+      active: [''],
+    });
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabPopulations' && event.newValue === 'true') {
         this.handleDataChange();
@@ -140,7 +148,7 @@ export class PopulationsListComponent extends BaseListComponent {
   }
 
  override cleanSearchData() {
-    //this.fg.reset();
+    this.fg.reset();
     this.loadAll();
   }
 
