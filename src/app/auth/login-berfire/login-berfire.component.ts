@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClient } from '@angular/common/http';
+import { VisibleNovisibleComponent } from "../../share/common/UI/visible-novisible/visible-novisible.component";
 
 @Component({
   selector: 'app-login-berfire',
   standalone: true,
-  imports: [FormsModule , ReactiveFormsModule, CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, MatLabel],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, MatLabel, VisibleNovisibleComponent],
   templateUrl: './login-berfire.component.html',
   providers: [HttpClient],
   styleUrl: './login-berfire.component.scss',

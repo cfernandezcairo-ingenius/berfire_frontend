@@ -5,7 +5,6 @@ import { PopulationsService } from '../populations.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -86,7 +85,7 @@ export class PopulationsListComponent extends BaseListComponent {
     this.loadAll();
   }
 
-  override searchData(event: IPopulations) {
+  searchData(event: IPopulations) {
     let payload = `?name=${event.name}`;
     if (event.country) {
       payload = payload + `&country=${event.country}`;
@@ -98,14 +97,7 @@ export class PopulationsListComponent extends BaseListComponent {
       payload = payload + `&active=${event.active}`;
     }
     this.loading = true;
-    this.populationsSrv.getByFields(payload).subscribe((res:any)=> {
-      this.loading = false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
-      }
-    });
+    super.searchDataBase(payload);
     this.todoListo = true;
   }
 

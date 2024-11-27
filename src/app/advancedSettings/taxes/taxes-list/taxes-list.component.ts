@@ -6,7 +6,6 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -92,7 +91,7 @@ export class TaxesListComponent extends BaseListComponent {
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
-  override searchData(event: ITaxes) {
+  searchData(event: ITaxes) {
 
     let payload = `?title=${event.title}`;
     if (event.value) {
@@ -105,14 +104,7 @@ export class TaxesListComponent extends BaseListComponent {
       payload = payload + `&isIGIC=${event.isIGIC}`;
     }
     this.loading = true;
-    this.taxesSrv.getByFields(payload).subscribe((res:any)=> {
-      this.loading =false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
-      }
-    });
+    super.searchDataBase(payload);
     this.todoListo = true;
   }
 

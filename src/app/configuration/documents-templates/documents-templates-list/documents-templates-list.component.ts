@@ -103,7 +103,7 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
-  override searchData(event: IDocumentsTemplates) {
+  searchData(event: IDocumentsTemplates) {
     let payload = `?name=${event.name}`;
     if (event.templateType) {
       payload = payload + `&templateType=${event.templateType}`;
@@ -121,14 +121,7 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
       payload = payload + `&template=${event.template}`;
     }
     this.loading = true;
-    this.documentsTemplatesSrv.getByFields(payload).subscribe((res:any)=> {
-      this.loading = false;
-      if (res.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-      } else {
-        this.dataSource = { data: res.data };
-      }
-    });
+    super.searchDataBase(payload);
     this.todoListo = true;
   }
 

@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
+import { VisibleNovisibleComponent } from '../../../visible-novisible/visible-novisible.component';
 
 @Component({
   selector: 'formly-field-password-toggle-visible-mat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyModule, MatFormFieldModule, MatLabel  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyModule, MatFormFieldModule, MatLabel ],
   template: `<div style="position: relative;display: flex;flex-direction: column;">
   <mat-form-field class="example-full-width">
     <mat-label>Favorite food</mat-label>
