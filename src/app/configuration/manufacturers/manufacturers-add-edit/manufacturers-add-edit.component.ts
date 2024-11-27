@@ -8,6 +8,9 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-manufacturers-add-edit',
@@ -19,15 +22,18 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 })
 export class ManufacturersAddEditComponent extends BaseAddEditComponent {
 
-  manufacturersSrv: any;
 
   constructor(
+    private readonly manufacturersSrv: ManufacturersService,
+    public override  readonly translate: TranslateService,
+    public readonly matSnackBar: MatSnackBar,
+    public readonly navigationSrv: NavigationService,
+    public readonly router: Router
   ) {
-    super();
+    super(translate);
   }
 
   override ngOnInit(): void {
-    this.manufacturersSrv = this.baseSrv as ManufacturersService;
     this.id = this.manufacturersSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -171,7 +177,7 @@ export class ManufacturersAddEditComponent extends BaseAddEditComponent {
           } else if (nuevo) {
               this.fg.reset();
           } else {
-            this.navigationService.goback();
+            this.navigationSrv.goback();
           }
         }
       },
@@ -186,7 +192,7 @@ export class ManufacturersAddEditComponent extends BaseAddEditComponent {
       window.close();
     } else {
     //Aqui tengo que regresar a la ultima ruta
-    this.navigationService.goback();
+    this.navigationSrv.goback();
     }
   }
 }

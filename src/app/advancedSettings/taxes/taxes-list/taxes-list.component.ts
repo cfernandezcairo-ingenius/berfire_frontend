@@ -4,10 +4,12 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { TaxesService } from '../taxes.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 export interface ITaxes {
   id: number,
@@ -33,13 +35,11 @@ providers: [TranslateService]
 })
 export class TaxesListComponent extends BaseListComponent {
 
-  dataSource = {
+  override dataSource = {
     data: [] as ITaxes[]
   };
-  darkMode = false;
   payload: any;
-  loading = false;
-  todoListo = false;
+
   override displayedLabels:IDisplayedLabels[] = [
     { name: '',isBoolean: false},
     { name: 'Titulo',isBoolean:false},
@@ -55,11 +55,19 @@ export class TaxesListComponent extends BaseListComponent {
     { name: 'Surcharge',isBoolean:false},
     { name: 'isIGIC', isBoolean:true}
   ];
+
   fg: FormGroup;
 
-  taxesSrv:any;
+  override newRoute: string = '/taxes/edit';
 
-  constructor(){super();
+  constructor(
+    private readonly taxesSrv: TaxesService,
+    public override readonly translate: TranslateService,
+    public override readonly matSnackBar: MatSnackBar,
+    public override readonly navigationSrv: NavigationService,
+    private readonly fb: FormBuilder
+  ){
+    super(taxesSrv, translate, matSnackBar,navigationSrv);
     this.fg = this.fb.group({
       title: [''],
       value: [''],
@@ -74,54 +82,14 @@ export class TaxesListComponent extends BaseListComponent {
   }
 
   override ngOnInit(): void {
-    this.taxesSrv = this.baseSrv as TaxesService;
     this.loading = true;
     this.loadAll();
   }
 
-  override loadAll() {
-    this.loading = true;
-    this.taxesSrv.getAll().subscribe((All:any) => {
-      if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-        this.addItem();
-      } else {
-        this.dataSource = { data: All.data };;
-        this.loading = false;
-        this.todoListo = true;
-      }
-    })
-  }
-
-  override handleDataChange() {
+   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabTaxes', 'false');
     //Aqui tengo que recargar los datos desde el backend
     this.navigationSrv.NavigateTo('/all/edit/new')
-  }
-
-
-  override edit(row:any) {
-    const strRow = JSON.stringify(row);
-    this.taxesSrv._idToEdit = row.id;
-    this.navigationSrv.NavigateTo(`/taxes/edit/${strRow}`)
-  }
-
-  override editNew(row:any) {
-    const strRow = JSON.stringify(row);
-    this.taxesSrv._idToEdit = row.id;
-    window.open(`/taxes/edit/new/${strRow}`, '_blank')
-  }
-
-  override delete(id: number) {
-    const strRow = JSON.stringify(id);
-    this.taxesSrv._idToDelete = id;
-    this.navigationSrv.NavigateTo(`/taxes/delete/${strRow}`)
-  }
-
-  override addItem() {
-    const row = JSON.stringify({ id: 0 });
-    this.taxesSrv._idToEdit = 0;
-    this.navigationSrv.NavigateTo(`/taxes/edit/${row}`)
   }
 
   override searchData(event: ITaxes) {

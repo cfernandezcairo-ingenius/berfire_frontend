@@ -4,10 +4,12 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { ManufacturersService  } from '../manufacturers.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 export interface IManufacturers {
   id: number,
@@ -32,12 +34,10 @@ providers: [TranslateService]
 })
 export class ManufacturersListComponent extends BaseListComponent {
 
-  dataSource = {
+  override dataSource = {
     data: [] as IManufacturers[]
   };
   payload: any;
-  loading = false;
-  todoListo = false;
   override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name: 'Nombre',isBoolean:false},
@@ -51,13 +51,19 @@ export class ManufacturersListComponent extends BaseListComponent {
     { name: 'Description', isBoolean:false},
     { name: 'isActive', isBoolean:true}
   ];
+
   fg: FormGroup;
-  manufacturersSrv:any;
+
+  override newRoute: string = '/manufacturers/edit';
 
   constructor(
-
+    private readonly manufacturersSrv: ManufacturersService,
+    public override readonly translate: TranslateService,
+    public override readonly matSnackBar: MatSnackBar,
+    public override readonly navigationSrv: NavigationService,
+    private readonly fb: FormBuilder
   ){
-    super();
+    super(manufacturersSrv, translate, matSnackBar,navigationSrv);
     this.fg = this.fb.group({
       name: [''],
       description: [''],
@@ -70,53 +76,14 @@ export class ManufacturersListComponent extends BaseListComponent {
   }
 
   override ngOnInit(): void {
-    this.manufacturersSrv = this.baseSrv as ManufacturersService;
     this.loading = true;
     this.loadAll();
   }
 
-  override loadAll() {
-    this.loading = true;
-    this.manufacturersSrv.getAll().subscribe((All:any) => {
-      if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-        this.addItem();
-      } else {
-        this.dataSource = { data: All.data };;
-        this.loading = false;
-        this.todoListo = true;
-      }
-    })
-  }
 
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabManufacturers', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
-  }
-
-
-  override edit(row:any) {
-    const strRow = JSON.stringify(row);
-    this.manufacturersSrv._idToEdit = row.id;
-    this.navigationSrv.NavigateTo(`/manufacturers/edit/${strRow}`)
-  }
-
-  override editNew(row:any) {
-    const strRow = JSON.stringify(row);
-    this.manufacturersSrv._idToEdit = row.id;
-    window.open(`/manufacturers/edit/new/${strRow}`, '_blank')
-  }
-
-  override delete(id: number) {
-    const strRow = JSON.stringify(id);
-    this.manufacturersSrv._idToDelete = id;
-    this.navigationSrv.NavigateTo(`/manufacturers/delete/${strRow}`)
-  }
-
-  override addItem() {
-    const row = JSON.stringify({ id: 0 });
-    this.manufacturersSrv._idToEdit = 0;
-    this.navigationSrv.NavigateTo(`/manufacturers/edit/${row}`)
   }
 
   override searchData(event: IManufacturers) {
@@ -145,7 +112,7 @@ export class ManufacturersListComponent extends BaseListComponent {
   }
 
  override cleanSearchData() {
-    this.fg.reset();
+    this.fg!.reset();
     this.loadAll();
   }
 

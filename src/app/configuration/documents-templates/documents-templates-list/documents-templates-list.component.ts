@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DocumentsTemplatesService } from '../documents-templates.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 export interface IDocumentsTemplates {
   id: number,
@@ -34,12 +36,10 @@ export interface IDocumentsTemplates {
 })
 export class DocumentsTemplatesListComponent extends BaseListComponent {
 
-  dataSource = {
+  override dataSource = {
     data: [] as IDocumentsTemplates[]
   };
   payload: any;
-  loading = false;
-  todoListo = false;
   title: string = '';
 
   override displayedLabels:IDisplayedLabels[] = [
@@ -61,21 +61,22 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
     { name: 'Descripction', isBoolean:false},
     { name: 'Template', isBoolean:false},
   ];
+
   fg: FormGroup;
 
-  documentsTemplatesSrv: any;
+  override newRoute: string = '/documents-templates/edit';
 
   constructor
   (
+    private readonly documentsTemplatesSrv: DocumentsTemplatesService,
+    public override readonly translate: TranslateService,
+    public override readonly matSnackBar: MatSnackBar,
+    public override readonly navigationSrv: NavigationService,
+    private readonly fb: FormBuilder
   ){
-    super();
+    super(documentsTemplatesSrv, translate, matSnackBar,navigationSrv);
     this.translate.get('menu.documents-templates').subscribe((translatedTitle: string) => {
       this.title = translatedTitle;
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabTemplates' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
     });
     this.fg = this.fb.group({
       name:[''],
@@ -85,56 +86,21 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
       description: [''],
       template: [''],
     });
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'dataModifiedInNewTabTemplates' && event.newValue === 'true') {
+        this.handleDataChange();
+      }
+    });
   }
 
   override ngOnInit(): void {
-    this.documentsTemplatesSrv = this.baseSrv as DocumentsTemplatesService;
     this.loading = true;
     this.loadAll();
-  }
-
-  override loadAll() {
-    this.loading = true;
-    this.documentsTemplatesSrv.getAll().subscribe((All:any) => {
-      if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-        this.addItem();
-      } else {
-        this.dataSource = { data: All.data };;
-        this.loading = false;
-        this.todoListo = true;
-      }
-    })
   }
 
  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabTemplates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
-  }
-
-
-  override edit(row:any) {
-    const strRow = JSON.stringify(row);
-    this.documentsTemplatesSrv._idToEdit = row.id;
-    this.navigationSrv.NavigateTo(`/documents-templates/edit/${strRow}`)
-  }
-
-  override editNew(row:any) {
-    const strRow = JSON.stringify(row);
-    this.documentsTemplatesSrv._idToEdit = row.id;
-    window.open(`/documents-templates/edit/new/${strRow}`, '_blank')
-  }
-
-  override delete(id: number) {
-    const strRow = JSON.stringify(id);
-    this.documentsTemplatesSrv._idToDelete = id;
-    this.navigationSrv.NavigateTo(`/documents-templates/delete/${strRow}`)
-  }
-
-  override addItem() {
-    const row = JSON.stringify({ id: 0 });
-    this.documentsTemplatesSrv._idToEdit = 0;
-    this.navigationSrv.NavigateTo(`/documents-templates/edit/${row}`)
   }
 
   override searchData(event: IDocumentsTemplates) {
@@ -167,7 +133,7 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
   }
 
  override cleanSearchData() {
-    this.fg.reset();
+    this.fg!.reset();
     this.loadAll();
   }
 

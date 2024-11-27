@@ -4,10 +4,12 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { BanksService } from '../banks.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface IBanks {
   id: number,
@@ -32,14 +34,11 @@ providers: [TranslateService]
 })
 export class BanksListComponent extends BaseListComponent {
 
-  banksSrv:any;
-
-  dataSource = {
+  override dataSource = {
     data: [] as IBanks[]
   };
   payload: any;
-  loading = false;
-  todoListo = false;
+
   override displayedLabels: IDisplayedLabels[] = [
     {
       name:'', isBoolean: false
@@ -70,11 +69,16 @@ export class BanksListComponent extends BaseListComponent {
     }
   ];
   fg: FormGroup;
+  override newRoute: string = '/banks/edit';
 
   constructor(
-
+    private readonly banksSrv: BanksService,
+    public override readonly translate: TranslateService,
+    public override readonly matSnackBar: MatSnackBar,
+    public override readonly navigationSrv: NavigationService,
+    private readonly fb: FormBuilder
   ){
-    super();
+    super(banksSrv, translate, matSnackBar,navigationSrv);
     this.fg = this.fb.group({
       name:[''],
       swift: [''],
@@ -87,52 +91,13 @@ export class BanksListComponent extends BaseListComponent {
     });
   }
    override ngOnInit(): void {
-    this.banksSrv = this.baseSrv as BanksService;
     this.loading = true;
     this.loadAll();
-  }
-
-  overrideloadAll() {
-    this.loading = true;
-    this.banksSrv.getAll().subscribe((All:any) => {
-      if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-        this.addItem();
-      } else {
-        this.dataSource = { data: All.data };;
-        this.loading = false;
-        this.todoListo = true;
-      }
-    })
   }
 
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabBanks', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
-  }
-
-
-  override edit(row:any) {
-    const strRow = JSON.stringify(row);
-    this.banksSrv._idToEdit = row.id;
-    this.navigationSrv.NavigateTo(`/banks/edit/${strRow}`)
-  }
-
-  override editNew(row:any) {
-    const strRow = JSON.stringify(row);
-    this.banksSrv._idToEdit = row.id;
-    window.open(`/banks/edit/new/${strRow}`, '_blank')
-  }
-
-  override delete(id: number) {
-    const strRow = JSON.stringify(id);
-    this.banksSrv._idToDelete = id;
-    this.navigationSrv.NavigateTo(`/banks/delete/${strRow}`)
-  }
-
-  override addItem() {
-    const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/banks/edit/${row}`)
   }
 
   override searchData(event: IBanks) {
@@ -157,7 +122,7 @@ export class BanksListComponent extends BaseListComponent {
   }
 
  override cleanSearchData() {
-    this.fg.reset();
+    this.fg!.reset();
     this.loadAll();
   }
 
