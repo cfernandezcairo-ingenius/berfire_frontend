@@ -1,16 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { BanksService } from '../banks.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { openSnackBar } from '../../../share/common/UI/utils'
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-banks-add-edit',
@@ -20,42 +17,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './banks-add-edit.component.scss',
   providers: [TranslateService]
 })
-export class BanksAddEditComponent implements OnInit {
+export class BanksAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode:boolean = false;
-  showinNewTab:boolean = false;
-  shoWButtonSaveAndNew:boolean = false;
-  loading = false;
-  fb: any;
-  id: number = 0;
+  banksSrv:any;
 
-  constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly banksSrv: BanksService,
-    private readonly router: Router,
-    private readonly matSnackBar: MatSnackBar
-  ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
-    })
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showinNewTab = this.router.url.includes('/banks/edit/new');
-      }
-    });
-    this.id = 0;
-    this.darkMode = false;
-    this.showinNewTab = true;
-    this.shoWButtonSaveAndNew = false;
-  }
+  constructor() { super(); }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.banksSrv = this.baseSrv as BanksService;
     this.id = this.banksSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -65,10 +34,8 @@ export class BanksAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.banksSrv.getById(payload).subscribe({
-        next:(res => {
-          this.model = { ...res.data};
-        }),
-        error: () => {
+        next:(res:any) => { this.model = { ...res.data}; },
+        error: (error:any) => {
           let title = this.translate.instant('inform');
           let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
           let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept'
@@ -148,20 +115,20 @@ export class BanksAddEditComponent implements OnInit {
     this.updateLabels();
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.SWIFT').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.SWIFT').subscribe((label:any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.IBAN').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.IBAN').subscribe((label:any) => {
       this.fields[1].fieldGroup[1].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -175,7 +142,7 @@ export class BanksAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  override onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {
       payload = {
@@ -193,7 +160,7 @@ export class BanksAddEditComponent implements OnInit {
     }
     const  myobs = this.id === 0 ?  this.banksSrv.add(payload) : this.banksSrv.edit(payload);
     myobs.subscribe({
-      next: (res) => {
+      next: (res:any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar, this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
@@ -210,13 +177,13 @@ export class BanksAddEditComponent implements OnInit {
           }
         }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

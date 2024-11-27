@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 })
 export class BaseService {
 
-  protected _idToDelete: number = 0;
-  protected _idToEdit: number = 0;
+  _idToDelete: number = 0;
+  _idToEdit: number = 0;
 
   constructor() { }
 

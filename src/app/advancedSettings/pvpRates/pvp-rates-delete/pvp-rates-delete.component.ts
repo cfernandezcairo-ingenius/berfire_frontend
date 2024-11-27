@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { PVPRatesService } from '../pvp-rates.service';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseDeleteComponent } from '../../../base-components/base-delete.component';
 
 @Component({
   selector: 'app-pvp-rates-delete',
@@ -14,25 +13,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styles: [],
   providers: [TranslateService]
 })
-export class PvpRatesDeleteComponent implements OnInit {
+export class PvpRatesDeleteComponent extends BaseDeleteComponent {
 
-  id: any;
-  darkMode = false;
+  pVPRatesSrv:any;
 
-  constructor(
-    private translate: TranslateService,
-    private pVPRatesSrv: PVPRatesService,
-    private navigationSrv: NavigationService,
-    private matSnackBar: MatSnackBar
-  ) {
-  }
+  constructor() {super();}
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.pVPRatesSrv = this.baseSrv as PVPRatesService;
     this.id = this.pVPRatesSrv._idToDelete;
     this.delete(this.id);
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     Swal.fire({
       title: this.translate.instant('confirm'),
       text: this.translate.currentLang === 'es' ? 'Desea continuar?' : 'Do you want to continue',
@@ -41,16 +34,14 @@ export class PvpRatesDeleteComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
       cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
     }).then(result => {
       if (result.isConfirmed) {
         this.pVPRatesSrv.delete(id).subscribe({
-          next: (d) => {
+          next: (d:any) => {
             openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'Registro Eliminado con éxito.!!' : 'Data deleted succesfully!!', this.translate.currentLang);
             this.navigationSrv.goback();
           },
-          error: (error) => {
+          error: (error:any) => {
             Swal.fire({
               title: this.translate.instant('inform'),
               text: this.translate.currentLang === 'es' ? 'Error al delete el Registro.!!!' : 'Error deleting data!!',
@@ -58,8 +49,6 @@ export class PvpRatesDeleteComponent implements OnInit {
               showConfirmButton:true,
               showCancelButton: false,
               confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-              background: this.darkMode ? '#444' : '#fff',
-              color: this.darkMode ? '#fff' : '#000',
             });
           },
           complete: () => {

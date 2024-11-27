@@ -9,10 +9,7 @@ import { WindowService } from '../../share/services/window.service';
 })
 export class PrTypesService extends BaseService {
 
-  public override _idToDelete: number = 0;
-  public override _idToEdit: number = 0;
-
-  constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { super(); }
+   constructor(private readonly http: HttpClient,  private readonly windowService: WindowService) { super(); }
 
   override add(payload: any): Observable<any> {
     return this.http.post<any>(`${this.windowService.apiUrl}/pRTypes`, payload);

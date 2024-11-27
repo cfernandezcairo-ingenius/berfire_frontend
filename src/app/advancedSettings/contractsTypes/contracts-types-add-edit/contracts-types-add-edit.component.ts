@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { NavigationEnd } from '@angular/router';
 import { ContractsTypesService } from '../contracts-types.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
@@ -20,33 +18,15 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   styles: '',
   providers: [TranslateService]
 })
-export class ContractsTypesAddEditComponent implements OnInit {
+export class ContractsTypesAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode = false;
-  id: number = 0;
-  showinNewTab: boolean = false;
-  shoWButtonSaveAndNew:boolean = true;
-  loading = false;
+  contractsTypesSrv:any;
 
   constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly contractsTypesSrv: ContractsTypesService,
-    private readonly router: Router,
-    private readonly matSnackBar: MatSnackBar
+
   ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
-    })
-    this.fg.valueChanges.subscribe(v=> {
-      //Aqui tengo los datos para cuando capture el submit
-    });
-    this.router.events.subscribe(event => {
+    super();
+    this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/contracts-types/edit/new');
@@ -57,7 +37,8 @@ export class ContractsTypesAddEditComponent implements OnInit {
     this.shoWButtonSaveAndNew = true;
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.contractsTypesSrv = this.baseSrv as ContractsTypesService;
     this.id = this.contractsTypesSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -70,7 +51,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.contractsTypesSrv.getById(payload).subscribe({
-        next:(res => {
+        next:((res:any) => {
           this.model = { ...res.data};
         }),
         error: () => {
@@ -155,20 +136,20 @@ export class ContractsTypesAddEditComponent implements OnInit {
     this.updateLabels();
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.DURATION').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.DURATION').subscribe((label:any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.ISWARNING').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.ISWARNING').subscribe((label:any) => {
       this.fields[1].fieldGroup[1].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -184,7 +165,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo: boolean = false) {
+  override onSubmit(model:any, nuevo: boolean = false) {
     let payload = {};
     if (this.id === 0) {
       payload = {
@@ -202,7 +183,7 @@ export class ContractsTypesAddEditComponent implements OnInit {
     }
     const myobs = this.id === 0 ? this.contractsTypesSrv.add(payload) : this.contractsTypesSrv.edit(payload);
     myobs.subscribe({
-      next: (res) => {
+      next: (res:any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
@@ -220,13 +201,13 @@ export class ContractsTypesAddEditComponent implements OnInit {
           }
         }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

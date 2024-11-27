@@ -9,9 +9,6 @@ import { BaseService } from '../../base-components/base.service';
 })
 export class ManufacturersService extends BaseService {
 
-  public override _idToDelete: number = 0;
-  public override _idToEdit: number = 0;
-
   constructor(private readonly http: HttpClient, private readonly windowService: WindowService) {super(); }
 
   override add(payload: any): Observable<any> {

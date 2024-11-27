@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { PopulationsService } from '../populations.service';
@@ -7,7 +6,7 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
 
 export interface IPopulations {
   id: number,
@@ -31,7 +30,7 @@ export interface IPopulations {
 ],
 providers: [TranslateService]
 })
-export class PopulationsListComponent implements OnInit {
+export class PopulationsListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as IPopulations[]
@@ -40,15 +39,15 @@ export class PopulationsListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels: IDisplayedLabels[] = [
+  override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Nombre',isBoolean:false},
     { name:'Pais',isBoolean:false},
     { name: 'Provincia',isBoolean:false},
     { name: 'Activo', isBoolean:true}
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn: IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Name',isBoolean:false},
     { name:'Country',isBoolean:false},
@@ -56,34 +55,26 @@ export class PopulationsListComponent implements OnInit {
     { name: 'Active', isBoolean:true}
   ];
 
-  constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly populationsSrv:PopulationsService,
-    private readonly matSnackBar: MatSnackBar
-  ){
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
-  }
+  populationsSrv:any;
 
-  ngOnInit(): void {
+  constructor(){
+    super();
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabPopulations' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
+  }
+
+  override ngOnInit(): void {
+    this.populationsSrv = this.baseSrv as PopulationsService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
+  override loadAll() {
     this.loading = true;
-    this.populationsSrv.getAll().subscribe(All => {
+    this.populationsSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -95,37 +86,37 @@ export class PopulationsListComponent implements OnInit {
     })
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabPopulations', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.populationsSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/populations/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.populationsSrv._idToEdit = row.id;
     window.open(`/populations/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.populationsSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/populations/delete/${strRow}`)
   }
 
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.populationsSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/populations/edit/${row}`)
   }
 
-  searchData(event: IPopulations) {
+  override searchData(event: IPopulations) {
     let payload = `?name=${event.name}`;
     if (event.country) {
       payload = payload + `&country=${event.country}`;
@@ -137,7 +128,7 @@ export class PopulationsListComponent implements OnInit {
       payload = payload + `&active=${event.active}`;
     }
     this.loading = true;
-    this.populationsSrv.getByFields(payload).subscribe(res=> {
+    this.populationsSrv.getByFields(payload).subscribe((res:any)=> {
       this.loading = false;
       if (res.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
@@ -148,7 +139,7 @@ export class PopulationsListComponent implements OnInit {
     this.todoListo = true;
   }
 
- cleanSearchData() {
+ override cleanSearchData() {
     //this.fg.reset();
     this.loadAll();
   }

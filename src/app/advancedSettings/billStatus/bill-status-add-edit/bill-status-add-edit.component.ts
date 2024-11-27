@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { NavigationEnd } from '@angular/router';
 import { BillStatusService } from '../bill-status.service';
-import { WindowService } from '../../../share/services/window.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 
 @Component({
   selector: 'app-bill-status-add-edit',
@@ -22,43 +19,25 @@ import { showMessage } from '../../../share/common/UI/sweetalert2';
   ,
 providers: [TranslateService]
 })
-export class BillStatusAddEditComponent implements OnInit {
+export class BillStatusAddEditComponent extends BaseAddEditComponent {
 
-  fields: any;
-  model:any = {};
-  fg = new FormGroup({});
-  darkMode = false;
-  loading = false;
-  fb: any;
-  id: number = 0;
-  showinNewTab:boolean = false;
-  shoWButtonSaveAndNew:boolean = false;
+  billStatusSrv:any;
 
   constructor(
-    private readonly translate: TranslateService,
-    public readonly navigationService: NavigationService,
-    private readonly billStatusSrv: BillStatusService,
-    private readonly router: Router,
-    private readonly windowService: WindowService,
-    private readonly matSnackBar: MatSnackBar
+
   ) {
-    this.translate.onLangChange.subscribe(ch=> {
-      this.model.lang = this.translate.currentLang;
-      this.updateLabels();
-      this.updateValidationMessages();
-    })
-    this.router.events.subscribe(event => {
+    super();
+    this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/invoice-status/edit/new');
       }
     });
-    this.id = 0;
-    this.showinNewTab = false;
-    this.shoWButtonSaveAndNew = true;
+
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.billStatusSrv = this.baseSrv as BillStatusService;
     this.id = this.billStatusSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -75,9 +54,7 @@ export class BillStatusAddEditComponent implements OnInit {
       }
       this.loading = true;
       this.billStatusSrv.getById(payload).subscribe({
-        next:(res => {
-          this.model = { ...res.data};
-        }),
+        next:(res:any) => { this.model = { ...res.data};},
         error: () => {
           let title = this.translate.instant('inform');
           let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
@@ -179,29 +156,29 @@ export class BillStatusAddEditComponent implements OnInit {
     this.updateLabels();
   }
 
-  updateLabels() {
+  override updateLabels() {
 
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.PAID').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.PAID').subscribe((label:any) => {
       this.fields[1].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.RETURNED').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.RETURNED').subscribe((label:any) => {
       this.fields[1].fieldGroup[1].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.PENDING').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.PENDING').subscribe((label:any) => {
       this.fields[2].fieldGroup[0].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.SENT').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.SENT').subscribe((label:any) => {
       this.fields[2].fieldGroup[1].props.label = label;
     });
-    this.translate.get('FORM.FIELDS.NOTPAID').subscribe((label) => {
+    this.translate.get('FORM.FIELDS.NOTPAID').subscribe((label:any) => {
       this.fields[3].fieldGroup[0].props.label = label;
     });
   }
 
-  updateValidationMessages() {
+  override updateValidationMessages() {
     this.fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {
@@ -215,7 +192,7 @@ export class BillStatusAddEditComponent implements OnInit {
     });
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  override onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {
       payload = {
@@ -239,15 +216,12 @@ export class BillStatusAddEditComponent implements OnInit {
     }
     const myobs = this.id === 0 ? this.billStatusSrv.add(payload) : this.billStatusSrv.edit(payload);
     myobs.subscribe({
-      next: (res) => {
+      next: (res: any) => {
         if (res.success === true) {
           openSnackBar(this.matSnackBar,this.translate.instant('save_ok'), this.translate.currentLang);
         } else {
           HandleMessagesSubmit(this.translate, res.error);
         }
-        //Aqui tengo que preguntar si nuevo = true
-        //Para limpiar el formulario
-        //y permanecer en la ventana
         if (res.success === true) {
           if (this.showinNewTab) {
             localStorage.setItem('dataModifiedInNewTabBillStatements', 'true');
@@ -260,13 +234,13 @@ export class BillStatusAddEditComponent implements OnInit {
           }
         }
       },
-      error: (error) => {
+      error: (error:any) => {
         HandleMessagesSubmit(this.translate, error);
       },
     });
   }
 
-  onCancel() {
+  override onCancel() {
     if (this.showinNewTab) {
       window.close();
     } else {

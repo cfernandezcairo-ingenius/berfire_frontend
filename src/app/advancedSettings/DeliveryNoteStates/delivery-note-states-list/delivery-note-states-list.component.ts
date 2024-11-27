@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { Component } from '@angular/core';
 import { TranslateService, TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseListComponent } from '../../../base-components/base-list.component';
 
 export interface IDeliveryNoteStates {
   id: number,
@@ -29,45 +28,35 @@ export interface IDeliveryNoteStates {
 ],
 providers: [TranslateService, TranslateStore]
 })
-export class DeliveryNoteStatesListComponent implements OnInit {
+export class DeliveryNoteStatesListComponent extends BaseListComponent {
 
   dataSource = {
     data: [] as IDeliveryNoteStates[]
   };
-  darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels: IDisplayedLabels[] = [
+  override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name: 'Nombre',isBoolean:false},
     { name: 'Confirma',isBoolean:true}
   ];
-  displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn: IDisplayedLabels[] = [
+  override displayedLabelsEs = this.displayedLabels;
+  override displayedLabelsEn: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name: 'Name',isBoolean:false},
     { name: 'Confirm',isBoolean:true}
   ];
   fg: FormGroup;
+  deliveryNoteStatesSrv:any;
 
   constructor(
-    private readonly navigationSrv: NavigationService,
-    private readonly translate: TranslateService,
-    private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
-    private readonly fb: FormBuilder,
-    private readonly matSnackBar: MatSnackBar
+
   ){
+    super();
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabDeliveryNoteStates' && event.newValue === 'true') {
         this.handleDataChange();
-      }
-    });
-    this.translate.onLangChange.subscribe(lc=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
       }
     });
     this.fg = this.fb.group({
@@ -76,13 +65,14 @@ export class DeliveryNoteStatesListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    this.deliveryNoteStatesSrv = this.baseSrv as DeliveryNoteStatesService;
     this.loading = true;
     this.loadAll();
   }
 
-  loadAll() {
-    this.deliveryNoteStatesSrv.getAll().subscribe(All => {
+  override loadAll() {
+    this.deliveryNoteStatesSrv.getAll().subscribe((All:any) => {
       if (All.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
         this.addItem();
@@ -94,42 +84,42 @@ export class DeliveryNoteStatesListComponent implements OnInit {
     });
   }
 
-  handleDataChange() {
+  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 
-  edit(row:any) {
+  override edit(row:any) {
     const strRow = JSON.stringify(row);
     this.deliveryNoteStatesSrv._idToEdit = row.id;
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${strRow}`)
   }
 
-  editNew(row:any) {
+  override editNew(row:any) {
     const strRow = JSON.stringify(row);
     this.deliveryNoteStatesSrv._idToEdit = row.id;
     window.open(`/delivery-note-states/edit/new/${strRow}`, '_blank')
   }
 
-  delete(id: number) {
+  override delete(id: number) {
     const strRow = JSON.stringify(id);
     this.deliveryNoteStatesSrv._idToDelete = id;
     this.navigationSrv.NavigateTo(`/delivery-note-states/delete/${strRow}`)
   }
-  addItem() {
+  override addItem() {
     const row = JSON.stringify({ id: 0 });
     this.deliveryNoteStatesSrv._idToEdit = 0;
     this.navigationSrv.NavigateTo(`/delivery-note-states/edit/${row}`)
   }
 
-  searchData(event: IDeliveryNoteStates) {
+  override searchData(event: IDeliveryNoteStates) {
     let payload = `?name=${event.name}`;
     if (event.confirmDeliveryNote) {
       payload = payload + `&confirmDeliveryNote=${event.confirmDeliveryNote}`;
     }
     this.loading = true;
-    this.deliveryNoteStatesSrv.getByFields(payload).subscribe(res=> {
+    this.deliveryNoteStatesSrv.getByFields(payload).subscribe((res:any)=> {
       this.loading = false;
       if (res.data.length === 0) {
         openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
@@ -140,7 +130,7 @@ export class DeliveryNoteStatesListComponent implements OnInit {
     this.todoListo = true;
   }
 
- cleanSearchData() {
+ override cleanSearchData() {
     this.fg.reset();
     this.loadAll();
   }

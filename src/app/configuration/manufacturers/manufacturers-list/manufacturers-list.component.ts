@@ -62,6 +62,11 @@ export class ManufacturersListComponent extends BaseListComponent {
       name: [''],
       description: [''],
     });
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'dataModifiedInNewTabManufacturers' && event.newValue === 'true') {
+        this.handleDataChange();
+      }
+    });
   }
 
   override ngOnInit(): void {
