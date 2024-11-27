@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -9,6 +9,8 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-delivery-note-states-add-edit',
@@ -20,12 +22,15 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 })
 export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
 
-  deliveryNoteStatesSrv:any;
 
   constructor(
-
+    private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
+    public override  readonly translate: TranslateService,
+    public readonly matSnackBar: MatSnackBar,
+    public readonly navigationSrv: NavigationService,
+    public readonly router: Router
   ) {
-    super();
+    super(translate);
     this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
@@ -38,7 +43,6 @@ export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.deliveryNoteStatesSrv = this.baseSrv as DeliveryNoteStatesService;
     this.id = this.deliveryNoteStatesSrv._idToEdit;
     if (this.id === 0) {
       this.model = {
@@ -158,7 +162,7 @@ export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
           localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'true');
           window.close();
         } else {
-          this.navigationService.goback();
+          this.navigationSrv.goback();
         }
       },
       error: (error:any) => {
@@ -172,7 +176,7 @@ export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
       window.close();
     } else {
     //Aqui tengo que regresar a la ultima ruta
-    this.navigationService.goback();
+    this.navigationSrv.goback();
     }
   }
 }

@@ -1,11 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationService } from '../navigation/shared/services/navigation.service';
-import { BaseService } from './base.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
 
 @Component({
   selector: 'app-base-add-edit',
@@ -26,14 +21,8 @@ export class BaseAddEditComponent implements OnInit {
   loading = false;
   fb: any;
 
-  translate = Inject(TranslateService);
-  navigationService = Inject(NavigationService);
-  baseSrv = Inject(BaseService);
-  router = Inject(Router);
-  matSnackBar = Inject(MatSnackBar);
-
   constructor(
-
+    public readonly translate: TranslateService,
   ) {
     this.translate.onLangChange.subscribe({
       next:(ch:any) => {
@@ -48,7 +37,7 @@ export class BaseAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   console.log('Metodo onInit');
+    console.log('Metodo onInit');
   }
 
   updateLabels() {
@@ -60,7 +49,7 @@ export class BaseAddEditComponent implements OnInit {
     console.log('Metodo updateValidationMessages');
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
+  onSubmit(model:any,nuevo:boolean = false) {
     console.log('Metodo onSubmit');
   }
 

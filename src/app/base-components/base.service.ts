@@ -11,41 +11,41 @@ export class BaseService {
 
   constructor() { }
 
-  protected add(payload: any): Observable<any> {
+  add(payload: any): Observable<any> {
     return new Observable<any>(observer => {
       observer.next({type: 'add'});
       observer.complete();
     });
   }
-  protected edit(payload: any): Observable<any> {
+  edit(payload: any): Observable<any> {
     return new Observable<any>(observer => {
       observer.next({type: 'edit'});
       observer.complete();
     });
   }
 
-  protected getAll(): Observable<any> {
+  getAll(): Observable<any> {
     return new Observable<any>(observer => {
       observer.next({type: 'getAll'});
       observer.complete();
     });
   }
 
-  protected getById(payload:any): Observable<any> {
+  getById(payload:any): Observable<any> {
     return new Observable<any>(observer => {
       observer.next({type: 'getById'});
       observer.complete();
     });
   }
 
-  protected getByFields(payload:any): Observable<any> {
+  getByFields(payload:any): Observable<any> {
     return new Observable<any>(observer => {
       observer.next({type: 'getByFields'});
       observer.complete();
     });
   }
 
-  protected delete(id:any):Observable<any> {
+  delete(id:any):Observable<any> {
     return new Observable<any>(observer => {
       observer.next({type: 'delete'});
       observer.complete();

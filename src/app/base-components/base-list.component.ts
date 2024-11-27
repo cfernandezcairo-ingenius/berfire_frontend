@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationService } from '../navigation/shared/services/navigation.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseService } from './base.service';
-import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IDisplayedLabels } from '../navigation/shared/models/app-models';
+import { openSnackBar } from '../share/common/UI/utils';
+import { NavigationService } from '../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-base-list',
@@ -22,26 +22,29 @@ export class BaseListComponent implements OnInit {
   displayedLabels: IDisplayedLabels[] = [];
   displayedLabelsEs = this.displayedLabels;
   displayedLabelsEn: IDisplayedLabels[] = [];
+  dataSource: any;
+  loading:boolean = false;
+  todoListo:boolean = false;
+  newRoute:string = '';
 
-  navigationSrv = Inject(NavigationService);
-  translate = Inject(TranslateService);
-  baseSrv = Inject(BaseService);
-  fb = Inject(FormBuilder);
-  matSnackBar = Inject(MatSnackBar);
-
-  constructor(){
-    this.translate.onLangChange.subscribe((lc: any)=> {
-      if(this.translate.currentLang === 'es') {
-        this.displayedLabels = this.displayedLabelsEs;
-      } else {
-        this.displayedLabels = this.displayedLabelsEn;
-      }
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
+  constructor(
+    private readonly baseSrv: BaseService,
+    public readonly translate: TranslateService,
+    public readonly matSnackBar: MatSnackBar,
+    public readonly navigationSrv: NavigationService)
+    {
+      window.addEventListener('storage', (event) => {
+        if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
+          this.handleDataChange();
+        }
+      });
+      this.translate.onLangChange.subscribe((lc: any)=> {
+        if(this.translate.currentLang === 'es') {
+          this.displayedLabels = this.displayedLabelsEs;
+        } else {
+          this.displayedLabels = this.displayedLabelsEn;
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -49,7 +52,16 @@ export class BaseListComponent implements OnInit {
   }
 
   loadAll() {
-    console.log('Metodo loadAll');
+    this.baseSrv.getAll().subscribe((All:any) => {
+      if (All.data.length === 0) {
+        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
+        this.addItem();
+      } else {
+        this.dataSource = { data: All.data };;
+        this.loading = false;
+        this.todoListo = true;
+      }
+    })
   }
 
   handleDataChange() {
@@ -58,19 +70,23 @@ export class BaseListComponent implements OnInit {
 
 
   edit(row:any) {
-    console.log('Metodo edit');
+    this.baseSrv._idToEdit = row.id;
+    this.navigationSrv.NavigateTo(`${this.newRoute}`)
   }
 
   editNew(row:any) {
-    console.log('Metodo editNew');
+    this.baseSrv._idToEdit = row.id;
+    window.open(`${this.newRoute}`, '_blank')
   }
 
   delete(id: number) {
-    console.log('Metodo delete');
+    this.baseSrv._idToDelete = id;
+    this.navigationSrv.NavigateTo(`${this.newRoute}`)
   }
 
   addItem() {
-    console.log('Metodo addItem');
+    this.baseSrv._idToEdit = 0;
+    this.navigationSrv.NavigateTo(`${this.newRoute}`)
   }
 
   searchData(event: any) {

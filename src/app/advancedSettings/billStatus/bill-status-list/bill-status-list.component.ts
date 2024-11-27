@@ -4,10 +4,12 @@ import { TableListComponent } from "../../../share/common/UI/table-list/table-li
 import { BillStatusService } from '../bill-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { IBillStatements, IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-bill-status-list',
@@ -25,12 +27,11 @@ providers: [TranslateService]
 })
 export class BillStatusListComponent extends BaseListComponent {
 
-  dataSource = {
+  override dataSource = {
     data: [] as IBillStatements[]
   };
   payload: any;
-  loading = false;
-  todoListo = false;
+
   override displayedLabels: IDisplayedLabels[] = [
     {
       name:'',
@@ -61,8 +62,6 @@ export class BillStatusListComponent extends BaseListComponent {
       isBoolean: true
     }
   ]
-
-
   override displayedLabelsEs = this.displayedLabels;
   override displayedLabelsEn: IDisplayedLabels[] =
   [
@@ -95,12 +94,18 @@ export class BillStatusListComponent extends BaseListComponent {
       isBoolean: true
     }
   ];
-  fg: FormGroup
+  fg: FormGroup;
 
-  billStatusSrv:any;
+  override newRoute: string = '/invoice-status/edit';
 
-  constructor(){
-    super();
+  constructor(
+    private readonly billStatusSrv: BillStatusService,
+    public override readonly translate: TranslateService,
+    public override readonly matSnackBar: MatSnackBar,
+    public override readonly navigationSrv: NavigationService,
+    private readonly fb: FormBuilder
+  ){
+    super(billStatusSrv, translate, matSnackBar,navigationSrv);
     this.fg = this.fb.group({
       name:[''],
       isPaid: [],
@@ -117,53 +122,14 @@ export class BillStatusListComponent extends BaseListComponent {
   }
 
   override ngOnInit(): void {
-    this.billStatusSrv = this.baseSrv as BillStatusService;
     this.loading = true;
     this.loadAll();
-  }
-
-  override loadAll() {
-    this.loading = true;
-    this.billStatusSrv.getAll().subscribe((All:any) => {
-      if (All.data.length === 0) {
-        openSnackBar(this.matSnackBar, this.translate.currentLang === 'es' ? 'No existen registros' : 'The data returned empty.', this.translate.currentLang);
-        this.addItem();
-      } else {
-        this.dataSource = { data: All.data };
-        this.loading = false;
-        this.todoListo = true;
-      }
-    })
   }
 
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabBillStatements', 'false');
     //Aqui tengo que recargar los datos desde el backend
     this.navigationSrv.NavigateTo('/all/edit/new')
-  }
-
-
-  override edit(row:any) {
-    const strRow = JSON.stringify(row);
-    this.billStatusSrv._idToEdit = row.id;
-    this.navigationSrv.NavigateTo(`/invoice-status/edit/${strRow}`)
-  }
-
-  override editNew(row:any) {
-    const strRow = JSON.stringify(row);
-    this.billStatusSrv._idToEdit = row.id;
-    window.open(`/invoice-status/edit/new/${strRow}`, '_blank')
-  }
-
-  override delete(id: number) {
-    const strRow = JSON.stringify(id);
-    this.billStatusSrv._idToDelete = id;
-    this.navigationSrv.NavigateTo(`/invoice-status/delete/${strRow}`)
-  }
-
-  override addItem() {
-    const row = JSON.stringify({ id: 0 });
-    this.navigationSrv.NavigateTo(`/invoice-status/edit/${row}`)
   }
 
   override searchData(event: IBillStatements) {
@@ -198,7 +164,7 @@ export class BillStatusListComponent extends BaseListComponent {
   }
 
   override cleanSearchData() {
-    this.fg.reset();
+    this.fg!.reset();
     this.loadAll();
   }
 

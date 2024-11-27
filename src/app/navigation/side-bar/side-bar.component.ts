@@ -40,7 +40,7 @@ export class SideBarComponent {
   }
 
   setMenuHidden() {
-    this.sideBarsrv.setVisible(false);
+    //this.sideBarsrv.setVisible(false);
   }
 
 }

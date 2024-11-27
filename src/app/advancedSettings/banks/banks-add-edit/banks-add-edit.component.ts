@@ -8,6 +8,9 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { openSnackBar } from '../../../share/common/UI/utils'
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-banks-add-edit',
@@ -19,12 +22,15 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 })
 export class BanksAddEditComponent extends BaseAddEditComponent {
 
-  banksSrv:any;
-
-  constructor() { super(); }
+  constructor(
+    private readonly banksSrv: BanksService,
+    public override  readonly translate: TranslateService,
+    public readonly matSnackBar: MatSnackBar,
+    public readonly navigationSrv: NavigationService,
+    public readonly router: Router
+  ) { super(translate); }
 
   override ngOnInit(): void {
-    this.banksSrv = this.baseSrv as BanksService;
     this.id = this.banksSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -173,7 +179,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
           } else if (nuevo) {
               this.fg.reset();
           } else {
-            this.navigationService.goback();
+            this.navigationSrv.goback();
           }
         }
       },
@@ -187,7 +193,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
     if (this.showinNewTab) {
       window.close();
     } else {
-    this.navigationService.goback();
+    this.navigationSrv.goback();
     }
   }
 }

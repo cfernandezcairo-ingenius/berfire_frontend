@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { PVPRatesService } from '../pvp-rates.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -9,6 +9,8 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-pvp-rates-add-edit',
@@ -20,10 +22,14 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 })
 export class PVPRatesAddEditComponent extends BaseAddEditComponent {
 
-  pVPRatesSrv:any;
-
-  constructor() {
-    super();
+  constructor(
+    private readonly pVPRatesSrv: PVPRatesService,
+    public override  readonly translate: TranslateService,
+    public readonly matSnackBar: MatSnackBar,
+    public readonly navigationSrv: NavigationService,
+    public readonly router: Router
+  ) {
+    super(translate);
     this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         this.showinNewTab = this.router.url.includes('/payment-form/edit/new');
@@ -35,7 +41,6 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.pVPRatesSrv = this.baseSrv as PVPRatesService;
     this.id = this.pVPRatesSrv._idToEdit;
     if (this.id === 0) {
 
@@ -165,7 +170,7 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
           } else if (nuevo) {
               this.fg.reset();
           } else {
-            this.navigationService.goback();
+            this.navigationSrv.goback();
           }
         }
       },
@@ -180,7 +185,7 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
       window.close();
     } else {
     //Aqui tengo que regresar a la ultima ruta
-    this.navigationService.goback();
+    this.navigationSrv.goback();
     }
   }
 }

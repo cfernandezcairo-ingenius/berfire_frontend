@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { BillStatusService } from '../bill-status.service';
 import { CommonModule } from '@angular/common';
 import { HandleMessagesSubmit } from '../../../share/common/handle-error-messages-submit';
@@ -9,6 +9,8 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { openSnackBar } from '../../../share/common/UI/utils';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
 @Component({
   selector: 'app-bill-status-add-edit',
@@ -21,12 +23,14 @@ providers: [TranslateService]
 })
 export class BillStatusAddEditComponent extends BaseAddEditComponent {
 
-  billStatusSrv:any;
-
   constructor(
-
+    private readonly billStatusSrv: BillStatusService,
+    public override  readonly translate: TranslateService,
+    public readonly matSnackBar: MatSnackBar,
+    public readonly navigationSrv: NavigationService,
+    public readonly router: Router
   ) {
-    super();
+    super(translate);
     this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
         // Cambia la lógica según tus rutas
@@ -37,7 +41,6 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.billStatusSrv = this.baseSrv as BillStatusService;
     this.id = this.billStatusSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
@@ -230,7 +233,7 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
           } else if (nuevo) {
               this.fg.reset();
           } else {
-            this.navigationService.goback();
+            this.navigationSrv.goback();
           }
         }
       },
@@ -245,7 +248,7 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
       window.close();
     } else {
     //Aqui tengo que regresar a la ultima ruta
-    this.navigationService.goback();
+    this.navigationSrv.goback();
     }
   }
 }

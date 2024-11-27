@@ -94,6 +94,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showMenu() {
+    debugger;
     const miDiv = document.getElementById('container_sidebar');
     miDiv!.classList.toggle('visible');
     this.sidebarVisible = !this.sidebarVisible;
