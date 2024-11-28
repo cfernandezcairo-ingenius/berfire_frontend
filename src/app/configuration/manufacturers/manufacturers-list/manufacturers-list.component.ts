@@ -54,6 +54,7 @@ export class ManufacturersListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/manufacturers/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabManufacturers';
 
   constructor(
     private readonly manufacturersSrv: ManufacturersService,
@@ -67,16 +68,6 @@ export class ManufacturersListComponent extends BaseListComponent {
       name: [''],
       description: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabManufacturers' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabManufacturers', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IManufacturers) {

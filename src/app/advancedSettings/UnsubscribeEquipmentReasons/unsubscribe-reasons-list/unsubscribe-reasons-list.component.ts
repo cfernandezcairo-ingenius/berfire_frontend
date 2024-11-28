@@ -52,6 +52,7 @@ export class UnsubscribeReasonsListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/unsubscribe-reasons/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabUnsubscribeReasons';
 
   constructor(
     private readonly unsubscribeReasonsSrv: UnsubscribeReasonsService,
@@ -65,17 +66,6 @@ export class UnsubscribeReasonsListComponent extends BaseListComponent {
       name: [''],
       description: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabUnsubscribeReasons' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabUnsubscribeReasons', 'false');
-    //Aqui tengo que recargar los datos desde el backend
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IUnsubscribeReasons) {

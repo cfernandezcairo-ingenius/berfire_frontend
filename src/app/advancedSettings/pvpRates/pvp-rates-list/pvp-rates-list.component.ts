@@ -51,6 +51,7 @@ export class PvPRatesListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/pvp-rates/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabPvPRates';
 
   constructor(
     private readonly pVPRatesSrv: PVPRatesService,
@@ -64,16 +65,6 @@ export class PvPRatesListComponent extends BaseListComponent {
       name:[''],
       description: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabPvPRates' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabPvPRates', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IPvpRates) {

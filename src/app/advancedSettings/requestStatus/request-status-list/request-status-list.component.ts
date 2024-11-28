@@ -52,6 +52,7 @@ export class RequestStatusListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/request-status/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabRequestStatus';
 
   constructor(
     private readonly requestStatusSrv: RequestStatusService,
@@ -65,16 +66,6 @@ export class RequestStatusListComponent extends BaseListComponent {
       name:[''],
       code: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabRequestStatus' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabRequestStatus', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new');
   }
 
   searchData(event: IRequestStatus) {

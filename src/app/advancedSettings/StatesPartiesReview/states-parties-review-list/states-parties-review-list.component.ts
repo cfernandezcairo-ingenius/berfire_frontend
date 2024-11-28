@@ -53,6 +53,7 @@ export class StatesPartiesReviewListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/states-parties-review/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabStatesPartiesReview';
 
   constructor(
     private readonly statesPartiesReviewSrv: StatesPartiesReviewService,
@@ -66,16 +67,6 @@ export class StatesPartiesReviewListComponent extends BaseListComponent {
       name:[''],
       description: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabStatesPartiesReview' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabStatesPartiesReview', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IPrStatus) {

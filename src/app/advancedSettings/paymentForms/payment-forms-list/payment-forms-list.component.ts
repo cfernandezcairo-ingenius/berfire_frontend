@@ -55,6 +55,7 @@ export class PaymenFormsListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/payment-forms/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabPaymentForms';
 
   constructor(
     private readonly paymentFormsSrv: PaymentFormsService,
@@ -68,11 +69,6 @@ export class PaymenFormsListComponent extends BaseListComponent {
       name:[''],
       days: [''],
       home: [''],
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabPaymentForms' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
     });
   }
 

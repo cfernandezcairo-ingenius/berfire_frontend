@@ -26,6 +26,7 @@ export class BaseListComponent implements OnInit {
   loading:boolean = false;
   todoListo:boolean = false;
   newRoute:string = '';
+  routefromNewTab = '';
 
   constructor(
     private readonly baseSrv: BaseService,
@@ -38,6 +39,11 @@ export class BaseListComponent implements OnInit {
           this.displayedLabels = this.displayedLabelsEs;
         } else {
           this.displayedLabels = this.displayedLabelsEn;
+        }
+      });
+      window.addEventListener('storage', (event) => {
+        if (event.key === `${this.routefromNewTab}` && event.newValue === 'true') {
+          this.handleDataChange();
         }
       });
   }
@@ -61,7 +67,8 @@ export class BaseListComponent implements OnInit {
   }
 
   handleDataChange() {
-    console.log('Metodo handleDataChange');
+    localStorage.setItem(`${this.routefromNewTab}`, 'false');
+    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
 

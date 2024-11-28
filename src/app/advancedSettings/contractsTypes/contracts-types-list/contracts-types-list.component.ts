@@ -53,6 +53,7 @@ export class ContractsTypesListComponent extends BaseListComponent {
   ];
   fg: FormGroup;
   override newRoute: string = '/clients-types/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabContractsTypes';
 
   constructor(
     private readonly contractsTypesSrv: ContractsTypesService,
@@ -66,17 +67,6 @@ export class ContractsTypesListComponent extends BaseListComponent {
       name:[''],
       description: [],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabContractsTypes' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabContractsTypes', 'false');
-    //Aqui tengo que recargar los datos desde el backend
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IContractsTypes) {

@@ -69,6 +69,7 @@ export class BanksListComponent extends BaseListComponent {
   ];
   fg: FormGroup;
   override newRoute: string = '/banks/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabBanks';
 
   constructor(
     private readonly banksSrv: BanksService,
@@ -83,16 +84,6 @@ export class BanksListComponent extends BaseListComponent {
       swift: [''],
       Iban: [],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabBanks' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabBanks', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IBanks) {
