@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslateService, TranslateStore } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { BaseDeleteComponent } from '../../../base-components/base-delete.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,7 +11,7 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
   imports: [],
   template: ``,
   styles: [],
-  providers: [TranslateService, TranslateStore]
+  providers: [TranslateService]
 })
 export class DeliveryNoteStatesDeleteComponent extends BaseDeleteComponent {
 
