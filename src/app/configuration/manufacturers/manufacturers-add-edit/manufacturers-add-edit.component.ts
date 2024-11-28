@@ -19,6 +19,7 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class ManufacturersAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabManufacturers';
 
   constructor(
     private readonly manufacturersSrv: ManufacturersService,

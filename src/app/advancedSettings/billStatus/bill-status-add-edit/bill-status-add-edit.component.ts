@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getFieldsBillStatus } from './bill-status-add-edit-fields';
 
 @Component({
   selector: 'app-bill-status-add-edit',
@@ -19,6 +20,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 providers: [TranslateService]
 })
 export class BillStatusAddEditComponent extends BaseAddEditComponent {
+
+  override dataModifiedInNewTab = 'dataModifiedInNewTabBillStatements';
 
   constructor(
     private readonly billStatusSrv: BillStatusService,
@@ -33,90 +36,7 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
         this.showinNewTab = this.router.url.includes('/invoice-status/edit/new');
       }
     });
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-126 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isPaid',
-            props: {
-              label: 'FORM.FIELDS.PAID',
-              required:false
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isReturned',
-            props: {
-              label: 'FORM.FIELDS.RETURNED',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isPending',
-            props: {
-              label: 'FORM.FIELDS.PENDING',
-              required:false
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isSent',
-            props: {
-              label: 'FORM.FIELDS.SENT',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'isUnPaid',
-            props: {
-              label: 'FORM.FIELDS.NOTPAID',
-              required:false
-            }
-          },
-        ],
-      }
-    ];
+    this.fields = getFieldsBillStatus(translate);
   }
 
   override ngOnInit(): void {

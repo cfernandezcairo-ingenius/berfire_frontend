@@ -27,6 +27,8 @@ export class BaseAddEditComponent implements OnInit {
   loading = false;
   fb: any;
 
+  dataModifiedInNewTab = '';
+
   constructor(
     public readonly translate: TranslateService,
     public readonly navigationSrv: NavigationService,
@@ -96,7 +98,7 @@ export class BaseAddEditComponent implements OnInit {
         }
         if (res.success === true) {
           if (this.showinNewTab) {
-            localStorage.setItem('dataModifiedInNewTabBanks', 'true');
+            localStorage.setItem(`${this.dataModifiedInNewTab}`, 'true');
             if (!nuevo) window.close();
           } else if (nuevo) {
               this.fg.reset();

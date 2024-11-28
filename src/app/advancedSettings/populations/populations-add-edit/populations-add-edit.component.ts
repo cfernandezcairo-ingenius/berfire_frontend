@@ -22,6 +22,8 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
   countries: any;
   selectedCountry = '';
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabPopulations';
+
   constructor(
     private readonly populationsService: PopulationsService,
     public override  readonly translate: TranslateService,

@@ -181,7 +181,7 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
     if (this.id === 0) {
       payload = {
         code: this.fg.get('code')?.value,
-        order: this.fg.get('order')?.value,
+        order: Number(this.fg.get('order')?.value),
         periodicity: this.fg.get('periodicity')?.value,
         description: this.fg.get('description')?.value,
         report: this.fg.get('report')?.value,
@@ -190,7 +190,7 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
       payload = {
         id: this.id,
         code: this.fg.get('code')?.value,
-        order: this.fg.get('order')?.value,
+        order: Number(this.fg.get('order')?.value),
         periodicity: this.fg.get('periodicity')?.value,
         description: this.fg.get('description')?.value,
         report: this.fg.get('report')?.value,

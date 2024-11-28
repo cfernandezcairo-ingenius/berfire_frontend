@@ -19,6 +19,8 @@ import { NavigationService } from '../../navigation/shared/services/navigation.s
 })
 export class TechnicalsAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabTechnicals';
+
   constructor(
     private readonly technicalsSrv: TechnicalsService,
     public override  readonly translate: TranslateService,

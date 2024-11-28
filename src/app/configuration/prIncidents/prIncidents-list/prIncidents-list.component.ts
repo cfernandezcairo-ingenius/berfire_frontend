@@ -40,25 +40,32 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
   };
   payload: any;
 
+  // id: number,
+  // code: string,
+  // order: number,
+  // periodicity: string,
+  // description: string,
+  // report: string
+
   override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
-    { name:'Nombre',isBoolean:false},
-    { name:'Nombre Equipo',isBoolean:false},
-    { name: 'Titulo Equipo',isBoolean:false},
-    { name: 'description', isBoolean:false}
+    { name:'Código',isBoolean:false},
+    { name:'Orden',isBoolean:false},
+    { name: 'Periodicidad',isBoolean:false},
+    { name: 'Descripción', isBoolean:false}
   ];
   override displayedLabelsEs = this.displayedLabels;
   override displayedLabelsEn: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
-    { name:'Name',isBoolean:false},
-    { name: 'Team Name',isBoolean:false},
-    { name: 'Title Name',isBoolean:false},
+    { name:'Code',isBoolean:false},
+    { name: 'Order',isBoolean:false},
+    { name: 'Periodicity',isBoolean:false},
     { name: 'Description', isBoolean:false}
   ];
 
   fg: FormGroup;
 
-  override newRoute: string = '/prTypes/edit';
+  override newRoute: string = '/prIncidents/edit';
 
   constructor(
     private readonly prIncidentsSrv: PrIncidentsService,
@@ -75,7 +82,7 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
       description: [''],
     });
     window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
+      if (event.key === 'dataModifiedInNewTabPrIncidents' && event.newValue === 'true') {
         this.handleDataChange();
       }
     });
@@ -88,7 +95,7 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
   }
 
   override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabPrTypes', 'false');
+    localStorage.setItem('dataModifiedInNewTabPrIncidents', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
   searchData(event: IprIncidents) {

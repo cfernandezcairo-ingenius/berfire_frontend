@@ -20,6 +20,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class DocumentsTemplatesAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabTemplates';
+
     constructor(
       private readonly documentsTemplatesSrv: DocumentsTemplatesService,
       public override  readonly translate: TranslateService,

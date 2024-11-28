@@ -19,6 +19,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class RequestStatusAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabRequestStatus';
+
   constructor(
     private readonly requestStatusSrv: RequestStatusService,
     public override  readonly translate: TranslateService,
