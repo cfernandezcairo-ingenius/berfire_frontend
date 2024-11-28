@@ -54,6 +54,7 @@ export class StatementOrderListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/statement-order/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabStatementOrder';
 
   constructor(
     private readonly StatementOrderSrv: StatementOrderService,
@@ -68,16 +69,6 @@ export class StatementOrderListComponent extends BaseListComponent {
       description: [''],
       finalized: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabStatementOrder' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabStatementOrder', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IIStatementOrder) {

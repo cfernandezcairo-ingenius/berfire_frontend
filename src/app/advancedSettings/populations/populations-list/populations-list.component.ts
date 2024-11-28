@@ -58,6 +58,7 @@ export class PopulationsListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/populations/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabPopulations';
 
   constructor(
     private readonly populationsSrv: PopulationsService,
@@ -72,11 +73,6 @@ export class PopulationsListComponent extends BaseListComponent {
       country: [''],
       province: [''],
       active: [''],
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabPopulations' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
     });
   }
 

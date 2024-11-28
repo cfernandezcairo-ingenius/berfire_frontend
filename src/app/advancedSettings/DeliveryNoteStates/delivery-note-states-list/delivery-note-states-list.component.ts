@@ -50,6 +50,7 @@ export class DeliveryNoteStatesListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/delivery-note-states/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabDeliveryNoteStates';
 
   constructor(
     private readonly deliveryNoteStatesSrv: DeliveryNoteStatesService,
@@ -63,16 +64,6 @@ export class DeliveryNoteStatesListComponent extends BaseListComponent {
       name:[''],
       confirmDeliveryNote: [],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabDeliveryNoteStates' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IDeliveryNoteStates) {

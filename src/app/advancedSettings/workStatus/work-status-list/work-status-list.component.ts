@@ -52,6 +52,7 @@ export class WorkStatusListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/work-status/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabWorkStatus';
 
   constructor(
     private readonly workStatusSrv: WorkStatusService,
@@ -65,16 +66,6 @@ export class WorkStatusListComponent extends BaseListComponent {
       name: [''],
       description: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabWorkStatus' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabWorkStatus', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IWorkStatus) {

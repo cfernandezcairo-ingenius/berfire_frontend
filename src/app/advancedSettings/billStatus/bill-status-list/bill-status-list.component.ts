@@ -96,6 +96,7 @@ export class BillStatusListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/invoice-status/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabBillStatements';
 
   constructor(
     private readonly billStatusSrv: BillStatusService,
@@ -113,17 +114,6 @@ export class BillStatusListComponent extends BaseListComponent {
       isSent: [''],
       isUnPaid: ['']
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabBillStatements' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
-  }
-
-  override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabBillStatements', 'false');
-    //Aqui tengo que recargar los datos desde el backend
-    this.navigationSrv.NavigateTo('/all/edit/new')
   }
 
   searchData(event: IBillStatements) {

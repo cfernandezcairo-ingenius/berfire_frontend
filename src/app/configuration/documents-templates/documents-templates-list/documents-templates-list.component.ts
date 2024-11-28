@@ -64,6 +64,7 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/documents-templates/edit';
+  override routefromNewTab:string = 'dataModifiedInNewTabTemplates';
 
   constructor
   (
@@ -85,17 +86,8 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
       description: [''],
       template: [''],
     });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'dataModifiedInNewTabTemplates' && event.newValue === 'true') {
-        this.handleDataChange();
-      }
-    });
   }
 
- override handleDataChange() {
-    localStorage.setItem('dataModifiedInNewTabTemplates', 'false');
-    this.navigationSrv.NavigateTo('/all/edit/new')
-  }
 
   searchData(event: IDocumentsTemplates) {
     let payload = `?name=${event.name}`;
