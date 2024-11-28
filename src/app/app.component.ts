@@ -69,10 +69,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sideBarsrv.toggleVisible$.subscribe((visible) => {
-      if (visible !== this.sidebarVisible) {
-        const miDiv = document.getElementById('container_sidebar');
-        miDiv!.classList.toggle('visible');
-        this.sidebarVisible = !this.sidebarVisible;
+      const miDiv = document.getElementById('container_sidebar');
+      debugger;
+      if (visible) {
+        miDiv!.classList.add('visible');
+      } else {
+        miDiv!.classList.remove('visible');
       }
     });
     this.cookieLang = this.cookieService.get('currentLang');

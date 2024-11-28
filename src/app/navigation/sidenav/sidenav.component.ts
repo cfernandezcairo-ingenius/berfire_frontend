@@ -43,11 +43,6 @@ export class SidenavComponent {
     private readonly router: Router,
     private readonly translate: TranslateService
   ) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showMenuL = !this.router.url.includes('/invoice/edit/new');
-      }
-    });
     this.translate.onLangChange.subscribe(ch=> {
       this.updateMenuItems();
     })

@@ -11,14 +11,17 @@ export class SidebarService {
   constructor() { }
 
   get toggleVisible$(): Observable<boolean> {
+    debugger;
     return this._visible.asObservable();
   }
 
   toggleVisible() {
+    debugger;
     this._visible.next(!this._visible.getValue());
   }
 
   setVisible(show: boolean) {
+    debugger;
     this._visible.next(show);
   }
 }

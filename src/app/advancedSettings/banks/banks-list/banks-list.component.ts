@@ -6,7 +6,6 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +21,7 @@ export interface IBanks {
 @Component({
   selector: 'app-banks-list',
   templateUrl: './banks-list.component.html',
-  styles: '',
+  styleUrl: './banks-list.component.scss',
   standalone: true,
   imports: [
     TableListComponent,
