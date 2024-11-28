@@ -6,22 +6,23 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
-import { PrTypesService } from '../prTypes.service';
+import { PrIncidentsService } from '../prIncidents.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 
-export interface IprTypes {
+export interface IprIncidents {
   id: number,
-  name: string,
-  teamName: string,
-  teamTitle: string,
-  description: string
+  code: string,
+  order: number,
+  periodicity: string,
+  description: string,
+  report: string
 }
 
 
 @Component({
-  selector: 'app-prTypes-list',
-  templateUrl: './prTypes-list.component.html',
+  selector: 'app-prIncidents-list',
+  templateUrl: './prIncidents-list.component.html',
   styles:'',
   standalone: true,
   imports: [
@@ -32,10 +33,10 @@ export interface IprTypes {
 ],
 providers: [TranslateService]
 })
-export class PrTypesListComponent extends BaseListComponent implements OnInit {
+export class PrIncidentsListComponent extends BaseListComponent implements OnInit {
 
   override dataSource = {
-    data: [] as IprTypes[]
+    data: [] as IprIncidents[]
   };
   payload: any;
 
@@ -60,13 +61,13 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
   override newRoute: string = '/prTypes/edit';
 
   constructor(
-    private readonly prTypesSrv: PrTypesService,
+    private readonly prIncidentsSrv: PrIncidentsService,
     public override readonly translate: TranslateService,
     public override readonly matSnackBar: MatSnackBar,
     public override readonly navigationSrv: NavigationService,
     private readonly fb: FormBuilder
   ){
-    super(prTypesSrv, translate, matSnackBar,navigationSrv);
+    super(prIncidentsSrv, translate, matSnackBar,navigationSrv);
     this.fg = this.fb.group({
       name:[''],
       teamName:[''],
@@ -90,21 +91,20 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
     localStorage.setItem('dataModifiedInNewTabPrTypes', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')
   }
+  searchData(event: IprIncidents) {
 
-  searchData(event: IprTypes) {
-
-    let payload = `?name=${event.name}`;
+    let payload = `?name=${event.code}`;
+    if (event.order) {
+      payload = payload + `&order=${event.order}`;
+    }
+    if (event.periodicity) {
+      payload = payload + `&periodicity=${event.periodicity}`;
+    }
     if (event.description) {
       payload = payload + `&description=${event.description}`;
     }
-    if (event.teamName) {
-      payload = payload + `&teamName=${event.teamName}`;
-    }
-    if (event.teamTitle) {
-      payload = payload + `&teamTitle=${event.teamTitle}`;
-    }
-    if (event.description) {
-      payload = payload + `&description=${event.description}`;
+    if (event.report) {
+      payload = payload + `&report=${event.report}`;
     }
     this.loading = true;
     super.searchDataBase(payload);

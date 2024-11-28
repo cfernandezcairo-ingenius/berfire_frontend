@@ -89,7 +89,10 @@
       "PREDETERMINED": "Predetermined",
       "TEMPLATE": "Template",
       "TEAMNAME": "Team Name",
-      "TEAMTITLE": "Team Title"
+      "TEAMTITLE": "Team Title",
+      "ORDER":"Order",
+      "PERIODICITY": "PERIODICITY",
+      "REPORT": "Report"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required'",
@@ -129,7 +132,8 @@
     "manufacturers": "Manufacturers",
     "technicals": "technicals",
     "documents-templates": "Documents Templates",
-    "prTypes": "PR Types"
+    "prTypes": "PR Types",
+    "prIncidents": "PR Incidents"
   },
   "error": {
     "messages": {

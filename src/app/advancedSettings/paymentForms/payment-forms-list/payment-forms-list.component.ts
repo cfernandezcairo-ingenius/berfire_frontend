@@ -95,7 +95,7 @@ export class PaymenFormsListComponent extends BaseListComponent {
   }
 
  override cleanSearchData() {
-    this.fg!.reset();
+    this.fg.reset();
     this.loadAll();
   }
 

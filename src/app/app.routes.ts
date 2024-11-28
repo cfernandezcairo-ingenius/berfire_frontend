@@ -55,6 +55,9 @@ import { DocumentsTemplatesDeleteComponent } from './configuration/documents-tem
 import { PrTypesListComponent } from './configuration/prTypes/prTypes-list/prTypes-list.component';
 import { PrTypesAddEditComponent } from './configuration/prTypes/prTypes-add-edit/prTypes-add-edit.component';
 import { PrTypesDeleteComponent } from './configuration/prTypes/prTypes-delete/prTypes-delete.component';
+import { PrIncidentsAddEditComponent } from './configuration/prIncidents/prIncidents-add-edit/prIncidents-add-edit.component';
+import { PrIncidentsListComponent } from './configuration/prIncidents/prIncidents-list/prIncidents-list.component';
+import { PrIncidentsDeleteComponent } from './configuration/prIncidents/prIncidents-delete/prIncidents-delete.component';
 
 export const routes: Routes = [
 
@@ -134,4 +137,8 @@ export const routes: Routes = [
   { path: 'prTypes/edit', component: PrTypesAddEditComponent, canActivate: [AuthGuard]},
   { path: 'prTypes/delete', component: PrTypesDeleteComponent , canActivate: [AuthGuard]},
   { path: 'prTypes/edit/new', component: PrTypesAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'prIncidents/list', component: PrIncidentsListComponent, canActivate: [AuthGuard]},
+  { path: 'prIncidents/edit', component: PrIncidentsAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'prIncidents/delete', component: PrIncidentsDeleteComponent , canActivate: [AuthGuard]},
+  { path: 'prIncidents/edit/new', component: PrIncidentsAddEditComponent, canActivate: [AuthGuard]},
 ];

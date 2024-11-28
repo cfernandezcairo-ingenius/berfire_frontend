@@ -63,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
         && !this.router.url.includes('/technicals/edit/new')
         && !this.router.url.includes('/documents-templates/edit/new')
         && !this.router.url.includes('/prTypes/edit/new')
+        && !this.router.url.includes('/prIncidents/edit/new')
       }
     });
   }
@@ -70,7 +71,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sideBarsrv.toggleVisible$.subscribe((visible) => {
       const miDiv = document.getElementById('container_sidebar');
-      debugger;
       if (visible) {
         miDiv!.classList.add('visible');
       } else {
@@ -96,7 +96,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showMenu() {
-    debugger;
     const miDiv = document.getElementById('container_sidebar');
     miDiv!.classList.toggle('visible');
     this.sidebarVisible = !this.sidebarVisible;

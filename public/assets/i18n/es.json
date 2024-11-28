@@ -89,7 +89,10 @@
       "PREDETERMINED": "Predeterminado",
       "TEMPLATE": "Plantilla",
       "TEAMNAME": "Nombre Equipo",
-      "TEAMTITLE": "Titulo Equipo"
+      "TEAMTITLE": "Titulo Equipo",
+      "ORDER":"Orden",
+      "PERIODICITY": "Periodicidad",
+      "REPORT": "Reporte"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido.",
@@ -129,7 +132,8 @@
     "manufacturers": "Fabricantes",
     "technicals": "Técnicos",
     "documents-templates": "Plantillas de Documentos",
-    "prTypes": "Tipos de partes de revisión"
+    "prTypes": "Tipos de partes de revisión",
+    "prIncidents": "Incidencias Partes de Revisión"
   },
   "error": {
     "messages": {

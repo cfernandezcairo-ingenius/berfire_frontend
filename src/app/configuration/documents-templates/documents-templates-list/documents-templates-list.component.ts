@@ -6,7 +6,6 @@ import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.compo
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
@@ -126,7 +125,7 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
   }
 
  override cleanSearchData() {
-    this.fg!.reset();
+    this.fg.reset();
     this.loadAll();
   }
 
