@@ -1,44 +1,13 @@
 import { TranslateService } from "@ngx-translate/core";
+import { createInputField, createRow } from "../../../share/common/UI/createFields/createField";
 
-export function getFieldsClients(translate: TranslateService) {
-
- return [
-  {
-    fieldGroupClassName: 'row',
-    fieldGroup: [
-      {
-        className: 'col-sm-12 col-md-12 col-lg-12',
-        type: 'input',
-        key: 'name',
-        props: {
-          required: true,
-          label: 'FORM.FIELDS.FIRSTNAME',
-        },
-        validators: {
-          validation: ['required'],
-        },
-        validation: {
-          messages: {
-            required: translate.get('FORM.VALIDATION.REQUIRED'),
-          },
-        },
-      }
-    ],
-  },
-  {
-    fieldGroupClassName: 'row',
-    fieldGroup: [
-      {
-        className: 'col-sm-12 col-md-12 col-lg-12',
-        type: 'input',
-        key: 'description',
-        props: {
-          label: 'FORM.FIELDS.DESCRIPTION',
-          required:false
-        },
-      }
-    ],
-  }
-
-];
+export function generateFieldsClientsTypes(translate: TranslateService): any[] {
+  return [
+    createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
+    createRow([createInputField(translate,'name', 'FORM.FIELDS.DESCRIPTION', true)])
+  ];
 }
+
+
+
+
