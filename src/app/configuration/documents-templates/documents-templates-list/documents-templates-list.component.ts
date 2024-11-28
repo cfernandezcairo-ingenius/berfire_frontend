@@ -92,11 +92,6 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
  override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabTemplates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')

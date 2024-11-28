@@ -74,12 +74,6 @@ export class ManufacturersListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabManufacturers', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')

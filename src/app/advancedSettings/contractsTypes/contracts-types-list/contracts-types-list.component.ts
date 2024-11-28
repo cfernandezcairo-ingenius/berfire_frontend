@@ -73,11 +73,6 @@ export class ContractsTypesListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabContractsTypes', 'false');
     //Aqui tengo que recargar los datos desde el backend

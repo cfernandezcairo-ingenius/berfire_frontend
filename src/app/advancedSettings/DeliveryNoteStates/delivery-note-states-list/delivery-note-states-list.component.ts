@@ -70,11 +70,6 @@ export class DeliveryNoteStatesListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabDeliveryNoteStates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')

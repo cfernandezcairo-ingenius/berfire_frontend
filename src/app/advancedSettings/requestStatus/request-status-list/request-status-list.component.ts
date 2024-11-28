@@ -72,11 +72,6 @@ export class RequestStatusListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabRequestStatus', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new');

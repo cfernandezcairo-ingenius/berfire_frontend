@@ -72,11 +72,6 @@ export class UnsubscribeReasonsListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabUnsubscribeReasons', 'false');
     //Aqui tengo que recargar los datos desde el backend

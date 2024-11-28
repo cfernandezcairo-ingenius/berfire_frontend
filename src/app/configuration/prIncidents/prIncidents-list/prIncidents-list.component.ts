@@ -40,13 +40,6 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
   };
   payload: any;
 
-  // id: number,
-  // code: string,
-  // order: number,
-  // periodicity: string,
-  // description: string,
-  // report: string
-
   override displayedLabels: IDisplayedLabels[] = [
     { name:'',isBoolean:false},
     { name:'Código',isBoolean:false},

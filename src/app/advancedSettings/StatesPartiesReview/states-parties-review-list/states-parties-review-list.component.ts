@@ -73,11 +73,6 @@ export class StatesPartiesReviewListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabStatesPartiesReview', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')

@@ -76,11 +76,6 @@ export class PaymenFormsListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   searchData(event: IPaymentForms) {
     let payload = `?name=${event.name}`;
     if (event.days) {
