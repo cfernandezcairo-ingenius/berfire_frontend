@@ -19,6 +19,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class StatementOrdersAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabStatementOrder';
+
 
   constructor(
     private readonly statementOrderSrv: StatementOrderService,

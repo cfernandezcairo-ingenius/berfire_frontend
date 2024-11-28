@@ -19,6 +19,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class PVPRatesAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabPvPRates';
+
   constructor(
     private readonly pVPRatesSrv: PVPRatesService,
     public override  readonly translate: TranslateService,

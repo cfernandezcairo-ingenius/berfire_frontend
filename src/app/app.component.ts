@@ -63,16 +63,18 @@ export class AppComponent implements OnInit, OnDestroy {
         && !this.router.url.includes('/technicals/edit/new')
         && !this.router.url.includes('/documents-templates/edit/new')
         && !this.router.url.includes('/prTypes/edit/new')
+        && !this.router.url.includes('/prIncidents/edit/new')
       }
     });
   }
 
   ngOnInit(): void {
     this.sideBarsrv.toggleVisible$.subscribe((visible) => {
-      if (visible !== this.sidebarVisible) {
-        const miDiv = document.getElementById('container_sidebar');
-        miDiv!.classList.toggle('visible');
-        this.sidebarVisible = !this.sidebarVisible;
+      const miDiv = document.getElementById('container_sidebar');
+      if (visible) {
+        miDiv!.classList.add('visible');
+      } else {
+        miDiv!.classList.remove('visible');
       }
     });
     this.cookieLang = this.cookieService.get('currentLang');
@@ -94,7 +96,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showMenu() {
-    debugger;
     const miDiv = document.getElementById('container_sidebar');
     miDiv!.classList.toggle('visible');
     this.sidebarVisible = !this.sidebarVisible;

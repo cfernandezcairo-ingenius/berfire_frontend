@@ -19,6 +19,7 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class UnsubscribeReasonsAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabUnsubscribeReasons';
 
   constructor(
     private readonly unsubscribeReasonsSrv: UnsubscribeReasonsService,

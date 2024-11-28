@@ -8,6 +8,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getFieldsBanks } from './banks-add-edit-fields';
 
 @Component({
   selector: 'app-banks-add-edit',
@@ -19,6 +20,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class BanksAddEditComponent extends BaseAddEditComponent {
 
+  override dataModifiedInNewTab = 'dataModifiedInNewTabBanks';
+
   constructor(
     private readonly banksSrv: BanksService,
     public override  readonly translate: TranslateService,
@@ -27,69 +30,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
     public readonly router: Router,
   ) {
     super(translate, navigationSrv,banksSrv,matSnackBar);
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'swift',
-            props: {
-              label: 'FORM.FIELDS.SWIFT',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'iban',
-            props: {
-              label: 'FORM.FIELDS.IBAN',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = getFieldsBanks(translate);
   }
 
   override ngOnInit(): void {

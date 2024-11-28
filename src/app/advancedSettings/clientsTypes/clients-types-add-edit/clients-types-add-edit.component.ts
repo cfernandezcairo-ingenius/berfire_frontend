@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getFieldsClients } from './clients-types-add-edit-fields';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
@@ -19,6 +20,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 providers: [TranslateService]
 })
 export class ClientsTypesAddEditComponent extends BaseAddEditComponent {
+
+  override dataModifiedInNewTab = 'dataModifiedInNewTabClientsTypes';
 
   constructor(
     private readonly clientsTypesSrv: ClientsTypesService,
@@ -35,45 +38,7 @@ export class ClientsTypesAddEditComponent extends BaseAddEditComponent {
       }
     });
     this.id = 0;
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'description',
-            props: {
-              label: 'FORM.FIELDS.DESCRIPTION',
-              required:false
-            },
-          }
-        ],
-      }
-
-    ];
+    this.fields = getFieldsClients(translate);
   }
 
   override ngOnInit(): void {

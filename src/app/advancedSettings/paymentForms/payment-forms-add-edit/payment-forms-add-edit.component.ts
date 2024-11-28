@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getFieldsPaymentForms } from './payment-forms-add-edit-fields';
 
 @Component({
   selector: 'app-payment-forms-add-edit',
@@ -19,6 +20,8 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
   providers: [TranslateService]
 })
 export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
+
+  override dataModifiedInNewTab = 'dataModifiedInNewTabPaymentForms';
 
   constructor(
     private readonly paymentFormsSrv: PaymentFormsService,
@@ -37,66 +40,7 @@ export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'days',
-            props: {
-              label: 'FORM.FIELDS.DAYS',
-              type: 'number',
-              step: 1,
-              required: true,
-              min: 0,
-              max: 999,
-            },
-            validators: {
-              validation: ['required', 'number'],
-            },
-            validation: {
-              messages: {
-                number: this.translate.get('FORM.VALIDATION.NUMBER'),
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              }
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'home',
-            props: {
-              label: 'FORM.FIELDS.HOME',
-              required:false
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = getFieldsPaymentForms(translate);
   }
 
   override ngOnInit(): void {

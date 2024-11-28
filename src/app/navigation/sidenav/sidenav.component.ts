@@ -9,7 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NavigationService } from '../shared/services/navigation.service';
 import { SidebarService } from '../side-bar/sidebar.service';
 import { AuthService } from '../../auth/auth.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -43,11 +43,6 @@ export class SidenavComponent {
     private readonly router: Router,
     private readonly translate: TranslateService
   ) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showMenuL = !this.router.url.includes('/invoice/edit/new');
-      }
-    });
     this.translate.onLangChange.subscribe(ch=> {
       this.updateMenuItems();
     })
@@ -195,6 +190,8 @@ export class SidenavComponent {
         {displayName: 'Datos de la Empresa',iconName: ''},
         {displayName: 'Usuarios',iconName: ''},
         {displayName: this.translate.instant('menu.prTypes'),iconName: '', route: 'prTypes/list'},
+        {displayName: this.translate.instant('menu.prIncidents'),iconName: '', route: 'prIncidents/list'},
+
         {displayName: this.translate.instant('menu.manufacturers'),iconName: '', route: 'manufacturers/list'},
         {displayName: this.translate.instant('menu.documents-templates'),iconName: '', route: 'documents-templates/list'},
       ]},

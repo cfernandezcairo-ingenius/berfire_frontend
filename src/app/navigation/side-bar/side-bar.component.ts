@@ -38,9 +38,4 @@ export class SideBarComponent {
   switchCollapsed(i: number) {
     this.Menu[i].collapsed = !this.Menu[i].collapsed;
   }
-
-  setMenuHidden() {
-    this.sideBarsrv.setVisible(false);
-  }
-
 }
