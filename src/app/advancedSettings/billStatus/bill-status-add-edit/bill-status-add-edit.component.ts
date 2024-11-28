@@ -8,7 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { getFieldsBillStatus } from './bill-status-add-edit-fields';
+import { generateFieldsBillStatus } from './bill-status-add-edit-fields';
 
 @Component({
   selector: 'app-bill-status-add-edit',
@@ -36,7 +36,7 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
         this.showinNewTab = this.router.url.includes('/invoice-status/edit/new');
       }
     });
-    this.fields = getFieldsBillStatus(translate);
+    this.fields = generateFieldsBillStatus(translate);
   }
 
   override ngOnInit(): void {

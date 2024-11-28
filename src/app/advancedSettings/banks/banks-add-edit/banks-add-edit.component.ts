@@ -57,7 +57,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
       this.fields[1].fieldGroup[0].props.label = label;
     });
     this.translate.get('FORM.FIELDS.IBAN').subscribe((label:any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
+      this.fields[1].fieldGroup[1].props.label = label;
     });
   }
 

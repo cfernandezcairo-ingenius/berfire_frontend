@@ -8,7 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { getFieldsClients } from './clients-types-add-edit-fields';
+import { generateFieldsClientsTypes } from './clients-types-add-edit-fields';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
@@ -38,7 +38,7 @@ export class ClientsTypesAddEditComponent extends BaseAddEditComponent {
       }
     });
     this.id = 0;
-    this.fields = getFieldsClients(translate);
+    this.fields = generateFieldsClientsTypes(translate);
   }
 
   override ngOnInit(): void {
