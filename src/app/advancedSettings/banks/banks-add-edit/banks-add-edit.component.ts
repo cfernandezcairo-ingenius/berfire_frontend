@@ -8,7 +8,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { getFieldsBanks } from './banks-add-edit-fields';
+import { generateFieldsBanks } from './banks-add-edit-fields';
 
 @Component({
   selector: 'app-banks-add-edit',
@@ -30,7 +30,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
     public readonly router: Router,
   ) {
     super(translate, navigationSrv,banksSrv,matSnackBar);
-    this.fields = getFieldsBanks(translate);
+    this.fields = generateFieldsBanks(translate);
   }
 
   override ngOnInit(): void {
@@ -57,7 +57,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
       this.fields[1].fieldGroup[0].props.label = label;
     });
     this.translate.get('FORM.FIELDS.IBAN').subscribe((label:any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
+      this.fields[2].fieldGroup[0].props.label = label;
     });
   }
 
