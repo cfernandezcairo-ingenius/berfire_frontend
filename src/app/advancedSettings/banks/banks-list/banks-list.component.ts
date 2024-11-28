@@ -89,10 +89,6 @@ export class BanksListComponent extends BaseListComponent {
       }
     });
   }
-   override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
 
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabBanks', 'false');

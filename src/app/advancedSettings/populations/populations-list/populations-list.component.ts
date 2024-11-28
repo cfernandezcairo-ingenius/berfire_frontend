@@ -80,11 +80,6 @@ export class PopulationsListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   searchData(event: IPopulations) {
     let payload = `?name=${event.name}`;
     if (event.country) {

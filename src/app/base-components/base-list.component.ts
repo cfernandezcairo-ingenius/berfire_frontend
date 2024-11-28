@@ -33,11 +33,6 @@ export class BaseListComponent implements OnInit {
     public readonly matSnackBar: MatSnackBar,
     public readonly navigationSrv: NavigationService)
     {
-      window.addEventListener('storage', (event) => {
-        if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
-          this.handleDataChange();
-        }
-      });
       this.translate.onLangChange.subscribe((lc: any)=> {
         if(this.translate.currentLang === 'es') {
           this.displayedLabels = this.displayedLabelsEs;
@@ -48,7 +43,8 @@ export class BaseListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Metodo onInit');
+    this.loading = true;
+    this.loadAll();
   }
 
   loadAll() {
@@ -103,6 +99,6 @@ export class BaseListComponent implements OnInit {
 
  cleanSearchData() {
   console.log('Metodo cleanSearchData');
-  }
+}
 
 }

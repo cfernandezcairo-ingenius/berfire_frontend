@@ -1,6 +1,6 @@
 <app-spinner class="spinnerClass" *ngIf="loading"></app-spinner>
 <div [ngStyle]="showinNewTab ? {'margin-top': '80px'} : {}">
-  <div class="prTypes-title">
+  <div class="prTypes-title" style="margin-top:20px;">
     <p>{{'menu.prIncidents' | translate}}</p>
   </div>
   <app-formly-base [theme]="'material'" [shoWButtonSaveAndNew]="shoWButtonSaveAndNew" [fields]="fields" [model]="model" [fg]="fg" (submitEvent)="onSubmit($event, false)" (submitEventNew)="onSubmit($event, true)" (cancelEvent)="onCancel()"></app-formly-base>

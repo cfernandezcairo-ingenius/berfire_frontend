@@ -71,11 +71,6 @@ export class PvPRatesListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabPvPRates', 'false');
     this.navigationSrv.NavigateTo('/all/edit/new')

@@ -120,11 +120,6 @@ export class BillStatusListComponent extends BaseListComponent {
     });
   }
 
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
-  }
-
   override handleDataChange() {
     localStorage.setItem('dataModifiedInNewTabBillStatements', 'false');
     //Aqui tengo que recargar los datos desde el backend

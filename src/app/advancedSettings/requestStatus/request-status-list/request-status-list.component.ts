@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { RequestStatusService } from '../request-status.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -28,7 +28,7 @@ export interface IRequestStatus {
     CommonModule,
     TranslateModule
 ],
-providers: [TranslateService, TranslateStore]
+providers: [TranslateService]
 })
 export class RequestStatusListComponent extends BaseListComponent {
 
@@ -70,11 +70,6 @@ export class RequestStatusListComponent extends BaseListComponent {
         this.handleDataChange();
       }
     });
-  }
-
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
   }
 
   override handleDataChange() {

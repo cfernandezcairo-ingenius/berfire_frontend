@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslateService , TranslateModule, TranslateStore } from '@ngx-translate/core';
+import { TranslateService , TranslateModule } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { ClientsTypesService } from '../clients-types.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -28,7 +28,7 @@ export interface IClientsTypes {
     TranslateModule
 ]
 ,
-providers: [TranslateService, TranslateStore]
+providers: [TranslateService]
 })
 export class ClientsTypesListComponent extends BaseListComponent {
 
@@ -70,11 +70,6 @@ export class ClientsTypesListComponent extends BaseListComponent {
         this.handleDataChange();
       }
     });
-  }
-
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
   }
 
   override handleDataChange() {

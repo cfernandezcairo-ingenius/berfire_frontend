@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { RequestStatusService } from '../request-status.service';
-import { openSnackBar } from '../../../share/common/UI/utils';
 import { BaseDeleteComponent } from '../../../base-components/base-delete.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';

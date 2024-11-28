@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslateService, TranslateModule, TranslateStore } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TableListComponent } from "../../../share/common/UI/table-list/table-list.component";
 import { DeliveryNoteStatesService } from '../delivery-note-states.service';
 import { SpinnerComponent } from "../../../share/common/UI/spinner/spinner.component";
@@ -27,7 +27,7 @@ export interface IDeliveryNoteStates {
     CommonModule,
     TranslateModule
 ],
-providers: [TranslateService, TranslateStore]
+providers: [TranslateService]
 })
 export class DeliveryNoteStatesListComponent extends BaseListComponent {
 
@@ -68,11 +68,6 @@ export class DeliveryNoteStatesListComponent extends BaseListComponent {
         this.handleDataChange();
       }
     });
-  }
-
-  override ngOnInit(): void {
-    this.loading = true;
-    this.loadAll();
   }
 
   override handleDataChange() {

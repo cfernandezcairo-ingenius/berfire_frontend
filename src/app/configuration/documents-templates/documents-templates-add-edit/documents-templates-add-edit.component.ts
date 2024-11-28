@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormlyBaseComponent } from '../../../share/common/UI/formly-form/formly-base.component';
-import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DocumentsTemplatesService } from '../documents-templates.service';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.component';
@@ -16,7 +16,7 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
   templateUrl: './documents-templates-add-edit.component.html',
   styleUrl: './documents-templates-add-edit.component.scss',
   encapsulation: ViewEncapsulation.None,
-  providers: [TranslateService, TranslateStore]
+  providers: [TranslateService]
 })
 export class DocumentsTemplatesAddEditComponent extends BaseAddEditComponent {
 

@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './visible-novisible.component.html',
-  styleUrl: './visible-novisible.component.scss'
+  styles: ''
 })
 export class VisibleNovisibleComponent {
 
