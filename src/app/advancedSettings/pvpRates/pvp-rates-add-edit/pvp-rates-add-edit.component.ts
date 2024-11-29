@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsPvPRates } from './pvp-rates-add-edit-fields';
+import { getPayload } from '../util';
 
 @Component({
   selector: 'app-pvp-rates-add-edit',
@@ -78,20 +79,8 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
     super.updateValidationMessagesBase(this.fields)
   }
 
-  onSubmit(model:any, nuevo:boolean = false) {
-    let payload = {};
-    if (this.id === 0) {
-      payload = {
-        name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value,
-      }
-    } else {
-      payload = {
-        id: this.id,
-        name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value,
-      }
-    }
+  onSubmit() {
+    let payload = getPayload(this.id, this.fg);
     super.onSubmitBase(payload);
   }
 
