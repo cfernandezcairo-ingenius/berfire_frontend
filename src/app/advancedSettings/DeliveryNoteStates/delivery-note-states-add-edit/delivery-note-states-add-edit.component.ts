@@ -61,20 +61,6 @@ export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
     this.updateLabels();
   }
 
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.CONFIRM').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-  }
-
-  updateValidationMessages(fields:any) {
-    super.updateValidationMessagesBase(fields);
-  }
-
   onSubmit(model:any, nuevo: boolean = false) {
     let payload = {};
     if (this.id === 0) {

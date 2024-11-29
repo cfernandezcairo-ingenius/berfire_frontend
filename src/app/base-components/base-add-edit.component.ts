@@ -39,7 +39,7 @@ export class BaseAddEditComponent implements OnInit {
       next:(ch:any) => {
         this.model.lang = this.translate.currentLang;
         this.updateLabels();
-        this.updateValidationMessagesBase(this.fields);
+        this.updateValidationMessages(this.fields);
       }
     })
     this.id = 0;
@@ -69,10 +69,21 @@ export class BaseAddEditComponent implements OnInit {
 
   updateLabels() {
 
-    console.log('Metodo updateLabels');
+    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
+      this.fields[0].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.TEAMNAME').subscribe((label: any) => {
+      this.fields[1].fieldGroup[0].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.TEAMTITLE').subscribe((label: any) => {
+      this.fields[1].fieldGroup[1].props.label = label;
+    });
+    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label: any) => {
+      this.fields[2].fieldGroup[0].props.label = label;
+    });
   }
 
-  updateValidationMessagesBase(fields:any) {
+  updateValidationMessages(fields:any) {
     fields.forEach((field:any) => {
       if (field.fieldGroup) {
         field.fieldGroup.forEach((fG: any) => {

@@ -75,10 +75,6 @@ export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
     });
   }
 
-  updateValidationMessages(fields:any) {
-    super.updateValidationMessagesBase(fields);
-  }
-
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {

@@ -67,10 +67,6 @@ export class WorkStatusAddEditComponent extends BaseAddEditComponent {
     });
   }
 
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields);
-  }
-
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = getPayloadWorkStatus(this.id,this.fg);
     super.onSubmitBase(payload);

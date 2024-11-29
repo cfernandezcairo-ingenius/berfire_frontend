@@ -44,7 +44,7 @@ export class RequestStatusAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
     this.id = this.requestStatusSrv._idToEdit;
-    this.shoWButtonSaveAndNew = this.id === 0 ? true : false;
+     this.shoWButtonSaveAndNew = this.id === 0;
     if (this.id !== 0) {
       let payload = {
         id: this.id
@@ -55,20 +55,6 @@ export class RequestStatusAddEditComponent extends BaseAddEditComponent {
 
 
     this.updateLabels();
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.CODE').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-  }
-
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

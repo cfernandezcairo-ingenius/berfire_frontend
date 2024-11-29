@@ -34,7 +34,7 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
     this.id = this.prIncidentsSrv._idToEdit;
-    this.shoWButtonSaveAndNew = this.id === 0 ? true : false;
+     this.shoWButtonSaveAndNew = this.id === 0;
     this.loading = true;
     super.getRegisterBase({id: this.id});
     this.updateLabels();
@@ -57,10 +57,6 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
     this.translate.get('FORM.FIELDS.REPORT').subscribe((label: any) => {
       this.fields[3].fieldGroup[0].props.label = label;
     });
-  }
-
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
