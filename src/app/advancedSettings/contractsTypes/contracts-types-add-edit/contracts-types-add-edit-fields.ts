@@ -6,7 +6,7 @@ export function generateFieldsContractsTypes(translate: TranslateService): any[]
     createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
     createRow([
       createInputFieldNumber(translate,'duration', 'FORM.FIELDS.DURATION', true,2),
-      createCheckboxField('isWarning', 'FORM.FIELDS.ISWARNING',2)])
+      createCheckboxField(translate,'isWarning', 'FORM.FIELDS.ISWARNING',2)])
   ];
 }
 

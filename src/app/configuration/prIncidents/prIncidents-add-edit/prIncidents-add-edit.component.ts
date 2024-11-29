@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsPrIncidents } from './prIncidents-add-edit-fields';
-import { getLabelsPrIncidentsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-prIncidents-add-edit',
@@ -38,7 +37,6 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
      this.shoWButtonSaveAndNew = this.id === 0;
     this.loading = true;
     super.getRegisterBase({id: this.id});
-    getLabelsPrIncidentsUpdate(this.translate, this.fields);
   }
 
 

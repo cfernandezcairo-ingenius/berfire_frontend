@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsTaxes } from './taxes-add-edit-fields';
-import { getLabelsaTxesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-taxes-add-edit',
@@ -58,7 +57,6 @@ export class TaxesAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsaTxesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

@@ -8,7 +8,6 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { getLabelsUpdatePopulationsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-populations-add-edit',
@@ -146,7 +145,6 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
       this.shoWButtonSaveAndNew = false;
     }
     this.updateOptionsCountries();
-    getLabelsUpdatePopulationsUpdate(this.translate, this.fields);
   }
 
   onSelectChange(field:any, event:any) {

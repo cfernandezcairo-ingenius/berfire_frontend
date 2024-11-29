@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsDocumentsTemplates } from './documents-templates-add-edit-fields';
-import { getLabelsDocumentsTemplatesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-documents-templates-add-edit',
@@ -50,7 +49,6 @@ export class DocumentsTemplatesAddEditComponent extends BaseAddEditComponent {
      super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsDocumentsTemplatesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

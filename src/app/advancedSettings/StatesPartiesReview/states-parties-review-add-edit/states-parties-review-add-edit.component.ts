@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsStatesPartiesReview } from './states-parties-review-add-edit-fields';
-import { getLabelsStatesPartiesReviewUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-states-parties-review-add-edit',
@@ -57,7 +56,6 @@ export class StatesPartiesReviewAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsStatesPartiesReviewUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsUnsubscribeReasons } from './unsubscribe-reasons-add-edit-fields';
-import { getLabelsUnsubscribeReasonsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-unsubscribe-reasons-add-edit',
@@ -55,7 +54,6 @@ export class UnsubscribeReasonsAddEditComponent extends BaseAddEditComponent {
       this.loading = true;
       super.getRegisterBase(payload);
     }
-    getLabelsUnsubscribeReasonsUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

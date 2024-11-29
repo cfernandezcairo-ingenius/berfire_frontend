@@ -1,13 +1,13 @@
 import { TranslateService } from "@ngx-translate/core";
 
 export function createInputField(translate: TranslateService, key: string, labelKey: string, required: boolean = false, columns: number = 1): any {
-  return {
+  const inputFieldString =  {
     className: getLayout(columns),
     type: 'input',
     key: key,
     props: {
       required: required,
-      label: labelKey,
+      label: '',
     },
     validators: required
       ? { validation: ['required'] }
@@ -20,33 +20,19 @@ export function createInputField(translate: TranslateService, key: string, label
         }
       : undefined,
   };
-}
-
-export function createInputFieldNumber(translate: TranslateService, key: string, labelKey: string, required: boolean = false,step: number = 1,min: number = 0, columns: number = 1): any {
-  return {
-    className: getLayout(columns),
-    type: 'input',
-    key: key,
-    props: {
-      type:'number',
-      required: required,
-      label: labelKey,
-      step: 1,
-      min: 0
-    },
-    validators: required
-      ? { validation: ['required', 'number'] }
-      : undefined,
-    validation: required
-      ? {
-          messages: {
-            required: translate.get('FORM.VALIDATION.REQUIRED'),
-            number: translate.get('FORM.VALIDATION.NUMBER')
-          },
-        }
-      : undefined,
-  };
-}
+  translate.get(labelKey).subscribe((translatedLabel: string) => {
+    inputFieldString.props.label = translatedLabel;
+  });
+  if (required) {
+    translate.onLangChange.subscribe(() => {
+      inputFieldString.validation!.messages.required = translate.get('FORM.VALIDATION.REQUIRED');
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        inputFieldString.props.label = updatedLabel;
+      });
+    });
+  }
+  return inputFieldString;
+};
 
 function getLayout(columns: number): string {
   let result = '';
@@ -74,21 +60,70 @@ function getLayout(columns: number): string {
   return result;
 }
 
-export function createCheckboxField(key: string, labelKey: string, columns: number = 1): any {
-  return {
+export function createCheckboxField(translate: TranslateService, key: string, labelKey: string, columns: number = 1): any {
+  const checkBoxField =  {
     className: getLayout(columns),
     type: 'checkbox',
     key: key,
     props: {
-      label: labelKey,
+      label: '',
       required: false,
     },
   };
+  translate.get(labelKey).subscribe((translatedLabel: string) => {
+    checkBoxField.props.label = translatedLabel;
+  });
+    translate.onLangChange.subscribe(() => {
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        checkBoxField.props.label = updatedLabel;
+      });
+    });
+  return checkBoxField;
 }
 
-export function createRow(fields: any[]): any {
+export function createRow(fields:any[]) {
   return {
     fieldGroupClassName: 'row',
     fieldGroup: fields,
+  }
+}
+
+export function createInputFieldNumber(translate: TranslateService, key: string, labelKey: string, required: boolean = false,step: number = 1,min: number = 0, columns: number = 1): any {
+  const inputFieldNumber = {
+    className: getLayout(columns),
+    type: 'input',
+    key: key,
+    props: {
+      type:'number',
+      required: required,
+      label: '',
+      step: 1,
+      min: 0
+    },
+    validators: required
+      ? { validation: ['required', 'number'] }
+      : undefined,
+    validation: required
+      ? {
+          messages: {
+            required: translate.get('FORM.VALIDATION.REQUIRED'),
+            number: translate.get('FORM.VALIDATION.NUMBER')
+          },
+        }
+      : undefined,
   };
+  translate.get(labelKey).subscribe((translatedLabel: string) => {
+    inputFieldNumber.props.label = translatedLabel;
+  });
+  if (required) {
+    translate.onLangChange.subscribe(() => {
+      inputFieldNumber.validation!.messages.required = translate.get('FORM.VALIDATION.REQUIRED');
+    });
+    translate.onLangChange.subscribe(() => {
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        inputFieldNumber.props.label = updatedLabel;
+      });
+    });
+  }
+  return inputFieldNumber;
 }

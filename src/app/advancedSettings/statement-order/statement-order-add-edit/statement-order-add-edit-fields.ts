@@ -7,7 +7,7 @@ export function generateFieldsStatementOrder(translate: TranslateService): any[]
     createRow([createInputField(translate,'description', 'FORM.FIELDS.DESCRIPTION', true)]),
     createRow(
       [
-        createCheckboxField('finalized', 'FORM.FIELDS.FINALIZED',1)
+        createCheckboxField(translate,'finalized', 'FORM.FIELDS.FINALIZED',1)
       ]
     )
   ]

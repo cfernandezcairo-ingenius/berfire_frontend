@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsPaymentForms } from './payment-forms-add-edit-fields';
-import { getLabelsUpdatePaymentFormsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-payment-forms-add-edit',
@@ -60,7 +59,6 @@ export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsUpdatePaymentFormsUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

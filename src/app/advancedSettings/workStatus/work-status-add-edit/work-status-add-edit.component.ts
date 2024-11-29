@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsWorkStatus } from './work-status-add-edit-fields';
 import { getPayloadWorkStatus } from '../util-work-status';
-import { getLabelsWorkStatusUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-work-status-add-edit',
@@ -55,7 +54,6 @@ export class WorkStatusAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsWorkStatusUpdate(this.translate, this.fields);
   }
 
  onSubmit(model:any, nuevo:boolean = false) {

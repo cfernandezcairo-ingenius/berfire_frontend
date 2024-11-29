@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsPrTypes } from './prTypes-add-edit-fields';
-import { getLabelsPrTypesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-prTypes-add-edit',
@@ -40,7 +39,6 @@ export class PrTypesAddEditComponent extends BaseAddEditComponent {
       this.loading = true;
       super.getRegisterBase({ id: this.id});
     }
-    getLabelsPrTypesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

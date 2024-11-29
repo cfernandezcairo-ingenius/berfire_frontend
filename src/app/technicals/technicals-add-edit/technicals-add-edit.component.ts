@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../base-components/base-add-edit.compon
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../navigation/shared/services/navigation.service';
 import { generateFieldsTechnicals } from './technicals-add-edit-fields';
-import { getLabelsTechnicalsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-technicals-add-edit',
@@ -58,7 +57,6 @@ export class TechnicalsAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsTechnicalsUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

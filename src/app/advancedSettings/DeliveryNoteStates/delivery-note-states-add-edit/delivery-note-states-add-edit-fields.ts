@@ -5,7 +5,7 @@ export function generateFieldsDeliveryNoteStates(translate: TranslateService): a
   return [
     createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
     createRow([
-      createCheckboxField('confirmDeliveryNote', 'FORM.FIELDS.CONFIRM')])
+      createCheckboxField(translate,'confirmDeliveryNote', 'FORM.FIELDS.CONFIRM')])
   ];
 }
 
