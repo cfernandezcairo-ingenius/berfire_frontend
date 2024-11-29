@@ -8,6 +8,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { generateFieldsDocumentsTemplates } from './documents-templates-add-edit-fields';
 
 @Component({
   selector: 'app-documents-templates-add-edit',
@@ -30,122 +31,7 @@ export class DocumentsTemplatesAddEditComponent extends BaseAddEditComponent {
       public readonly router: Router
     ) {
     super(translate, navigationSrv,documentsTemplatesSrv,matSnackBar);
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'templateType',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.TEMPLATETYPE',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'renderType',
-            props: {
-              label: 'FORM.FIELDS.RENDERTYPE',
-              required: true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              }
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'predetermined',
-            props: {
-              label: 'FORM.FIELDS.PREDETERMINED',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'description',
-            props: {
-              label: 'FORM.FIELDS.DESCRIPTION',
-              required: true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              }
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'template',
-            props: {
-              label: 'FORM.FIELDS.TEMPLATE',
-              required: true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              }
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = generateFieldsDocumentsTemplates(translate);
   }
 
   override ngOnInit(): void {

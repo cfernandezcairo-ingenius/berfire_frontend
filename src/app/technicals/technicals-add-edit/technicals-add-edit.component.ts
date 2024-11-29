@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../share/common/UI/spinner/spinner.componen
 import { BaseAddEditComponent } from '../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../navigation/shared/services/navigation.service';
+import { generateFieldsTechnicals } from './technicals-add-edit-fields';
 
 @Component({
   selector: 'app-technicals-add-edit',
@@ -38,75 +39,7 @@ export class TechnicalsAddEditComponent extends BaseAddEditComponent {
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'firstSurname',
-            props: {
-              label: 'FORM.FIELDS.FIRSTSURNAME',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'secondSurName',
-            props: {
-              label: 'FORM.FIELDS.SECONDSURNAME',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'user',
-            props: {
-              label: 'FORM.FIELDS.USER',
-              required:false
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = generateFieldsTechnicals(translate);
   }
 
   override ngOnInit(): void {

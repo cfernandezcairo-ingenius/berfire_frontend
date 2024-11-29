@@ -8,7 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { getFieldsPaymentForms } from './payment-forms-add-edit-fields';
+import { generateFieldsPaymentForms } from './payment-forms-add-edit-fields';
 
 @Component({
   selector: 'app-payment-forms-add-edit',
@@ -40,7 +40,7 @@ export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;
-    this.fields = getFieldsPaymentForms(translate);
+    this.fields = generateFieldsPaymentForms(translate);
   }
 
   override ngOnInit(): void {

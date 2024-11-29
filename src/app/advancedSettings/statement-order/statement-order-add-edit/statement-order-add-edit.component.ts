@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { generateFieldsStatementOrder } from './statement-order-add-edit-fields';
 
 @Component({
   selector: 'app-statement-order-add-edit',
@@ -36,58 +37,7 @@ export class StatementOrdersAddEditComponent extends BaseAddEditComponent {
         this.showinNewTab = this.router.url.includes('/statement-order/edit/new');
       }
     });
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'description',
-            props: {
-              label: 'FORM.FIELDS.DESCRIPTION',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'finalized',
-            props: {
-              label: 'FORM.FIELDS.FINALIZED',
-              required:false
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = generateFieldsStatementOrder(translate);
   }
 
   override ngOnInit(): void {

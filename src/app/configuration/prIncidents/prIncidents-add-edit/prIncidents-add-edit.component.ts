@@ -8,6 +8,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { generateFieldsPrIncidents } from './prIncidents-add-edit-fields';
 
 @Component({
   selector: 'app-prIncidents-add-edit',
@@ -28,113 +29,7 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
     public readonly router: Router
   ) {
     super(translate, navigationSrv,prIncidentsSrv,matSnackBar);
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'code',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.CODE',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'order',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.ORDER',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'periodicity',
-            props: {
-              label: 'FORM.FIELDS.PERIODICITY',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            }
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'description',
-            props: {
-              label: 'FORM.FIELDS.DESCRIPTION',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            }
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'report',
-            props: {
-              label: 'FORM.FIELDS.REPORT',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            }
-          }
-        ],
-      },
-    ];
+    this.fields = generateFieldsPrIncidents(translate);
   }
 
   override ngOnInit(): void {
