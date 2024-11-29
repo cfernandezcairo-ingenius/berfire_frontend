@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsWorkStatus } from './work-status-add-edit-fields';
+import { getPayloadWorkStatus } from '../util-work-status';
 
 @Component({
   selector: 'app-work-status-add-edit',
@@ -71,19 +72,7 @@ export class WorkStatusAddEditComponent extends BaseAddEditComponent {
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
-    let payload = {};
-    if (this.id === 0) {
-      payload = {
-        name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value,
-      }
-    } else {
-      payload = {
-        id: this.id,
-        name: this.fg.get('name')?.value,
-        description: this.fg.get('description')?.value,
-      }
-    }
+    let payload = getPayloadWorkStatus(this.id,this.fg);
     super.onSubmitBase(payload);
   }
 

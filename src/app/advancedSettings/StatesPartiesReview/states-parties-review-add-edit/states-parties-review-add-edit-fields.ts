@@ -1,5 +1,5 @@
 import { TranslateService } from "@ngx-translate/core";
-import { createCheckboxField, createInputField, createInputFieldNumber, createRow } from "../../../share/common/UI/createFields/createField";
+import { createInputField, createRow } from "../../../share/common/UI/createFields/createField";
 
 export function generateFieldsStatesPartiesReview(translate: TranslateService): any[] {
   return [
