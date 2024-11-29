@@ -144,7 +144,6 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    this.updateLabels();
     this.updateOptionsCountries();
   }
 

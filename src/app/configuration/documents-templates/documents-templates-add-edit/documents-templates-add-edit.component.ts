@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsDocumentsTemplates } from './documents-templates-add-edit-fields';
+import { getLabelsDocumentsTemplatesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-documents-templates-add-edit',
@@ -49,29 +50,7 @@ export class DocumentsTemplatesAddEditComponent extends BaseAddEditComponent {
      super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    this.updateLabels();
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.TEMPLATETYPE').subscribe((label:any) => {
-      this.fields[0].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.RENDERTYPE').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.PREDETERMINED').subscribe((label:any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label:any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.TEMPLATE').subscribe((label:any) => {
-      this.fields[3].fieldGroup[0].props.label = label;
-    });
+    getLabelsDocumentsTemplatesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
