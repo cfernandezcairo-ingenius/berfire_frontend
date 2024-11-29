@@ -10,6 +10,7 @@ import { PrTypesService } from '../prTypes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { getLabelsPrTypesEn, getLabelsPrTypesEs } from './labels';
+import { getfgPrTypes } from './getfg';
 
 export interface IprTypes {
   id: number,
@@ -56,12 +57,7 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
     private readonly fb: FormBuilder
   ){
     super(prTypesSrv, translate, matSnackBar,navigationSrv);
-    this.fg = this.fb.group({
-      name:[''],
-      teamName:[''],
-      teamTitle: [''],
-      description: [''],
-    });
+    this.fg = getfgPrTypes(this.fb);
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabPrTypes' && event.newValue === 'true') {
         this.handleDataChange();
