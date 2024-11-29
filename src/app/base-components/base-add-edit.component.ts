@@ -68,19 +68,7 @@ export class BaseAddEditComponent implements OnInit {
   }
 
   updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.TEAMNAME').subscribe((label: any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.TEAMTITLE').subscribe((label: any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label: any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
+    console.log('método update labels');
   }
 
   updateValidationMessages(fields:any) {

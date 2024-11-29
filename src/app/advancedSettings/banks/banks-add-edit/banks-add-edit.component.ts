@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsBanks } from './banks-add-edit-fields';
+import { getLabelsUpdateBanks } from './labelsUpdate';
 
 @Component({
   selector: 'app-banks-add-edit',
@@ -41,8 +42,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
     this.loading = true;
     super.getRegisterBase({id: this.id});
     this.shoWButtonSaveAndNew = false;
-
-    this.updateLabels();
+    getLabelsUpdateBanks(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

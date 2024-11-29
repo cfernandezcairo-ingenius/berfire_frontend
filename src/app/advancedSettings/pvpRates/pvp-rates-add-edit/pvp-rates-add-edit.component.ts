@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsPvPRates } from './pvp-rates-add-edit-fields';
 import { getPayload } from '../util';
+import { getLabelsUpdatePVPRatesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-pvp-rates-add-edit',
@@ -60,9 +61,7 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
      super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-
-
-    this.updateLabels();
+    getLabelsUpdatePVPRatesUpdate(this.translate, this.fields);
   }
 
   override updateLabels() {

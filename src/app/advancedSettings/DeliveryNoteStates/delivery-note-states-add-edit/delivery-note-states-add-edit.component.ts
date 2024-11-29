@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsDeliveryNoteStates } from './delivery-note-states-add-edit-fields';
+import { getLabelsUpdateDeliveryNoteStatesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-delivery-note-states-add-edit',
@@ -56,9 +57,7 @@ export class DeliveryNoteStatesAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-
-
-    this.updateLabels();
+    getLabelsUpdateDeliveryNoteStatesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo: boolean = false) {
