@@ -75,10 +75,6 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
     });
   }
 
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields)
-  }
-
   onSubmit(event: any, nuevo:boolean) {
     let payload = getPayload(this.id, this.fg);
     super.onSubmitBase(payload, nuevo);

@@ -34,35 +34,12 @@ export class PrTypesAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
     this.id = this.prTypesSrv._idToEdit;
-    this.shoWButtonSaveAndNew = this.id === 0 ? true : false;
+     this.shoWButtonSaveAndNew = this.id === 0;
     if (this.id !== 0) {
-      let payload = {
-        id: this.id
-      }
       this.loading = true;
-     super.getRegisterBase(payload);
+      super.getRegisterBase({ id: this.id});
     }
     this.updateLabels();
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.TEAMNAME').subscribe((label: any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.TEAMTITLE').subscribe((label: any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label: any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
-  }
-
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

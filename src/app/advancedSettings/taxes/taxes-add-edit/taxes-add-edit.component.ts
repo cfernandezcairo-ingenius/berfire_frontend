@@ -76,10 +76,6 @@ export class TaxesAddEditComponent extends BaseAddEditComponent {
     });
   }
 
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields);
-  }
-
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     //let myobs = new Observable<any>;

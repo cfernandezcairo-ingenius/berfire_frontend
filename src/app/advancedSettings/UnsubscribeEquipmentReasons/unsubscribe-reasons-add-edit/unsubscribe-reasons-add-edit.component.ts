@@ -68,10 +68,6 @@ export class UnsubscribeReasonsAddEditComponent extends BaseAddEditComponent {
 
   }
 
-  updateValidationMessages() {
-    super.updateValidationMessagesBase(this.fields);
-  }
-
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {
