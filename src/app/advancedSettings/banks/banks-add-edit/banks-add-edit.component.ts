@@ -37,14 +37,11 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
     this.id = this.banksSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;
-    } else {
-      let payload = {
-        id: this.id
-      }
-      this.loading = true;
-      super.getRegisterBase(payload);
-      this.shoWButtonSaveAndNew = false;
     }
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
+    this.shoWButtonSaveAndNew = false;
+
     this.updateLabels();
   }
 
