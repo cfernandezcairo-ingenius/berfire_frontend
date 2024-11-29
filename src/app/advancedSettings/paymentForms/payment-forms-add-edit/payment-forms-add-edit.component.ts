@@ -63,19 +63,6 @@ export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
     getLabelsUpdatePaymentFormsUpdate(this.translate, this.fields);
   }
 
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DAYS').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.HOME').subscribe((label:any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-  }
-
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
     if (this.id === 0) {

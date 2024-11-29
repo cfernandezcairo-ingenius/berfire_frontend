@@ -10,6 +10,7 @@ import { PrIncidentsService } from '../prIncidents.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { getLabelsPrIncidentsEn, getLabelsPrIncidentsEs } from './labels';
+import { getfgPrIncidents } from './getfg';
 
 export interface IprIncidents {
   id: number,
@@ -57,12 +58,7 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
     private readonly fb: FormBuilder
   ){
     super(prIncidentsSrv, translate, matSnackBar,navigationSrv);
-    this.fg = this.fb.group({
-      name:[''],
-      teamName:[''],
-      teamTitle: [''],
-      description: [''],
-    });
+    this.fg = getfgPrIncidents(this.fb)
     window.addEventListener('storage', (event) => {
       if (event.key === 'dataModifiedInNewTabPrIncidents' && event.newValue === 'true') {
         this.handleDataChange();

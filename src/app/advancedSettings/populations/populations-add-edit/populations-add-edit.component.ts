@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsUpdatePopulationsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-populations-add-edit',
@@ -145,6 +146,7 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
       this.shoWButtonSaveAndNew = false;
     }
     this.updateOptionsCountries();
+    getLabelsUpdatePopulationsUpdate(this.translate, this.fields);
   }
 
   onSelectChange(field:any, event:any) {
@@ -184,22 +186,6 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
           }
       });
 
-    });
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.COUNTRY').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.PROVINCE').subscribe((label:any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.ACTIVE').subscribe((label:any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
     });
   }
 
