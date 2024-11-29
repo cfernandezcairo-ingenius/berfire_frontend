@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsManufacturers } from './manufacturers-add-edit-fields';
-import { getLabelsManufacturersUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-manufacturers-add-edit',
@@ -49,7 +48,6 @@ export class ManufacturersAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsManufacturersUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

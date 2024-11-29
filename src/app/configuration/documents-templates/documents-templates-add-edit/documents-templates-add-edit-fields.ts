@@ -6,7 +6,7 @@ export function generateFieldsDocumentsTemplates(translate: TranslateService): a
     createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
     createRow([createInputField(translate,'templateType', 'FORM.FIELDS.TEMPLATETYPE', true)]),
     createRow([createInputField(translate,'renderType', 'FORM.FIELDS.RENDERTYPE', true)]),
-    createRow([createCheckboxField('predetermined', 'FORM.FIELDS.PREDETERMINED')]),
+    createRow([createCheckboxField(translate,'predetermined', 'FORM.FIELDS.PREDETERMINED')]),
     createRow([createInputField(translate,'description', 'FORM.FIELDS.DESCRIPTION', true)]),
   ]
 }

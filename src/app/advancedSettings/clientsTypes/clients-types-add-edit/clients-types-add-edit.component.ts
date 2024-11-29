@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsClientsTypes } from './clients-types-add-edit-fields';
-import { getLabelsUpdateClientsTypesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
@@ -58,7 +57,6 @@ export class ClientsTypesAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsUpdateClientsTypesUpdate(this.translate, this.fields)
   }
 
   onSubmit(model:any, nuevo: boolean = false) {

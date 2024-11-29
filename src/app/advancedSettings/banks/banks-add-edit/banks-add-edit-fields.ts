@@ -7,7 +7,3 @@ export function generateFieldsBanks(translate: TranslateService): any[] {
     createRow([createInputField(translate, 'swift', 'FORM.FIELDS.SWIFT', true, 2), createInputField(translate, 'iban', 'FORM.FIELDS.IBAN', true,2)]),
   ];
 }
-
-
-
-

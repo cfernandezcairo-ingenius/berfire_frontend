@@ -6,19 +6,19 @@ export function generateFieldsBillStatus(translate: TranslateService): any[] {
     createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
     createRow(
       [
-        createCheckboxField('isPaid', 'FORM.FIELDS.PAID',2),
-        createCheckboxField('isReturned', 'FORM.FIELDS.RETURNED',2)
+        createCheckboxField(translate,'isPaid', 'FORM.FIELDS.PAID',2),
+        createCheckboxField(translate,'isReturned', 'FORM.FIELDS.RETURNED',2)
       ]
     ),
     createRow(
       [
-        createCheckboxField('isPending', 'FORM.FIELDS.PENDING',2),
-        createCheckboxField('isSent', 'FORM.FIELDS.SENT',2),
+        createCheckboxField(translate,'isPending', 'FORM.FIELDS.PENDING',2),
+        createCheckboxField(translate,'isSent', 'FORM.FIELDS.SENT',2),
       ]
     ),
     createRow(
       [
-        createCheckboxField('isUnPaid', 'FORM.FIELDS.NOTPAID',1)
+        createCheckboxField(translate,'isUnPaid', 'FORM.FIELDS.NOTPAID',1)
       ]
     )
   ];

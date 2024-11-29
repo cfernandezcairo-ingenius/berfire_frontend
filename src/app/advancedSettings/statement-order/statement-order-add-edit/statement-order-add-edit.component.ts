@@ -9,7 +9,6 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsStatementOrder } from './statement-order-add-edit-fields';
-import { getLabelsStatementOrderUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-statement-order-add-edit',
@@ -56,7 +55,6 @@ export class StatementOrdersAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    getLabelsStatementOrderUpdate(this.translate, this.fields);
   }
 
   override updateLabels() {
