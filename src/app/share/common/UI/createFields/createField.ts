@@ -26,6 +26,9 @@ export function createInputField(translate: TranslateService, key: string, label
   if (required) {
     translate.onLangChange.subscribe(() => {
       inputFieldString.validation!.messages.required = translate.get('FORM.VALIDATION.REQUIRED');
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        inputFieldString.props.label = updatedLabel;
+      });
     });
   }
   return inputFieldString;
@@ -70,6 +73,11 @@ export function createCheckboxField(translate: TranslateService, key: string, la
   translate.get(labelKey).subscribe((translatedLabel: string) => {
     checkBoxField.props.label = translatedLabel;
   });
+    translate.onLangChange.subscribe(() => {
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        checkBoxField.props.label = updatedLabel;
+      });
+    });
   return checkBoxField;
 }
 
@@ -110,6 +118,11 @@ export function createInputFieldNumber(translate: TranslateService, key: string,
   if (required) {
     translate.onLangChange.subscribe(() => {
       inputFieldNumber.validation!.messages.required = translate.get('FORM.VALIDATION.REQUIRED');
+    });
+    translate.onLangChange.subscribe(() => {
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        inputFieldNumber.props.label = updatedLabel;
+      });
     });
   }
   return inputFieldNumber;
