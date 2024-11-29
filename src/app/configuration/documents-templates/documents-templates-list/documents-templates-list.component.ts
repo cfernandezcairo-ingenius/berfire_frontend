@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsDocumentsTemplatesEn, getLabelsDocumentsTemplatesEs } from './labels';
 
 export interface IDocumentsTemplates {
   id: number,
@@ -41,25 +42,9 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
   payload: any;
   title: string = '';
 
-  override displayedLabels:IDisplayedLabels[] = [
-    { name: '',isBoolean:false},
-    { name: 'Nombre',isBoolean:false},
-    { name: 'Tipo plantilla',isBoolean:false},
-    { name: 'Tipo Renderizao',isBoolean:false},
-    { name: 'Predeterminado', isBoolean:true},
-    { name: 'Descripción', isBoolean:false},
-    { name: 'Plantilla', isBoolean:false},
-  ];
+  override displayedLabels:IDisplayedLabels[] = getLabelsDocumentsTemplatesEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn:IDisplayedLabels[] = [
-    { name: '',isBoolean:false},
-    { name: 'Name',isBoolean:false},
-    { name: 'Template type',isBoolean:false},
-    { name: 'Render type',isBoolean:false},
-    { name: 'Predetermined', isBoolean:true},
-    { name: 'Descripction', isBoolean:false},
-    { name: 'Template', isBoolean:false},
-  ];
+  override displayedLabelsEn:IDisplayedLabels[] = getLabelsDocumentsTemplatesEn();
 
   fg: FormGroup;
 

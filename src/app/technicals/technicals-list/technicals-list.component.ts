@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDisplayedLabels } from '../../navigation/shared/models/app-models';
 import { openSnackBar } from '../../share/common/UI/utils';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { getLabelsTechnicalsEn, getLabelsTechnicalsEs } from './labels';
 
 export interface ITechnicals {
   id: number,
@@ -41,21 +42,9 @@ export class TechnicalsListComponent implements OnInit {
   payload: any;
   loading = false;
   todoListo = false;
-  displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name: 'Nombre',isBoolean:false},
-    { name: 'Primer Apellido', isBoolean:false},
-    { name: 'Segundo Apellido', isBoolean:false},
-    { name: 'Usuario', isBoolean:false}
-  ];
+  displayedLabels: IDisplayedLabels[] = getLabelsTechnicalsEs();
   displayedLabelsEs = this.displayedLabels;
-  displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name: 'Name',isBoolean:false},
-    { name: 'first Surname', isBoolean:false},
-    { name: 'second Surname', isBoolean:false},
-    { name: 'User', isBoolean:false}
-  ];
+  displayedLabelsEn: IDisplayedLabels[] = getLabelsTechnicalsEn();
   fg: FormGroup;
 
   constructor(

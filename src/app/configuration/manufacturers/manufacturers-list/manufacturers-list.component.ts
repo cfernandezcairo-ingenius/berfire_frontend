@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsManufacturersEn, getLabelsManufacturersEs } from './labels';
 
 export interface IManufacturers {
   id: number,
@@ -37,19 +38,9 @@ export class ManufacturersListComponent extends BaseListComponent {
     data: [] as IManufacturers[]
   };
   payload: any;
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name: 'Nombre',isBoolean:false},
-    { name: 'Descripción', isBoolean:false},
-    { name: 'Active', isBoolean:true}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsManufacturersEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name: 'Name',isBoolean:false},
-    { name: 'Description', isBoolean:false},
-    { name: 'isActive', isBoolean:true}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsManufacturersEn();
 
   fg: FormGroup;
 

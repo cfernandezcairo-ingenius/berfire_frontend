@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsContractsTypesEn, getLabelsContractsTypesEs } from './labels';
 
 export interface IContractsTypes {
   id: number,
@@ -38,19 +39,9 @@ export class ContractsTypesListComponent extends BaseListComponent {
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'', isBoolean: false},
-    { name: 'Nombre',isBoolean: false},
-    { name: 'Duración', isBoolean:false},
-    { name: 'Es aviso', isBoolean: true}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsContractsTypesEs();
   override displayedLabelsEs = this.displayedLabels
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'', isBoolean: false},
-    { name: 'Name',isBoolean: false},
-    { name: 'Duration', isBoolean:false},
-    { name: 'isWarning', isBoolean: true}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsContractsTypesEn();
   fg: FormGroup;
   override newRoute: string = '/contracts-types/edit';
   override routefromNewTab:string = 'dataModifiedInNewTabContractsTypes';

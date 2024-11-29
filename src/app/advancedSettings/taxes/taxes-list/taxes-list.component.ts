@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsTaxesEn, getLabelsTaxesEs } from './labels';
 
 export interface ITaxes {
   id: number,
@@ -39,21 +40,9 @@ export class TaxesListComponent extends BaseListComponent {
   };
   payload: any;
 
-  override displayedLabels:IDisplayedLabels[] = [
-    { name: '',isBoolean: false},
-    { name: 'Titulo',isBoolean:false},
-    { name: 'Valor',isBoolean:false},
-    { name: 'Recargo',isBoolean:false},
-    { name: 'es IGIC', isBoolean:true}
-  ];
+  override displayedLabels:IDisplayedLabels[] = getLabelsTaxesEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn:IDisplayedLabels[] = [
-    { name: '',isBoolean: false},
-    { name: 'Title',isBoolean:false},
-    { name: 'Value',isBoolean:false},
-    { name: 'Surcharge',isBoolean:false},
-    { name: 'isIGIC', isBoolean:true}
-  ];
+  override displayedLabelsEn:IDisplayedLabels[] = getLabelsTaxesEn();
 
   fg: FormGroup;
 

@@ -9,6 +9,7 @@ import { BaseListComponent } from '../../../base-components/base-list.component'
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsStatementOrderEn, getLabelsStatementOrderEs } from './labels';
 
 export interface IIStatementOrder {
   id: number,
@@ -38,19 +39,9 @@ export class StatementOrderListComponent extends BaseListComponent {
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Nombre',isBoolean:false},
-    { name: 'Descripción',isBoolean:false},
-    { name: 'Finalizada', isBoolean:true}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsStatementOrderEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Name',isBoolean:false},
-    { name: 'Description',isBoolean:false},
-    { name: 'Finalized', isBoolean:true}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsStatementOrderEn();
   fg: FormGroup;
 
   override newRoute: string = '/statement-order/edit';

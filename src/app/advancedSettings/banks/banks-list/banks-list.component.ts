@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { getLabelsBanksEn, getLabelsBanksEs } from './labels';
 
 export interface IBanks {
   id: number,
@@ -38,35 +39,9 @@ export class BanksListComponent extends BaseListComponent {
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    {
-      name:'', isBoolean: false
-    },
-    {
-      name: 'Nombre', isBoolean: false
-     },
-     {
-      name:'Swift',isBoolean: false
-    },
-    {
-      name: 'Iban', isBoolean: false
-    }
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsBanksEs();
   override displayedLabelsEs = this.displayedLabels
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    {
-      name:'', isBoolean: false
-    },
-    {
-      name: 'Name', isBoolean: false
-     },
-     {
-      name:'Swift',isBoolean: false
-    },
-    {
-      name: 'Iban', isBoolean: false
-    }
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsBanksEn();
   fg: FormGroup;
   override newRoute: string = '/banks/edit';
   override routefromNewTab:string = 'dataModifiedInNewTabBanks';

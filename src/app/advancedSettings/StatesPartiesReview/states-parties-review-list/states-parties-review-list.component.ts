@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsStatesPartiesReviewEn, getLabelsStatesPartiesReviewEs } from './labels';
 
 export interface IPrStatus {
   id: number,
@@ -38,18 +39,9 @@ export class StatesPartiesReviewListComponent extends BaseListComponent {
 
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Nombre',isBoolean:false},
-    { name: 'Descripción',isBoolean:false},
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsStatesPartiesReviewEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Name',isBoolean:false},
-    { name: 'Description',isBoolean:false},
-  ];
-
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsStatesPartiesReviewEn();
   fg: FormGroup;
 
   override newRoute: string = '/states-parties-review/edit';

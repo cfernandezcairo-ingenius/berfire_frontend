@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsPaymentFormsEn, getLabelsPaymentFormsEs } from './labels';
 
 export interface IPaymentForms {
   id: number,
@@ -39,19 +40,9 @@ export class PaymenFormsListComponent extends BaseListComponent {
 
   payload: any;
 
-  override displayedLabels:IDisplayedLabels[] = [
-    { name: '',isBoolean:false},
-    { name: 'Nombre',isBoolean:false},
-    { name: 'Dias',isBoolean:false},
-    { name: 'Domiciliado', isBoolean:true}
-  ];
+  override displayedLabels:IDisplayedLabels[] = getLabelsPaymentFormsEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn:IDisplayedLabels[] = [
-    { name: '',isBoolean:false},
-    { name: 'Name',isBoolean:false},
-    { name: 'Days',isBoolean:false},
-    { name: 'Domiciled', isBoolean:true}
-  ];
+  override displayedLabelsEn:IDisplayedLabels[] = getLabelsPaymentFormsEn();
 
   fg: FormGroup;
   override newRoute: string = '/payment-forms/edit';

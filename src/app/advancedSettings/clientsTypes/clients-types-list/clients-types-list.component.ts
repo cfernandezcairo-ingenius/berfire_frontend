@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsClientsTypesEn, getLabelsClientsTypesEs } from './labels';
 
 export interface IClientsTypes {
   id: number,
@@ -38,17 +39,9 @@ export class ClientsTypesListComponent extends BaseListComponent {
 
   payload: any;
 
-  override displayedLabels:IDisplayedLabels[] = [
-    { name: '',isBoolean: false},
-    { name: 'Nombre',isBoolean: false},
-    { name: 'Descripción', isBoolean:false}
-  ];
+  override displayedLabels:IDisplayedLabels[] = getLabelsClientsTypesEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn:IDisplayedLabels[] = [
-    { name: '',isBoolean: false},
-    { name: 'Nombre',isBoolean: false},
-    { name: 'Descripción', isBoolean:false}
-  ];
+  override displayedLabelsEn:IDisplayedLabels[] = getLabelsClientsTypesEn();
 
   fg: FormGroup;
   override newRoute: string = '/clients-types/edit';
