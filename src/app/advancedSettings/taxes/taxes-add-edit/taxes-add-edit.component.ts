@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { generateFieldsTaxes } from './taxes-add-edit-fields';
 
 @Component({
   selector: 'app-taxes-add-edit',
@@ -38,83 +39,7 @@ export class TaxesAddEditComponent extends BaseAddEditComponent {
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'title',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.TITLE',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'value',
-            props: {
-              label: 'FORM.FIELDS.VALUE',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'input',
-            key: 'equivalentSurcharge',
-            props: {
-              label: 'FORM.FIELDS.SURCHARGE',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            }
-          },
-          {
-            className: 'col-sm-12 col-md-6 col-lg-6',
-            type: 'checkbox',
-            key: 'isIGIC',
-            props: {
-              label: 'FORM.FIELDS.ISIGIC',
-              required:false
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = generateFieldsTaxes(translate);
   }
 
   override ngOnInit(): void {
@@ -147,7 +72,7 @@ export class TaxesAddEditComponent extends BaseAddEditComponent {
       this.fields[2].fieldGroup[0].props.label = label;
     });
     this.translate.get('FORM.FIELDS.ISIGIC').subscribe((label:any) => {
-      this.fields[2].fieldGroup[1].props.label = label;
+      this.fields[3].fieldGroup[0].props.label = label;
     });
   }
 

@@ -22,6 +22,32 @@ export function createInputField(translate: TranslateService, key: string, label
   };
 }
 
+export function createInputFieldNumber(translate: TranslateService, key: string, labelKey: string, required: boolean = false,step: number = 1,min: number = 0, columns: number = 1): any {
+  return {
+    className: getLayout(columns),
+    type: 'input',
+    key: key,
+    props: {
+      type:'number',
+      required: required,
+      label: labelKey,
+      step: 1,
+      min: 0
+    },
+    validators: required
+      ? { validation: ['required', 'number'] }
+      : undefined,
+    validation: required
+      ? {
+          messages: {
+            required: translate.get('FORM.VALIDATION.REQUIRED'),
+            number: translate.get('FORM.VALIDATION.NUMBER')
+          },
+        }
+      : undefined,
+  };
+}
+
 function getLayout(columns: number): string {
   let result = '';
 

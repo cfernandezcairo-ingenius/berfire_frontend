@@ -52,7 +52,7 @@ export class ContractsTypesListComponent extends BaseListComponent {
     { name: 'isWarning', isBoolean: true}
   ];
   fg: FormGroup;
-  override newRoute: string = '/clients-types/edit';
+  override newRoute: string = '/contracts-types/edit';
   override routefromNewTab:string = 'dataModifiedInNewTabContractsTypes';
 
   constructor(

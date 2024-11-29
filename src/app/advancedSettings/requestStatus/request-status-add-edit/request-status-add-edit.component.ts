@@ -8,6 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { generateFieldsRequestStatus } from './request-status-add-edit-fields';
 
 @Component({
   selector: 'app-request-status-add-edit',
@@ -38,52 +39,7 @@ export class RequestStatusAddEditComponent extends BaseAddEditComponent {
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'code',
-            props: {
-              label: 'FORM.FIELDS.CODE',
-              required:true
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              }
-            },
-          },
-        ],
-      },
-    ];
+    this.fields = generateFieldsRequestStatus(translate);
   }
 
   override ngOnInit(): void {

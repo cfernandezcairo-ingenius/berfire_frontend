@@ -8,6 +8,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { generateFieldsManufacturers } from './manufacturers-add-edit-fields';
 
 @Component({
   selector: 'app-manufacturers-add-edit',
@@ -29,58 +30,7 @@ export class ManufacturersAddEditComponent extends BaseAddEditComponent {
     public readonly router: Router
   ) {
     super(translate, navigationSrv,manufacturersSrv,matSnackBar);
-    this.fields = [
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'name',
-            props: {
-              required: true,
-              label: 'FORM.FIELDS.FIRSTNAME',
-            },
-            validators: {
-              validation: ['required'],
-            },
-            validation: {
-              messages: {
-                required: this.translate.get('FORM.VALIDATION.REQUIRED'),
-              },
-            },
-          }
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'input',
-            key: 'description',
-            props: {
-              label: 'FORM.FIELDS.DESCRIPTION',
-              required:false
-            },
-          },
-        ],
-      },
-      {
-        fieldGroupClassName: 'row',
-        fieldGroup: [
-          {
-            className: 'col-sm-12 col-md-12 col-lg-12',
-            type: 'checkbox',
-            key: 'isActive',
-            props: {
-              label: 'FORM.FIELDS.ACTIVE',
-              required:false
-            },
-          },
-        ],
-      },
-    ];
+    this.fields =generateFieldsManufacturers(translate);
   }
 
   override ngOnInit(): void {

@@ -8,7 +8,7 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
-import { getFieldsContractsTypes } from './contracts-types-add-edit-fields';
+import { generateFieldsContractsTypes } from './contracts-types-add-edit-fields';
 
 @Component({
   selector: 'app-contracts-types-add-edit',
@@ -33,14 +33,13 @@ export class ContractsTypesAddEditComponent extends BaseAddEditComponent {
     super(translate, navigationSrv,contractsTypesSrv,matSnackBar);
     this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/contracts-types/edit/new');
       }
     });
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;
-    this.fields = getFieldsContractsTypes(translate);
+    this.fields = generateFieldsContractsTypes(translate);
   }
 
   override ngOnInit(): void {
