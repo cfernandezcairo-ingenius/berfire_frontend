@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsStatesPartiesReview } from './states-parties-review-add-edit-fields';
+import { getLabelsStatesPartiesReviewUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-states-parties-review-add-edit',
@@ -56,20 +57,7 @@ export class StatesPartiesReviewAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    this.updateLabels();
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.FINALIZED').subscribe((label:any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
+    getLabelsStatesPartiesReviewUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

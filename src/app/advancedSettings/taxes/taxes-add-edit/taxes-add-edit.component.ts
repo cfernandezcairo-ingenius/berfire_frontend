@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsTaxes } from './taxes-add-edit-fields';
+import { getLabelsaTxesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-taxes-add-edit',
@@ -57,23 +58,7 @@ export class TaxesAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    this.updateLabels();
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.TITLE').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.VALUE').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.SURCHARGE').subscribe((label:any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.ISIGIC').subscribe((label:any) => {
-      this.fields[3].fieldGroup[0].props.label = label;
-    });
+    getLabelsaTxesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

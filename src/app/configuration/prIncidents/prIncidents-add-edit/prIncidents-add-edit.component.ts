@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsPrIncidents } from './prIncidents-add-edit-fields';
+import { getLabelsPrIncidentsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-prIncidents-add-edit',
@@ -37,27 +38,9 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
      this.shoWButtonSaveAndNew = this.id === 0;
     this.loading = true;
     super.getRegisterBase({id: this.id});
-    this.updateLabels();
+    getLabelsPrIncidentsUpdate(this.translate, this.fields);
   }
 
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.CODE').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.ORDER').subscribe((label: any) => {
-      this.fields[0].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.PERIODICITY').subscribe((label: any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label: any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.REPORT').subscribe((label: any) => {
-      this.fields[3].fieldGroup[0].props.label = label;
-    });
-  }
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};

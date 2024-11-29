@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../base-components/base-add-edit.compon
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../navigation/shared/services/navigation.service';
 import { generateFieldsTechnicals } from './technicals-add-edit-fields';
+import { getLabelsTechnicalsUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-technicals-add-edit',
@@ -57,23 +58,7 @@ export class TechnicalsAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    this.updateLabels();
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label: any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.FIRSTSURNAME').subscribe((label: any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.SECONDSURNAME').subscribe((label: any) => {
-      this.fields[1].fieldGroup[1].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.USER').subscribe((label: any) => {
-      this.fields[2].fieldGroup[0].props.label = label;
-    });
+    getLabelsTechnicalsUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
