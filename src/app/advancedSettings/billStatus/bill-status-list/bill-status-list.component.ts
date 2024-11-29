@@ -9,6 +9,7 @@ import { IBillStatements, IDisplayedLabels } from '../../../navigation/shared/mo
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsBillStatusEn, getLabelsBillStatusEs } from './labels';
 
 @Component({
   selector: 'app-bill-status-list',
@@ -31,68 +32,10 @@ export class BillStatusListComponent extends BaseListComponent {
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    {
-      name:'',
-      isBoolean: false
-    },
-    {
-      name: 'Nombre',
-      isBoolean: false
-    },
-    {
-      name: 'Pagado',
-      isBoolean: true
-    },
-    {
-      name: 'Devuelto',
-      isBoolean: true
-    },
-    {
-      name: 'Pendiente',
-      isBoolean: true
-    },
-    {
-      name: 'Enviado',
-      isBoolean: true
-    },
-    {
-      name: 'Impagado',
-      isBoolean: true
-    }
-  ]
+  override displayedLabels: IDisplayedLabels[] = getLabelsBillStatusEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] =
-  [
-    {
-      name:'',
-      isBoolean: false
-    },
-    {
-      name: 'Name',
-      isBoolean: false
-    },
-    {
-      name: 'Is Paid',
-      isBoolean: true
-    },
-    {
-      name: 'Is returned',
-      isBoolean: true
-    },
-    {
-      name: 'Is Pending',
-      isBoolean: true
-    },
-    {
-      name: 'Is Sending',
-      isBoolean: true
-    },
-    {
-      name: 'Is Unpaid',
-      isBoolean: true
-    }
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsBillStatusEn();
+
   fg: FormGroup;
 
   override newRoute: string = '/invoice-status/edit';

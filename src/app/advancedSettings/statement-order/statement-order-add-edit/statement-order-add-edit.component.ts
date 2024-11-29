@@ -61,7 +61,6 @@ export class StatementOrdersAddEditComponent extends BaseAddEditComponent {
   }
 
   override updateLabels() {
-
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
     });

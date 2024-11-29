@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsRequestStatusEn, getLabelsRequestStatusEs } from './labels';
 
 export interface IRequestStatus {
   id: number,
@@ -38,17 +39,9 @@ export class RequestStatusListComponent extends BaseListComponent {
 
   payload: any;
 
-  override displayedLabels:IDisplayedLabels[] = [
-    { name: '',isBoolean:false},
-    { name:'Nombre',isBoolean:false},
-    { name: 'Código', isBoolean:false}
-  ];
+  override displayedLabels:IDisplayedLabels[] = getLabelsRequestStatusEs();
   override displayedLabelsEs = this.displayedLabels
-  override displayedLabelsEn:IDisplayedLabels[] = [
-    { name: '',isBoolean:false},
-    { name:'Name',isBoolean:false},
-    { name: 'Code', isBoolean:false}
-  ];
+  override displayedLabelsEn:IDisplayedLabels[] = getLabelsRequestStatusEn();
 
   fg: FormGroup;
   override newRoute: string = '/request-status/edit';

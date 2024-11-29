@@ -9,6 +9,7 @@ import { BaseListComponent } from '../../../base-components/base-list.component'
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsPopulationsEn, getLabelsPopulationsEs } from './labels';
 
 export interface IPopulations {
   id: number,
@@ -40,21 +41,9 @@ export class PopulationsListComponent extends BaseListComponent {
 
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Nombre',isBoolean:false},
-    { name:'Pais',isBoolean:false},
-    { name: 'Provincia',isBoolean:false},
-    { name: 'Activo', isBoolean:true}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsPopulationsEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Name',isBoolean:false},
-    { name:'Country',isBoolean:false},
-    { name: 'Province',isBoolean:false},
-    { name: 'Active', isBoolean:true}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsPopulationsEn();
 
   fg: FormGroup;
   override newRoute: string = '/populations/edit';

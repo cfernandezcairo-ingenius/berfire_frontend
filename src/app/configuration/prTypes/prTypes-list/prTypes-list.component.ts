@@ -9,6 +9,7 @@ import { BaseListComponent } from '../../../base-components/base-list.component'
 import { PrTypesService } from '../prTypes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsPrTypesEn, getLabelsPrTypesEs } from './labels';
 
 export interface IprTypes {
   id: number,
@@ -39,21 +40,9 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Nombre',isBoolean:false},
-    { name:'Nombre Equipo',isBoolean:false},
-    { name: 'Titulo Equipo',isBoolean:false},
-    { name: 'description', isBoolean:false}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsPrTypesEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Name',isBoolean:false},
-    { name: 'Team Name',isBoolean:false},
-    { name: 'Title Name',isBoolean:false},
-    { name: 'Description', isBoolean:false}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsPrTypesEn();
 
   fg: FormGroup;
 

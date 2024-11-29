@@ -9,6 +9,7 @@ import { BaseListComponent } from '../../../base-components/base-list.component'
 import { PrIncidentsService } from '../prIncidents.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsPrIncidentsEn, getLabelsPrIncidentsEs } from './labels';
 
 export interface IprIncidents {
   id: number,
@@ -40,21 +41,9 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Código',isBoolean:false},
-    { name:'Orden',isBoolean:false},
-    { name: 'Periodicidad',isBoolean:false},
-    { name: 'Descripción', isBoolean:false}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsPrIncidentsEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name:'Code',isBoolean:false},
-    { name: 'Order',isBoolean:false},
-    { name: 'Periodicity',isBoolean:false},
-    { name: 'Description', isBoolean:false}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsPrIncidentsEn();
 
   fg: FormGroup;
 

@@ -9,6 +9,7 @@ import { IDisplayedLabels } from '../../../navigation/shared/models/app-models';
 import { BaseListComponent } from '../../../base-components/base-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { getLabelsWorkStatusEn, getLabelsWorkStatusEs } from './labels';
 
 export interface IWorkStatus {
   id: number,
@@ -37,17 +38,9 @@ export class WorkStatusListComponent extends BaseListComponent {
   };
   payload: any;
 
-  override displayedLabels: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name: 'Nombre',isBoolean:false},
-    { name: 'Descripción', isBoolean:false}
-  ];
+  override displayedLabels: IDisplayedLabels[] = getLabelsWorkStatusEs();
   override displayedLabelsEs = this.displayedLabels;
-  override displayedLabelsEn: IDisplayedLabels[] = [
-    { name:'',isBoolean:false},
-    { name: 'Name',isBoolean:false},
-    { name: 'Description', isBoolean:false}
-  ];
+  override displayedLabelsEn: IDisplayedLabels[] = getLabelsWorkStatusEn();
 
   fg: FormGroup;
 
