@@ -34,15 +34,13 @@ export class PrTypesAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
     this.id = this.prTypesSrv._idToEdit;
-    if (this.id === 0) {
-      this.shoWButtonSaveAndNew = true;
-    } else {
+    this.shoWButtonSaveAndNew = this.id === 0 ? true : false;
+    if (this.id !== 0) {
       let payload = {
         id: this.id
       }
       this.loading = true;
      super.getRegisterBase(payload);
-      this.shoWButtonSaveAndNew = false;
     }
     this.updateLabels();
   }
