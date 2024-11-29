@@ -34,16 +34,9 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
     this.id = this.prIncidentsSrv._idToEdit;
-    if (this.id === 0) {
-      this.shoWButtonSaveAndNew = true;
-    } else {
-      let payload = {
-        id: this.id
-      }
-      this.loading = true;
-     super.getRegisterBase(payload);
-      this.shoWButtonSaveAndNew = false;
-    }
+    this.shoWButtonSaveAndNew = this.id === 0 ? true : false;
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
     this.updateLabels();
   }
 
