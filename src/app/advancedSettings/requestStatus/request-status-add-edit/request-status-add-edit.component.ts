@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsRequestStatus } from './request-status-add-edit-fields';
+import { getLabelsUpdatePVPRatesUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-request-status-add-edit',
@@ -52,9 +53,7 @@ export class RequestStatusAddEditComponent extends BaseAddEditComponent {
       this.loading = true;
       super.getRegisterBase(payload);
     }
-
-
-    this.updateLabels();
+    getLabelsUpdatePVPRatesUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

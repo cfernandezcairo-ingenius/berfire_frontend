@@ -9,6 +9,7 @@ import { BaseAddEditComponent } from '../../../base-components/base-add-edit.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { generateFieldsBillStatus } from './bill-status-add-edit-fields';
+import { getLabelsUpdateBillUpdate } from './labelsUpdate';
 
 @Component({
   selector: 'app-bill-status-add-edit',
@@ -58,7 +59,7 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
       super.getRegisterBase(payload);
       this.shoWButtonSaveAndNew = false;
     }
-    this.updateLabels();
+    getLabelsUpdateBillUpdate(this.translate, this.fields);
   }
 
   onSubmit(model:any, nuevo:boolean = false) {
