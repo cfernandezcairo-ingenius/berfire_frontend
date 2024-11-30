@@ -52,24 +52,10 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
       }
       this.shoWButtonSaveAndNew = true;
     } else {
-
-      let payload = {
-        id: this.id
-      }
       this.loading = true;
-     super.getRegisterBase(payload);
+      super.getRegisterBase({id: this.id});
       this.shoWButtonSaveAndNew = false;
     }
-  }
-
-  override updateLabels() {
-
-    this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
-      this.fields[0].fieldGroup[0].props.label = label;
-    });
-    this.translate.get('FORM.FIELDS.DESCRIPTION').subscribe((label:any) => {
-      this.fields[1].fieldGroup[0].props.label = label;
-    });
   }
 
   onSubmit(event: any, nuevo:boolean) {

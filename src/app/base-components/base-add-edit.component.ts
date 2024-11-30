@@ -35,13 +35,6 @@ export class BaseAddEditComponent implements OnInit {
     public readonly  baseSrv: BaseService,
     public readonly matSnackBar: MatSnackBar,
   ) {
-    // this.translate.onLangChange.subscribe({
-    //   next:(ch:any) => {
-    //     this.model.lang = this.translate.currentLang;
-    //     this.updateLabels();
-    //     this.updateValidationMessages(this.fields);
-    //   }
-    // })
     this.id = 0;
     this.showinNewTab = false;
     this.shoWButtonSaveAndNew = true;

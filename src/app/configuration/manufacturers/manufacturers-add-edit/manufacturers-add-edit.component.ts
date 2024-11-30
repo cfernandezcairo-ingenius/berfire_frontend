@@ -41,11 +41,8 @@ export class ManufacturersAddEditComponent extends BaseAddEditComponent {
         isActive: false
       }
     } else {
-      let payload = {
-        id: this.id
-      }
       this.loading = true;
-      super.getRegisterBase(payload);
+      super.getRegisterBase({id: this.id});
       this.shoWButtonSaveAndNew = false;
     }
   }
