@@ -12,6 +12,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { createWatch } from '@angular/core/primitives/signals';
 
 export interface NavItem {
   displayName: string;
@@ -49,176 +50,186 @@ export class SidenavComponent {
 
   }
 
+  createMenuItem(menu: NavItem) {
+    return {
+      displayName: this.translate.instant(menu.displayName),
+      iconName: menu.iconName,
+      route: menu.route,
+      children: menu.children
+       }
+  };
+
+  menuAdministracion() : any {
+    return [
+      this.createMenuItem({displayName: 'menu.budgets', iconName: '', route: 'budgets'}),
+      this.createMenuItem({displayName: 'menu.delivery-note', iconName: '', route: 'delivery-note/list'}),
+      this.createMenuItem({displayName: 'menu.invoice', iconName: '', route: 'invoice/list'}),
+      this.createMenuItem({displayName: 'menu.expirations', iconName: '', route: 'expirations'}),
+      this.createMenuItem({displayName: 'menu.corrective-budgets', iconName: '', route: 'corrective-budgets'}),
+      this.createMenuItem({displayName: 'menu.handle-rectification', iconName: '', route: 'handle-rectification'}),
+      this.createMenuItem({displayName: 'menu.reports', iconName: 'menu', route: '' ,
+        children: [
+          this.createMenuItem({displayName: 'Reporte de Facturas', iconName: '', route: 'invoice-report'}),
+          this.createMenuItem({displayName: 'Reporte de Albaranes', iconName: '', route: ''}),
+        ]
+      }),
+      this.createMenuItem({ displayName: 'Facturas de gastos', iconName: '',route: '' }),
+      this.createMenuItem({ displayName: 'Subidas de cuotas',iconName: '',route: ''}),
+      this.createMenuItem({ displayName: 'Modelos 347', iconName: ''}),
+      this.createMenuItem({ displayName: 'Importes facturados', iconName: ''}),
+      this.createMenuItem({ displayName: 'Estimación de cobros periódicos', iconName: ''}),
+      this.createMenuItem({ displayName: 'Reportes de facturación', iconName: 'menu',
+        children: [
+          this.createMenuItem({displayName: 'Por categorías', iconName: '', route: ''}),
+          this.createMenuItem({displayName: 'Por operaciones', iconName: '', route: ''}),
+          this.createMenuItem({displayName: 'Deuda por cliente', iconName: '', route: ''}),
+          this.createMenuItem({displayName: 'Facturación mensual', iconName: '', route: ''}),
+        ]
+      })
+      ]
+  }
+
+  menuFacturacionProveedores() : any {
+    return [
+      this.createMenuItem({displayName: 'Proveedores', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Facturación de Proveedores', iconName: 'menu', route: '',
+      children: [
+        this.createMenuItem({displayName: 'Facturas de Proveedores', iconName: '', route: ''}),
+        this.createMenuItem({displayName: 'Rectificativas de Proveedores', iconName: '', route: ''}),
+      ]
+      }),
+      this.createMenuItem({displayName: 'Vencimientos de Proveedores', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Remesa', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Mostrar deuda por Proveedor', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Modelos 347', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Propuestas de Compra', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Remesas', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Albaranes de Entrega', iconName: '', route: ''}),
+      this.createMenuItem({displayName: 'Pedidos', iconName: '', route: ''})
+    ]
+  }
+
+  menuAlmacen() : any {
+  return [
+    this.createMenuItem({displayName: 'Almacenes', iconName: '', route: ''}),
+    this.createMenuItem({displayName: 'Categorías', iconName: '', route: ''}),
+    this.createMenuItem({displayName: 'Subcategorías', iconName: '', route: ''}),
+    this.createMenuItem({displayName: 'Material en espera', iconName: '', route: ''})
+  ]
+  }
+
+  menuTrabajos() {
+    return [
+      this.createMenuItem({displayName: 'Próximas revisiones', iconName: 'menu', route: '',
+      children: [
+        this.createMenuItem({displayName: 'Próximas revisiones RIPCI', iconName: '', route: ''}),
+        this.createMenuItem( {displayName: 'Próximas revisiones Seguridad', iconName: '', route: ''}),
+      ]
+      }),
+    this.createMenuItem({displayName: 'Revisiones planificadas', iconName: '', route: ''}),
+    this.createMenuItem({displayName: 'Calendario de ejecución', iconName: '', route: ''}),
+    this.createMenuItem({displayName: 'últimas revisiones', iconName: 'menu', route: '',
+      children: [
+        this.createMenuItem({displayName: 'últimas revisiones RIPCI', iconName: '', route: ''}),
+        this.createMenuItem({displayName: 'últimas revisiones Seguridad', iconName: '', route: ''}),
+      ]
+    }),
+  ]
+  }
+
   updateMenuItems() {
     this.menu = [
-      {
-        displayName: this.translate.instant('menu.clients'),
-        iconName: 'person',
-        route: 'clients',
-      },
-      {
-        displayName: this.translate.instant('menu.administration'),
-        iconName: 'menu',
-        route: '',
-        children:[
-          {displayName: this.translate.instant('menu.budgets'), iconName: '', route: 'budgets'},
-          {displayName: this.translate.instant('menu.delivery-note'), iconName: '', route: 'delivery-note/list'},
-          {displayName:  this.translate.instant('menu.invoice'), iconName: '', route: 'invoice/list'},
-          {displayName: this.translate.instant('menu.expirations'), iconName: '', route: 'expirations'},
-          {displayName: this.translate.instant('menu.corrective-budgets'), iconName: '', route: 'corrective-budgets'},
-          {displayName: this.translate.instant('menu.handle-rectification'), iconName: '', route: 'handle-rectification'},
-          {displayName: this.translate.instant('menu.reports'), iconName: 'menu', route: '' ,children: [
-            {displayName: 'Reporte de Facturas', iconName: '', route: 'invoice-report'},
-            {displayName: 'Reporte de Albaranes', iconName: '', route: ''},
-          ]},
-          {
-            displayName: 'Facturas de gastos',
-            iconName: '',
-          },
-          {
-            displayName: 'Subidas de cuotas',
-            iconName: '',
-          },
-          {
-            displayName: 'Modelos 347',
-            iconName: '',
-          },
-          {
-            displayName: 'Importes facturados',
-            iconName: '',
-          },
-          {
-            displayName: 'Estimación de cobros periódicos',
-            iconName: '',
-          },
-          {
-            displayName: 'Reportes de facturación',
-            iconName: 'menu',
-            children: [
-              {displayName: 'Por categorías', iconName: '', route: ''},
-              {displayName: 'Por operaciones', iconName: '', route: ''},
-              {displayName: 'Deuda por cliente', iconName: '', route: ''},
-              {displayName: 'Facturación mensual', iconName: '', route: ''},
-            ]
-          }
+      this.createMenuItem({ displayName: 'menu.clients', iconName: 'person', route: 'clients'}),
+      this.createMenuItem({displayName: 'menu.administration', iconName: 'menu', route: '',
+        children: this.menuAdministracion()}),
+      this.createMenuItem({displayName: 'Facturación de Proveedores',
+        iconName: 'menu', children: this.menuFacturacionProveedores()}),
+      this.createMenuItem({displayName: 'Almacén', iconName: 'menu',
+        children: [
+          this.createMenuItem({displayName: 'Almacenes', iconName: '', route: ''}),
+          this.createMenuItem({displayName: 'Categorías', iconName: '', route: ''}),
+          this.createMenuItem({displayName: 'Subcategorías', iconName: '', route: ''}),
+          this.createMenuItem({displayName: 'Material en espera', iconName: '', route: ''})
         ]
-      },
-      {
-        displayName: 'Facturación de Proveedores',
-        iconName: 'menu',
+      }),
+      this.createMenuItem({ displayName: 'Trabajos', iconName: 'menu', children: this.menuTrabajos()}),
+      this.createMenuItem({ displayName: 'menu.technicals',iconName: '', route: 'technicals/list'}),
+      this.createMenuItem({ displayName: 'Proyectos', iconName: '', }),
+      this.createMenuItem({ displayName: 'Documentos', iconName: ''}),
+      this.createMenuItem({displayName: 'Informes',iconName: 'menu',
         children: [
-          {displayName: 'Proveedores', iconName: '', route: ''},
-          {displayName: 'Facturación de Proveedores', iconName: 'menu', route: '', children: [
-            {displayName: 'Facturas de Proveedores', iconName: '', route: ''},
-            {displayName: 'Rectificativas de Proveedores', iconName: '', route: ''},
-          ]},
-          {displayName: 'Vencimientos de Proveedores', iconName: '', route: ''},
-          {displayName: 'Remesa', iconName: '', route: ''},
-          {displayName: 'Mostrar deuda por Proveedor', iconName: '', route: ''},
-          {displayName: 'Modelos 347', iconName: '', route: ''},
-          {displayName: 'Propuestas de Compra', iconName: '', route: ''},
-          {displayName: 'Remesas', iconName: '', route: ''},
-          {displayName: 'Albaranes de Entrega', iconName: '', route: ''},
-          {displayName: 'Pedidos', iconName: '', route: ''},
-        ],
-      },
-      {
-        displayName: 'Almacén',
-        iconName: 'menu',
+          this.createMenuItem({displayName: 'Informes de trabajos', iconName:'menu',
+            children: [
+              this.createMenuItem({displayName: 'Tareas Asignadas',iconName: ''}),
+              this.createMenuItem({displayName: 'Incidencias',iconName: ''}),
+              this.createMenuItem({displayName: 'Confirmaciones de Tareas',iconName: ''}),
+              this.createMenuItem({displayName: 'Gráficos de Productividad',iconName: ''}),
+            ]
+      }),
+      this.createMenuItem({displayName: 'Informes de periodicidad', iconName:'menu',
         children: [
-          {displayName: 'Almacenes', iconName: '', route: ''},
-          {displayName: 'Categorías', iconName: '', route: ''},
-          {displayName: 'Subcategorías', iconName: '', route: ''},
-          {displayName: 'Material en espera', iconName: '', route: ''}
-        ],
-      },
-      {
-        displayName: 'Trabajos',
-        iconName: 'menu',
+          this.createMenuItem({displayName: 'Gráficos de Periodicidades',iconName: ''}),
+          this.createMenuItem({displayName: 'Cuotas',iconName: ''}),
+          this.createMenuItem({displayName: 'Gráficos mensuales',iconName: ''}),
+        ]
+      }),
+      this.createMenuItem({displayName: 'Mostrar Informes de clientes', iconName:'menu',
         children: [
-          {displayName: 'Próximas revisiones', iconName: 'menu', route: '', children: [
-            {displayName: 'Próximas revisiones RIPCI', iconName: '', route: ''},
-            {displayName: 'Próximas revisiones Seguridad', iconName: '', route: ''},
-          ]},
-          {displayName: 'Revisiones planificadas', iconName: '', route: ''},
-          {displayName: 'Calendario de ejecución', iconName: '', route: ''},
-          {displayName: 'últimas revisiones', iconName: 'menu', route: '', children: [
-            {displayName: 'últimas revisiones RIPCI', iconName: '', route: ''},
-            {displayName: 'últimas revisiones Seguridad', iconName: '', route: ''},
-          ]},
-        ],
-      },
-      {
-        displayName: this.translate.instant('menu.technicals'),iconName: '', route: 'technicals/list'
-      },
-      {
-        displayName: 'Proyectos',
-        iconName: '',
-      },
-      {
-        displayName: 'Documentos',
-        iconName: '',
-      },
-      {displayName: 'Informes',iconName: 'menu',children: [
-        {displayName: 'Informes de trabajos', iconName:'menu', children: [
-          {displayName: 'Tareas Asignadas',iconName: ''},
-          {displayName: 'Incidencias',iconName: ''},
-          {displayName: 'Confirmaciones de Tareas',iconName: ''},
-          {displayName: 'Gráficos de Productividad',iconName: ''},
-        ]},
-        {displayName: 'Informes de periodicidad', iconName:'menu', children: [
-          {displayName: 'Gráficos de Periodicidades',iconName: ''},
-          {displayName: 'Cuotas',iconName: ''},
-          {displayName: 'Gráficos mensuales',iconName: ''},
-        ]},
-        {displayName: 'Mostrar Informes de clientes', iconName:'menu', children: [
-          {displayName: 'Márgenes de beneficio',iconName: ''},
-          {displayName: 'Servicios ofrecidos',iconName: ''},
-          {displayName: 'Rentabilidad de los clientes',iconName: ''},
-          {displayName: 'Programación de actividades con clientes',iconName: ''},
-          {displayName: 'Facturas de clientes',iconName: ''},
-          {displayName: 'Facturación agrupada',iconName: ''},
-          {displayName: 'Presupuestos de clientes',iconName: ''},
-        ]},
-        {displayName: 'Mostrar Informes de equipos', iconName:'menu', children: [
-          {displayName: 'Equipos',iconName: ''},
-          {displayName: 'Historial de un equipo',iconName: ''}
-        ]},
+          this.createMenuItem({displayName: 'Márgenes de beneficio',iconName: ''}),
+          this.createMenuItem({displayName: 'Servicios ofrecidos',iconName: ''}),
+          this.createMenuItem({displayName: 'Rentabilidad de los clientes',iconName: ''}),
+          this.createMenuItem({displayName: 'Programación de actividades con clientes',iconName: ''}),
+          this.createMenuItem({displayName: 'Facturas de clientes',iconName: ''}),
+          this.createMenuItem({displayName: 'Facturación agrupada',iconName: ''}),
+          this.createMenuItem({displayName: 'Presupuestos de clientes',iconName: ''}),
+        ]
+      }),
+      this.createMenuItem({displayName: 'Mostrar Informes de equipos', iconName:'menu',
+        children: [
+          this.createMenuItem({displayName: 'Equipos',iconName: ''}),
+          this.createMenuItem({displayName: 'Historial de un equipo',iconName: ''})
+        ]
+      }),
       ]
-      },
-      {displayName: 'Gestionar la configuración',iconName: 'menu',children: [
-        {displayName: 'Datos de la Empresa',iconName: ''},
-        {displayName: 'Usuarios',iconName: ''},
-        {displayName: this.translate.instant('menu.prTypes'),iconName: '', route: 'prTypes/list'},
-        {displayName: this.translate.instant('menu.prIncidents'),iconName: '', route: 'prIncidents/list'},
+      }),
+      this.createMenuItem({displayName: 'Gestionar la configuración',iconName: 'menu',
+        children: [
+          this.createMenuItem({displayName: 'Datos de la Empresa',iconName: ''}),
+          this.createMenuItem({displayName: 'Usuarios',iconName: ''}),
+          this.createMenuItem({displayName: 'menu.prTypes',iconName: '', route: 'prTypes/list'}),
+          this.createMenuItem({displayName: 'menu.prIncidents',iconName: '', route: 'prIncidents/list'}),
 
-        {displayName: this.translate.instant('menu.manufacturers'),iconName: '', route: 'manufacturers/list'},
-        {displayName: this.translate.instant('menu.documents-templates'),iconName: '', route: 'documents-templates/list'},
-      ]},
-      {displayName: this.translate.instant('menu.advancedSettings'),iconName: 'menu',children: [
-        {displayName: this.translate.instant('menu.banks'),iconName: '', route: 'banks/list'},
-        {displayName: this.translate.instant('menu.delivery-note-states'),iconName: '', route: 'delivery-note-states/list'},
-        {displayName: this.translate.instant('menu.invoice-status'),iconName: '', route: 'invoice-status/list'},
-        {displayName: this.translate.instant('menu.statement-order'),iconName: '', route: 'statement-order/list'},
-        {displayName: this.translate.instant('menu.request-status'),iconName: '', route: 'request-status/list'},
-        {displayName: this.translate.instant('menu.states-parties-review') ,iconName: '', route: 'states-parties-review/list'},
-        {displayName: this.translate.instant('menu.work-status'),iconName: '', route: 'work-status/list'},
-        {displayName: this.translate.instant('menu.payment-forms'),iconName: '', route: 'payment-forms/list'},
-        {displayName: this.translate.instant('menu.taxes') ,iconName: '', route: 'taxes/list'},
-        {displayName: 'Logs',iconName: ''},
-        {displayName: this.translate.instant('menu.unsubscribe-equipment-reasons') ,iconName: '', route: 'unsubscribe-reasons/list'},
-        {displayName: this.translate.instant('menu.populations'),iconName: '', route: 'populations/list'},
-        {displayName: this.translate.instant('menu.pvpRates') ,iconName: '', route: 'pvp-rates/list'},
-        {displayName: this.translate.instant('menu.clients-types'),iconName: '', route: 'clients-types/list'},
-        {displayName: this.translate.instant('menu.contracts-types'),iconName: '', route: 'contracts-types/list'},
-        {displayName: 'Roles',iconName: ''}
-      ]},
-      {displayName: 'Gestión Operativa',iconName: 'menu',children: [
+          this.createMenuItem({displayName: 'menu.manufacturers',iconName: '', route: 'manufacturers/list'}),
+          this.createMenuItem({displayName: 'menu.documents-templates',iconName: '', route: 'documents-templates/list'})
+        ]
+      }),
+      this.createMenuItem({displayName: 'menu.advancedSettings',iconName: 'menu',
+        children: [
+          this.createMenuItem({displayName: 'menu.banks',iconName: '', route: 'banks/list'}),
+          this.createMenuItem({displayName: 'menu.delivery-note-states',iconName: '', route: 'delivery-note-states/list'}),
+          this.createMenuItem({displayName: 'menu.invoice-status',iconName: '', route: 'invoice-status/list'}),
+          this.createMenuItem({displayName: 'menu.statement-order',iconName: '', route: 'statement-order/list'}),
+          this.createMenuItem({displayName: 'menu.request-status',iconName: '', route: 'request-status/list'}),
+          this.createMenuItem({displayName: 'menu.states-parties-review' ,iconName: '', route: 'states-parties-review/list'}),
+          this.createMenuItem({displayName: 'menu.work-status',iconName: '', route: 'work-status/list'}),
+          this.createMenuItem({displayName: 'menu.payment-forms',iconName: '', route: 'payment-forms/list'}),
+          this.createMenuItem({displayName: 'menu.taxes',iconName: '', route: 'taxes/list'}),
+          this.createMenuItem({displayName: 'Logs',iconName: ''}),
+          this.createMenuItem({displayName: 'menu.unsubscribe-equipment-reasons' ,iconName: '', route: 'unsubscribe-reasons/list'}),
+          this.createMenuItem({displayName: 'menu.populations',iconName: '', route: 'populations/list'}),
+          this.createMenuItem({displayName: 'menu.pvpRates',iconName: '', route: 'pvp-rates/list'}),
+          this.createMenuItem({displayName: 'menu.clients-types',iconName: '', route: 'clients-types/list'}),
+          this.createMenuItem({displayName: 'menu.contracts-types',iconName: '', route: 'contracts-types/list'}),
+          this.createMenuItem({displayName: 'Roles',iconName: ''})
+        ]
+      }),
+      this.createMenuItem({displayName: 'Gestión Operativa',iconName: 'menu',
+        children: [
         {displayName: 'Familias',iconName: ''},
         {displayName: 'Productos',iconName: ''},
         {displayName: 'Servicios',iconName: ''}
-      ]
-      }
+        ]
+      })
     ];
   }
 
