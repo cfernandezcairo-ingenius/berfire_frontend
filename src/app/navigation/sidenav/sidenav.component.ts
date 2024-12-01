@@ -12,7 +12,6 @@ import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { createWatch } from '@angular/core/primitives/signals';
 
 export interface NavItem {
   displayName: string;
