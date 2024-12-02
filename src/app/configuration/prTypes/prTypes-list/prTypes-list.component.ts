@@ -48,6 +48,7 @@ export class PrTypesListComponent extends BaseListComponent implements OnInit {
   fg: FormGroup;
 
   override newRoute: string = '/prTypes/edit';
+  override newRouteToDelete:string = 'prTypes/delete';
 
   constructor(
     private readonly prTypesSrv: PrTypesService,

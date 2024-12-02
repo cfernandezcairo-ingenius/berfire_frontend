@@ -143,17 +143,6 @@ export class TableListComponent implements OnInit, OnChanges {
     document.removeEventListener('mouseup', this.mouseMoveHandler!);
   }
 
-  // filterData(array:any, searchTerm:string) {
-  //   return array.filter((item:any) => {
-  //     // Convertir el término de búsqueda a minúsculas
-  //     const lowerCaseTerm = searchTerm.toLowerCase();
-  //     // Comprobar si el término de búsqueda está en algún campo del objeto
-  //     return Object.values(item).some(value =>
-  //       String(value).toLowerCase().includes(lowerCaseTerm)
-  //     );
-  //   });
-  // }
-
   edit(row:any) {
     this.editRow.emit(row);
   }

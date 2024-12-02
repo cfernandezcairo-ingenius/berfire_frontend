@@ -44,6 +44,7 @@ export class ContractsTypesListComponent extends BaseListComponent {
   override displayedLabelsEn: IDisplayedLabels[] = getLabelsContractsTypesEn();
   fg: FormGroup;
   override newRoute: string = '/contracts-types/edit';
+  override newRouteToDelete:string = 'conteacts-types/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabContractsTypes';
 
   constructor(

@@ -45,6 +45,7 @@ export class ManufacturersListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/manufacturers/edit';
+  override newRouteToDelete:string = 'manufacturers/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabManufacturers';
 
   constructor(

@@ -15,7 +15,7 @@ export class PopulationsService extends BaseService {
     return this.http.post<any>(`${this.windowService.apiUrl}/populations`, payload);
   }
   override  edit(payload: any): Observable<any> {
-    return this.http.put<any>(`${this.windowService.apiUrl}/populations`, payload);
+    return this.http.put<any>(`${this.windowService.apiUrl}/populations//${payload.id}`, payload);
   }
 
   override  getAll(): Observable<any> {

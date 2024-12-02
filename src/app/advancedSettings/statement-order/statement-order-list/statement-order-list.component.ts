@@ -45,6 +45,7 @@ export class StatementOrderListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/statement-order/edit';
+  override newRouteToDelete:string = 'statement-order/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabStatementOrder';
 
   constructor(

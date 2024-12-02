@@ -58,6 +58,7 @@ import { PrTypesDeleteComponent } from './configuration/prTypes/prTypes-delete/p
 import { PrIncidentsAddEditComponent } from './configuration/prIncidents/prIncidents-add-edit/prIncidents-add-edit.component';
 import { PrIncidentsListComponent } from './configuration/prIncidents/prIncidents-list/prIncidents-list.component';
 import { PrIncidentsDeleteComponent } from './configuration/prIncidents/prIncidents-delete/prIncidents-delete.component';
+import { EnterpriseComponent } from './configuration/enterprise/enterprise/enterprise.component';
 
 export const routes: Routes = [
 
@@ -141,4 +142,5 @@ export const routes: Routes = [
   { path: 'prIncidents/edit', component: PrIncidentsAddEditComponent, canActivate: [AuthGuard]},
   { path: 'prIncidents/delete', component: PrIncidentsDeleteComponent , canActivate: [AuthGuard]},
   { path: 'prIncidents/edit/new', component: PrIncidentsAddEditComponent, canActivate: [AuthGuard]},
+  { path: 'enterprise', component: EnterpriseComponent, canActivate: [AuthGuard]}
 ];

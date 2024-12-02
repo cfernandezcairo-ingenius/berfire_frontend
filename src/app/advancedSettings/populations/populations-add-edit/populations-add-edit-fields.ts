@@ -4,8 +4,11 @@ import { createCheckboxField, createInputField, createInputFieldNumber, createRo
 export function generateFieldsPopulations(translate: TranslateService): any[] {
   return [
     createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
-    createRow([createInputFieldNumber(translate,'days','FORM.FIELDS.DAYS', true)]),
-    createRow([createCheckboxField(translate,'home', 'FORM.FIELDS.HOME')])
+    createRow([
+      createInputField(translate,'country','FORM.FIELDS.COUNTRY', true,2),
+      createInputField(translate, 'province', 'FORM.FIELDS.PROVINCE', true,2)
+    ]),
+    createRow([createCheckboxField(translate,'active', 'FORM.FIELDS.ACTIVE')])
   ]
 }
 

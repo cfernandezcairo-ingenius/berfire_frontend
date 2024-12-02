@@ -45,6 +45,7 @@ export class WorkStatusListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/work-status/edit';
+  override newRouteToDelete:string = 'work-status/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabWorkStatus';
 
   constructor(

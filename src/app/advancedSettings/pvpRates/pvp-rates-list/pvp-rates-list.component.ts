@@ -44,6 +44,7 @@ export class PvPRatesListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/pvp-rates/edit';
+  override newRouteToDelete:string = 'pvp-rates/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabPvPRates';
 
   constructor(

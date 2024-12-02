@@ -46,6 +46,7 @@ export class PaymenFormsListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/payment-forms/edit';
+  override newRouteToDelete:string = 'payment-forms/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabPaymentForms';
 
   constructor(

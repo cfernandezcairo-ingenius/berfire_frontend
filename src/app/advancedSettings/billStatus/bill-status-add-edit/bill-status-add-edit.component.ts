@@ -40,6 +40,7 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
+    debugger;
     this.id = this.billStatusSrv._idToEdit;
     if (this.id === 0) {
       this.shoWButtonSaveAndNew = true;

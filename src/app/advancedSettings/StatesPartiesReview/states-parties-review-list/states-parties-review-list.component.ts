@@ -45,6 +45,7 @@ export class StatesPartiesReviewListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/states-parties-review/edit';
+  override newRouteToDelete:string = 'states-parties-review/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabStatesPartiesReview';
 
   constructor(

@@ -44,6 +44,7 @@ export class BanksListComponent extends BaseListComponent {
   override displayedLabelsEn: IDisplayedLabels[] = getLabelsBanksEn();
   fg: FormGroup;
   override newRoute: string = '/banks/edit';
+  override newRouteToDelete:string = 'banks/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabBanks';
 
   constructor(

@@ -92,7 +92,17 @@
       "TEAMTITLE": "Team Title",
       "ORDER":"Order",
       "PERIODICITY": "PERIODICITY",
-      "REPORT": "Report"
+      "REPORT": "Report",
+      "NIFCIF" : "NIF/CIF",
+      "FISCALNAME": "Fiscal Name",
+      "FISCALADDRESS": "FISCAL ADDRESS",
+      "FISCALPOPULATION": "Fiscal Population",
+      "FISCALPOSTALCODE": "Fiscal Postal Code",
+      "MAINPHONE": "Main phone",
+      "SECONDARYPHONE": "Secondary phone",
+      "FAX": "Fax",
+      "WEBPAGE": "Web Page",
+      "DEFAULTING": "Default engineer"
     },
     "VALIDATION": {
       "REQUIRED": "Data in the field is required'",
@@ -126,6 +136,7 @@
     "states-parties-review": "States parties review",
     "unsubscribe-equipment-reasons": "Unsubscribe equipment reasons",
     "populations": "Populations",
+    "population": "Population",
     "pvpRates": "PVP rates",
     "clients-types": "clients types",
     "contracts-types": "Contracts types",

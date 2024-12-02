@@ -45,6 +45,7 @@ export class RequestStatusListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/request-status/edit';
+  override newRouteToDelete:string = 'rquest-status/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabRequestStatus';
 
   constructor(
