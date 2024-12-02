@@ -34,6 +34,46 @@ export function createInputField(translate: TranslateService, key: string, label
   return inputFieldString;
 };
 
+export function createSelectField(translate: TranslateService, key: string, labelKey: string, required: boolean = false, columns: number = 1): any {
+  const inputFieldString =  {
+    className: getLayout(columns),
+    type: 'select',
+    key: key,
+    props: {
+      required: required,
+      label: '',
+      options: [
+        { label: 'Opción 1', value: '1' },
+        { label: 'Opción 2', value: '2' },
+        { label: 'Opción 3', value: '3' },
+      ],
+      //change: (field:any, $event:any) => onSelectChange(field, $event),
+    },
+    validators: required
+      ? { validation: ['required'] }
+      : undefined,
+    validation: required
+      ? {
+          messages: {
+            required: translate.get('FORM.VALIDATION.REQUIRED'),
+          },
+        }
+      : undefined,
+  };
+  translate.get(labelKey).subscribe((translatedLabel: string) => {
+    inputFieldString.props.label = translatedLabel;
+  });
+  if (required) {
+    translate.onLangChange.subscribe(() => {
+      inputFieldString.validation!.messages.required = translate.get('FORM.VALIDATION.REQUIRED');
+      translate.get(labelKey).subscribe((updatedLabel: string) => {
+        inputFieldString.props.label = updatedLabel;
+      });
+    });
+  }
+  return inputFieldString;
+};
+
 function getLayout(columns: number): string {
   let result = '';
 

@@ -26,6 +26,7 @@ export class BaseListComponent implements OnInit {
   loading:boolean = false;
   todoListo:boolean = false;
   newRoute:string = '';
+  newRouteToDelete:string = '';
   routefromNewTab = '';
 
   constructor(
@@ -78,13 +79,13 @@ export class BaseListComponent implements OnInit {
   }
 
   editNew(row:any) {
-    this.baseSrv._idToEdit = row.id;
+    localStorage.setItem('_idToEdit',row.id);
     window.open(`${this.newRoute}`, '_blank')
   }
 
   delete(id: number) {
     this.baseSrv._idToDelete = id;
-    this.navigationSrv.NavigateTo(`${this.newRoute}`)
+    this.navigationSrv.NavigateTo(`${this.newRouteToDelete}`)
   }
 
   addItem() {

@@ -92,7 +92,17 @@
       "TEAMTITLE": "Titulo Equipo",
       "ORDER":"Orden",
       "PERIODICITY": "Periodicidad",
-      "REPORT": "Reporte"
+      "REPORT": "Reporte",
+      "NIFCIF" : "NIF/CIF",
+      "FISCALNAME": "Nombre Fiscal",
+      "FISCALADDRESS": "Dirección Fiscal",
+      "FISCALPOPULATION": "Población Fiscal",
+      "FISCALPOSTALCODE": "Código Postal Fiscal",
+      "MAINPHONE": "Teléfono Principal",
+      "SECONDARYPHONE": "Teléfono secundario",
+      "FAX": "Fax",
+      "WEBPAGE": "Página Web",
+      "DEFAULTING": "Ing. Predeterminado"
     },
     "VALIDATION": {
       "REQUIRED": "El valor del campo es requerido.",
@@ -126,6 +136,7 @@
     "states-parties-review": "Estados de los partes de revisión",
     "unsubscribe-equipment-reasons": "Motivos baja equipamiento",
     "populations": "Poblaciones",
+    "population": "Población",
     "pvpRates": "Tarifas PVP",
     "clients-types": "Tipos de clientes",
     "contracts-types": "Tipos de contratos",

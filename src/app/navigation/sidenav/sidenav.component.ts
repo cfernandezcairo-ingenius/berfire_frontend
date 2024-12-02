@@ -193,7 +193,7 @@ export class SidenavComponent {
       }),
       this.createMenuItem({displayName: 'Gestionar la configuración',iconName: 'menu',
         children: [
-          this.createMenuItem({displayName: 'Datos de la Empresa',iconName: ''}),
+          this.createMenuItem({displayName: 'Datos de la Empresa',iconName: '', route: 'enterprise'}),
           this.createMenuItem({displayName: 'Usuarios',iconName: ''}),
           this.createMenuItem({displayName: 'menu.prTypes',iconName: '', route: 'prTypes/list'}),
           this.createMenuItem({displayName: 'menu.prIncidents',iconName: '', route: 'prIncidents/list'}),

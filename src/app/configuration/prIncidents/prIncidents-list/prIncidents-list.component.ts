@@ -49,6 +49,7 @@ export class PrIncidentsListComponent extends BaseListComponent implements OnIni
   fg: FormGroup;
 
   override newRoute: string = '/prIncidents/edit';
+  override newRouteToDelete:string = 'prIncidents/delete';
 
   constructor(
     private readonly prIncidentsSrv: PrIncidentsService,

@@ -49,6 +49,7 @@ export class DocumentsTemplatesListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/documents-templates/edit';
+  override newRouteToDelete:string = 'documents-templates/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabTemplates';
 
   constructor

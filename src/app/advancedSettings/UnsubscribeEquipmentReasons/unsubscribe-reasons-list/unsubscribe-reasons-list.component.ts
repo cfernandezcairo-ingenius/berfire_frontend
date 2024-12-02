@@ -45,6 +45,7 @@ export class UnsubscribeReasonsListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/unsubscribe-reasons/edit';
+  override newRouteToDelete:string = 'unsubscribe-reasons/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabUnsubscribeReasons';
 
   constructor(

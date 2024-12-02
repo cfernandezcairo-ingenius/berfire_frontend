@@ -47,6 +47,7 @@ export class TaxesListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/taxes/edit';
+  override newRouteToDelete:string = 'taxes/delete';
 
   constructor(
     private readonly taxesSrv: TaxesService,

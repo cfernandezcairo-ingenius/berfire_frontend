@@ -45,6 +45,7 @@ export class ClientsTypesListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/clients-types/edit';
+  override newRouteToDelete:string = 'clients-types/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabClientsTypes';
 
   constructor(

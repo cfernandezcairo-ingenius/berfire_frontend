@@ -8,6 +8,15 @@ import { SpinnerComponent } from '../../../share/common/UI/spinner/spinner.compo
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
+import { showMessage } from '../../../share/common/UI/sweetalert2';
+import { catchError, combineLatest} from 'rxjs';
+import { generateFieldsPopulations } from './populations-add-edit-fields';
+
+export interface ICountry {
+  country_name_en: string,
+  country_name_es?: string,
+  country_short_name:string
+}
 
 @Component({
   selector: 'app-populations-add-edit',
@@ -19,7 +28,7 @@ import { NavigationService } from '../../../navigation/shared/services/navigatio
 })
 export class PopulationsAddEditComponent extends BaseAddEditComponent {
 
-  countries: any;
+  countries: ICountry[] = [];
   selectedCountry = '';
 
   override dataModifiedInNewTab = 'dataModifiedInNewTabPopulations';
@@ -34,7 +43,6 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
     super(translate, navigationSrv,populationsService,matSnackBar);
     this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd) {
-        // Cambia la lógica según tus rutas
         this.showinNewTab = this.router.url.includes('/populations/edit/new');
       }
     });
@@ -128,6 +136,21 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
+    this.fields.forEach((f:any) => {
+      f.fieldGroup.forEach((fg:any) => {
+        this.translate.get(fg.props.label).subscribe((translatedLabel: string) => {
+          fg.props.label = translatedLabel;
+        });
+        if (fg.props.required) {
+          this.translate.onLangChange.subscribe(() => {
+            fg.validation.messages.required = this.translate.get('FORM.VALIDATION.REQUIRED');
+            this.translate.get(fg.props.label).subscribe((updatedLabel: string) => {
+              fg.props.label = updatedLabel;
+            });
+          });
+        }
+      })
+    });
     this.id = this.populationsService._idToEdit;
     if (this.id === 0) {
       //Agregar
@@ -141,14 +164,46 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
         id: this.id
       }
       this.loading = true;
-      super.getRegisterBase(payload);
+      const obsCountries = this.populationsService.getCountries().pipe(
+        catchError((error) => {
+          let title = this.translate.instant('inform');
+          let text = this.translate.currentLang === 'es' ? 'Error al cargar los Paises.!!!' : 'Error getting data!!';
+          let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept';
+          let cancelButtonText = this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel';
+          showMessage(title, text, 'error', true, false, confirmButtonText, cancelButtonText);
+          return [];
+        })
+      );
+
+      const obsData = this.populationsService.getById(payload).pipe(
+        catchError((error) => {
+          let title = this.translate.instant('inform');
+          let text = this.translate.currentLang === 'es' ? 'Error al cargar el Registro.!!!' : 'Error getting data!!';
+          let confirmButtonText = this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept';
+          let cancelButtonText = this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel';
+          showMessage(title, text, 'error', true, false, confirmButtonText, cancelButtonText);
+          return [];
+        })
+      );
+
+      combineLatest([obsCountries, obsData]).subscribe({
+        next: ([countries, data]) => {
+          this.countries = countries.data;
+          this.model = { ...data.data };
+          this.selectedCountry = this.model.country;
+          this.updateOptionsProvinces();
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
       this.shoWButtonSaveAndNew = false;
     }
     this.updateOptionsCountries();
   }
 
   onSelectChange(field:any, event:any) {
-    this.selectedCountry = this.countries.filter((c:any) => c.country_short_name === event.value)[0].country_name_en;
+    this.selectedCountry = event.value;
     this.updateOptionsProvinces();
   }
 
@@ -162,7 +217,7 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
           if (selectField) {
             selectField.props.options = this.countries.map((option: any) => ({
               label: this.translate.currentLang === 'es' ? option.country_name_es : option.country_name_en,
-              value: option.country_short_name
+              value:  option.country_name_en
             }));
           }
       });

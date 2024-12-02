@@ -39,6 +39,7 @@ export class BillStatusListComponent extends BaseListComponent {
   fg: FormGroup;
 
   override newRoute: string = '/invoice-status/edit';
+  override newRouteToDelete:string = 'invoice-status/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabBillStatements';
 
   constructor(

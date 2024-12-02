@@ -47,6 +47,7 @@ export class PopulationsListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/populations/edit';
+  override newRouteToDelete:string = 'populations/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabPopulations';
 
   constructor(
@@ -81,9 +82,8 @@ export class PopulationsListComponent extends BaseListComponent {
     this.todoListo = true;
   }
 
- override cleanSearchData() {
-    this.fg.reset();
-    this.loadAll();
+  override cleanSearchData() {
+      this.fg.reset();
+      this.loadAll();
   }
-
 }

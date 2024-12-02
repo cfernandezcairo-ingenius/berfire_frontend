@@ -43,6 +43,7 @@ export class DeliveryNoteStatesListComponent extends BaseListComponent {
 
   fg: FormGroup;
   override newRoute: string = '/delivery-note-states/edit';
+  override newRouteToDelete:string = 'delivery-note-states/delete';
   override routefromNewTab:string = 'dataModifiedInNewTabDeliveryNoteStates';
 
   constructor(
