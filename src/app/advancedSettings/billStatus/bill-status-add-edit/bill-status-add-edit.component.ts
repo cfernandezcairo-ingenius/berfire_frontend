@@ -31,34 +31,22 @@ export class BillStatusAddEditComponent extends BaseAddEditComponent {
     public readonly router: Router
   ) {
     super(translate, navigationSrv,billStatusSrv,matSnackBar);
-    this.router.events.subscribe((event:any) => {
-      if (event instanceof NavigationEnd) {
-        this.showinNewTab = this.router.url.includes('/invoice-status/edit/new');
-      }
-    });
     this.fields = generateFieldsBillStatus(translate);
   }
 
   override ngOnInit(): void {
-    debugger;
-    this.id = this.billStatusSrv._idToEdit;
-    if (this.id === 0) {
+
+    let inputs = localStorage.getItem!('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
       this.shoWButtonSaveAndNew = true;
-      this.model = {
-        isPaid: false,
-        isReturned: false,
-        isSent: false,
-        isUnPaid:false,
-        isPending:false
-      }
     } else {
-      let payload = {
-        id: this.id
-      }
-      this.loading = true;
-      super.getRegisterBase(payload);
-      this.shoWButtonSaveAndNew = false;
+      this.shoWButtonSaveAndNew = false
     }
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

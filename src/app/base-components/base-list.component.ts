@@ -74,12 +74,12 @@ export class BaseListComponent implements OnInit {
 
 
   edit(row:any) {
-    this.baseSrv._idToEdit = row.id;
+    localStorage.setItem('_idToEdit',JSON.stringify({id: row.id, newTab: false}));
     this.navigationSrv.NavigateTo(`${this.newRoute}`)
   }
 
   editNew(row:any) {
-    localStorage.setItem('_idToEdit',row.id);
+    localStorage.setItem('_idToEdit',JSON.stringify({id: row.id, newTab: true}));
     window.open(`${this.newRoute}`, '_blank')
   }
 
@@ -89,7 +89,7 @@ export class BaseListComponent implements OnInit {
   }
 
   addItem() {
-    this.baseSrv._idToEdit = 0;
+    localStorage.setItem('_idToEdit',JSON.stringify({id: 0, newTab: false}));
     this.navigationSrv.NavigateTo(`${this.newRoute}`)
   }
 

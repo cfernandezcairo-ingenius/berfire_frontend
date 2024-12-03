@@ -8,6 +8,7 @@ import { RevisionCertificateComponent } from "../revision-certificate/revision-c
 import { MaintenanceCertificateComponent } from "../maintenance-certificate/maintenance-certificate.component";
 import { ContractsComponent } from "../contracts/contracts.component";
 import { InstallCertificationComponent } from "../install-certification/install-certification.component";
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-enterprise',
@@ -17,5 +18,15 @@ import { InstallCertificationComponent } from "../install-certification/install-
   styleUrl: './enterprise.component.scss'
 })
 export class EnterpriseComponent {
+
+  fgDetails = new FormGroup({});
+  modelDetails: any;
+
+  constructor() {
+    this.fgDetails.valueChanges.subscribe({
+      next: (res:any) => {
+      }
+    });
+  }
 
 }

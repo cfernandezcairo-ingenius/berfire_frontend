@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BaseAddEditComponent } from '../../../base-components/base-add-edit.component';
 import { generateFieldsEnterpriseDetails } from './enterprise-details-fields';
 import { EnterpriseDetailsService } from './enterprise.service';
@@ -21,6 +21,9 @@ import { catchError, combineLatest } from 'rxjs';
 export class EnterpriseDetailsComponent extends BaseAddEditComponent {
 
   populations: any;
+
+  @Input() fgDetails: any;
+  @Input() modelDetails:any;
 
     constructor(private readonly enterpriseDetailsSrv: EnterpriseDetailsService,
       public override  readonly translate: TranslateService,
@@ -54,6 +57,7 @@ export class EnterpriseDetailsComponent extends BaseAddEditComponent {
       );
       combineLatest([obsPopulations, obsEnterprise]).subscribe({
         next: ([populations, data]) => {
+          debugger;
           this.populations = populations.data;
           this.model = { ...data.data };
         },
@@ -77,12 +81,12 @@ export class EnterpriseDetailsComponent extends BaseAddEditComponent {
       } else {
         payload = {
           id: this.id,
+          cif: this.fg.get('cif')?.value,
           name: this.fg.get('name')?.value,
-          templateType: this.fg.get('templateType')?.value,
-          renderType: this.fg.get('renderType')?.value,
-          predetermined: this.fg.get('predetermined')?.value === undefined ? false : this.fg.get('predetermined')?.value,
-          description: this.fg.get('description')?.value,
-          template: this.fg.get('template')?.value
+          fiscalName: this.fg.get('fiscalName')?.value,
+          address: this.fg.get('address')?.value,
+          population: this.fg.get('population')?.value,
+          code: this.fg.get('code')?.value
         }
       }
       super.onSubmitBase(payload);

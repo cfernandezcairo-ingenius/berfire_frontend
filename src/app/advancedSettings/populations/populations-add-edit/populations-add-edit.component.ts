@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationService } from '../../../navigation/shared/services/navigation.service';
 import { showMessage } from '../../../share/common/UI/sweetalert2';
 import { catchError, combineLatest} from 'rxjs';
-import { generateFieldsPopulations } from './populations-add-edit-fields';
 
 export interface ICountry {
   country_name_en: string,
@@ -135,26 +134,48 @@ export class PopulationsAddEditComponent extends BaseAddEditComponent {
     ];
   }
 
-  override ngOnInit(): void {
-    this.fields.forEach((f:any) => {
-      f.fieldGroup.forEach((fg:any) => {
-        this.translate.get(fg.props.label).subscribe((translatedLabel: string) => {
-          fg.props.label = translatedLabel;
-        });
-        if (fg.props.required) {
-          this.translate.onLangChange.subscribe(() => {
-            fg.validation.messages.required = this.translate.get('FORM.VALIDATION.REQUIRED');
-            this.translate.get(fg.props.label).subscribe((updatedLabel: string) => {
-              fg.props.label = updatedLabel;
-            });
-          });
-        }
-      })
+  translateLabel(fg: any) {
+    this.translate.get(fg.props.label).subscribe((translatedLabel: string) => {
+      fg.props.label = translatedLabel;
     });
-    this.id = this.populationsService._idToEdit;
+  }
+
+  handleRequiredField(fg: any) {
+    this.translate.onLangChange.subscribe(() => {
+      fg.validation.messages.required = this.translate.get('FORM.VALIDATION.REQUIRED');
+      this.updateLabelOnLangChange(fg);
+    });
+  }
+
+  updateLabelOnLangChange(fg: any) {
+    this.translate.get(fg.props.label).subscribe({
+      next: (updatedLabel: string) => {
+        fg.props.label = updatedLabel;
+      }
+    });
+  }
+
+  override ngOnInit(): void {
+    this.fields.forEach((f: any) => {
+      f.fieldGroup.forEach((fg: any) => {
+        this.translateLabel(fg);
+        if (fg.props.required) {
+          this.handleRequiredField(fg);
+        }
+      });
+    });
+
+    let inputs = localStorage.getItem!('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
     if (this.id === 0) {
       //Agregar
-      this.shoWButtonSaveAndNew = true;
+      if (this.id === 0 && !this.showinNewTab) {
+        this.shoWButtonSaveAndNew = true;
+      } else {
+        this.shoWButtonSaveAndNew = false
+      }
       this.model = {
         active: false,
       }

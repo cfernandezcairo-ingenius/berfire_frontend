@@ -42,21 +42,18 @@ export class ClientsTypesAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.id = this.clientsTypesSrv._idToEdit;
-    if (this.id === 0) {
-      this.shoWButtonSaveAndNew = true;
-      this.model = {
-        confirmDeliveryNote: false
-      }
-    } else {
 
-      let payload = {
-        id: this.id
-      }
-      this.loading = true;
-      super.getRegisterBase(payload);
-      this.shoWButtonSaveAndNew = false;
+    let inputs = localStorage.getItem!('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
+      this.shoWButtonSaveAndNew = true;
+    } else {
+      this.shoWButtonSaveAndNew = false
     }
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
   }
 
   onSubmit(model:any, nuevo: boolean = false) {
