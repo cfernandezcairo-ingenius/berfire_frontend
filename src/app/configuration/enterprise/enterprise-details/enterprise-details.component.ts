@@ -57,7 +57,6 @@ export class EnterpriseDetailsComponent extends BaseAddEditComponent {
       );
       combineLatest([obsPopulations, obsEnterprise]).subscribe({
         next: ([populations, data]) => {
-          debugger;
           this.populations = populations.data;
           this.model = { ...data.data };
         },
