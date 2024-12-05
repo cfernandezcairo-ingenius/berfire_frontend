@@ -1,0 +1,15 @@
+<div class="uploadC">
+  <div class="upload-container">
+    <label for="file-upload" class="custom-file-upload">
+      Seleccionar imagen
+    </label>
+    <input id="file-upload" class="mybuttonUpload" type="file" (change)="onFileSelected($event)" accept="image/*" />
+    <div class="example-label">
+      <p style="margin-top: 15px;margin-bottom: 15px;" *ngIf="selectedFile">Archivo seleccionado: {{ selectedFile.name }}</p>
+      <button mat-stroked-button class="mybuttonUpload" style="margin-top: 15px;width: 140px;"  (click)="onUpload()"><span>Subir Imagen</span>
+        <mat-icon style="width: 36px;">eject</mat-icon>
+      </button>
+
+    </div>
+  </div>
+</div>

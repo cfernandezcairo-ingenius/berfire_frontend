@@ -28,6 +28,7 @@ export class ButtonPrimaryComponent {
   }
 
   get buttonIsDisabled() {
+    if (this.fg === undefined) return false;
     return !this.fg!.valid;
   }
 

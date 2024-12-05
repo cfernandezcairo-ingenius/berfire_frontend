@@ -1,11 +1,10 @@
-.example-label {
-  display: table-cell;
-  font-size: 14px;
-  margin-left: 8px;
-  min-width: 120px;
+.uploadC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.mybuttonIcon {
+.mybuttonUpload {
   height: 50px;
   border-radius: 1rem;
   width: 120px;
@@ -26,15 +25,13 @@
   }
 }
 
-.mybutton.dark-mode {
-  background-color: #3BBE9B !important;
-  color: white !important;
-}
-.mybutton.disabled {
-  cursor: not-allowed;
-  background-color: #e0e0e0 !important;
-  color: #9e9e9e !important;
-  opacity: 0.5;
+.custom-file-upload {
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 1.4rem;
 }
 
-
+input[type="file"] {
+  display: none; /* Ocultar el input de archivo */
+}
