@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SignatureComponent } from '../signature/signature.component';
 import { UploadImageComponent } from '../upload-image/upload-image.component';
 import { UploadSelloIsoComponent } from '../upload-sello-iso/upload-sello-iso.component';
@@ -12,5 +12,7 @@ import { UploadLogoComponent } from "../upload-logo/upload-logo.component";
   styleUrl: './resources.component.scss'
 })
 export class ResourcesComponent {
+
+  @Input() fgResources: any;
 
 }

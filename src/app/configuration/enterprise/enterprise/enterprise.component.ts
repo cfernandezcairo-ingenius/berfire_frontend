@@ -8,7 +8,7 @@ import { RevisionCertificateComponent } from "../revision-certificate/revision-c
 import { MaintenanceCertificateComponent } from "../maintenance-certificate/maintenance-certificate.component";
 import { ContractsComponent } from "../contracts/contracts.component";
 import { InstallCertificationComponent } from "../install-certification/install-certification.component";
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-enterprise',
@@ -19,12 +19,61 @@ import { FormGroup } from '@angular/forms';
 })
 export class EnterpriseComponent {
 
-  fgDetails = new FormGroup({});
+  fgDetails:FormGroup;
+  fgTextDocuments: FormGroup;
+  fgInstallCertification: FormGroup;
+  fgResources: FormGroup;
   modelDetails: any;
 
-  constructor() {
+  constructor(private readonly fb: FormBuilder) {
+
+    this.fgDetails = this.fb.group({
+      nifCif:[''],
+      name: [''],
+      fiscalName: [],
+      fiscalAddress: [],
+      fiscalPopulation: [],
+      fiscalPostalCode: [],
+      email: [],
+      mainPhone: [],
+      secondaryPhone: [],
+      fax: [],
+      webPage: [],
+      engineerByDefault: [],
+      iban: []
+    });
+    this.fgTextDocuments = this.fb.group({
+      commercialRegister:[''],
+      enterpriseRegistrationData: [''],
+      lopd: [],
+      article20VAT: []
+    });
+    this.fgInstallCertification = fb.group({
+      certificateInstallationHeader: [],
+      certificateInstallationFooter: []
+    });
+    this.fgResources = this.fb.group({
+      signature: [],
+      signatureImage: [],
+      logo: [],
+      seal:[]
+    });
     this.fgDetails.valueChanges.subscribe({
-      next: (res:any) => {
+      next: (det:any) => {
+      }
+    });
+    this.fgTextDocuments.valueChanges.subscribe({
+      next: (ted:any) => {
+      }
+    });
+    this.fgInstallCertification.valueChanges.subscribe({
+      next:(ins:any) => {
+
+      }
+    });
+    this.fgResources.valueChanges.subscribe({
+      next:(ins:any) => {
+
       }
     });
   }

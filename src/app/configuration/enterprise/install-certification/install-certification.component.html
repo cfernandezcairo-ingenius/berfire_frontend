@@ -1,1 +1,30 @@
-<p>install-certification works!</p>
+<div style="position: relative;width: 100%;height: 100%;">
+  <form [formGroup]="fgInstallCertification">
+    <div style="position: relative;display: flex;flex-direction: column;gap: 20px;width: 70%; margin-left: auto;margin-right: auto;margin-top: 40px;">
+      <div>
+        <div style="position: relative;display: flex;flex-direction: row;">
+          <button>[[año]]</button>
+          <button>[[fecha[[</button>
+          <button>[[ingeniero.nombre]]</button>
+          <button>[[ingeniero.dni]]</button>
+          <button>[[ingeniero.titulo]]</button>
+          <button>[[CIF]]</button>
+          <button>[[direccion]]</button>
+          <button>[[direccion.provincia]]</button>
+          <button>[[empresa.nombre]]</button>
+        </div>
+
+        <label for="certificateInstallationHeader">Registro Mercantil:</label>
+        <textarea id="certificateInstallationHeader" formControlName="certificateInstallationHeader" rows="4" cols="50">
+        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+      </div>
+      <div>
+        <label for="certificateInstallationFooter">Registro Mercantil:</label>
+        <textarea id="certificateInstallationFooter" formControlName="certificateInstallationFooter" rows="4" cols="50">
+        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+      </div>
+    </div>>
+  </form>
+</div>

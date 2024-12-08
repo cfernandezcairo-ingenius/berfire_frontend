@@ -1,57 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { WindowService } from '../share/services/window.service';
+import { Injectable, Inject } from '@angular/core';
+import { IPublicClientApplication } from '@azure/msal-browser';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private tokenRenewalInterval: any;
+  private msalInstance: IPublicClientApplication;
 
-  constructor(private http: HttpClient, private windowService: WindowService) { }
-
-  login(email: string, password: string): Observable<any> {
-    const payload = {
-      email: email,
-      password: password
-    }
-    return this.http.post<any>(`${this.windowService.apiUrl}/login`, payload);
+  constructor(@Inject('MSAL_INSTANCE') msalInstance: IPublicClientApplication) {
+    this.msalInstance = msalInstance;
   }
 
-  logout() {
-    clearInterval(this.tokenRenewalInterval);
+  async initialize(): Promise<void> {
+    await this.msalInstance.initialize();
+    console.log('MSAL initialized');
   }
 
-  refreshToken(): Observable<any> {
-    return this.http.post<any>(`${this.windowService.apiUrl}/refresh-token`,null)
-      .pipe(
-        tap((response: { access_token: string }) => {
-          localStorage.setItem('access_token', response.access_token);
-        })
-      );
-  }
-
-  public stopTokenRenewal() {
-    clearInterval(this.tokenRenewalInterval);
-  }
-
-  public startTokenRenewal() {
-    if (this.tokenRenewalInterval) {
-      clearInterval(this.tokenRenewalInterval);
-    }
-
-    // Renueva el token cada 9 minutos (540000 ms)
-    this.tokenRenewalInterval = setInterval(() => {
-      this.refreshToken().subscribe();
-    }, 540000);
-  }
-
-  public isAuthenticated() : boolean {
-    const token = localStorage.getItem('access_token');
-    const helper = new JwtHelperService();
-    const isExpired = helper.isTokenExpired(token);
-    return !isExpired;
+  login(): void {
+    this.msalInstance.loginRedirect();
   }
 }

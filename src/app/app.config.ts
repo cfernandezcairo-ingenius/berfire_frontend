@@ -1,13 +1,12 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {JwtInterceptor} from '../app/jwt-interceptor.interceptor';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { AuthGuard } from '../app/share/common/auth-guard';
 import { MatIconRegistry } from '@angular/material/icon';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -16,6 +15,14 @@ import { PasswordToggleVisibleFieldType } from './share/common/UI/formly-form/fo
 import { PasswordToggleVisibleMatFieldType } from './share/common/UI/formly-form/formly-custom-components/password-toggle-visible-mat/password-toggle-visible-mat.component'
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
+import {
+    MsalGuard, MsalBroadcastService, MsalService,
+    MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalGuardConfiguration, MsalRedirectComponent, MsalModule,
+    MsalInterceptor
+} from '@azure/msal-angular';
+import { loginRequest, msalConfig, msalInstance } from './auth-config';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 function HttpLoaderFactory(http: HttpClient) {
@@ -52,17 +59,46 @@ export function NumberValidator(control: FormControl) {
   return /\d{1,3}/.test(control.value) ? true : { number: true };
 }
 
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication(msalConfig);
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+      interactionType: InteractionType.Redirect,
+      authRequest: loginRequest
+  };
+}
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
-        {
-            provide:HTTP_INTERCEPTORS,
-            useClass:JwtInterceptor,
-            multi:true
-        },
+  {
+    provide: MSAL_INSTANCE,
+    useFactory: MSALInstanceFactory
+  },
+  {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
+  },
+  MsalService,
+  MsalGuard,
+  MsalBroadcastService,
+  provideHttpClient(withInterceptorsFromDi()),
+  /// Proveedor de MSAL
+  {
+    provide: 'MSAL_INSTANCE',
+    useValue: msalInstance,
+  },
+  {
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+  },
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideNoopAnimations(),
     importProvidersFrom([
+      MsalRedirectComponent,
       TranslateModule.forRoot(provideTranslation()),
       FormlyBootstrapModule,
       FormlyMaterialModule,
@@ -96,15 +132,13 @@ export const appConfig: ApplicationConfig = {
         ],
       }),
       ReactiveFormsModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      MsalInterceptor
     ]),
     AuthGuard,
+    MsalModule,
     MatIconRegistry,
     provideRouter(routes),
     provideAnimationsAsync(), provideCharts(withDefaultRegisterables())
   ]
 };
-
-export const backendConfig = {
-  url: 'http://localhost:3000'
-}

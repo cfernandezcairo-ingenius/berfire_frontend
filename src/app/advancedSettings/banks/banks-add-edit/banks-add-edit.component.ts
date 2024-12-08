@@ -35,7 +35,7 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
 
-    let inputs = localStorage.getItem!('_idToEdit');
+    let inputs = localStorage.getItem('_idToEdit');
     let tmp = JSON.parse(inputs!);
     this.id = tmp.id;
     this.showinNewTab = tmp.newTab;
@@ -50,7 +50,6 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
 
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
-    debugger;
     if (this.id === 0) {
       payload = {
         name: this.fg.get('name')?.value,

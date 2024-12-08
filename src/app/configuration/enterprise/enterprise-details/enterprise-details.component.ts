@@ -70,22 +70,36 @@ export class EnterpriseDetailsComponent extends BaseAddEditComponent {
       let payload = {};
       if (this.id === 0) {
         payload = {
-          cif: this.fg.get('cif')?.value,
-          name: this.fg.get('name')?.value,
-          fiscalName: this.fg.get('fiscalName')?.value,
-          address: this.fg.get('address')?.value,
-          population: this.fg.get('population')?.value,
-          code: this.fg.get('code')?.value
+          nifCif: this.fgDetails.get('nifCif')?.value,
+          name: this.fgDetails.get('name')?.value,
+          fiscalName: this.fgDetails.get('fiscalName')?.value,
+          fiscalAddress: this.fgDetails.get('fiscalAddress')?.value,
+          fiscalPopulation: this.fgDetails.get('fiscalPopulation')?.value,
+          fiscalPostalCode: this.fgDetails.get('fiscalPostalCode')?.value,
+          email: this.fgDetails.get('email')?.value,
+          mainPhone: this.fgDetails.get('mainPhone')?.value,
+          secondaryPhone: this.fgDetails.get('secondaryPhone')?.value,
+          fax: this.fgDetails.get('fax')?.value,
+          webPage: this.fgDetails.get('webPage')?.value,
+          engineerByDefault: this.fgDetails.get('engineerByDefault')?.value,
+          iban: this.fgDetails.get('iban')?.value,
         }
       } else {
         payload = {
           id: this.id,
-          cif: this.fg.get('cif')?.value,
-          name: this.fg.get('name')?.value,
-          fiscalName: this.fg.get('fiscalName')?.value,
-          address: this.fg.get('address')?.value,
-          population: this.fg.get('population')?.value,
-          code: this.fg.get('code')?.value
+          nifCif: this.fgDetails.get('nifCif')?.value,
+          name: this.fgDetails.get('name')?.value,
+          fiscalName: this.fgDetails.get('fiscalName')?.value,
+          fiscalAddress: this.fgDetails.get('fiscalAddress')?.value,
+          fiscalPopulation: this.fgDetails.get('fiscalPopulation')?.value,
+          fiscalPostalCode: this.fgDetails.get('fiscalPostalCode')?.value,
+          email: this.fgDetails.get('email')?.value,
+          mainPhone: this.fgDetails.get('mainPhone')?.value,
+          secondaryPhone: this.fgDetails.get('secondaryPhone')?.value,
+          fax: this.fgDetails.get('fax')?.value,
+          webPage: this.fgDetails.get('webPage')?.value,
+          engineerByDefault: this.fgDetails.get('engineerByDefault')?.value,
+          iban: this.fgDetails.get('iban')?.value,
         }
       }
       super.onSubmitBase(payload);

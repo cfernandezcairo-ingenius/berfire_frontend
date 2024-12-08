@@ -55,7 +55,8 @@ export class TopBarComponent {
     this.menuChange.emit();
   }
   get isAuthenticated() {
-    return this.authService.isAuthenticated();
+    return true;
+    //this.authService.isAuthenticated();
   }
 
 }
