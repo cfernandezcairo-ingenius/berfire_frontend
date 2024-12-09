@@ -21,7 +21,6 @@ export class FormlyBootstrapComponentt {
   @Output() cancelEvent = new EventEmitter();
 
   show = false;
-  darkMode = false;
 
   constructor() { }
 

@@ -17,8 +17,6 @@ export class ButtonPrimaryComponent {
   @Input() buttonText: string = 'Guardar'
   @Output() addEdit = new EventEmitter();
 
-  darkMode = false;
-
   constructor(
     private readonly navigationSrv: NavigationService,
   ) {}
@@ -29,7 +27,7 @@ export class ButtonPrimaryComponent {
 
   get buttonIsDisabled() {
     if (this.fg === undefined) return false;
-    return !this.fg!.valid;
+    return !this.fg.valid;
   }
 
 }

@@ -28,7 +28,6 @@ export class MatTableMobileComponent implements OnInit {
   @Output() deleteEvent = new EventEmitter();
 
   dataNew: strucNew[] = [];
-  darkMode = false;
 
   constructor() {
   }

@@ -3,15 +3,15 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { MsalService } from '@azure/msal-angular';
 import { from, Observable } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { loginRequest } from './auth-config';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: MsalService,) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Define los scopes para las API protegidas
-    //const scopes = ['https://https://berfiresolutiondev.b2clogin.com/berfiresolutiondev.onmicrosoft.com/api/scope'];
-    const scopes = [''];
+
+    const scopes = loginRequest.scopes;
 
     const account = this.authService.instance.getActiveAccount();
 

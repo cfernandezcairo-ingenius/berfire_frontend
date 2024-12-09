@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MDCardComponent } from "../share/common/UI/md-card/md-card.component";
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { ChartPieComponent } from '../share/common/UI/chart-pie/chart-pie.component';
 import { ChartBarComponent } from '../share/common/UI/chart-bar/chart-bar.component';
@@ -16,7 +15,6 @@ import { ChartBarComponent } from '../share/common/UI/chart-bar/chart-bar.compon
 })
 export class DashboardComponent {
 
-  darkMode = false;
   pieChart = {
     chartOptions: {
       responsive: false,
@@ -48,7 +46,7 @@ export class DashboardComponent {
 
   constructor(
     public translate: TranslateService,
-    public authService: AuthService
-  ) {}
+  ) {
+  }
 
 }

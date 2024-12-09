@@ -5,9 +5,33 @@
       <img *ngIf="isMobile" id="miImagen" src="logoBerFire.jpg" alt="Logo" style="width: 100px; height: 85px; aspect-ratio: 16/9; object-fit: contain; object-position: center;">
     </div>
   </div>
-  <div onkeypress="" class="btn-menu-container-bar" (click)="showMenu()" *ngIf="isMobile && isAuthenticated">
-    <div class="btn-menu-bar">
-      <span style="position: absolute;top: 15%;left: 30%;">Menú</span>
+  <div style="position: relative;width: 100%;">
+    <div style="position: absolute; gap: 15px;right: 10%;display: flex;flex-direction: row;margin-top: 16px;">
+      <div>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <span *ngIf="loginDisplay" style="color:white">{{AuthenticatedUser}}</span>
+          <span *ngIf="!loginDisplay" style="color:white">No autenticado</span>
+        </button>
+        <mat-menu #menu="matMenu">
+          <div *ngIf="loginDisplay">
+            <button (click)="editProfile()" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Edit Profile</span>
+            </button>
+          </div>
+          <div *ngIf="!loginDisplay">
+            <button (click)="login()" mat-menu-item>
+              <span>Login</span>
+            </button>
+          </div>
+          <div *ngIf="loginDisplay">
+            <button  (click)="logout()" mat-menu-item>
+              <mat-icon>Logout</mat-icon>
+              <span>Logout</span>
+            </button>
+          </div>
+        </mat-menu>
+      </div>
     </div>
   </div>
   <div class="idiomas">

@@ -1,4 +1,4 @@
-<div [ngClass]="darkMode ? 'containerLogin containerDarkMode' : 'containerLogin'">
+<div class="containerLogin">
   <div class="containerLeft">
     <div style="width: 100%; max-width: 28rem;">
       <div class="accessClass">
@@ -28,7 +28,7 @@
             <!-- forgot Password -->
             <div style="position: relative; display:flex;text-align: end;align-items: end; margin-top: 1.2rem;width: 100%;">
               <div style="position: absolute;right: 0;">
-                <a *ngIf="!isLoading" href="https://fernandolopez.cofrai.app/password/reset" [ngClass]="darkMode ? 'labelforgotDarkMode' : 'labelforgot'">
+                <a *ngIf="!isLoading" href="https://fernandolopez.cofrai.app/password/reset" class="labelforgot'">
                     {{"forgotPassword" | translate}}
                 </a>
               </div>
@@ -55,12 +55,12 @@
         </button>
         </div>
       </form>
-      <div [ngClass]="darkMode ? 'loginGoogleDarkMode' : 'loginGoogle'">{{"loginGoogle" | translate}}
+      <div class="loginGoogle">{{"loginGoogle" | translate}}
         <div style="position: absolute; left: 10px;top:10px;">
           <img src="google.png" width="24px" height="24px" alt="">
         </div>
       </div>
-      <div [ngClass]="darkMode ? 'loginMicrosoftLabelDarkMode' : 'loginMicrosoftLabel'">{{"loginMicrosoft" | translate}}
+      <div class="loginMicrosoftLabel">{{"loginMicrosoft" | translate}}
         <div style="position: absolute; left: 10px;top:10px;">
           <img src="microsoft.png" width="24px" height="24px" alt="">
         </div>

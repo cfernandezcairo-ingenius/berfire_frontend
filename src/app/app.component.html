@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
   <a class="title" href="/">{{ title }}</a>
 
   <div class="toolbar-spacer"></div>
@@ -8,9 +8,9 @@
   <button mat-button *ngIf="loginDisplay" (click)="editProfile()">Edit Profile</button>
   <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">Login</button>
   <button mat-raised-button color="accent" *ngIf="loginDisplay" (click)="logout()">Logout</button>
-</mat-toolbar>
+</mat-toolbar> -->
 <div class="containerApp">
-  <app-top-bar *ngIf="showTopbar" (languageChange)="changeLanguage($event)" (menuChange)="showMenu()"></app-top-bar>
+  <app-top-bar *ngIf="showTopbar" [loginDisplay]="loginDisplay" (languageChange)="changeLanguage($event)" (menuChange)="showMenu()" (loginRequest)="login()" (logoutRequest)="logout()" (editProfileRequest)="editProfile()"></app-top-bar>
 
   <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
   @if (!isIframe) {

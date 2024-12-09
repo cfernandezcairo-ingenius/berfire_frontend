@@ -71,7 +71,6 @@ export class TableListComponent implements OnInit, OnChanges {
 
   dataSourceShow = new MatTableDataSource<any>();
 
-  darkMode = false;
   columns: any;
   displayedColumns: string[] = [];
   isMobile = false;
@@ -164,8 +163,6 @@ export class TableListComponent implements OnInit, OnChanges {
       showCancelButton: true,
       confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
       cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
     })
     this.deleteRow.emit(id);
   }

@@ -13,10 +13,6 @@
   }
 }
 
-.containerDarkMode {
-  background-color: #2d3436;
-  color: #dfe6e9;
-}
 .containerLeft {
   display: flex;
   flex-direction: column;
@@ -120,10 +116,6 @@ input.disabled {
   text-decoration: none;
 }
 
-.labelforgotDarkMode {
-  color: #dfe6e9;
-}
-
 .labelforgot:hover {
   text-decoration: underline;
 }
@@ -177,21 +169,6 @@ input.disabled {
   border-radius: 1px;
   background-color: #DEDEDE;
   margin-top: 20px;
-}
-
-.loginGoogleDarkMode {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  height: 40px;
-  border: solid;
-  border-width: 1px;
-  border-radius: 1px;
-  background-color: #DEDEDE;
-  margin-top: 20px;
-  color: #2d3436;
 }
 
 .idiomas {
@@ -299,21 +276,6 @@ input:checked + .slider:before {
   border-radius: 1px;
   background-color: #86D3FF
 }
-.loginMicrosoftLabelDarkMode {
-  margin-top:20px;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  height: 40px;
-  border: solid;
-  border-width: 1px;
-  border-radius: 1px;
-  background-color: #86D3FF;
-  color: black;
-}
-
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent !important;
 }

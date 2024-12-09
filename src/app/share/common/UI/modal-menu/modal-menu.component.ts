@@ -18,7 +18,6 @@ export class ModalMenuComponent {
   @Output() menuEdit = new EventEmitter();
   @Output() menuEditNueva = new EventEmitter();
   @Output() menuDelete = new EventEmitter();
-  darkMode = false;
 
   constructor() {
   }

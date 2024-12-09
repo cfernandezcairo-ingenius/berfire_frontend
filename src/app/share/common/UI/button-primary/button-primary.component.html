@@ -1,7 +1,6 @@
 <div class="example-label">
   <button class="mybutton" (click)="onSubmit()"
-    [ngStyle]=" darkMode && !buttonIsDisabled ? {'background-color': '#58C472', color: 'white'} :
-    buttonIsDisabled ?
+    [ngStyle]=" buttonIsDisabled ?
     { cursor: 'not-allowed', 'background-color': '#e0e0e0', color: '#9e9e9e', opacity: 0.5}: {}"
     >{{buttonText | translate}}
   </button>

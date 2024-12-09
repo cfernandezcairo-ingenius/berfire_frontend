@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {SideBarComponent} from './navigation/side-bar/side-bar.component'
 import { CommonModule } from '@angular/common';
@@ -30,7 +30,6 @@ type IdTokenClaimsWithPolicyId = IdTokenClaims & {
     CommonModule,
     TopBarComponent,
     MatToolbarModule,
-    RouterLink,
     MatMenuModule
   ],
   templateUrl: './app.component.html',
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly _destroying$ = new Subject<void>();
   title = 'berFire App';
   show = false;
-  darkMode = false;
   anterior = false;
   sidebarVisible = false;
   cookieValue = '';
@@ -61,11 +59,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly authService: MsalService,
     private readonly msalBroadcastService: MsalBroadcastService
   ) {
-    translate.addLangs(['en', 'es']);
-    translate.setDefaultLang('es');
-
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang?.match(/en|es/) ? browserLang : 'es');
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Se oculta la Barra Top y el sideBar si se ejecuta el componente en nueva pestaña
@@ -94,6 +87,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+
+    this.authService.instance.addEventCallback((event:any) => {
+      debugger;
+      if (event.eventType === "msal:loginSuccess" || event.eventType === "msal:initializeEnd") {
+          console.log("Autenticación exitosa:", event);
+          this.setLanguageConfig();
+      }
+
+      if (event.eventType === "LOGIN_FAILURE") {
+          console.error("Error en la autenticación:", event);
+      }
+    });
 
     this.isIframe = window !== window.parent && !window.opener;
     this.setLoginDisplay();
@@ -211,14 +216,6 @@ export class AppComponent implements OnInit, OnDestroy {
         miDiv!.classList.remove('visible');
       }
     });
-    this.cookieLang = this.cookieService.get('currentLang');
-    if (this.cookieLang === '') {
-      this.fechaExpiracion.setTime(this.fechaExpiracion.getTime() + (10 *365 * 24 * 60 * 60 * 1000));//10 años
-      this.cookieService.set('currentLang', 'es', {expires: this.fechaExpiracion});
-      this.translate.use('es');
-    } else {
-      this.translate.use(this.cookieLang);
-    }
     this.windowService.loadConfig().subscribe(config => {
       this.windowService.setConfig(config);
     });
@@ -226,6 +223,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
 setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+}
+
+setLanguageConfig() {
+  // Manejar la lógica de la internacionalizacion  después de la autenticación
+  this.translate.addLangs(['en', 'es']);
+  this.translate.setDefaultLang('es');
+
+  const browserLang = this.translate.getBrowserLang();
+  this.translate.use(browserLang?.match(/en|es/) ? browserLang : 'es');
+  this.cookieLang = this.cookieService.get('currentLang');
+  if (this.cookieLang === '') {
+    this.fechaExpiracion.setTime(this.fechaExpiracion.getTime() + (10 *365 * 24 * 60 * 60 * 1000));//10 años
+    this.cookieService.set('currentLang', 'es', {expires: this.fechaExpiracion});
+    this.translate.use('es');
+  } else {
+    this.translate.use(this.cookieLang);
+  }
 }
 
 checkAndSetActiveAccount() {

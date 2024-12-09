@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 export class ButtonAddComponent {
 
   @Output() newItem = new EventEmitter();
-  darkMode = false;
 
   constructor(){}
 

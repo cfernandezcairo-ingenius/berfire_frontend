@@ -15,7 +15,6 @@ export class ChartPieComponent {
 
   @Input() data: any;
   title = '';
-  darkMode = false;
 
   constructor() {}
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
