@@ -23,6 +23,7 @@ import {
 } from '@azure/msal-angular';
 import { loginRequest, msalConfig, msalInstance } from './auth-config';
 import { AuthInterceptor } from './auth.interceptor';
+import { QuillModule } from 'ngx-quill';
 
 
 function HttpLoaderFactory(http: HttpClient) {
@@ -100,6 +101,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom([
       MsalRedirectComponent,
       TranslateModule.forRoot(provideTranslation()),
+      QuillModule.forRoot(),
       FormlyBootstrapModule,
       FormlyMaterialModule,
       FormlyModule.forRoot({

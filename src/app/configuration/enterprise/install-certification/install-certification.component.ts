@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-install-certification',
@@ -11,9 +11,21 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class InstallCertificationComponent {
 
-  @Input() fgInstallCertification: any;
+  @Input() fgInstallCertification: FormGroup;
 
   constructor(private readonly fb: FormBuilder) {
+    this.fgInstallCertification = fb.group({
+      certificateInstallationHeader: [],
+      certificateInstallationFooter: []
+    });
+  }
+
+  addInHeader(text:string) {
+    this.fgInstallCertification.get('certificateInstallationHeader')?.setValue(this.fgInstallCertification.get('certificateInstallationHeader')?.value + ' ' + text);
+  }
+
+  addInFooter(text:string) {
+    this.fgInstallCertification.get('certificateInstallationFooter')?.setValue(this.fgInstallCertification.get('certificateInstallationFooter')?.value + ' ' + text);
   }
 
 }

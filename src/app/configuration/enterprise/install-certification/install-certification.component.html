@@ -2,26 +2,38 @@
   <form [formGroup]="fgInstallCertification">
     <div style="position: relative;display: flex;flex-direction: column;gap: 20px;width: 70%; margin-left: auto;margin-right: auto;margin-top: 40px;">
       <div>
-        <div style="position: relative;display: flex;flex-direction: row;">
-          <button>[[año]]</button>
-          <button>[[fecha[[</button>
-          <button>[[ingeniero.nombre]]</button>
-          <button>[[ingeniero.dni]]</button>
-          <button>[[ingeniero.titulo]]</button>
-          <button>[[CIF]]</button>
-          <button>[[direccion]]</button>
-          <button>[[direccion.provincia]]</button>
-          <button>[[empresa.nombre]]</button>
+        <label for="certificateInstallationHeader">Cabecera:</label>
+        <div style="position: relative;display: flex;flex-direction: row;gap:10px;margin-top: 5px">
+          <button id="cabecera-Anno" (click)="addInHeader('[[año]]')">[[año]]</button>
+          <button id="cabecera-fecha" (click)="addInHeader('[[fecha]]')">[[fecha]]</button>
+          <button id="cabecera-nombre" (click)="addInHeader('[[ingeniero.nombre]]')">[[ingeniero.nombre]]</button>
+          <button id="cabecera-dni" (click)="addInHeader('[[ingeniero.dni]]')">[[ingeniero.dni]]</button>
+          <button id="cabecera-ing-titulo" (click)="addInHeader('[[ingeniero.titulo]]')">[[ingeniero.titulo]]</button>
+          <button id="cabecera-cif" (click)="addInHeader('[[CIF]]')">[[CIF]]</button>
+          <button id="cabecera-direccion" (click)="addInHeader('[[direccion]]')">[[direccion]]</button>
+          <button id="cabecera-provincia" (click)="addInHeader('[[direccion.provincia]]')">[[direccion.provincia]]</button>
+          <button id="cabecera-empresa-nombre" (click)="addInHeader('[[empresa.nombre]]')">[[empresa.nombre]]</button>
         </div>
+        <br />
 
-        <label for="certificateInstallationHeader">Registro Mercantil:</label>
-        <textarea id="certificateInstallationHeader" formControlName="certificateInstallationHeader" rows="4" cols="50">
+        <textarea id="certificateInstallationHeader" style="width: 100%;" formControlName="certificateInstallationHeader" rows="4" cols="50">
         At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
         </textarea>
       </div>
       <div>
-        <label for="certificateInstallationFooter">Registro Mercantil:</label>
-        <textarea id="certificateInstallationFooter" formControlName="certificateInstallationFooter" rows="4" cols="50">
+        <label for="certificateInstallationFooter">Pie de página:</label>
+        <div style="position: relative;display: flex;flex-direction: row;gap:10px;margin-top: 5px">
+          <button id="pie-Anno" (click)="addInFooter('[[año]]')">[[año]]</button>
+          <button id="pie-fecha" (click)="addInFooter('[[fecha]]')">[[fecha]]</button>
+          <button id="pie-nombre" (click)="addInFooter('ingeniero.nombre')">[[ingeniero.nombre]]</button>
+          <button id="pie-dni" (click)="addInFooter('[[ingeniero.dni]]')">[[ingeniero.dni]]</button>
+          <button id="pie-ing-titulo" (click)="addInFooter('[[ingeniero.titulo]]')">[[ingeniero.titulo]]</button>
+          <button id="pie-cif" (click)="addInFooter('[[CIF]]')">[[CIF]]</button>
+          <button id="pie-direccion" (click)="addInFooter('[[direccion]]')">[[direccion]]</button>
+          <button id="pie-provincia" (click)="addInFooter('[[direccion.provincia]]')">[[direccion.provincia]]</button>
+          <button id="pie-empresa-nombre" (click)="addInFooter('[[empresa.nombre]]')">[[empresa.nombre]]</button>
+        </div>
+        <textarea id="certificateInstallationFooter" style="width: 100%;margin-top: 20px;" formControlName="certificateInstallationFooter" rows="4" cols="50">
         At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
         </textarea>
       </div>

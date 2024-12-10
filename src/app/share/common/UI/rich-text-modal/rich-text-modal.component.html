@@ -1,0 +1,11 @@
+<div class="modal">
+  <div class="modal-content">
+    <h2>Editor de Texto Enriquecido</h2>
+    <quill-editor [(ngModel)]="content" [styles]="{ height: '300px' }"></quill-editor>
+    <div class="modal-actions">
+      <button (click)="save()">Guardar</button>
+      <button (click)="close()">Cerrar</button>
+    </div>
+  </div>
+</div>
+

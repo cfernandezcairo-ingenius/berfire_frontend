@@ -89,7 +89,6 @@ export class AppComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
 
     this.authService.instance.addEventCallback((event:any) => {
-      debugger;
       if (event.eventType === "msal:loginSuccess" || event.eventType === "msal:initializeEnd") {
           console.log("Autenticación exitosa:", event);
           this.setLanguageConfig();

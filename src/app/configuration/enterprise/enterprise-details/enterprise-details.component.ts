@@ -21,6 +21,7 @@ import { catchError, combineLatest } from 'rxjs';
 export class EnterpriseDetailsComponent extends BaseAddEditComponent {
 
   populations: any;
+  override shoWButtonSaveAndNew = false;
 
   @Input() fgDetails: any;
   @Input() modelDetails:any;

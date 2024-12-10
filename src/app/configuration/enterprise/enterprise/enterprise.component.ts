@@ -22,7 +22,9 @@ export class EnterpriseComponent {
   fgDetails:FormGroup;
   fgTextDocuments: FormGroup;
   fgInstallCertification: FormGroup;
+  fgMaintenanceCertification: FormGroup;
   fgResources: FormGroup;
+  fgContracts: FormGroup;
   modelDetails: any;
 
   constructor(private readonly fb: FormBuilder) {
@@ -48,15 +50,24 @@ export class EnterpriseComponent {
       lopd: [],
       article20VAT: []
     });
+
     this.fgInstallCertification = fb.group({
       certificateInstallationHeader: [],
       certificateInstallationFooter: []
+    });
+    this.fgMaintenanceCertification = fb.group({
+      maintenanceCertificationHeader: [],
+      maintenanceCertificationFooter: []
     });
     this.fgResources = this.fb.group({
       signature: [],
       signatureImage: [],
       logo: [],
       seal:[]
+    });
+    this.fgContracts = this.fb.group({
+      security: [],
+      ripci: []
     });
     this.fgDetails.valueChanges.subscribe({
       next: (det:any) => {
@@ -73,6 +84,11 @@ export class EnterpriseComponent {
     });
     this.fgResources.valueChanges.subscribe({
       next:(ins:any) => {
+
+      }
+    });
+    this.fgContracts.valueChanges.subscribe({
+      next: () => {
 
       }
     });
