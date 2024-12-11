@@ -56,7 +56,6 @@ import { PrTypesDeleteComponent } from './configuration/prTypes/prTypes-delete/p
 import { PrIncidentsAddEditComponent } from './configuration/prIncidents/prIncidents-add-edit/prIncidents-add-edit.component';
 import { PrIncidentsListComponent } from './configuration/prIncidents/prIncidents-list/prIncidents-list.component';
 import { PrIncidentsDeleteComponent } from './configuration/prIncidents/prIncidents-delete/prIncidents-delete.component';
-import { EnterpriseComponent } from './configuration/enterprise/enterprise/enterprise.component';
 import { MsalGuard, MsalRedirectComponent } from '@azure/msal-angular';
 
 export const routes: Routes = [
@@ -142,5 +141,4 @@ export const routes: Routes = [
   { path: 'prIncidents/edit', component: PrIncidentsAddEditComponent, canActivate: [MsalGuard]},
   { path: 'prIncidents/delete', component: PrIncidentsDeleteComponent , canActivate: [MsalGuard]},
   { path: 'prIncidents/edit/new', component: PrIncidentsAddEditComponent, canActivate: [MsalGuard]},
-  { path: 'enterprise', component: EnterpriseComponent, canActivate: [MsalGuard]}
 ];
