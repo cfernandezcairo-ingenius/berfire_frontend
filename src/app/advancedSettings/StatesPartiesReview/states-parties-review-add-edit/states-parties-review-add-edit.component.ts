@@ -43,10 +43,9 @@ export class StatesPartiesReviewAddEditComponent extends BaseAddEditComponent {
 
   override ngOnInit(): void {
 
-    let inputs = localStorage.getItem!('_idToEdit');
-    let tmp = JSON.parse(inputs!);
-    this.id = tmp.id;
-    this.showinNewTab = tmp.newTab;
+    let getId = this.getIdToEdit();
+    this.id = getId.id;
+    this.showinNewTab = getId.newTab;
     if (this.id === 0 && !this.showinNewTab) {
       this.shoWButtonSaveAndNew = true;
     } else {
