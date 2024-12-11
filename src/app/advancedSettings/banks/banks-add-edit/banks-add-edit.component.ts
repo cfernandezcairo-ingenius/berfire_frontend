@@ -34,13 +34,18 @@ export class BanksAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.id = this.banksSrv._idToEdit;
-    if (this.id === 0) {
+
+    let inputs = localStorage.getItem('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
       this.shoWButtonSaveAndNew = true;
+    } else {
+      this.shoWButtonSaveAndNew = false
     }
     this.loading = true;
     super.getRegisterBase({id: this.id});
-    this.shoWButtonSaveAndNew = false;
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

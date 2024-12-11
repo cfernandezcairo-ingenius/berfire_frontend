@@ -1,5 +1,5 @@
 <div *ngIf="!isMobile">
-  <div class="mat-elevation-z2" style="margin-top: 50px;" [ngStyle]="darkMode ? { 'background-color': 'black', color: 'white'} : {}">
+  <div class="mat-elevation-z2" style="margin-top: 50px;">
     <table style="display: inline-table;" mat-table [dataSource]="dataSourceShow" class="full-width-table" matSort>
       @for (column of displayedColumns; track column;let index = $index,e = $even) {
         @if (column === 'id') {

@@ -6,7 +6,7 @@ export function generateFieldsTaxes(translate: TranslateService): any[] {
     createRow([createInputField(translate,'title', 'FORM.FIELDS.TITLE', true)]),
     createRow([createInputField(translate,'value', 'FORM.FIELDS.VALUE', true)]),
     createRow([
-      createInputField(translate,'equivalentSurcharge', 'FORM.FIELDS.EQUIVALENTSURCHARGE', true,2),
+      createInputField(translate,'equivalentSurcharge', 'FORM.FIELDS.SURCHARGE', true,2),
       createRow([createCheckboxField(translate,'isIGIC', 'FORM.FIELDS.ISIGIC',2)])
     ])
   ]

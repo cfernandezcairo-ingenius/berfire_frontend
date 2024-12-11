@@ -1,0 +1,17 @@
+<p style="margin-top: 15px;margin-bottom: 15px;" *ngIf="selectedFile">Archivo seleccionado: {{ selectedFile.name }}</p>
+<div class="uploadC">
+  <div>
+    <label for="file-upload" class="custom-file-upload">
+      Seleccionar Logo
+    </label>
+  </div>
+  <div>
+    <input id="file-upload" class="mybuttonUpload" type="file" (change)="onFileSelected($event)" accept="image/*" />
+    <div class="example-label">
+      <p style="margin-top: 15px;margin-bottom: 15px;" *ngIf="selectedFile">Archivo seleccionado: {{ selectedFile.name }}</p>
+      <button mat-stroked-button class="mybuttonUpload" style="width: 140px;margin-left: 10px;margin-bottom: 10px;"  (click)="onUpload()"><span>Subir Logo</span>
+        <mat-icon style="width: 36px;">eject</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

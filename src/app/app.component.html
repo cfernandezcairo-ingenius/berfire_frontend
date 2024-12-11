@@ -1,6 +1,21 @@
+<!-- <mat-toolbar color="primary">
+  <a class="title" href="/">{{ title }}</a>
+
+  <div class="toolbar-spacer"></div>
+
+  <a mat-button [routerLink]="['dashboard']">Guarded Page</a>
+
+  <button mat-button *ngIf="loginDisplay" (click)="editProfile()">Edit Profile</button>
+  <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">Login</button>
+  <button mat-raised-button color="accent" *ngIf="loginDisplay" (click)="logout()">Logout</button>
+</mat-toolbar> -->
 <div class="containerApp">
-  <app-top-bar *ngIf="showTopbar" (languageChange)="changeLanguage($event)" (menuChange)="showMenu()"></app-top-bar>
-  <router-outlet />
+  <app-top-bar *ngIf="showTopbar" [loginDisplay]="loginDisplay" (languageChange)="changeLanguage($event)" (menuChange)="showMenu()" (loginRequest)="login()" (logoutRequest)="logout()" (editProfileRequest)="editProfile()"></app-top-bar>
+
+  <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
+  @if (!isIframe) {
+  <router-outlet></router-outlet>
+  }
 </div>
 <div id="container_sidebar" class="container_sidebar" style="z-index: 9999;" >
   <app-side-bar *ngIf="showTopbar"></app-side-bar>

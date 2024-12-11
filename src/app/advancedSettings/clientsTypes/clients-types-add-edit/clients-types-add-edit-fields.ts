@@ -4,7 +4,7 @@ import { createInputField, createRow } from "../../../share/common/UI/createFiel
 export function generateFieldsClientsTypes(translate: TranslateService): any[] {
   return [
     createRow([createInputField(translate,'name', 'FORM.FIELDS.FIRSTNAME', true)]),
-    createRow([createInputField(translate,'name', 'FORM.FIELDS.DESCRIPTION', true)])
+    createRow([createInputField(translate,'description', 'FORM.FIELDS.DESCRIPTION', true)])
   ];
 }
 

@@ -8,12 +8,12 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar las dependencias
-RUN npm install --force --ignore-scripts
-
+#RUN npm install --force --ignore-scripts
+RUN npm install --force
 # Copiar el resto de la aplicación
-#COPY . .
-COPY src ./src
-COPY tsconfig.json ./
+COPY . .
+#COPY src ./src
+#COPY tsconfig.json ./
 
 # Construir la aplicación
 RUN npm run build:prod
@@ -22,13 +22,13 @@ RUN npm run build:prod
 FROM nginx:alpine
 
 # Crear un usuario no privilegiado
-RUN addgroup -S nginxgroup && adduser -S nginxuser -G nginxgroup
+#RUN addgroup -S nginxgroup && adduser -S nginxuser -G nginxgroup
 
 # Cambiar al nuevo usuario
-USER nginxuser
+#USER nginxuser
 
 # Copiar la configuración de Nginx
-COPY nginx.conf /etc/nginx/nginx.conf
+#COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copiar los archivos construidos al directorio de Nginx
 COPY --from=build /app/dist/berfire-frontend/browser /usr/share/nginx/html

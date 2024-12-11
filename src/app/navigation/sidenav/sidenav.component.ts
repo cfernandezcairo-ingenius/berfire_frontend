@@ -242,7 +242,8 @@ export class SidenavComponent {
   }
 
   isAuthenticated() {
-    return this.authService.isAuthenticated();
+    return true;
+    //this.authService.isAuthenticated();
   }
 }
 

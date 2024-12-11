@@ -16,7 +16,6 @@ export class ChartBarComponent {
 
   @Input() data: any;
   title = '';
-  darkMode = false;
   chartDatasets: any;
   chartLabels:any;
   chartOptions:any;

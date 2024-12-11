@@ -17,7 +17,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TechnicalsDeleteComponent implements OnInit {
 
   id: any;
-  darkMode = false;
 
   constructor(
     private readonly translate: TranslateService,
@@ -41,8 +40,6 @@ export class TechnicalsDeleteComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
       cancelButtonText: this.translate.currentLang === 'es' ? 'Cancelar' : 'Cancel',
-      background: this.darkMode ? '#444' : '#fff',
-      color: this.darkMode ? '#fff' : '#000',
     }).then(result => {
       if (result.isConfirmed) {
         this.technicalsSrv.delete(id).subscribe({
@@ -58,8 +55,6 @@ export class TechnicalsDeleteComponent implements OnInit {
               showConfirmButton:true,
               showCancelButton: false,
               confirmButtonText: this.translate.currentLang === 'es' ? 'Aceptar' : 'Accept',
-              background: this.darkMode ? '#444' : '#fff',
-              color: this.darkMode ? '#fff' : '#000',
             });
           },
           complete: () => {

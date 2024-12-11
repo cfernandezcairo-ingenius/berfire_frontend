@@ -18,7 +18,6 @@ export class MDCardComponent  {
   @Input() title: string = '';
   @Input() valor:string = '';
   @Input() descripcion:string = '';
-  darkMode = false;
   isMobile = false;
   isTablet = false;
   isPC = true;

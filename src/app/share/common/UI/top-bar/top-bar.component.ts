@@ -1,32 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output, Input } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../../../auth/auth.service';
 import { WindowService } from '../../../services/window.service';
+import { MsalService } from '@azure/msal-angular';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatMenuModule, MatIcon],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss',
   providers: [TranslateService]
 })
 export class TopBarComponent {
 
-  @Output() darkModeChange = new EventEmitter();
+  @Input() loginDisplay = false;
+  @Output() loginRequest = new EventEmitter();
+  @Output() logoutRequest = new EventEmitter();
+  @Output() editProfileRequest = new EventEmitter();
   @Output() languageChange = new EventEmitter();
   @Output() menuChange = new EventEmitter();
+
 
   isMobile = false;
   isTablet = false;
   isPC = true;
 
-  darkMode = false;
-
   constructor(
     public translate: TranslateService,
-    public authService: AuthService,
+    public authService: MsalService,
     private readonly windowService: WindowService,
   ) {
     this.setLayout();
@@ -43,10 +48,6 @@ export class TopBarComponent {
     this.isMobile = this.windowService.isDeviceMobile;
   }
 
-  onValChange(item: any) {
-    this.darkModeChange.emit(item);
-  }
-
   changeLanguage(lang: string) {
     this.languageChange.emit(lang)
   }
@@ -55,7 +56,24 @@ export class TopBarComponent {
     this.menuChange.emit();
   }
   get isAuthenticated() {
-    return this.authService.isAuthenticated();
+    return true;
+  }
+
+  editProfile() {
+    this.editProfileRequest.emit();
+  }
+
+  login() {
+    this.loginRequest.emit();
+  }
+
+  logout() {
+    this.logoutRequest.emit();
+  }
+
+  get AuthenticatedUser() {
+    const accounts = this.authService.instance.getAllAccounts();
+    return accounts.length > 0 ? accounts[0].username : null;
   }
 
 }

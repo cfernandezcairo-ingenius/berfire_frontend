@@ -5,11 +5,13 @@
   min-width: 120px;
 }
 
-.mybutton {
+.mybuttonIcon {
   height: 50px;
   border-radius: 1rem;
   width: 120px;
   border-width: 1px;
+  background-color: #2E3192;
+  color: white !important;
   transition: all .5s ease;
   &:hover {
     cursor: pointer;

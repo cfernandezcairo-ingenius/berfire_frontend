@@ -1,1 +1,30 @@
-<p>text-documents works!</p>
+<div style="position: relative;width: 100%;height: 100%;">
+  <form [formGroup]="fgTextDocuments">
+    <div style="position: relative;display: flex;flex-direction: column;gap: 20px;width: 70%; margin-left: auto;margin-right: auto;margin-top: 40px;">
+      <div>
+        <label for="commercialRegister">Registro Mercantil:</label>
+        <textarea id="commercialRegister" style="width: 100%;margin-top: 5px;" formControlName="commercialRegister" rows="4" cols="50">
+        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+      </div>
+      <div>
+        <label for="enterpriseRegistrationData">Datos Registro Empresa:</label>
+        <textarea id="enterpriseRegistrationData"  style="width: 100%;margin-top: 5px;" formControlName="enterpriseRegistrationData" rows="4" cols="50">
+        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+      </div>
+      <div>
+        <label for="lopd">Registro Datos LOPD:</label>
+        <textarea id="lopd" formControlName="lopd" style="width: 100%;margin-top: 5px;" rows="4" cols="50">
+        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+      </div>
+      <div>
+        <label for="article20VAT">Artículo 20 IVA:</label>
+        <textarea id="article20VAT" style="width: 100%;margin-top: 5px;" formControlName="article20VAT" rows="4" cols="50">
+        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+        </textarea>
+      </div>
+    </div>
+  </form>
+</div>

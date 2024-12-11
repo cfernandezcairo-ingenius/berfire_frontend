@@ -37,7 +37,5 @@ function showErrorMessage(translate: TranslateService,titleError: string) {
     icon: 'error',
     showConfirmButton:true,
     confirmButtonText: 'OK',
-    //background: this.darkMode ? '#444' : '#fff',
-    //color: this.darkMode ? '#fff' : '#000',
   })
 }

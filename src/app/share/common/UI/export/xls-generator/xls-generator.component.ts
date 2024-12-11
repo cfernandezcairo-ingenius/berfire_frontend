@@ -18,7 +18,6 @@ export class XlsGeneratorComponent {
 
   @Input() dataSource: any = [];
   @Input() header: any = [];
-  darkMode = false;
 
   constructor(
     private translate: TranslateService

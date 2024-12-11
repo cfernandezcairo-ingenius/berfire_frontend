@@ -43,19 +43,18 @@ export class PVPRatesAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.id = this.pVPRatesSrv._idToEdit;
-    if (this.id === 0) {
 
-      this.model = {
-        home: false,
-        days: 0
-      }
+    let inputs = localStorage.getItem!('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
       this.shoWButtonSaveAndNew = true;
     } else {
-      this.loading = true;
-      super.getRegisterBase({id: this.id});
-      this.shoWButtonSaveAndNew = false;
+      this.shoWButtonSaveAndNew = false
     }
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
   }
 
   onSubmit(event: any, nuevo:boolean) {

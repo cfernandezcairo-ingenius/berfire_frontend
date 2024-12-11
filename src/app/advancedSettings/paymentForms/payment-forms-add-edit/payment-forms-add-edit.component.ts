@@ -44,21 +44,18 @@ export class PaymentFormsAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.id = this.paymentFormsSrv._idToEdit;
-    if (this.id === 0) {
-      this.model = {
-        home: false,
-        days: 0
-      }
+
+    let inputs = localStorage.getItem!('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
       this.shoWButtonSaveAndNew = true;
     } else {
-      let payload = {
-        id: this.id
-      }
-      this.loading = true;
-      super.getRegisterBase(payload);
-      this.shoWButtonSaveAndNew = false;
+      this.shoWButtonSaveAndNew = false
     }
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

@@ -27,7 +27,6 @@ export class LoginBerfireComponent  {
   isTablet = false;
   isMobile = false;
   show = false;
-  darkMode = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -55,22 +54,6 @@ export class LoginBerfireComponent  {
     }
 
     onSubmit() {
-      if (this.fg.valid) {
-        localStorage.setItem('access_token', '');
-        this.authSrv.login(this.fg.controls['email'].value, this.fg.controls['password'].value)
-        .subscribe(res => {
-          if (res.token) {
-            localStorage.setItem('access_token', res.token);
-            localStorage.setItem('refresh_token', res.token);
-            localStorage.setItem('authenticated_user', this.fg.controls['email'].value);
-            this.authSrv.startTokenRenewal();
-            this.router.navigateByUrl('/dashboard');
-          }
-        });
-
-      } else {
-        console.log('Formulario no válido');
-      }
     }
 
   toggleShow() {

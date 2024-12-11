@@ -1,0 +1,10 @@
+<div class="signature-container">
+  <canvas #canvas width="300" height="160" style="border: 1px solid #000;"></canvas>
+  <div style="margin-top: 30px;">
+    <div class="example-button-row">
+      <app-button-primary [fg]="undefined" [buttonText]="'Guardar Firma'"(addEdit)="guardarFirma()" ></app-button-primary>
+      <app-button-icon-primary style="margin-left:15px;" (clicked)="limpiar()" [buttonText]="'Limpiar'" [iconText]="'delete'" ></app-button-icon-primary>
+    </div>
+  </div>
+</div>
+

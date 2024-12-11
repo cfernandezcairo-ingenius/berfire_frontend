@@ -34,17 +34,18 @@ export class ManufacturersAddEditComponent extends BaseAddEditComponent {
   }
 
   override ngOnInit(): void {
-    this.id = this.manufacturersSrv._idToEdit;
-    if (this.id === 0) {
+
+    let inputs = localStorage.getItem!('_idToEdit');
+    let tmp = JSON.parse(inputs!);
+    this.id = tmp.id;
+    this.showinNewTab = tmp.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
       this.shoWButtonSaveAndNew = true;
-      this.model = {
-        isActive: false
-      }
     } else {
-      this.loading = true;
-      super.getRegisterBase({id: this.id});
-      this.shoWButtonSaveAndNew = false;
+      this.shoWButtonSaveAndNew = false
     }
+    this.loading = true;
+    super.getRegisterBase({id: this.id});
   }
 
   onSubmit(model:any, nuevo:boolean = false) {

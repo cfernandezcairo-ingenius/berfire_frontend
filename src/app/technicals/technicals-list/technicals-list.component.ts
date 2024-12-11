@@ -38,7 +38,6 @@ export class TechnicalsListComponent implements OnInit {
   dataSource = {
     data: [] as ITechnicals[]
   };
-  darkMode = false;
   payload: any;
   loading = false;
   todoListo = false;

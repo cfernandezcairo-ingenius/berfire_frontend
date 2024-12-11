@@ -14,8 +14,6 @@ export class ButtonSecondaryComponent  {
 
   @Output() cancel = new EventEmitter();
 
-  darkMode = false;
-
   constructor(private navigationSrv: NavigationService) {}
 
   onCancel() {

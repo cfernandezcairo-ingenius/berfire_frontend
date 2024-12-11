@@ -1,15 +1,15 @@
 <mat-tab-group>
   <mat-tab label="Empresa">
-    <app-enterprise-details></app-enterprise-details>
+    <app-enterprise-details [fgDetails]="fgDetails" [modelDetails]="modelDetails"></app-enterprise-details>
   </mat-tab>
   <mat-tab label="Recursos">
     <app-resources></app-resources>
   </mat-tab>
   <mat-tab label="Textos Documentos">
-    <app-text-documents></app-text-documents>
+    <app-text-documents [fgTextDocuments]="fgTextDocuments"></app-text-documents>
   </mat-tab>
   <mat-tab label="Certificado instalación">
-    <app-install-certification></app-install-certification>
+    <app-install-certification [fgInstallCertification]="fgInstallCertification"></app-install-certification>
   </mat-tab>
   <mat-tab label="Contratos">
     <app-contracts></app-contracts>
