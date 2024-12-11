@@ -44,6 +44,11 @@ export class BaseAddEditComponent implements OnInit {
     console.log('Metodo onInit');
   }
 
+  getIdToEdit() {
+    let inputs = localStorage.getItem('_idToEdit');
+    return JSON.parse(inputs!);
+  }
+
   getRegisterBase(payload:any) {
     this.baseSrv.getById(payload).subscribe({
       next:(res:any) => { this.model = { ...res.data}; },
