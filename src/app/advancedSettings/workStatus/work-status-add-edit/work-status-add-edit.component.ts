@@ -42,21 +42,7 @@ export class WorkStatusAddEditComponent extends BaseAddEditComponent {
     this.fields = generateFieldsWorkStatus(translate);
   }
 
-  override ngOnInit(): void {
-
-    let getId = this.getIdToEdit();
-    this.id = getId.id;
-    this.showinNewTab = getId.newTab;
-    if (this.id === 0 && !this.showinNewTab) {
-      this.shoWButtonSaveAndNew = true;
-    } else {
-      this.shoWButtonSaveAndNew = false
-    }
-    this.loading = true;
-    super.getRegisterBase({id: this.id});
-  }
-
- onSubmit(model:any, nuevo:boolean = false) {
+  onSubmit(model:any, nuevo:boolean = false) {
     let payload = getPayloadWorkStatus(this.id,this.fg);
     super.onSubmitBase(payload);
   }

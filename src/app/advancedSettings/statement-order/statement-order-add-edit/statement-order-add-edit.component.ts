@@ -40,20 +40,6 @@ export class StatementOrdersAddEditComponent extends BaseAddEditComponent {
     this.fields = generateFieldsStatementOrder(translate);
   }
 
-  override ngOnInit(): void {
-
-    let getId = this.getIdToEdit();
-    this.id = getId.id;
-    this.showinNewTab = getId.newTab;
-    if (this.id === 0 && !this.showinNewTab) {
-      this.shoWButtonSaveAndNew = true;
-    } else {
-      this.shoWButtonSaveAndNew = false
-    }
-    this.loading = true;
-    super.getRegisterBase({id: this.id});
-  }
-
   override updateLabels() {
     this.translate.get('FORM.FIELDS.FIRSTNAME').subscribe((label:any) => {
       this.fields[0].fieldGroup[0].props.label = label;
