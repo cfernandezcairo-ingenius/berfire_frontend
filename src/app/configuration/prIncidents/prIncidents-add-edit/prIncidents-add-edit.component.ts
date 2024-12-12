@@ -32,21 +32,6 @@ export class PrIncidentsAddEditComponent extends BaseAddEditComponent {
     this.fields = generateFieldsPrIncidents(translate);
   }
 
-  override ngOnInit(): void {
-
-    let getId = this.getIdToEdit();
-    this.id = getId.id;
-    this.showinNewTab = getId.newTab;
-    if (this.id === 0 && !this.showinNewTab) {
-      this.shoWButtonSaveAndNew = true;
-    } else {
-      this.shoWButtonSaveAndNew = false
-    }
-    this.loading = true;
-    super.getRegisterBase({id: this.id});
-  }
-
-
   onSubmit(model:any, nuevo:boolean = false) {
     let payload = {};
 

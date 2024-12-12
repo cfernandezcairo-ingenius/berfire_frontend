@@ -41,7 +41,16 @@ export class BaseAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Metodo onInit');
+    let getId = this.getIdToEdit();
+    this.id = getId.id;
+    this.showinNewTab = getId.newTab;
+    if (this.id === 0 && !this.showinNewTab) {
+      this.shoWButtonSaveAndNew = true;
+    } else {
+      this.shoWButtonSaveAndNew = false
+    }
+    this.loading = true;
+    this.getRegisterBase({id: this.id});
   }
 
   getIdToEdit() {
