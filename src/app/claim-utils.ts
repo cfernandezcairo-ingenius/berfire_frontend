@@ -6,7 +6,8 @@
 export const createClaimsTable = (claims: Record<string, string>): any[] => {
     const claimsTable: any[] = [];
 
-    Object.keys(claims).map((key) => {
+    Object.keys(claims).forEach((key:any) => {
+
         switch (key) {
             case 'aud':
                 populateClaim(
@@ -158,8 +159,7 @@ export const createClaimsTable = (claims: Record<string, string>): any[] => {
             default:
                 populateClaim(key, claims[key], '', claimsTable);
         }
-    });
-
+    })
     return claimsTable;
 };
 
